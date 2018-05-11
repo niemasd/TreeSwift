@@ -78,17 +78,25 @@ class Node:
             for y in c[1].traverse_inorder():
                 yield y
 
-    def traverse_leaves(self):
-        '''Traverse over the leaves below this Node object'''
-        for n in self.traverse_levelorder(only_leaves=True):
+    def traverse_internal(self):
+        '''Traverse over the internal nodes below (and including) this Node object'''
+        for n in self.traverse_levelorder(leaves=False):
             yield n
 
-    def traverse_levelorder(self, only_leaves=False):
+    def traverse_leaves(self):
+        '''Traverse over the leaves below this Node object'''
+        for n in self.traverse_levelorder(internal=False):
+            yield n
+
+    def traverse_levelorder(self, leaves=True, internal=True):
         '''Perform a levelorder traversal starting at this Node object'''
         q = Queue(); q.put(self)
         while not q.empty():
             n = q.get()
-            if n.is_leaf() or not only_leaves:
+            if n.is_leaf():
+                if leaves:
+                    yield n
+            elif internal:
                 yield n
             for c in n.children:
                 q.put(c)
@@ -122,6 +130,11 @@ class Tree:
     def traverse_inorder(self):
         '''Perform an inorder traversal of the Node objects in this Tree'''
         for node in self.root.traverse_inorder():
+            yield node
+
+    def traverse_internal(self):
+        '''Traverse over the internal nodes of this Tree'''
+        for node in self.root.traverse_internal():
             yield node
 
     def traverse_leaves(self):
