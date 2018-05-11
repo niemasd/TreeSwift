@@ -33,18 +33,6 @@ class Node:
         '''Return a set containing this Node object's child Node objects'''
         return copy(self.children)
 
-    def inorder(self):
-        '''Perform an inorder traversal starting at this Node object'''
-        c = list(self.children)
-        assert len(c) in {0,2}, INORDER_NONBINARY
-        if len(c) != 0:
-            for y in c[0].inorder():
-                yield y
-        yield self
-        if len(c) != 0:
-            for y in c[1].inorder():
-                yield y
-
     def is_leaf(self):
         '''Returns True if this is a leaf'''
         return len(self.children) == 0
@@ -52,14 +40,6 @@ class Node:
     def is_root(self):
         '''Returns True if this is the root'''
         return self.parent is None
-
-    def levelorder(self):
-        '''Perform a levelorder traversal starting at this Node object'''
-        q = Queue(); q.put(self)
-        while not q.empty():
-            n = q.get(); yield n
-            for c in n.children:
-                q.put(c)
 
     def newick(self):
         '''Recursive Newick string conversion starting at this Node object'''
@@ -81,24 +61,44 @@ class Node:
                 out.append(self.label)
             return ''.join(out)
 
-    def postorder(self):
-        '''Perform a postorder traversal starting at this Node object'''
-        for c in self.children:
-            for n in c.postorder():
-                yield n
-        yield self
-
-    def preorder(self):
-        '''Perform a preorder traversal starting at this Node object'''
-        yield self
-        for c in self.children:
-            for n in c.preorder():
-                yield n
-
     def remove_child(self, child):
         '''Remove child from Node object'''
         assert child in self.children, "Attempting to remove non-existent child"
         self.children.remove(child); child.parent = None
+
+    def traverse_inorder(self):
+        '''Perform an inorder traversal starting at this Node object'''
+        c = list(self.children)
+        assert len(c) in {0,2}, INORDER_NONBINARY
+        if len(c) != 0:
+            for y in c[0].traverse_inorder():
+                yield y
+        yield self
+        if len(c) != 0:
+            for y in c[1].traverse_inorder():
+                yield y
+
+    def traverse_levelorder(self):
+        '''Perform a levelorder traversal starting at this Node object'''
+        q = Queue(); q.put(self)
+        while not q.empty():
+            n = q.get(); yield n
+            for c in n.children:
+                q.put(c)
+
+    def traverse_postorder(self):
+        '''Perform a postorder traversal starting at this Node object'''
+        for c in self.children:
+            for n in c.traverse_postorder():
+                yield n
+        yield self
+
+    def traverse_preorder(self):
+        '''Perform a preorder traversal starting at this Node object'''
+        yield self
+        for c in self.children:
+            for n in c.traverse_preorder():
+                yield n
 
 class Tree:
     '''Tree class'''
@@ -106,30 +106,30 @@ class Tree:
         '''Tree constructor'''
         self.root = Node()  # root Node object
 
-    def inorder(self):
-        '''Perform an inorder traversal of the Node objects in this Tree'''
-        for node in self.root.inorder():
-            yield node
-
-    def levelorder(self):
-        '''Perform a levelorder traversal of the Node objects in this Tree'''
-        for node in self.root.levelorder():
-            yield node
-
     def newick(self):
         if self.root.edge_length is None:
             return '%s;' % self.root.newick()
         else:
             return '%s:%f;' % (self.root.newick(), self.root.edge_length)
 
-    def postorder(self):
-        '''Perform an postorder traversal of the Node objects in this Tree'''
-        for node in self.root.postorder():
+    def traverse_inorder(self):
+        '''Perform an inorder traversal of the Node objects in this Tree'''
+        for node in self.root.traverse_inorder():
             yield node
 
-    def preorder(self):
+    def traverse_levelorder(self):
+        '''Perform a levelorder traversal of the Node objects in this Tree'''
+        for node in self.root.traverse_levelorder():
+            yield node
+
+    def traverse_postorder(self):
+        '''Perform an postorder traversal of the Node objects in this Tree'''
+        for node in self.root.traverse_postorder():
+            yield node
+
+    def traverse_preorder(self):
         '''Perform an preorder traversal of the Node objects in this Tree'''
-        for node in self.root.preorder():
+        for node in self.root.traverse_preorder():
             yield node
 
 def read_tree_newick(tree_string):
