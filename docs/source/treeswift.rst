@@ -4,10 +4,18 @@ treeswift package
 Submodules
 ----------
 
-treeswift.treeswift module
---------------------------
+treeswift.Node module
+---------------------
 
-.. automodule:: treeswift.treeswift
+.. automodule:: treeswift.Node
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+treeswift.Tree module
+---------------------
+
+.. automodule:: treeswift.Tree
     :members:
     :undoc-members:
     :show-inheritance:
