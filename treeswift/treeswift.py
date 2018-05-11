@@ -13,9 +13,11 @@ class Node:
     '''Node class'''
     def __init__(self, label=None, edge_length=None):
         '''`Node` constructor
+
         Args:
             label (str): Label of this `Node`
             edge_length (float): Length of the edge incident to this `Node`
+
         Returns:
             Node object
         '''
@@ -26,6 +28,7 @@ class Node:
 
     def __str__(self):
         '''Represent `Node` as a string
+
         Returns:
             str: string representation of this `Node`
         '''
@@ -33,6 +36,7 @@ class Node:
 
     def add_child(self, child):
         '''Add child to `Node` object
+
         Args:
             child (Node): The child `Node` to be added
         '''
@@ -41,6 +45,7 @@ class Node:
 
     def child_nodes(self):
         '''Return a `set` containing this `Node` object's children
+
         Returns:
             set: A `set` containing this `Node` object's children
         '''
@@ -48,6 +53,7 @@ class Node:
 
     def is_leaf(self):
         '''Returns True if this is a leaf
+
         Returns:
             bool: True if this is a leaf, otherwise False
         '''
@@ -55,6 +61,7 @@ class Node:
 
     def is_root(self):
         '''Returns True if this is the root
+
         Returns:
             bool: True if this is the root, otherwise False
         '''
@@ -62,6 +69,7 @@ class Node:
 
     def newick(self):
         '''Recursive Newick string conversion starting at this `Node` object
+
         Returns:
             str: Recursive Newick string conversion starting at this `Node` object
         '''
@@ -85,6 +93,7 @@ class Node:
 
     def remove_child(self, child):
         '''Remove child from `Node` object
+
         Args:
             child (Node): The child to remove
         '''
@@ -148,6 +157,7 @@ class Tree:
 
     def __str__(self):
         '''Represent this Tree as a string
+
         Returns:
             str: string representation of this `Tree` (Newick string)
         '''
@@ -155,6 +165,7 @@ class Tree:
 
     def newick(self):
         '''Output this Tree as a Newick string
+
         Returns:
             str: Newick string of this `Tree`
         '''
@@ -195,8 +206,10 @@ class Tree:
 
 def read_tree_newick(tree_string):
     '''Read a tree from a Newick string
+
     Args:
         tree_string (str): Newick string
+
     Returns:
         Tree: The tree represented by `tree_string`
     '''
