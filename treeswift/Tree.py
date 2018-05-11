@@ -14,7 +14,7 @@ class Tree:
         '''Represent this Tree as a string
 
         Returns:
-            str: string representation of this `Tree` (Newick string)
+            str: string representation of this Tree (Newick string)
         '''
         return self.newick()
 
@@ -22,7 +22,7 @@ class Tree:
         '''Output this Tree as a Newick string
 
         Returns:
-            str: Newick string of this `Tree`
+            str: Newick string of this Tree
         '''
         if self.root.edge_length is None:
             return '%s;' % self.root.newick()

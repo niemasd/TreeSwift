@@ -10,11 +10,11 @@ INVALID_NEWICK = "Tree not valid Newick tree"
 class Node:
     '''Node class'''
     def __init__(self, label=None, edge_length=None):
-        '''`Node` constructor
+        '''Node constructor
 
         Args:
-            label (str): Label of this `Node`
-            edge_length (float): Length of the edge incident to this `Node`
+            label (str): Label of this Node
+            edge_length (float): Length of the edge incident to this Node
 
         Returns:
             Node object
@@ -25,27 +25,27 @@ class Node:
         self.edge_length = edge_length # length of incident edge
 
     def __str__(self):
-        '''Represent `Node` as a string
+        '''Represent Node as a string
 
         Returns:
-            str: string representation of this `Node`
+            str: string representation of this Node
         '''
         return self.label
 
     def add_child(self, child):
-        '''Add child to `Node` object
+        '''Add child to Node object
 
         Args:
-            child (Node): The child `Node` to be added
+            child (Node): The child Node to be added
         '''
         assert child not in self.children, "Attempting to add existing child"
         self.children.add(child); child.parent = self
 
     def child_nodes(self):
-        '''Return a `set` containing this `Node` object's children
+        '''Return a `set` containing this Node object's children
 
         Returns:
-            set: A `set` containing this `Node` object's children
+            set: A `set` containing this Node object's children
         '''
         return copy(self.children)
 
@@ -66,10 +66,10 @@ class Node:
         return self.parent is None
 
     def newick(self):
-        '''Recursive Newick string conversion starting at this `Node` object
+        '''Recursive Newick string conversion starting at this Node object
 
         Returns:
-            str: Recursive Newick string conversion starting at this `Node` object
+            str: Recursive Newick string conversion starting at this Node object
         '''
         if self.is_leaf():
             if self.label is None:
@@ -90,7 +90,7 @@ class Node:
             return ''.join(out)
 
     def remove_child(self, child):
-        '''Remove child from `Node` object
+        '''Remove child from Node object
 
         Args:
             child (Node): The child to remove
