@@ -8,41 +8,63 @@ try:                # Python 3
     from queue import Queue
 except ImportError: # Python 2
     from Queue import Queue
-def valid_order(o):
-    return o == 'level' or o == 'in' or o == 'post' or o == 'pre'
 
 class Node:
     '''Node class'''
-    def __init__(self, parent=None, label=None, edge_length=None, edge_label=None):
-        '''Node constructor'''
+    def __init__(self, label=None, edge_length=None):
+        '''`Node` constructor
+        Args:
+            label (str): Label of this `Node`
+            edge_length (float): Length of the edge incident to this `Node`
+        Returns:
+            Node object
+        '''
         self.children = set()          # set of child Node objects
-        self.parent = parent           # parent Node object (None for root)
+        self.parent = None             # parent Node object (None for root)
         self.label = label             # label
         self.edge_length = edge_length # length of incident edge
 
     def __str__(self):
-        '''Represent Node as string'''
+        '''Represent `Node` as a string
+        Returns:
+            str: string representation of this `Node`
+        '''
         return self.label
 
     def add_child(self, child):
-        '''Add child to Node object'''
+        '''Add child to `Node` object
+        Args:
+            child (Node): The child `Node` to be added
+        '''
         assert child not in self.children, "Attempting to add existing child"
         self.children.add(child); child.parent = self
 
     def child_nodes(self):
-        '''Return a set containing this Node object's child Node objects'''
+        '''Return a `set` containing this `Node` object's children
+        Returns:
+            set: A `set` containing this `Node` object's children
+        '''
         return copy(self.children)
 
     def is_leaf(self):
-        '''Returns True if this is a leaf'''
+        '''Returns True if this is a leaf
+        Returns:
+            bool: True if this is a leaf, otherwise False
+        '''
         return len(self.children) == 0
 
     def is_root(self):
-        '''Returns True if this is the root'''
+        '''Returns True if this is the root
+        Returns:
+            bool: True if this is the root, otherwise False
+        '''
         return self.parent is None
 
     def newick(self):
-        '''Recursive Newick string conversion starting at this Node object'''
+        '''Recursive Newick string conversion starting at this `Node` object
+        Returns:
+            str: Recursive Newick string conversion starting at this `Node` object
+        '''
         if self.is_leaf():
             if self.label is None:
                 return ''
@@ -62,7 +84,10 @@ class Node:
             return ''.join(out)
 
     def remove_child(self, child):
-        '''Remove child from Node object'''
+        '''Remove child from `Node` object
+        Args:
+            child (Node): The child to remove
+        '''
         assert child in self.children, "Attempting to remove non-existent child"
         self.children.remove(child); child.parent = None
 
@@ -121,7 +146,18 @@ class Tree:
         '''Tree constructor'''
         self.root = Node()  # root Node object
 
+    def __str__(self):
+        '''Represent this Tree as a string
+        Returns:
+            str: string representation of this `Tree` (Newick string)
+        '''
+        return self.newick()
+
     def newick(self):
+        '''Output this Tree as a Newick string
+        Returns:
+            str: Newick string of this `Tree`
+        '''
         if self.root.edge_length is None:
             return '%s;' % self.root.newick()
         else:
@@ -158,7 +194,12 @@ class Tree:
             yield node
 
 def read_tree_newick(tree_string):
-    '''Read a tree from a Newick string'''
+    '''Read a tree from a Newick string
+    Args:
+        tree_string (str): Newick string
+    Returns:
+        Tree: The tree represented by `tree_string`
+    '''
     ts = tree_string; t = Tree(); n = t.root
     i = 0
     while i < len(ts):
