@@ -148,12 +148,12 @@ class Tree:
             yield node
 
     def traverse_postorder(self):
-        '''Perform an postorder traversal of the Node objects in this Tree'''
+        '''Perform a postorder traversal of the Node objects in this Tree'''
         for node in self.root.traverse_postorder():
             yield node
 
     def traverse_preorder(self):
-        '''Perform an preorder traversal of the Node objects in this Tree'''
+        '''Perform a preorder traversal of the Node objects in this Tree'''
         for node in self.root.traverse_preorder():
             yield node
 
