@@ -191,6 +191,13 @@ class Tree:
             for c in node.children:
                 q.put(c)
 
+    def scale_edges(self, multiplier):
+        '''Multiply all edges in this Tree by `multiplier`'''
+        assert isinstance(multiplier,int) or isinstance(multiplier,float), "multiplier must be an int or float"
+        for node in self.traverse_preorder():
+            if node.edge_length is not None:
+                node.edge_length *= multiplier
+
     def suppress_unifurcations(self):
         '''Remove all nodes with only one child and directly attach child to parent'''
         q = Queue(); q.put(self.root)
