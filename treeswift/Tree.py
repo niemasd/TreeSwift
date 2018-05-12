@@ -91,7 +91,7 @@ class Tree:
         '''Extract a copy of this Tree with only the leaves labeled by the strings in `labels`
 
         Args:
-            leaves (set): Set of leaf labels to include
+            leaves (set): Set of leaf labels to include.
 
         Returns:
             Tree: Copy of this Tree, including only the leaves labeled by the strings in `labels`
@@ -99,13 +99,13 @@ class Tree:
         return self.extract_tree(labels, False, suppress_unifurcations)
 
     def get_nodes_with_label(self, labels):
-        '''Return a dictionary with all nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the first will be obtained.
+        '''Return a dictionary with all nodes labeled by a label in `labels` If multiple nodes are labeled by a given label, only the first will be obtained
 
         Args:
-            labels (set): Set of leaf labels to get.
+            labels (set): Set of leaf labels to get
 
         Returns:
-            dict: Dictionary mapping labels to the corresponding nodes.
+            dict: Dictionary mapping labels to the corresponding nodes
         '''
         if not isinstance(labels, set):
             labels = set(labels)
@@ -116,10 +116,10 @@ class Tree:
         return label_to_node
 
     def furthest_from_root(self):
-        '''Return the Node that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0.
+        '''Return the Node that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0
 
         Returns:
-            tuple: First value is the furthest Node from the root, and second value is the corresponding distance.
+            tuple: First value is the furthest Node from the root, and second value is the corresponding distance
         '''
         best = (self.root,0); d = dict()
         for node in self.traverse_preorder():
@@ -131,10 +131,10 @@ class Tree:
         return best
 
     def newick(self):
-        '''Output this Tree as a Newick string.
+        '''Output this Tree as a Newick string
 
         Returns:
-            str: Newick string of this Tree.
+            str: Newick string of this Tree
         '''
         if self.root.edge_length is None:
             return '%s;' % self.root.newick()
