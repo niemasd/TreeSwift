@@ -2,6 +2,10 @@
 from treeswift.Node import Node
 from copy import copy
 from gzip import open as gopen
+try:                # Python 3
+    from queue import Queue
+except ImportError: # Python 2
+    from Queue import Queue
 INVALID_NEWICK = "Tree not valid Newick tree"
 
 class Tree:
@@ -47,31 +51,52 @@ class Tree:
                 if (node.is_leaf() and leaves) or (not node.is_leaf() and internal):
                     yield d[node]
 
-    def extract_tree(self, leaves, without):
+    def extract_tree(self, labels, without, suppress_unifurcations=True):
         '''Helper function for extract_tree_* functions'''
-        pass
+        if not isinstance(labels, set):
+            labels = set(labels)
+        label_to_leaf = dict(); keep = set()
+        for node in self.traverse_leaves():
+            label_to_leaf[str(node)] = node
+            if (without and str(node) not in labels) or (not without and str(node) in labels):
+                keep.add(node)
+        for node in list(keep):
+            for a in node.traverse_ancestors(include_self=False):
+                keep.add(a)
+        out = Tree(); out.root.label = self.root.label; out.root.edge_length = self.root.edge_length
+        q_old = Queue(); q_old.put(self.root)
+        q_new = Queue(); q_new.put(out.root)
+        while not q_old.empty():
+            n_old = q_old.get(); n_new = q_new.get()
+            for c_old in n_old.children:
+                if c_old in keep:
+                    c_new = Node(label=str(c_old), edge_length=c_old.edge_length); n_new.add_child(c_new)
+                    q_old.put(c_old); q_new.put(c_new)
+        if suppress_unifurcations:
+            out.suppress_unifurcations()
+        return out
 
-    def extract_tree_without(self, leaves):
-        '''Extract a copy of this Tree without the leaves labeled by the strings in `leaves`
+    def extract_tree_without(self, labels, suppress_unifurcations=True):
+        '''Extract a copy of this Tree without the leaves labeled by the strings in `labels`
 
         Args:
-            leaves (list): List of leaf labels to exclude
+            labels (set): Set of leaf labels to exclude
 
         Returns:
-            Tree: Copy of this Tree, exluding the leaves labeled by the strings in `leaves`
+            Tree: Copy of this Tree, exluding the leaves labeled by the strings in `labels`
         '''
-        return extract_tree(leaves, True)
+        return self.extract_tree(labels, True, suppress_unifurcations)
 
-    def extract_tree_with(self, leaves):
-        '''Extract a copy of this Tree with only the leaves labeled by the strings in `leaves`
+    def extract_tree_with(self, labels, suppress_unifurcations=True):
+        '''Extract a copy of this Tree with only the leaves labeled by the strings in `labels`
 
         Args:
-            leaves (list): List of leaf labels to include
+            leaves (set): Set of leaf labels to include
 
         Returns:
-            Tree: Copy of this Tree, including only the leaves labeled by the strings in `leaves`
+            Tree: Copy of this Tree, including only the leaves labeled by the strings in `labels`
         '''
-        return extract_tree(leaves, False)
+        return self.extract_tree(labels, False, suppress_unifurcations)
 
     def newick(self):
         '''Output this Tree as a Newick string
@@ -86,18 +111,23 @@ class Tree:
 
     def suppress_unifurcations(self):
         '''Remove all nodes with only one child and directly attach child to parent'''
-        for node in self.traverse_levelorder():
+        q = Queue(); q.put(self.root)
+        while not q.empty():
+            node = q.get()
             if len(node.children) != 1:
+                for c in node.children:
+                    q.put(c)
                 continue
             child = node.children.pop()
             if node.is_root():
-                self.root = child
+                self.root = child; child.parent = None
             else:
                 parent = node.parent; parent.remove_child(node); parent.add_child(child)
             if node.edge_length is not None:
                 if child.edge_length is None:
                     child.edge_length = 0
                 child.edge_length += node.edge_length
+            q.put(child)
 
     def traverse_inorder(self):
         '''Perform an inorder traversal of the Node objects in this Tree'''

@@ -98,6 +98,16 @@ class Node:
         assert child in self.children, "Attempting to remove non-existent child"
         self.children.remove(child); child.parent = None
 
+    def traverse_ancestors(self, include_self=True):
+        '''Traverse over the ancestors of this Node
+
+        Args:
+            include_self (bool): True to include self in the traversal, otherwise False
+        '''
+        curr = {True:self,False:self.parent}[include_self]
+        while curr is not None:
+            yield curr; curr = curr.parent
+
     def traverse_inorder(self):
         '''Perform an inorder traversal starting at this Node object'''
         c = list(self.children)
