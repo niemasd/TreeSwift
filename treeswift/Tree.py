@@ -2,6 +2,7 @@
 from treeswift.Node import Node
 from copy import copy
 from gzip import open as gopen
+from warnings import warn
 try:                # Python 3
     from queue import Queue
 except ImportError: # Python 2
@@ -129,7 +130,7 @@ class Tree:
         return best
 
     def get_nodes_with_label(self, labels):
-        '''Return a dictionary with all nodes labeled by a label in `labels` If multiple nodes are labeled by a given label, only the first will be obtained
+        '''Return a dictionary with all nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
 
         Args:
             labels (set): Set of leaf labels to get
@@ -141,9 +142,31 @@ class Tree:
             labels = set(labels)
         label_to_node = dict()
         for node in self.traverse_preorder():
-            if str(node) in labels and str(node) not in label_to_node:
+            if str(node) in labels and str(node):
                 label_to_node[str(node)] = node
+        if len(label_to_node) != len(labels):
+            warn("Not all given labels exist in the tree")
         return label_to_node
+
+    def mrca(self, labels):
+        '''Return the Node that is the MRCA of the nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
+
+        Args:
+            labels (set): Set of leaf labels
+
+        Returns:
+            Node: The MRCA of the Node objects labeled by a label in `labels`
+        '''
+        label_to_node = self.get_nodes_with_label(labels)
+        count = dict()
+        for node in label_to_node.values():
+            for a in node.traverse_ancestors():
+                if a not in count:
+                    count[a] = 0
+                count[a] += 1
+                if count[a] == len(label_to_node):
+                    return a
+        assert False, "There somehow does not exist an MRCA for the given labels"
 
     def newick(self):
         '''Output this Tree as a Newick string
