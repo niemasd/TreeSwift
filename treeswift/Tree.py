@@ -47,6 +47,32 @@ class Tree:
                 if (node.is_leaf() and leaves) or (not node.is_leaf() and internal):
                     yield d[node]
 
+    def extract_tree(self, leaves, without):
+        '''Helper function for extract_tree_* functions'''
+        pass
+
+    def extract_tree_without(self, leaves):
+        '''Extract a copy of this Tree without the leaves labeled by the strings in `leaves`
+
+        Args:
+            leaves (list): List of leaf labels to exclude
+
+        Returns:
+            Tree: Copy of this Tree, exluding the leaves labeled by the strings in `leaves`
+        '''
+        return extract_tree(leaves, True)
+
+    def extract_tree_with(self, leaves):
+        '''Extract a copy of this Tree with only the leaves labeled by the strings in `leaves`
+
+        Args:
+            leaves (list): List of leaf labels to include
+
+        Returns:
+            Tree: Copy of this Tree, including only the leaves labeled by the strings in `leaves`
+        '''
+        return extract_tree(leaves, False)
+
     def newick(self):
         '''Output this Tree as a Newick string
 
@@ -57,6 +83,21 @@ class Tree:
             return '%s;' % self.root.newick()
         else:
             return '%s:%f;' % (self.root.newick(), self.root.edge_length)
+
+    def suppress_unifurcations(self):
+        '''Remove all nodes with only one child and directly attach child to parent'''
+        for node in self.traverse_levelorder():
+            if len(node.children) != 1:
+                continue
+            child = node.children.pop()
+            if node.is_root():
+                self.root = child
+            else:
+                parent = node.parent; parent.remove_child(node); parent.add_child(child)
+            if node.edge_length is not None:
+                if child.edge_length is None:
+                    child.edge_length = 0
+                child.edge_length += node.edge_length
 
     def traverse_inorder(self):
         '''Perform an inorder traversal of the Node objects in this Tree'''
