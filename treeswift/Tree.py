@@ -98,11 +98,43 @@ class Tree:
         '''
         return self.extract_tree(labels, False, suppress_unifurcations)
 
-    def newick(self):
-        '''Output this Tree as a Newick string
+    def get_nodes_with_label(self, labels):
+        '''Return a dictionary with all nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the first will be obtained.
+
+        Args:
+            labels (set): Set of leaf labels to get.
 
         Returns:
-            str: Newick string of this Tree
+            dict: Dictionary mapping labels to the corresponding nodes.
+        '''
+        if not isinstance(labels, set):
+            labels = set(labels)
+        label_to_node = dict()
+        for node in self.traverse_preorder():
+            if str(node) in labels and str(node) not in label_to_node:
+                label_to_node[str(node)] = node
+        return label_to_node
+
+    def furthest_from_root(self):
+        '''Return the Node that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0.
+
+        Returns:
+            tuple: First value is the furthest Node from the root, and second value is the corresponding distance.
+        '''
+        best = (self.root,0); d = dict()
+        for node in self.traverse_preorder():
+            d[node] = {True:0,False:node.edge_length}[node.edge_length is None]
+            if not node.is_root():
+                d[node] += d[node.parent]
+            if d[node] > best[1]:
+                best = (node,d[node])
+        return best
+
+    def newick(self):
+        '''Output this Tree as a Newick string.
+
+        Returns:
+            str: Newick string of this Tree.
         '''
         if self.root.edge_length is None:
             return '%s;' % self.root.newick()
