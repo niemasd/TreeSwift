@@ -35,6 +35,18 @@ class Tree:
                     best = max_pair
         return best
 
+    def distances_from_root(self, leaves=True, internal=True):
+        '''Generator over the root-to-tip distances of this Tree'''
+        if leaves or internal:
+            d = dict()
+            for node in self.traverse_preorder():
+                if node.is_root():
+                    d[node] = {True:0,False:node.edge_length}[node.edge_length is None]
+                else:
+                    d[node] = d[node.parent] + node.edge_length
+                if (node.is_leaf() and leaves) or (not node.is_leaf() and internal):
+                    yield d[node]
+
     def newick(self):
         '''Output this Tree as a Newick string
 
@@ -45,17 +57,6 @@ class Tree:
             return '%s;' % self.root.newick()
         else:
             return '%s:%f;' % (self.root.newick(), self.root.edge_length)
-
-    def root_to_tip(self):
-        '''Generator over the root-to-tip distances of this Tree'''
-        d = dict()
-        for node in self.traverse_preorder():
-            if node.is_root():
-                d[node] = {True:0,False:node.edge_length}[node.edge_length is None]
-            else:
-                d[node] = d[node.parent] + node.edge_length
-            if node.is_leaf():
-                yield d[node]
 
     def traverse_inorder(self):
         '''Perform an inorder traversal of the Node objects in this Tree'''
