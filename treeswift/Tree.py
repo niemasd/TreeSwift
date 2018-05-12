@@ -179,6 +179,18 @@ class Tree:
         else:
             return '%s:%f;' % (self.root.newick(), self.root.edge_length)
 
+    def resolve_polytomies(self):
+        '''Arbitrarily resolve polytomies with 0-lengthed edges.'''
+        q = Queue(); q.put(self.root)
+        while not q.empty():
+            node = q.get()
+            while len(node.children) > 2:
+                c1 = node.children.pop(); c2 = node.children.pop()
+                nn = Node(edge_length=0); node.add_child(nn)
+                nn.add_child(c1); nn.add_child(c2)
+            for c in node.children:
+                q.put(c)
+
     def suppress_unifurcations(self):
         '''Remove all nodes with only one child and directly attach child to parent'''
         q = Queue(); q.put(self.root)
