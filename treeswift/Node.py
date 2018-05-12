@@ -30,7 +30,7 @@ class Node:
         Returns:
             str: string representation of this Node
         '''
-        return self.label
+        return {True:'',False:self.label}[self.label is None]
 
     def add_child(self, child):
         '''Add child to Node object
