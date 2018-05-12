@@ -257,7 +257,7 @@ def read_tree_newick(tree_string):
     Returns:
         Tree: The tree represented by `tree_string`
     '''
-    ts = tree_string; t = Tree(); n = t.root
+    ts = tree_string.strip(); t = Tree(); n = t.root
     i = 0
     while i < len(ts):
         if ts[i] == ';':
