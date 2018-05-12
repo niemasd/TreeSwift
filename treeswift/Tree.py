@@ -56,7 +56,7 @@ class Tree:
         return best
 
     def distances_from_root(self, leaves=True, internal=True):
-        '''Generator over the root-to-tip distances of this Tree'''
+        '''Generator over the root-to-tip distances of this Tree; (node,distance) tuples'''
         if leaves or internal:
             d = dict()
             for node in self.traverse_preorder():
@@ -65,7 +65,7 @@ class Tree:
                 else:
                     d[node] = d[node.parent] + node.edge_length
                 if (node.is_leaf() and leaves) or (not node.is_leaf() and internal):
-                    yield d[node]
+                    yield (node,d[node])
 
     def extract_tree(self, labels, without, suppress_unifurcations=True):
         '''Helper function for extract_tree_* functions'''
