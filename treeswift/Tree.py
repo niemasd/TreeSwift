@@ -18,6 +18,23 @@ class Tree:
         '''
         return self.newick()
 
+    def diameter(self):
+        '''Compute the diameter (maximum leaf pairwise distance) of this Tree
+
+        Returns:
+            float: The diameter of this Tree
+        '''
+        d = dict(); best = float('-inf')
+        for node in self.traverse_postorder():
+            if node.is_leaf():
+                d[node] = 0
+            else:
+                dists = sorted(d[c]+c.edge_length for c in node.children)
+                d[node] = dists[-1]; max_pair = dists[-1]+dists[-2]
+                if max_pair > best:
+                    best = max_pair
+        return best
+
     def newick(self):
         '''Output this Tree as a Newick string
 
