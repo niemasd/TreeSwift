@@ -1,11 +1,17 @@
 # TreeSwift
-TreeSwift: Fast tree module for Python 2 and 3
+TreeSwift is a Python library for parsing, manipulating, and iterating over (rooted) tree structures. TreeSwift places an emphasis on speed.
 
 ## Installation
-You should be able to install TreeSwift using `pip`, e.g.:
+TreeSwift can be installed using `pip`:
 
 ```bash
-pip install treeswift
+sudo pip install treeswift
+```
+
+If you are using a machine on which you lack administrative powers, TreeSwift can be installed locally using `pip`:
+
+```bash
+pip install --user treeswift
 ```
 
 ## Usage
