@@ -20,6 +20,6 @@ help:
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	@if [ "$(@)" == "html" ]; then \
-		rm -rf "$(DOCSDIR)" && cp -R "$(BUILDDIR)/html" "$(DOCSDIR)"; \
+		rm -rf "$(DOCSDIR)" && cp -R "$(BUILDDIR)/html" "$(DOCSDIR)" && touch "$(DOCSDIR)/index.md"; \
 	fi
 
