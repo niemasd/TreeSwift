@@ -181,3 +181,14 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+def run_apidoc(_):
+    import os,subprocess,sys
+    src_dir = os.path.abspath(os.path.dirname(__file__))
+    code_dir = '/'.join(src_dir.split('/')[:-2]+['treeswift'])
+    cmd_path = 'sphinx-apidoc'
+    if hasattr(sys, 'real_prefix'):
+        cmd_path = os.path.abspath(os.path.join(sys.prefix, 'bin', 'sphinx-apidoc'))
+    subprocess.check_call([cmd_path, '-f', '-o', src_dir, code_dir])
+
+def setup(app):
+    app.connect('builder-inited', run_apidoc)
