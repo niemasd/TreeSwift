@@ -138,7 +138,8 @@ class Tree:
         Returns:
             dict: Dictionary mapping labels to the corresponding nodes
         '''
-        assert (isinstance(selection,str) and selection in {'all','leaves','internal'}) or isinstance(selection,set) or isinstance(selection,list), '"selection" must be one of the strings "all", "leaves", or "internal", or it must be a set containing Node labels'
+        if not isinstance(selection,set) and not isinstance(selection,list) and (not isinstance(selection,str) or selection not in {'all','leaves','internal'}):
+            raise RuntimeError('"selection" must be one of the strings "all", "leaves", or "internal", or it must be a set containing Node labels')
         if isinstance(selection, str):
             selection = selection[0]
         elif isinstance(selection,list):
@@ -169,7 +170,7 @@ class Tree:
                 count[a] += 1
                 if count[a] == len(label_to_node):
                     return a
-        assert False, "There somehow does not exist an MRCA for the given labels"
+        raise RuntimeError("There somehow does not exist an MRCA for the given labels")
 
     def newick(self):
         '''Output this Tree as a Newick string
@@ -196,7 +197,8 @@ class Tree:
 
     def scale_edges(self, multiplier):
         '''Multiply all edges in this Tree by `multiplier`'''
-        assert isinstance(multiplier,int) or isinstance(multiplier,float), "multiplier must be an int or float"
+        if not isinstance(multiplier,int) and not isinstance(multiplier,float):
+            raise RuntimeError("multiplier must be an int or float")
         for node in self.traverse_preorder():
             if node.edge_length is not None:
                 node.edge_length *= multiplier
@@ -264,7 +266,8 @@ def read_tree_newick(tree_string):
     i = 0
     while i < len(ts):
         if ts[i] == ';':
-            assert i == len(ts)-1 and n == t.root, INVALID_NEWICK
+            if i != len(ts)-1 or n != t.root:
+                raise RuntimeError(INVALID_NEWICK)
         elif ts[i] == '(':
             c = Node(); n.add_child(c); n = c
         elif ts[i] == ')':

@@ -38,7 +38,8 @@ class Node:
         Args:
             child (Node): The child Node to be added
         '''
-        assert child not in self.children, "Attempting to add existing child"
+        if child in self.children:
+            raise RuntimeError("Attempting to add existing child")
         self.children.add(child); child.parent = self
 
     def child_nodes(self):
@@ -95,7 +96,8 @@ class Node:
         Args:
             child (Node): The child to remove
         '''
-        assert child in self.children, "Attempting to remove non-existent child"
+        if child not in self.children:
+            raise RuntimeError("Attempting to remove non-existent child")
         self.children.remove(child); child.parent = None
 
     def traverse_ancestors(self, include_self=True):
@@ -111,7 +113,8 @@ class Node:
     def traverse_inorder(self):
         '''Perform an inorder traversal starting at this Node object'''
         c = list(self.children)
-        assert len(c) in {0,2}, INORDER_NONBINARY
+        if len(c) not in {0,2}:
+            raise RuntimeError(INORDER_NONBINARY)
         if len(c) != 0:
             for y in c[0].traverse_inorder():
                 yield y
