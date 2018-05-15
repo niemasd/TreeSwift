@@ -43,9 +43,9 @@
 <span class="kn">from</span> <span class="nn">gzip</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
 <span class="k">try</span><span class="p">:</span>                <span class="c1"># Python 3</span>
-    <span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span>
+    <span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span><span class="p">,</span><span class="n">PriorityQueue</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span> <span class="c1"># Python 2</span>
-    <span class="kn">from</span> <span class="nn">Queue</span> <span class="k">import</span> <span class="n">Queue</span>
+    <span class="kn">from</span> <span class="nn">Queue</span> <span class="k">import</span> <span class="n">Queue</span><span class="p">,</span><span class="n">PriorityQueue</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
 
 <div class="viewcode-block" id="Tree"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree">[docs]</a><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
@@ -61,6 +61,15 @@
 <span class="sd">            str: string representation of this Tree (Newick string)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">newick</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Copy this Tree</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tree: A copy of this tree</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_tree</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
 
 <div class="viewcode-block" id="Tree.closest_leaf_to_root"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.closest_leaf_to_root">[docs]</a>    <span class="k">def</span> <span class="nf">closest_leaf_to_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0</span>
@@ -108,12 +117,12 @@
 
 <div class="viewcode-block" id="Tree.extract_tree"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.extract_tree">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">without</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Helper function for extract_tree_* functions&#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
             <span class="n">labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
         <span class="n">label_to_leaf</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">keep</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_leaves</span><span class="p">():</span>
             <span class="n">label_to_leaf</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)]</span> <span class="o">=</span> <span class="n">node</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">without</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">without</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="n">without</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">without</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">):</span>
                 <span class="n">keep</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">keep</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">traverse_ancestors</span><span class="p">(</span><span class="n">include_self</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -290,7 +299,27 @@
 <div class="viewcode-block" id="Tree.traverse_preorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.traverse_preorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_preorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform a preorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
-            <span class="k">yield</span> <span class="n">node</span></div></div>
+            <span class="k">yield</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="Tree.traverse_rootdistorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.traverse_rootdistorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_rootdistorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Perform a traversal of the Node objects in this Tree in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from the root&#39;&#39;&#39;</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">();</span> <span class="n">dist_from_root</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">dist_from_root</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+            <span class="n">dist_from_root</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+            <span class="k">if</span> <span class="n">ascending</span><span class="p">:</span>
+                <span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">d</span><span class="p">,</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="o">-</span><span class="n">d</span><span class="p">,</span><span class="n">node</span><span class="p">))</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">pq</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">priority</span><span class="p">,</span><span class="n">node</span> <span class="o">=</span> <span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ascending</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">priority</span><span class="p">,</span><span class="n">node</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="o">-</span><span class="n">priority</span><span class="p">,</span><span class="n">node</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="read_tree_newick"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.read_tree_newick">[docs]</a><span class="k">def</span> <span class="nf">read_tree_newick</span><span class="p">(</span><span class="n">tree_string</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Read a tree from a Newick string</span>
