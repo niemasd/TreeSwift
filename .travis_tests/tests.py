@@ -8,6 +8,9 @@ TREESTR = gopen('%s/test.tre.gz'%dirname(realpath(__file__))).read().decode().st
 # tests
 def test_closest_leaf_to_root(t):
     l,d = t.closest_leaf_to_root()
+def test_coalescence_waiting_times(t):
+    for l in t.coalescence_waiting_times():
+        pass
 def test_copy(t):
     o = copy(t)
 def test_diameter(t):
