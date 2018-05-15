@@ -24,6 +24,16 @@ class Node:
         self.label = label             # label
         self.edge_length = edge_length # length of incident edge
 
+    def __lt__(self, other):
+        '''Less Than operator. Just compares labels'''
+        if not isinstance(other,Node):
+            raise TypeError("'<' not supported between instances of '%s' and '%s'"%(type(self).__name__,type(other).__name__))
+        elif self.label is None and other.label is not None:
+            return True
+        elif other.label is None:
+            return False
+        return self.label < other.label
+
     def __str__(self):
         '''Represent Node as a string
 
