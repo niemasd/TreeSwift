@@ -47,6 +47,18 @@ class Tree:
                 best = (node,d[node])
         return best
 
+    def coalescence_waiting_times(self):
+        '''Generator over the waiting times of successive coalescence events (going backward in time)'''
+        pq = PriorityQueue(); lowest_leaf_dist = float('-inf')
+        for n,d in self.distances_from_root():
+            if len(n.children) > 1:
+                pq.put(-d)
+            elif len(n.children) == 0 and d > lowest_leaf_dist:
+                lowest_leaf_dist = d
+        pq.put(-lowest_leaf_dist); curr = -pq.get()
+        while not pq.empty():
+            next = -pq.get(); yield curr - next; curr = next
+
     def diameter(self):
         '''Compute the diameter (maximum leaf pairwise distance) of this Tree
 
@@ -65,7 +77,7 @@ class Tree:
         return best
 
     def distances_from_root(self, leaves=True, internal=True):
-        '''Generator over the root-to-tip distances of this Tree; (node,distance) tuples'''
+        '''Generator over the root-to-node distances of this Tree; (node,distance) tuples'''
         if leaves or internal:
             d = dict()
             for node in self.traverse_preorder():
