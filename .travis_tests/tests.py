@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 from gzip import open as gopen
+from os.path import dirname,realpath
 from treeswift import read_tree_newick
-TREESTR = gopen('test.tre.gz').read().decode().strip()
+TREESTR = gopen('%s/test.tre.gz'%dirname(realpath(__file__))).read().decode().strip()
 
 # tests
 def test_inorder(t):
