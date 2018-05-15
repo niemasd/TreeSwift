@@ -5,16 +5,45 @@ from treeswift import read_tree_newick
 TREESTR = gopen('%s/test.tre.gz'%dirname(realpath(__file__))).read().decode().strip()
 
 # tests
-def test_inorder(t):
+def test_closest_leaf_to_root(t):
+    l,d = t.closest_leaf_to_root()
+def test_diameter(t):
+    d = t.diameter()
+def test_distances_from_root(t):
+    for n,d in t.distances_from_root():
+        pass
+def test_extract_tree_with(t):
+    pass # TODO
+def test_extract_tree_without(t):
+    pass # TODO
+def test_furthest_from_root(t):
+    n,d = t.furthest_from_root()
+def test_label_to_node(t):
+    for l,n in t.label_to_node().items():
+        pass
+def test_mrca(t):
+    pass # TODO
+def test_newick(t):
+    s = t.newick(); s = str(t)
+def test_resolve_polytomies(t):
+    t.resolve_polytomies() # TODO
+def test_scale_edges(t):
+    t.scale_edges(1.5)
+def test_suppress_unifurcations(t):
+    t.suppress_unifurcations() # TODO
+def test_traverse_inorder(t):
     for n in t.traverse_inorder():
         pass
-def test_levelorder(t):
+def test_traverse_leaves(t):
+    for l in t.traverse_leaves():
+        pass
+def test_traverse_levelorder(t):
     for n in t.traverse_levelorder():
         pass
-def test_postorder(t):
+def test_traverse_postorder(t):
     for n in t.traverse_postorder():
         pass
-def test_preorder(t):
+def test_traverse_preorder(t):
     for n in t.traverse_preorder():
         pass
 
