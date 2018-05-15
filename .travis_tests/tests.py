@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from copy import copy,deepcopy
 from gzip import open as gopen
 from os.path import dirname,realpath
 from treeswift import read_tree_newick
@@ -7,6 +8,8 @@ TREESTR = gopen('%s/test.tre.gz'%dirname(realpath(__file__))).read().decode().st
 # tests
 def test_closest_leaf_to_root(t):
     l,d = t.closest_leaf_to_root()
+def test_copy_deepcopy(t):
+    o = copy(t); o = deepcopy(t)
 def test_diameter(t):
     d = t.diameter()
 def test_distances_from_root(t):
@@ -45,6 +48,11 @@ def test_traverse_postorder(t):
         pass
 def test_traverse_preorder(t):
     for n in t.traverse_preorder():
+        pass
+def test_traverse_rootdistorder(t):
+    for n in t.traverse_rootdistorder(ascending=True):
+        pass
+    for n in t.traverse_rootdistorder(ascending=False):
         pass
 
 # run tests
