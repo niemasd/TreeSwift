@@ -59,6 +59,29 @@ class Tree:
         while not pq.empty():
             next = -pq.get(); yield curr - next; curr = next
 
+    def collapse_short_branches(self, threshold):
+        '''Collapse internal branches (not terminal branches) with length less than or equal to `threshold`. A branch length of `None` is considered 0
+
+        Args:
+            threshold (float): The threshold to use when collapsing branches
+        '''
+        if not isinstance(threshold,float) and not isinstance(threshold,int):
+            raise RuntimeError("threshold must be an integer or a float")
+        elif threshold < 0:
+            raise RuntimeError("threshold cannot be negative")
+        q = Queue(); q.put(self.root)
+        while not q.empty():
+            next = q.get()
+            if next.edge_length is None or next.edge_length <= threshold:
+                if next.is_root():
+                    next.edge_length = None
+                elif not next.is_leaf():
+                    parent = next.parent; parent.remove_child(next)
+                    for c in next.children:
+                        parent.add_child(c)
+            for c in next.children:
+                q.put(c)
+
     def diameter(self):
         '''Compute the diameter (maximum leaf pairwise distance) of this Tree
 

@@ -11,6 +11,8 @@ def test_closest_leaf_to_root(t):
 def test_coalescence_waiting_times(t):
     for l in t.coalescence_waiting_times():
         pass
+def test_collapse_short_branches(t):
+    t.collapse_short_branches(float('inf'))
 def test_copy(t):
     o = copy(t)
 def test_diameter(t):
