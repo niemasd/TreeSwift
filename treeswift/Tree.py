@@ -160,7 +160,7 @@ class Tree:
         Returns:
             Node: The MRCA of the Node objects labeled by a label in `labels`
         '''
-        label_to_node = self.get_nodes_with_label(labels)
+        label_to_node = self.label_to_node(labels)
         count = dict()
         for node in label_to_node.values():
             for a in node.traverse_ancestors():

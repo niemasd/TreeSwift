@@ -19,7 +19,9 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	@if [ "$(@)" == "html" ]; then \
-		rm -rf "$(DOCSDIR)" && cp -R "$(BUILDDIR)/html" "$(DOCSDIR)" && touch "$(DOCSDIR)/index.md"; \
+	@if [ "$(@)" == "clean" ]; then \
+		rm -rf "$(DOCSDIR)" ; \
 	fi
-
+	@if [ "$(@)" == "html" ]; then \
+		rm -rf "$(DOCSDIR)" && cp -R "$(BUILDDIR)/html" "$(DOCSDIR)" ; \
+	fi

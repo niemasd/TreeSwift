@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>treeswift package &#8212; TreeSwift  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -16,15 +16,23 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to TreeSwift’s documentation!" href="index.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="prev" title="Welcome to TreeSwift’s documentation!" href="index.html" /> 
   </head><body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to TreeSwift’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">TreeSwift  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -226,12 +234,12 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="treeswift.Tree.Tree.get_nodes_with_label">
-<code class="descname">get_nodes_with_label</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.get_nodes_with_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.get_nodes_with_label" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dictionary with all nodes labeled by a label in <cite>labels</cite>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
+<dt id="treeswift.Tree.Tree.label_to_node">
+<code class="descname">label_to_node</code><span class="sig-paren">(</span><em>selection='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.label_to_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.label_to_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary mapping labels (strings) to Node objects. If <cite>selection</cite> is <cite>“all”</cite>, the dictionary will contain all nodes. If <cite>selection</cite> is <cite>“leaves”</cite>, the dictionary will only contain leaves. If <cite>selection</cite> is <cite>“internal”</cite>, the dictionary will only contain internal nodes. If <cite>selection</cite> is a <cite>set</cite>, the dictionary will contain all nodes labeled by a label in <cite>selection</cite>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>labels (set): Set of leaf labels to get</dd>
+<dd>selection (str or set): <cite>“all”</cite> to select all nodes, <cite>“leaves”</cite> to select leaves, <cite>“internal”</cite> to select internal nodes, or a <cite>set</cite> of labels to specify nodes to select</dd>
 <dt>Returns:</dt>
 <dd>dict: Dictionary mapping labels to the corresponding nodes</dd>
 </dl>
@@ -515,12 +523,12 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="treeswift.Tree.get_nodes_with_label">
-<code class="descname">get_nodes_with_label</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.get_nodes_with_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.get_nodes_with_label" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dictionary with all nodes labeled by a label in <cite>labels</cite>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
+<dt id="treeswift.Tree.label_to_node">
+<code class="descname">label_to_node</code><span class="sig-paren">(</span><em>selection='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.label_to_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.label_to_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary mapping labels (strings) to Node objects. If <cite>selection</cite> is <cite>“all”</cite>, the dictionary will contain all nodes. If <cite>selection</cite> is <cite>“leaves”</cite>, the dictionary will only contain leaves. If <cite>selection</cite> is <cite>“internal”</cite>, the dictionary will only contain internal nodes. If <cite>selection</cite> is a <cite>set</cite>, the dictionary will contain all nodes labeled by a label in <cite>selection</cite>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>labels (set): Set of leaf labels to get</dd>
+<dd>selection (str or set): <cite>“all”</cite> to select all nodes, <cite>“leaves”</cite> to select leaves, <cite>“internal”</cite> to select internal nodes, or a <cite>set</cite> of labels to specify nodes to select</dd>
 <dt>Returns:</dt>
 <dd>dict: Dictionary mapping labels to the corresponding nodes</dd>
 </dl>
@@ -635,14 +643,10 @@
 </ul>
 </li>
 </ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to TreeSwift’s documentation!</a></li>
-  </ul></li>
-</ul>
-</div>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to TreeSwift’s documentation!</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -666,20 +670,24 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2018, Niema Moshiri.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
-      
-      |
-      <a href="_sources/treeswift.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to TreeSwift’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">TreeSwift  documentation</a> &#187;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Niema Moshiri.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
   </body>
 </html>
