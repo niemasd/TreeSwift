@@ -27,14 +27,6 @@ class Tree:
         '''Copy this Tree
 
         Returns:
-            Tree: A copy of this Tree
-        '''
-        return self.__deepcopy__()
-
-    def __deepcopy__(self):
-        '''Copy this Tree
-
-        Returns:
             Tree: A copy of this tree
         '''
         return self.extract_tree(None, False, False)
