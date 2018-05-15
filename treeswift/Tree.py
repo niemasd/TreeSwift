@@ -129,22 +129,25 @@ class Tree:
                 best = (node,d[node])
         return best
 
-    def get_nodes_with_label(self, labels):
-        '''Return a dictionary with all nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
+    def label_to_node(self, selection='all'):
+        '''Return a dictionary mapping labels (strings) to Node objects. If `selection` is `"all"`, the dictionary will contain all nodes. If `selection` is `"leaves"`, the dictionary will only contain leaves. If `selection` is `"internal"`, the dictionary will only contain internal nodes. If `selection` is a `set`, the dictionary will contain all nodes labeled by a label in `selection`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
 
         Args:
-            labels (set): Set of leaf labels to get
+            selection (str or set): `"all"` to select all nodes, `"leaves"` to select leaves, `"internal"` to select internal nodes, or a `set` of labels to specify nodes to select
 
         Returns:
             dict: Dictionary mapping labels to the corresponding nodes
         '''
-        if not isinstance(labels, set):
-            labels = set(labels)
+        assert (isinstance(selection,str) and selection in {'all','leaves','internal'}) or isinstance(selection,set) or isinstance(selection,list), '"selection" must be one of the strings "all", "leaves", or "internal", or it must be a set containing Node labels'
+        if isinstance(selection, str):
+            selection = selection[0]
+        elif isinstance(selection,list):
+            selection = set(selection)
         label_to_node = dict()
         for node in self.traverse_preorder():
-            if str(node) in labels and str(node):
+            if selection == 'a' or (selection == 'i' and not node.is_leaf()) or (selection == 'l' and node.is_leaf()) or str(node) in selection:
                 label_to_node[str(node)] = node
-        if len(label_to_node) != len(labels):
+        if not isinstance(selection,str) and len(label_to_node) != len(selection):
             warn("Not all given labels exist in the tree")
         return label_to_node
 
