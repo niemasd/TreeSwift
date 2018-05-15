@@ -20,6 +20,6 @@ def test_preorder(t):
 
 # run tests
 if __name__ == "__main__":
-    for k,v in locals().items():
-        if callable(v) and v.__module__ == __name__:
-            v(read_tree_newick(TREESTR))
+    tests = [v for k,v in locals().items() if callable(v) and v.__module__ == __name__]
+    for test in tests:
+        test(read_tree_newick(TREESTR))
