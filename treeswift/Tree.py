@@ -23,6 +23,23 @@ class Tree:
         '''
         return self.newick()
 
+    def __copy__(self):
+        '''Copy this Tree
+
+        Returns:
+            Tree: A copy of this Tree
+        '''
+        return self.__deepcopy__()
+
+    def __deepcopy__(self):
+        '''Copy this Tree
+
+        Returns:
+            Tree: A copy of this tree
+        '''
+        return self.extract_tree(None, False, False)
+
+
     def closest_leaf_to_root(self):
         '''Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0
 
@@ -69,12 +86,12 @@ class Tree:
 
     def extract_tree(self, labels, without, suppress_unifurcations=True):
         '''Helper function for extract_tree_* functions'''
-        if not isinstance(labels, set):
+        if labels is not None and not isinstance(labels, set):
             labels = set(labels)
         label_to_leaf = dict(); keep = set()
         for node in self.traverse_leaves():
             label_to_leaf[str(node)] = node
-            if (without and str(node) not in labels) or (not without and str(node) in labels):
+            if labels is None or (without and str(node) not in labels) or (not without and str(node) in labels):
                 keep.add(node)
         for node in list(keep):
             for a in node.traverse_ancestors(include_self=False):

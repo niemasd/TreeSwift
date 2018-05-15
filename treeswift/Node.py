@@ -32,6 +32,28 @@ class Node:
         '''
         return {True:'',False:self.label}[self.label is None]
 
+    def __copy__(self):
+        '''Shallow copy this Node
+
+        Returns:
+            Node: A shallow copy of this Node
+        '''
+        out = Node(label=self.label, edge_length=self.edge_length)
+        out.children = self.children
+        out.parent = self.parent
+        return out
+
+    def __deepcopy__(self):
+        '''Deep copy this Node
+
+        Returns:
+            Node: A deep copy of this Node
+        '''
+        out = Node(label=copy(self.label), edge_length=copy(self))
+        out.children = copy(self.children)
+        out.parent = self.parent
+        return out
+
     def add_child(self, child):
         '''Add child to Node object
 
