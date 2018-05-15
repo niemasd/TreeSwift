@@ -113,7 +113,7 @@ class Node:
     def traverse_inorder(self):
         '''Perform an inorder traversal starting at this Node object'''
         c = list(self.children)
-        if len(c) not in {0,2}:
+        if len(c) != 0 and len(c) != 2:
             raise RuntimeError(INORDER_NONBINARY)
         if len(c) != 0:
             for y in c[0].traverse_inorder():
