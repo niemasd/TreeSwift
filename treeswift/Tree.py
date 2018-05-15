@@ -138,7 +138,7 @@ class Tree:
         Returns:
             dict: Dictionary mapping labels to the corresponding nodes
         '''
-        if not isinstance(selection,set) and not isinstance(selection,list) and (not isinstance(selection,str) or selection not in ['all','leaves','internal']):
+        if not isinstance(selection,set) and not isinstance(selection,list) and (not isinstance(selection,str) or selection != 'all' or selection != 'leaves' or seleciton != 'internal']):
             raise RuntimeError('"selection" must be one of the strings "all", "leaves", or "internal", or it must be a set containing Node labels')
         if isinstance(selection, str):
             selection = selection[0]
@@ -276,12 +276,12 @@ def read_tree_newick(tree_string):
             n = n.parent; c = Node(); n.add_child(c); n = c
         elif ts[i] == ':':
             i += 1; ls = ''
-            while ts[i] not in {',', ')', ';'}:
+            while ts[i] != ',' and ts[i] != ')' and ts[i] != ';':
                 ls += ts[i]; i += 1
             n.edge_length = float(ls); i -= 1
         else:
             label = ''
-            while ts[i] not in {':', ',', ';',')'}:
+            while ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')':
                 label += ts[i]; i += 1
             i -= 1; n.label = label
         i += 1
