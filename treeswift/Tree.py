@@ -105,9 +105,11 @@ class Tree:
             d = dict()
             for node in self.traverse_preorder():
                 if node.is_root():
-                    d[node] = {True:0,False:node.edge_length}[node.edge_length is None]
+                    d[node] = 0
                 else:
-                    d[node] = d[node.parent] + node.edge_length
+                    d[node] = d[node.parent]
+                if node.edge_length is not None:
+                    d[node] += node.edge_length
                 if (node.is_leaf() and leaves) or (not node.is_leaf() and internal):
                     yield (node,d[node])
 
@@ -238,6 +240,33 @@ class Tree:
             return '%s;' % self.root.newick()
         else:
             return '%s:%f;' % (self.root.newick(), self.root.edge_length)
+
+    def num_lineages_at(self, distance):
+        '''Returns the number of lineages of this Tree that exist `distance` away from the root
+
+        Args:
+            distance (float): The distance away from the root
+
+        Returns:
+            int: The number of lineages that exist `distance` away from the root
+        '''
+        if distance < 0:
+            raise RuntimeError("distance cannot be negative")
+        d = dict(); q = Queue(); q.put(self.root); count = 0
+        while not q.empty():
+            node = q.get()
+            if node.is_root():
+                d[node] = 0
+            else:
+                d[node] = d[node.parent]
+            if node.edge_length is not None:
+                d[node] += node.edge_length
+            if d[node] < distance:
+                for c in node.children:
+                    q.put(c)
+            elif node.parent is None or d[node.parent] < distance:
+                count += 1
+        return count
 
     def resolve_polytomies(self):
         '''Arbitrarily resolve polytomies with 0-lengthed edges.'''

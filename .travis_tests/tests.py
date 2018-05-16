@@ -38,6 +38,10 @@ def test_mrca(t):
     pass # TODO
 def test_newick(t):
     s = t.newick(); s = str(t)
+def test_num_lineages_at(t):
+    o = t.num_lineages_at(0)
+    o = t.num_lineages_at(1)
+    o = t.num_lineages_at(float('inf'))
 def test_resolve_polytomies(t):
     t.resolve_polytomies() # TODO
 def test_scale_edges(t):
