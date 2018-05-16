@@ -128,9 +128,9 @@ class Tree:
                                 if v not in M:
                                     M[v] = dict()
                                 M[v][u] = d
-                leaf_dists[node] = leaf_dists[children[0]]
+                leaf_dists[node] = leaf_dists[children[0]]; del leaf_dists[children[0]]
                 for i in range(1,len(children)):
-                    leaf_dists[node] += leaf_dists[children[i]]
+                    leaf_dists[node] += leaf_dists[children[i]]; del leaf_dists[children[i]]
         return M
 
     def distances_from_root(self, leaves=True, internal=True):
