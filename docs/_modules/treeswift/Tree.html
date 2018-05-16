@@ -86,6 +86,41 @@
                 <span class="n">best</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">best</span></div>
 
+<div class="viewcode-block" id="Tree.coalescence_waiting_times"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.coalescence_waiting_times">[docs]</a>    <span class="k">def</span> <span class="nf">coalescence_waiting_times</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Generator over the waiting times of successive coalescence events (going backward in time)&#39;&#39;&#39;</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">();</span> <span class="n">lowest_leaf_dist</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances_from_root</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="o">-</span><span class="n">d</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="n">lowest_leaf_dist</span><span class="p">:</span>
+                <span class="n">lowest_leaf_dist</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="o">-</span><span class="n">lowest_leaf_dist</span><span class="p">);</span> <span class="n">curr</span> <span class="o">=</span> <span class="o">-</span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">pq</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="nb">next</span> <span class="o">=</span> <span class="o">-</span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">();</span> <span class="k">yield</span> <span class="n">curr</span> <span class="o">-</span> <span class="nb">next</span><span class="p">;</span> <span class="n">curr</span> <span class="o">=</span> <span class="nb">next</span></div>
+
+<div class="viewcode-block" id="Tree.collapse_short_branches"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.collapse_short_branches">[docs]</a>    <span class="k">def</span> <span class="nf">collapse_short_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Collapse internal branches (not terminal branches) with length less than or equal to `threshold`. A branch length of `None` is considered 0</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            threshold (float): The threshold to use when collapsing branches</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span><span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;threshold must be an integer or a float&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">threshold</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;threshold cannot be negative&quot;</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="nb">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">next</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">next</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">next</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
+                    <span class="nb">next</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="nb">next</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                    <span class="n">parent</span> <span class="o">=</span> <span class="nb">next</span><span class="o">.</span><span class="n">parent</span><span class="p">;</span> <span class="n">parent</span><span class="o">.</span><span class="n">remove_child</span><span class="p">(</span><span class="nb">next</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                        <span class="n">parent</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Tree.diameter"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.diameter">[docs]</a>    <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the diameter (maximum leaf pairwise distance) of this Tree</span>
 
@@ -104,7 +139,7 @@
         <span class="k">return</span> <span class="n">best</span></div>
 
 <div class="viewcode-block" id="Tree.distances_from_root"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.distances_from_root">[docs]</a>    <span class="k">def</span> <span class="nf">distances_from_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Generator over the root-to-tip distances of this Tree; (node,distance) tuples&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Generator over the root-to-node distances of this Tree; (node,distance) tuples&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">leaves</span> <span class="ow">or</span> <span class="n">internal</span><span class="p">:</span>
             <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>

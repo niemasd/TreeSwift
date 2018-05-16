@@ -178,6 +178,22 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.Tree.coalescence_waiting_times">
+<code class="descname">coalescence_waiting_times</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.coalescence_waiting_times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.coalescence_waiting_times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator over the waiting times of successive coalescence events (going backward in time)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.Tree.collapse_short_branches">
+<code class="descname">collapse_short_branches</code><span class="sig-paren">(</span><em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.collapse_short_branches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.collapse_short_branches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collapse internal branches (not terminal branches) with length less than or equal to <cite>threshold</cite>. A branch length of <cite>None</cite> is considered 0</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>threshold (float): The threshold to use when collapsing branches</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.Tree.diameter">
 <code class="descname">diameter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.diameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.diameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the diameter (maximum leaf pairwise distance) of this Tree</p>
@@ -190,7 +206,7 @@
 <dl class="method">
 <dt id="treeswift.Tree.Tree.distances_from_root">
 <code class="descname">distances_from_root</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.distances_from_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.distances_from_root" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generator over the root-to-tip distances of this Tree; (node,distance) tuples</p>
+<dd><p>Generator over the root-to-node distances of this Tree; (node,distance) tuples</p>
 </dd></dl>
 
 <dl class="method">
@@ -473,6 +489,22 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.coalescence_waiting_times">
+<code class="descname">coalescence_waiting_times</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.coalescence_waiting_times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.coalescence_waiting_times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator over the waiting times of successive coalescence events (going backward in time)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.collapse_short_branches">
+<code class="descname">collapse_short_branches</code><span class="sig-paren">(</span><em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.collapse_short_branches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.collapse_short_branches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collapse internal branches (not terminal branches) with length less than or equal to <cite>threshold</cite>. A branch length of <cite>None</cite> is considered 0</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>threshold (float): The threshold to use when collapsing branches</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.diameter">
 <code class="descname">diameter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.diameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.diameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the diameter (maximum leaf pairwise distance) of this Tree</p>
@@ -485,7 +517,7 @@
 <dl class="method">
 <dt id="treeswift.Tree.distances_from_root">
 <code class="descname">distances_from_root</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.distances_from_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.distances_from_root" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generator over the root-to-tip distances of this Tree; (node,distance) tuples</p>
+<dd><p>Generator over the root-to-node distances of this Tree; (node,distance) tuples</p>
 </dd></dl>
 
 <dl class="method">
