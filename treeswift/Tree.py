@@ -99,6 +99,40 @@ class Tree:
                     best = max_pair
         return best
 
+    def distance_matrix(self):
+        '''Return a distance matrix (2D dictionary) of the leaves of this Tree
+
+        Returns:
+            dict: Distance matrix (2D dictionary) of the leaves of this Tree, where keys are Node objects; M[u][v] = distance from u to v
+        '''
+        M = dict(); leaf_dists = dict()
+        for node in self.traverse_postorder():
+            if node.is_leaf():
+                leaf_dists[node] = [[node,0]]
+            else:
+                children = list(node.children)
+                for c in children:
+                    if c.edge_length is not None:
+                        for i in range(len(leaf_dists[c])):
+                            leaf_dists[c][i][1] += c.edge_length
+                for c1 in range(0,len(children)-1):
+                    leaves_c1 = leaf_dists[children[c1]]
+                    for c2 in range(c1+1,len(children)):
+                        leaves_c2 = leaf_dists[children[c2]]
+                        for i in range(len(leaves_c1)):
+                            for j in range(len(leaves_c2)):
+                                u,ud = leaves_c1[i]; v,vd = leaves_c2[j]; d = ud+vd
+                                if u not in M:
+                                    M[u] = dict()
+                                M[u][v] = d
+                                if v not in M:
+                                    M[v] = dict()
+                                M[v][u] = d
+                leaf_dists[node] = leaf_dists[children[0]]
+                for i in range(1,len(children)):
+                    leaf_dists[node] += leaf_dists[children[i]]
+        return M
+
     def distances_from_root(self, leaves=True, internal=True):
         '''Generator over the root-to-node distances of this Tree; (node,distance) tuples'''
         if leaves or internal:
