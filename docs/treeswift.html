@@ -204,6 +204,16 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.Tree.distance_matrix">
+<code class="descname">distance_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.distance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.distance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a distance matrix (2D dictionary) of the leaves of this Tree</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>dict: Distance matrix (2D dictionary) of the leaves of this Tree, where keys are Node objects; M[u][v] = distance from u to v</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.Tree.distances_from_root">
 <code class="descname">distances_from_root</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.distances_from_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.distances_from_root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generator over the root-to-node distances of this Tree; (node,distance) tuples</p>
@@ -536,6 +546,16 @@ internal (bool): <cite>True</cite> to include edges incident to internal nodes, 
 <dl class="docutils">
 <dt>Returns:</dt>
 <dd>float: The diameter of this Tree</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.distance_matrix">
+<code class="descname">distance_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.distance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.distance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a distance matrix (2D dictionary) of the leaves of this Tree</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>dict: Distance matrix (2D dictionary) of the leaves of this Tree, where keys are Node objects; M[u][v] = distance from u to v</dd>
 </dl>
 </dd></dl>
 
