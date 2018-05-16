@@ -2,6 +2,7 @@
 from copy import copy
 from gzip import open as gopen
 from os.path import dirname,realpath
+from random import sample
 from treeswift import read_tree_newick
 TREESTR = gopen('%s/test.tre.gz'%dirname(realpath(__file__))).read().decode().strip()
 
@@ -28,16 +29,16 @@ def test_edge_length_sum(t):
     o = t.edge_length_sum(internal=False)
     o = t.edge_length_sum(leaves=False, internal=False)
 def test_extract_tree_with(t):
-    pass # TODO
+    o = t.extract_tree_with(sample({l for l in t.traverse_leaves()},10))
 def test_extract_tree_without(t):
-    pass # TODO
+    o = t.extract_tree_without(sample({l for l in t.traverse_leaves()},10))
 def test_furthest_from_root(t):
     n,d = t.furthest_from_root()
 def test_label_to_node(t):
     for l,n in t.label_to_node().items():
         pass
 def test_mrca(t):
-    pass # TODO
+    o = t.mrca(sample({l for l in t.traverse_leaves()},10))
 def test_newick(t):
     s = t.newick(); s = str(t)
 def test_num_lineages_at(t):
@@ -45,7 +46,8 @@ def test_num_lineages_at(t):
     o = t.num_lineages_at(1)
     o = t.num_lineages_at(float('inf'))
 def test_resolve_polytomies(t):
-    t.resolve_polytomies() # TODO
+    t.collapse_short_branches(float('inf'))
+    t.resolve_polytomies()
 def test_sackin(t):
     o = t.sackin()
     o = t.sackin(None)
@@ -53,8 +55,6 @@ def test_sackin(t):
     o = t.sackin('pda')
 def test_scale_edges(t):
     t.scale_edges(1.5)
-def test_suppress_unifurcations(t):
-    t.suppress_unifurcations() # TODO
 def test_traverse_inorder(t):
     for n in t.traverse_inorder():
         pass

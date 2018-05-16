@@ -19,7 +19,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='treeswift',  # Required
-    version='1.0.19',  # Required
+    version='1.0.20',  # Required
     description='TreeSwift: Fast tree module for Python 2 and 3',  # Required
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)
