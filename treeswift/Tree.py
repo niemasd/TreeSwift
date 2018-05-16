@@ -314,6 +314,35 @@ class Tree:
             for c in node.children:
                 q.put(c)
 
+    def sackin(self, normalize='leaves'):
+        '''Compute the Sackin index of this Tree
+
+        Args:
+            normalize (str): None to not normalize, "leaves" to normalize by the number of leaves, "yule" to normalize to the Yule model, or "pda" to normalize to the Proportional to Distinguishable
+            Arrangements model
+
+        Returns:
+            float: Sackin index (either normalized or not)
+        '''
+        num_nodes_from_root = dict(); sackin = 0; num_leaves = 0
+        for node in self.traverse_preorder():
+            num_nodes_from_root[node] = 1
+            if not node.is_root():
+                num_nodes_from_root[node] += num_nodes_from_root[node.parent]
+            if node.is_leaf():
+                num_nodes_from_root[node] -= 1; sackin += num_nodes_from_root[node]; num_leaves += 1
+        if normalize is None or normalize is False:
+            return sackin
+        elif normalize == 'leaves':
+            return float(sackin)/num_leaves
+        elif normalize == 'yule':
+            x = sum(1./i for i in range(2, num_leaves+1))
+            return (sackin - (2*num_leaves*x)) / num_leaves
+        elif normalize == 'pda':
+            return sackin/(num_leaves**1.5)
+        else:
+            raise RuntimeError("normalize must be None, 'leaves', 'yule', or 'pda'")
+
     def scale_edges(self, multiplier):
         '''Multiply all edges in this Tree by `multiplier`'''
         if not isinstance(multiplier,int) and not isinstance(multiplier,float):
@@ -391,6 +420,20 @@ class Tree:
                 yield (priority,node)
             else:
                 yield (-priority,node)
+
+    def treeness(self):
+        '''Compute the "treeness" (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length
+
+        Returns:
+            float: "Treeness" of this Tree (sum of internal branch lengths / sum of all branch lengths)
+        '''
+        internal = 0.; all = 0.
+        for node in self.traverse_preorder():
+            if node.edge_length is not None:
+                all += node.edge_length
+                if not node.is_leaf():
+                    internal += node.edge_length
+        return internal/all
 
 def read_tree_newick(tree_string):
     '''Read a tree from a Newick string

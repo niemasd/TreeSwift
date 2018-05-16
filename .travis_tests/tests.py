@@ -46,6 +46,11 @@ def test_num_lineages_at(t):
     o = t.num_lineages_at(float('inf'))
 def test_resolve_polytomies(t):
     t.resolve_polytomies() # TODO
+def test_sackin(t):
+    o = t.sackin()
+    o = t.sackin(None)
+    o = t.sackin('yule')
+    o = t.sackin('pda')
 def test_scale_edges(t):
     t.scale_edges(1.5)
 def test_suppress_unifurcations(t):
@@ -70,6 +75,8 @@ def test_traverse_rootdistorder(t):
         pass
     for n in t.traverse_rootdistorder(ascending=False):
         pass
+def test_treeness(t):
+    o = t.treeness()
 
 # run tests
 if __name__ == "__main__":
