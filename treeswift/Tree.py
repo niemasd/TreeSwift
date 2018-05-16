@@ -111,6 +111,18 @@ class Tree:
                 if (node.is_leaf() and leaves) or (not node.is_leaf() and internal):
                     yield (node,d[node])
 
+    def edge_length_sum(self, leaves=True, internal=True):
+        '''Compute the sum of all selected edge lengths in this Tree
+
+        Args:
+            leaves (bool): `True` to include edges incident to leaves, otherwise `False`
+            internal (bool): `True` to include edges incident to internal nodes, otherwise `False`
+
+        Returns:
+            float: Sum of all selected edge lengths in this Tree
+        '''
+        return sum(node.edge_length for node in self.traverse_preorder() if node.edge_length is not None and ((leaves and node.is_leaf()) or (internal and not node.is_leaf())))
+
     def extract_tree(self, labels, without, suppress_unifurcations=True):
         '''Helper function for extract_tree_* functions'''
         if labels is not None and not isinstance(labels, set):

@@ -20,6 +20,11 @@ def test_diameter(t):
 def test_distances_from_root(t):
     for n,d in t.distances_from_root():
         pass
+def test_edge_length_sum(t):
+    o = t.edge_length_sum()
+    o = t.edge_length_sum(leaves=False)
+    o = t.edge_length_sum(internal=False)
+    o = t.edge_length_sum(leaves=False, internal=False)
 def test_extract_tree_with(t):
     pass # TODO
 def test_extract_tree_without(t):
