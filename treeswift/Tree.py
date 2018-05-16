@@ -230,7 +230,7 @@ class Tree:
         Returns:
             dict: Dictionary mapping labels to the corresponding nodes
         '''
-        if not isinstance(selection,set) and not isinstance(selection,list) and not isinstance(selection,str) or (selection != 'all' and selection != 'leaves' and selection != 'internal'):
+        if not isinstance(selection,set) and not isinstance(selection,list) and (not isinstance(selection,str) or not (selection != 'all' or selection != 'leaves' or selection != 'internal')):
             raise RuntimeError('"selection" must be one of the strings "all", "leaves", or "internal", or it must be a set containing Node labels')
         if isinstance(selection, str):
             selection = selection[0]
@@ -253,14 +253,14 @@ class Tree:
         Returns:
             Node: The MRCA of the Node objects labeled by a label in `labels`
         '''
-        label_to_node = self.label_to_node(labels)
+        l2n = self.label_to_node(labels)
         count = dict()
-        for node in label_to_node.values():
+        for node in l2n.values():
             for a in node.traverse_ancestors():
                 if a not in count:
                     count[a] = 0
                 count[a] += 1
-                if count[a] == len(label_to_node):
+                if count[a] == len(l2n):
                     return a
         raise RuntimeError("There somehow does not exist an MRCA for the given labels")
 

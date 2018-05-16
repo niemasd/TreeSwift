@@ -29,16 +29,16 @@ def test_edge_length_sum(t):
     o = t.edge_length_sum(internal=False)
     o = t.edge_length_sum(leaves=False, internal=False)
 def test_extract_tree_with(t):
-    o = t.extract_tree_with(sample({l for l in t.traverse_leaves()},10))
+    o = t.extract_tree_with(sample({str(l) for l in t.traverse_leaves()},10))
 def test_extract_tree_without(t):
-    o = t.extract_tree_without(sample({l for l in t.traverse_leaves()},10))
+    o = t.extract_tree_without(sample({str(l) for l in t.traverse_leaves()},10))
 def test_furthest_from_root(t):
     n,d = t.furthest_from_root()
 def test_label_to_node(t):
     for l,n in t.label_to_node().items():
         pass
 def test_mrca(t):
-    o = t.mrca(sample({l for l in t.traverse_leaves()},10))
+    o = t.mrca(sample({str(l) for l in t.traverse_leaves()},10))
 def test_newick(t):
     s = t.newick(); s = str(t)
 def test_num_lineages_at(t):
