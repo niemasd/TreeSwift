@@ -353,6 +353,35 @@
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Tree.sackin"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.sackin">[docs]</a>    <span class="k">def</span> <span class="nf">sackin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Compute the Sackin index of this Tree</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            normalize (str): None to not normalize, &quot;leaves&quot; to normalize by the number of leaves, &quot;yule&quot; to normalize to the Yule model, or &quot;pda&quot; to normalize to the Proportional to Distinguishable</span>
+<span class="sd">            Arrangements model</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Sackin index (either normalized or not)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">num_nodes_from_root</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">sackin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">num_leaves</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
+            <span class="n">num_nodes_from_root</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
+                <span class="n">num_nodes_from_root</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="n">num_nodes_from_root</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                <span class="n">num_nodes_from_root</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">sackin</span> <span class="o">+=</span> <span class="n">num_nodes_from_root</span><span class="p">[</span><span class="n">node</span><span class="p">];</span> <span class="n">num_leaves</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">normalize</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">normalize</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sackin</span>
+        <span class="k">elif</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;leaves&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">sackin</span><span class="p">)</span><span class="o">/</span><span class="n">num_leaves</span>
+        <span class="k">elif</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;yule&#39;</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">sackin</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">num_leaves</span><span class="o">*</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">num_leaves</span>
+        <span class="k">elif</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;pda&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sackin</span><span class="o">/</span><span class="p">(</span><span class="n">num_leaves</span><span class="o">**</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;normalize must be None, &#39;leaves&#39;, &#39;yule&#39;, or &#39;pda&#39;&quot;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Tree.scale_edges"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.scale_edges">[docs]</a>    <span class="k">def</span> <span class="nf">scale_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Multiply all edges in this Tree by `multiplier`&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
@@ -429,7 +458,21 @@
             <span class="k">if</span> <span class="n">ascending</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="p">(</span><span class="n">priority</span><span class="p">,</span><span class="n">node</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="p">(</span><span class="o">-</span><span class="n">priority</span><span class="p">,</span><span class="n">node</span><span class="p">)</span></div></div>
+                <span class="k">yield</span> <span class="p">(</span><span class="o">-</span><span class="n">priority</span><span class="p">,</span><span class="n">node</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Tree.treeness"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.treeness">[docs]</a>    <span class="k">def</span> <span class="nf">treeness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Compute the &quot;treeness&quot; (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: &quot;Treeness&quot; of this Tree (sum of internal branch lengths / sum of all branch lengths)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">internal</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span> <span class="nb">all</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">all</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                    <span class="n">internal</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+        <span class="k">return</span> <span class="n">internal</span><span class="o">/</span><span class="nb">all</span></div></div>
 
 <div class="viewcode-block" id="read_tree_newick"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.read_tree_newick">[docs]</a><span class="k">def</span> <span class="nf">read_tree_newick</span><span class="p">(</span><span class="n">tree_string</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Read a tree from a Newick string</span>

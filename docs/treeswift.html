@@ -325,6 +325,19 @@ internal (bool): <cite>True</cite> to include edges incident to internal nodes, 
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.Tree.sackin">
+<code class="descname">sackin</code><span class="sig-paren">(</span><em>normalize='leaves'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.sackin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.sackin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the Sackin index of this Tree</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>normalize (str): None to not normalize, “leaves” to normalize by the number of leaves, “yule” to normalize to the Yule model, or “pda” to normalize to the Proportional to Distinguishable
+Arrangements model</dd>
+<dt>Returns:</dt>
+<dd>float: Sackin index (either normalized or not)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.Tree.scale_edges">
 <code class="descname">scale_edges</code><span class="sig-paren">(</span><em>multiplier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.scale_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.scale_edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply all edges in this Tree by <cite>multiplier</cite></p>
@@ -376,6 +389,16 @@ internal (bool): <cite>True</cite> to include edges incident to internal nodes, 
 <dt id="treeswift.Tree.Tree.traverse_rootdistorder">
 <code class="descname">traverse_rootdistorder</code><span class="sig-paren">(</span><em>ascending=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_rootdistorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.traverse_rootdistorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a traversal of the Node objects in this Tree in either ascending (<cite>ascending=True</cite>) or descending (<cite>ascending=False</cite>) order of distance from the root</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.Tree.treeness">
+<code class="descname">treeness</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.treeness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.treeness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the “treeness” (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>float: “Treeness” of this Tree (sum of internal branch lengths / sum of all branch lengths)</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -671,6 +694,19 @@ internal (bool): <cite>True</cite> to include edges incident to internal nodes, 
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.sackin">
+<code class="descname">sackin</code><span class="sig-paren">(</span><em>normalize='leaves'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.sackin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.sackin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the Sackin index of this Tree</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>normalize (str): None to not normalize, “leaves” to normalize by the number of leaves, “yule” to normalize to the Yule model, or “pda” to normalize to the Proportional to Distinguishable
+Arrangements model</dd>
+<dt>Returns:</dt>
+<dd>float: Sackin index (either normalized or not)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.scale_edges">
 <code class="descname">scale_edges</code><span class="sig-paren">(</span><em>multiplier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.scale_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.scale_edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply all edges in this Tree by <cite>multiplier</cite></p>
@@ -722,6 +758,16 @@ internal (bool): <cite>True</cite> to include edges incident to internal nodes, 
 <dt id="treeswift.Tree.traverse_rootdistorder">
 <code class="descname">traverse_rootdistorder</code><span class="sig-paren">(</span><em>ascending=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_rootdistorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_rootdistorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a traversal of the Node objects in this Tree in either ascending (<cite>ascending=True</cite>) or descending (<cite>ascending=False</cite>) order of distance from the root</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.treeness">
+<code class="descname">treeness</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.treeness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.treeness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the “treeness” (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>float: “Treeness” of this Tree (sum of internal branch lengths / sum of all branch lengths)</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
