@@ -210,6 +210,19 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.Tree.edge_length_sum">
+<code class="descname">edge_length_sum</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.edge_length_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.edge_length_sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the sum of all selected edge lengths in this Tree</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>leaves (bool): <cite>True</cite> to include edges incident to leaves, otherwise <cite>False</cite>
+internal (bool): <cite>True</cite> to include edges incident to internal nodes, otherwise <cite>False</cite></dd>
+<dt>Returns:</dt>
+<dd>float: Sum of all selected edge lengths in this Tree</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.Tree.extract_tree">
 <code class="descname">extract_tree</code><span class="sig-paren">(</span><em>labels</em>, <em>without</em>, <em>suppress_unifurcations=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.extract_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.extract_tree" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function for extract_tree_* functions</p>
@@ -280,6 +293,18 @@
 <dl class="docutils">
 <dt>Returns:</dt>
 <dd>str: Newick string of this Tree</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.Tree.num_lineages_at">
+<code class="descname">num_lineages_at</code><span class="sig-paren">(</span><em>distance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.num_lineages_at"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.Tree.num_lineages_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of lineages of this Tree that exist <cite>distance</cite> away from the root</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>distance (float): The distance away from the root</dd>
+<dt>Returns:</dt>
+<dd>int: The number of lineages that exist <cite>distance</cite> away from the root</dd>
 </dl>
 </dd></dl>
 
@@ -521,6 +546,19 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.edge_length_sum">
+<code class="descname">edge_length_sum</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.edge_length_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.edge_length_sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the sum of all selected edge lengths in this Tree</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>leaves (bool): <cite>True</cite> to include edges incident to leaves, otherwise <cite>False</cite>
+internal (bool): <cite>True</cite> to include edges incident to internal nodes, otherwise <cite>False</cite></dd>
+<dt>Returns:</dt>
+<dd>float: Sum of all selected edge lengths in this Tree</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.extract_tree">
 <code class="descname">extract_tree</code><span class="sig-paren">(</span><em>labels</em>, <em>without</em>, <em>suppress_unifurcations=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.extract_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.extract_tree" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function for extract_tree_* functions</p>
@@ -591,6 +629,18 @@
 <dl class="docutils">
 <dt>Returns:</dt>
 <dd>str: Newick string of this Tree</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.num_lineages_at">
+<code class="descname">num_lineages_at</code><span class="sig-paren">(</span><em>distance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.num_lineages_at"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.num_lineages_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of lineages of this Tree that exist <cite>distance</cite> away from the root</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>distance (float): The distance away from the root</dd>
+<dt>Returns:</dt>
+<dd>int: The number of lineages that exist <cite>distance</cite> away from the root</dd>
 </dl>
 </dd></dl>
 

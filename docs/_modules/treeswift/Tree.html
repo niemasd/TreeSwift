@@ -144,11 +144,25 @@
             <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
-                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="kc">True</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="kc">False</span><span class="p">:</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">}[</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()</span> <span class="ow">and</span> <span class="n">leaves</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()</span> <span class="ow">and</span> <span class="n">internal</span><span class="p">):</span>
                     <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Tree.edge_length_sum"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.edge_length_sum">[docs]</a>    <span class="k">def</span> <span class="nf">edge_length_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Compute the sum of all selected edge lengths in this Tree</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            leaves (bool): `True` to include edges incident to leaves, otherwise `False`</span>
+<span class="sd">            internal (bool): `True` to include edges incident to internal nodes, otherwise `False`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Sum of all selected edge lengths in this Tree</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">()</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">((</span><span class="n">leaves</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">internal</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())))</span></div>
 
 <div class="viewcode-block" id="Tree.extract_tree"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.extract_tree">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">without</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Helper function for extract_tree_* functions&#39;&#39;&#39;</span>
@@ -265,6 +279,33 @@
             <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">newick</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%f</span><span class="s1">;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">newick</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Tree.num_lineages_at"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.num_lineages_at">[docs]</a>    <span class="k">def</span> <span class="nf">num_lineages_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the number of lineages of this Tree that exist `distance` away from the root</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            distance (float): The distance away from the root</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of lineages that exist `distance` away from the root</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;distance cannot be negative&quot;</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">);</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+            <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count</span></div>
 
 <div class="viewcode-block" id="Tree.resolve_polytomies"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.Tree.resolve_polytomies">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_polytomies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Arbitrarily resolve polytomies with 0-lengthed edges.&#39;&#39;&#39;</span>
