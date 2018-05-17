@@ -175,6 +175,17 @@ internal (bool): True to include internal branches, otherwise False</dd>
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.branch_lengths">
+<code class="descname">branch_lengths</code><span class="sig-paren">(</span><em>terminal=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.branch_lengths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.branch_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator over the lengths of the selected branches of this Tree. Edges with length None will be output as 0-length</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>terminal (bool): True to include terminal branches, otherwise False
+internal (bool): True to include internal branches, otherwise False</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.closest_leaf_to_root">
 <code class="descname">closest_leaf_to_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.closest_leaf_to_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.closest_leaf_to_root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0</p>
