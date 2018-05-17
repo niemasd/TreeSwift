@@ -11,6 +11,10 @@ def test_avg_branch_length(t):
     o = t.avg_branch_length()
     o = t.avg_branch_length(terminal=False)
     o = t.avg_branch_length(internal=False)
+def test_branch_lengths(t):
+    o = t.branch_lengths()
+    o = t.branch_lengths(terminal=False)
+    o = t.branch_lengths(internal=False)
 def test_closest_leaf_to_root(t):
     l,d = t.closest_leaf_to_root()
 def test_coalescence_times(t):

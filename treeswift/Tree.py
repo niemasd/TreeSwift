@@ -50,6 +50,20 @@ class Tree:
                 tot += node.edge_length; num += 1
         return tot/num
 
+    def branch_lengths(self, terminal=True, internal=True):
+        '''Generator over the lengths of the selected branches of this Tree. Edges with length None will be output as 0-length
+
+        Args:
+            terminal (bool): True to include terminal branches, otherwise False
+            internal (bool): True to include internal branches, otherwise False
+        '''
+        for node in self.traverse_preorder():
+            if (internal and not node.is_leaf()) or (terminal and node.is_leaf()):
+                if node.edge_length is None:
+                    yield 0
+                else:
+                    yield node.edge_length
+
     def closest_leaf_to_root(self):
         '''Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0
 
