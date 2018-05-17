@@ -308,8 +308,22 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: The Gamma statistic of Pybus and Harvey (2000)</span>
-<span class="sd">        &#39;&#39;&#39;</span></div>
-        
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">);</span> <span class="n">t</span><span class="o">.</span><span class="n">resolve_polytomies</span><span class="p">()</span> <span class="c1"># need fully bifurcating tree</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">coalescence_times</span><span class="p">(</span><span class="n">backward</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Gamma statistic can only be computed on trees with more than 2 leaves&quot;</span><span class="p">)</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">j</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">g</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">G</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">out</span> <span class="o">/=</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">-=</span> <span class="p">(</span><span class="n">T</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">/=</span> <span class="n">T</span>
+        <span class="n">out</span> <span class="o">/=</span> <span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span><span class="o">**</span><span class="mf">0.5</span>
+        <span class="k">return</span> <span class="n">out</span></div>
 
 <div class="viewcode-block" id="Tree.height"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.height">[docs]</a>    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the height (i.e., maximum distance from root) of this tree</span>
