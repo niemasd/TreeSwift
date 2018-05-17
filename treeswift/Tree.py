@@ -32,6 +32,24 @@ class Tree:
         return self.extract_tree(None, False, False)
 
 
+    def avg_branch_length(self, terminal=True, internal=True):
+        '''Compute the average length of the selected branches of this Tree. Edges with length None will be treated as 0-length
+
+        Args:
+            terminal (bool): True to include terminal branches, otherwise False
+            internal (bool): True to include internal branches, otherwise False
+
+        Returns:
+            The average length of the selected branches
+        '''
+        if not internal and not terminal:
+            raise RuntimeError("Must select either internal or terminal branches (or both)")
+        tot = 0.; num = 0
+        for node in self.traverse_preorder():
+            if node.edge_length is not None and (internal and not node.is_leaf()) or (terminal and node.is_leaf()):
+                tot += node.edge_length; num += 1
+        return tot/num
+
     def closest_leaf_to_root(self):
         '''Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0
 
@@ -47,17 +65,42 @@ class Tree:
                 best = (node,d[node])
         return best
 
-    def coalescence_waiting_times(self):
-        '''Generator over the waiting times of successive coalescence events (going backward in time)'''
-        pq = PriorityQueue(); lowest_leaf_dist = float('-inf')
+    def coalescence_times(self, backward=True):
+        '''Generator over the times of successive coalescence events
+
+        Args:
+            backward (bool): True to go backward in time (i.e., leaves to root), otherwise False
+        '''
+        pq = PriorityQueue()
+        if backward:
+            mult = -1
+        else:
+            mult = 1
         for n,d in self.distances_from_root():
             if len(n.children) > 1:
-                pq.put(-d)
+                pq.put(mult*d)
+        while not pq.empty():
+            yield mult*pq.get()
+
+    def coalescence_waiting_times(self, backward=True):
+        '''Generator over the waiting times of successive coalescence events
+
+        Args:
+            backward (bool): True to go backward in time (i.e., leaves to root), otherwise False
+        '''
+        pq = PriorityQueue(); lowest_leaf_dist = float('-inf')
+        if backward:
+            mult = -1
+        else:
+            mult = 1
+        for n,d in self.distances_from_root():
+            if len(n.children) > 1:
+                pq.put(mult*d)
             elif len(n.children) == 0 and d > lowest_leaf_dist:
                 lowest_leaf_dist = d
-        pq.put(-lowest_leaf_dist); curr = -pq.get()
+        pq.put(mult*lowest_leaf_dist); curr = mult*pq.get()
         while not pq.empty():
-            next = -pq.get(); yield curr - next; curr = next
+            next = mult*pq.get(); yield abs(curr-next); curr = next
 
     def collapse_short_branches(self, threshold):
         '''Collapse internal branches (not terminal branches) with length less than or equal to `threshold`. A branch length of `None` is considered 0
@@ -221,6 +264,14 @@ class Tree:
                 best = (node,d[node])
         return best
 
+    def height(self):
+        '''Compute the height (i.e., maximum distance from root) of this tree
+
+        Returns:
+            float: The height (i.e., maximum distance from root) of this tree
+        '''
+        return max(d[1] for d in self.distances_from_root())
+
     def label_to_node(self, selection='all'):
         '''Return a dictionary mapping labels (strings) to Node objects. If `selection` is `"all"`, the dictionary will contain all nodes. If `selection` is `"leaves"`, the dictionary will only contain leaves. If `selection` is `"internal"`, the dictionary will only contain internal nodes. If `selection` is a `set`, the dictionary will contain all nodes labeled by a label in `selection`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
 
@@ -301,6 +352,22 @@ class Tree:
             elif node.parent is None or d[node.parent] < distance:
                 count += 1
         return count
+
+    def num_nodes(self, leaves=True, internal=True):
+        '''Compute the total number of selected nodes in this Tree
+
+        Args:
+            leaves (bool): True to include leaves, otherwise False
+            internal (bool): True to include internal nodes, otherwise False
+
+        Returns:
+            int: The total number of selected nodes in this Tree
+        '''
+        num = 0
+        for node in self.traverse_preorder():
+            if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
+                num += 1
+        return num
 
     def resolve_polytomies(self):
         '''Arbitrarily resolve polytomies with 0-lengthed edges.'''

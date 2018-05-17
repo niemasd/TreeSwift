@@ -7,10 +7,21 @@ from treeswift import read_tree_newick
 TREESTR = gopen('%s/test.tre.gz'%dirname(realpath(__file__))).read().decode().strip()
 
 # tests
+def test_avg_branch_length(t):
+    o = t.avg_branch_length()
+    o = t.avg_branch_length(terminal=False)
+    o = t.avg_branch_length(internal=False)
 def test_closest_leaf_to_root(t):
     l,d = t.closest_leaf_to_root()
+def test_coalescence_times(t):
+    for d in t.coalescence_times():
+        pass
+    for d in t.coalescence_times(backward=False):
+        pass
 def test_coalescence_waiting_times(t):
     for l in t.coalescence_waiting_times():
+        pass
+    for l in t.coalescence_waiting_times(backward=False):
         pass
 def test_collapse_short_branches(t):
     t.collapse_short_branches(float('inf'))
@@ -34,6 +45,8 @@ def test_extract_tree_without(t):
     o = t.extract_tree_without(sample([str(l) for l in t.traverse_leaves()],10))
 def test_furthest_from_root(t):
     n,d = t.furthest_from_root()
+def test_height(t):
+    h = t.height()
 def test_label_to_node(t):
     for l,n in t.label_to_node().items():
         pass
@@ -45,6 +58,10 @@ def test_num_lineages_at(t):
     o = t.num_lineages_at(0)
     o = t.num_lineages_at(1)
     o = t.num_lineages_at(float('inf'))
+def test_num_nodes(t):
+    o = t.num_nodes()
+    o = t.num_nodes(leaves=False)
+    o = t.num_nodes(internal=False)
 def test_resolve_polytomies(t):
     t.collapse_short_branches(float('inf'))
     t.resolve_polytomies()
