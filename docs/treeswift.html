@@ -162,6 +162,19 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Tree class</p>
 <dl class="method">
+<dt id="treeswift.Tree.avg_branch_length">
+<code class="descname">avg_branch_length</code><span class="sig-paren">(</span><em>terminal=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.avg_branch_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.avg_branch_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the average length of the selected branches of this Tree. Edges with length None will be treated as 0-length</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>terminal (bool): True to include terminal branches, otherwise False
+internal (bool): True to include internal branches, otherwise False</dd>
+<dt>Returns:</dt>
+<dd>The average length of the selected branches</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.closest_leaf_to_root">
 <code class="descname">closest_leaf_to_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.closest_leaf_to_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.closest_leaf_to_root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0</p>
@@ -172,9 +185,23 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.coalescence_times">
+<code class="descname">coalescence_times</code><span class="sig-paren">(</span><em>backward=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.coalescence_times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.coalescence_times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator over the times of successive coalescence events</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>backward (bool): True to go backward in time (i.e., leaves to root), otherwise False</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.coalescence_waiting_times">
-<code class="descname">coalescence_waiting_times</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.coalescence_waiting_times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.coalescence_waiting_times" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generator over the waiting times of successive coalescence events (going backward in time)</p>
+<code class="descname">coalescence_waiting_times</code><span class="sig-paren">(</span><em>backward=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.coalescence_waiting_times"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.coalescence_waiting_times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator over the waiting times of successive coalescence events</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>backward (bool): True to go backward in time (i.e., leaves to root), otherwise False</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -267,6 +294,26 @@ internal (bool): <cite>True</cite> to include edges incident to internal nodes, 
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.gamma_statistic">
+<code class="descname">gamma_statistic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.gamma_statistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.gamma_statistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the Gamma statistic of Pybus and Harvey (2000)</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>float: The Gamma statistic of Pybus and Harvey (2000)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.height">
+<code class="descname">height</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the height (i.e., maximum distance from root) of this tree</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>float: The height (i.e., maximum distance from root) of this tree</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.label_to_node">
 <code class="descname">label_to_node</code><span class="sig-paren">(</span><em>selection='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.label_to_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.label_to_node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dictionary mapping labels (strings) to Node objects. If <cite>selection</cite> is <cite>“all”</cite>, the dictionary will contain all nodes. If <cite>selection</cite> is <cite>“leaves”</cite>, the dictionary will only contain leaves. If <cite>selection</cite> is <cite>“internal”</cite>, the dictionary will only contain internal nodes. If <cite>selection</cite> is a <cite>set</cite>, the dictionary will contain all nodes labeled by a label in <cite>selection</cite>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
@@ -309,6 +356,19 @@ internal (bool): <cite>True</cite> to include edges incident to internal nodes, 
 <dd>distance (float): The distance away from the root</dd>
 <dt>Returns:</dt>
 <dd>int: The number of lineages that exist <cite>distance</cite> away from the root</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.num_nodes">
+<code class="descname">num_nodes</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.num_nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.num_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the total number of selected nodes in this Tree</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>leaves (bool): True to include leaves, otherwise False
+internal (bool): True to include internal nodes, otherwise False</dd>
+<dt>Returns:</dt>
+<dd>int: The total number of selected nodes in this Tree</dd>
 </dl>
 </dd></dl>
 

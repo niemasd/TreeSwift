@@ -264,6 +264,14 @@ class Tree:
                 best = (node,d[node])
         return best
 
+    def gamma_statistic(self):
+        '''Compute the Gamma statistic of Pybus and Harvey (2000)
+
+        Returns:
+            float: The Gamma statistic of Pybus and Harvey (2000)
+        '''
+        
+
     def height(self):
         '''Compute the height (i.e., maximum distance from root) of this tree
 
