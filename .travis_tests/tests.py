@@ -45,6 +45,8 @@ def test_extract_tree_without(t):
     o = t.extract_tree_without(sample([str(l) for l in t.traverse_leaves()],10))
 def test_furthest_from_root(t):
     n,d = t.furthest_from_root()
+def test_gamma_statistic(t):
+    g = t.gamma_statistic()
 def test_height(t):
     h = t.height()
 def test_label_to_node(t):
