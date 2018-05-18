@@ -253,12 +253,12 @@ internal (bool): True to include internal branches, otherwise False</dd>
 
 <dl class="method">
 <dt id="treeswift.Tree.edge_length_sum">
-<code class="descname">edge_length_sum</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.edge_length_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.edge_length_sum" title="Permalink to this definition">¶</a></dt>
+<code class="descname">edge_length_sum</code><span class="sig-paren">(</span><em>terminal=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.edge_length_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.edge_length_sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the sum of all selected edge lengths in this Tree</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>leaves (bool): <cite>True</cite> to include edges incident to leaves, otherwise <cite>False</cite>
-internal (bool): <cite>True</cite> to include edges incident to internal nodes, otherwise <cite>False</cite></dd>
+<dd>terminal (bool): <cite>True</cite> to include terminal branches, otherwise <cite>False</cite>
+internal (bool): <cite>True</cite> to include internal branches, otherwise <cite>False</cite></dd>
 <dt>Returns:</dt>
 <dd>float: Sum of all selected edge lengths in this Tree</dd>
 </dl>
@@ -326,7 +326,7 @@ internal (bool): <cite>True</cite> to include edges incident to internal nodes, 
 
 <dl class="method">
 <dt id="treeswift.Tree.label_to_node">
-<code class="descname">label_to_node</code><span class="sig-paren">(</span><em>selection='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.label_to_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.label_to_node" title="Permalink to this definition">¶</a></dt>
+<code class="descname">label_to_node</code><span class="sig-paren">(</span><em>selection='leaves'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.label_to_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.label_to_node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dictionary mapping labels (strings) to Node objects. If <cite>selection</cite> is <cite>“all”</cite>, the dictionary will contain all nodes. If <cite>selection</cite> is <cite>“leaves”</cite>, the dictionary will only contain leaves. If <cite>selection</cite> is <cite>“internal”</cite>, the dictionary will only contain internal nodes. If <cite>selection</cite> is a <cite>set</cite>, the dictionary will contain all nodes labeled by a label in <cite>selection</cite>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
 <dl class="docutils">
 <dt>Args:</dt>
