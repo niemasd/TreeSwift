@@ -28,4 +28,4 @@ for node in tree.traverse_postorder():
     print(node)
 ```
 
-Full documentation can be found at [https://niemasd.github.io/TreeSwift/](https://niemasd.github.io/TreeSwift/).
+Full documentation can be found at [https://niemasd.github.io/TreeSwift/](https://niemasd.github.io/TreeSwift/), and more examples can be found in the [TreeSwift Wiki](https://github.com/niemasd/TreeSwift/wiki).
