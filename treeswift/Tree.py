@@ -308,7 +308,7 @@ class Tree:
         '''
         return max(d[1] for d in self.distances_from_root())
 
-    def label_to_node(self, selection='all'):
+    def label_to_node(self, selection='leaves'):
         '''Return a dictionary mapping labels (strings) to Node objects. If `selection` is `"all"`, the dictionary will contain all nodes. If `selection` is `"leaves"`, the dictionary will only contain leaves. If `selection` is `"internal"`, the dictionary will only contain internal nodes. If `selection` is a `set`, the dictionary will contain all nodes labeled by a label in `selection`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
 
         Args:
