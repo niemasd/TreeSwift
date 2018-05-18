@@ -40,9 +40,9 @@ def test_distance_matrix(t):
     m = t.distance_matrix()
 def test_edge_length_sum(t):
     o = t.edge_length_sum()
-    o = t.edge_length_sum(leaves=False)
+    o = t.edge_length_sum(terminal=False)
     o = t.edge_length_sum(internal=False)
-    o = t.edge_length_sum(leaves=False, internal=False)
+    o = t.edge_length_sum(terminal=False, internal=False)
 def test_extract_tree_with(t):
     o = t.extract_tree_with(sample([str(l) for l in t.traverse_leaves()],10))
 def test_extract_tree_without(t):
