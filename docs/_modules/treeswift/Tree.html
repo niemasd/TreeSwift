@@ -390,6 +390,31 @@
                     <span class="k">return</span> <span class="n">a</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;There somehow does not exist an MRCA for the given labels&quot;</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Tree.mrca_matrix"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.mrca_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">mrca_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return a dictionary storing all pairwise MRCAs. M[u][v] = MRCA of nodes u and v. Excludes M[u][u] because MRCA of node and itself is itself.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: M[u][v] = MRCA of nodes u and v</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">leaves_below</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
+            <span class="n">leaves_below</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                <span class="n">leaves_below</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">);</span> <span class="n">M</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">children</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">l1</span> <span class="ow">in</span> <span class="n">leaves_below</span><span class="p">[</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]]:</span>
+                        <span class="n">leaves_below</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)):</span>
+                            <span class="k">for</span> <span class="n">l2</span> <span class="ow">in</span> <span class="n">leaves_below</span><span class="p">[</span><span class="n">children</span><span class="p">[</span><span class="n">j</span><span class="p">]]:</span>
+                                <span class="n">M</span><span class="p">[</span><span class="n">l1</span><span class="p">][</span><span class="n">l2</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span> <span class="n">M</span><span class="p">[</span><span class="n">l2</span><span class="p">][</span><span class="n">l1</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">l2</span> <span class="ow">in</span> <span class="n">leaves_below</span><span class="p">[</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]:</span>
+                        <span class="n">leaves_below</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">M</span></div>
+
 <div class="viewcode-block" id="Tree.newick"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.newick">[docs]</a>    <span class="k">def</span> <span class="nf">newick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Output this Tree as a Newick string</span>
 
