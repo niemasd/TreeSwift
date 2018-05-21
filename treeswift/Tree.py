@@ -351,6 +351,31 @@ class Tree:
                     return a
         raise RuntimeError("There somehow does not exist an MRCA for the given labels")
 
+    def mrca_matrix(self):
+        '''Return a dictionary storing all pairwise MRCAs. M[u][v] = MRCA of nodes u and v. Excludes M[u][u] because MRCA of node and itself is itself.
+
+        Returns:
+            dict: M[u][v] = MRCA of nodes u and v
+        '''
+        M = dict()
+        leaves_below = dict()
+        for node in self.traverse_postorder():
+            leaves_below[node] = list()
+            if node.is_leaf():
+                leaves_below[node].append(node); M[node] = dict()
+            else:
+                children = list(node.children)
+                for i in range(len(children)-1):
+                    for l1 in leaves_below[children[i]]:
+                        leaves_below[node].append(l1)
+                        for j in range(i+1, len(children)):
+                            for l2 in leaves_below[children[j]]:
+                                M[l1][l2] = node; M[l2][l1] = node
+                if len(children) != 1:
+                    for l2 in leaves_below[children[-1]]:
+                        leaves_below[node].append(l2)
+        return M
+
     def newick(self):
         '''Output this Tree as a Newick string
 

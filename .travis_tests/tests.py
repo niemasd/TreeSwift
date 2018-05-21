@@ -58,6 +58,8 @@ def test_label_to_node(t):
         pass
 def test_mrca(t):
     o = t.mrca(sample([str(l) for l in t.traverse_leaves()],10))
+def test_mrca_matrix(t):
+    m = t.mrca_matrix()
 def test_newick(t):
     s = t.newick(); s = str(t)
 def test_num_lineages_at(t):
