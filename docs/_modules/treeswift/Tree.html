@@ -48,7 +48,7 @@
     <span class="kn">from</span> <span class="nn">Queue</span> <span class="k">import</span> <span class="n">Queue</span><span class="p">,</span><span class="n">PriorityQueue</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
 
-<div class="viewcode-block" id="Tree"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree">[docs]</a><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
+<div class="viewcode-block" id="Tree"><a class="viewcode-back" href="../../index.html#treeswift.Tree">[docs]</a><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Tree class&#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Tree constructor&#39;&#39;&#39;</span>
@@ -71,7 +71,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_tree</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Tree.avg_branch_length"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.avg_branch_length">[docs]</a>    <span class="k">def</span> <span class="nf">avg_branch_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.avg_branch_length"><a class="viewcode-back" href="../../index.html#treeswift.Tree.avg_branch_length">[docs]</a>    <span class="k">def</span> <span class="nf">avg_branch_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the average length of the selected branches of this Tree. Edges with length None will be treated as 0-length</span>
 
 <span class="sd">        Args:</span>
@@ -89,7 +89,7 @@
                 <span class="n">tot</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">;</span> <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">tot</span><span class="o">/</span><span class="n">num</span></div>
 
-<div class="viewcode-block" id="Tree.branch_lengths"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.branch_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">branch_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.branch_lengths"><a class="viewcode-back" href="../../index.html#treeswift.Tree.branch_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">branch_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Generator over the lengths of the selected branches of this Tree. Edges with length None will be output as 0-length</span>
 
 <span class="sd">        Args:</span>
@@ -103,7 +103,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span></div>
 
-<div class="viewcode-block" id="Tree.closest_leaf_to_root"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.closest_leaf_to_root">[docs]</a>    <span class="k">def</span> <span class="nf">closest_leaf_to_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.closest_leaf_to_root"><a class="viewcode-back" href="../../index.html#treeswift.Tree.closest_leaf_to_root">[docs]</a>    <span class="k">def</span> <span class="nf">closest_leaf_to_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0</span>
 
 <span class="sd">        Returns:</span>
@@ -118,7 +118,7 @@
                 <span class="n">best</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">best</span></div>
 
-<div class="viewcode-block" id="Tree.coalescence_times"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.coalescence_times">[docs]</a>    <span class="k">def</span> <span class="nf">coalescence_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backward</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.coalescence_times"><a class="viewcode-back" href="../../index.html#treeswift.Tree.coalescence_times">[docs]</a>    <span class="k">def</span> <span class="nf">coalescence_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backward</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Generator over the times of successive coalescence events</span>
 
 <span class="sd">        Args:</span>
@@ -135,7 +135,7 @@
         <span class="k">while</span> <span class="ow">not</span> <span class="n">pq</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">mult</span><span class="o">*</span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Tree.coalescence_waiting_times"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.coalescence_waiting_times">[docs]</a>    <span class="k">def</span> <span class="nf">coalescence_waiting_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backward</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.coalescence_waiting_times"><a class="viewcode-back" href="../../index.html#treeswift.Tree.coalescence_waiting_times">[docs]</a>    <span class="k">def</span> <span class="nf">coalescence_waiting_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backward</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Generator over the waiting times of successive coalescence events</span>
 
 <span class="sd">        Args:</span>
@@ -155,7 +155,7 @@
         <span class="k">while</span> <span class="ow">not</span> <span class="n">pq</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
             <span class="nb">next</span> <span class="o">=</span> <span class="n">mult</span><span class="o">*</span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">();</span> <span class="k">yield</span> <span class="nb">abs</span><span class="p">(</span><span class="n">curr</span><span class="o">-</span><span class="nb">next</span><span class="p">);</span> <span class="n">curr</span> <span class="o">=</span> <span class="nb">next</span></div>
 
-<div class="viewcode-block" id="Tree.collapse_short_branches"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.collapse_short_branches">[docs]</a>    <span class="k">def</span> <span class="nf">collapse_short_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.collapse_short_branches"><a class="viewcode-back" href="../../index.html#treeswift.Tree.collapse_short_branches">[docs]</a>    <span class="k">def</span> <span class="nf">collapse_short_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Collapse internal branches (not terminal branches) with length less than or equal to `threshold`. A branch length of `None` is considered 0</span>
 
 <span class="sd">        Args:</span>
@@ -178,7 +178,7 @@
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.diameter"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.diameter">[docs]</a>    <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.diameter"><a class="viewcode-back" href="../../index.html#treeswift.Tree.diameter">[docs]</a>    <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the diameter (maximum leaf pairwise distance) of this Tree</span>
 
 <span class="sd">        Returns:</span>
@@ -195,7 +195,7 @@
                     <span class="n">best</span> <span class="o">=</span> <span class="n">max_pair</span>
         <span class="k">return</span> <span class="n">best</span></div>
 
-<div class="viewcode-block" id="Tree.distance_matrix"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.distance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.distance_matrix"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return a distance matrix (2D dictionary) of the leaves of this Tree</span>
 
 <span class="sd">        Returns:</span>
@@ -229,7 +229,7 @@
                     <span class="n">leaf_dists</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="n">leaf_dists</span><span class="p">[</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span> <span class="k">del</span> <span class="n">leaf_dists</span><span class="p">[</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
         <span class="k">return</span> <span class="n">M</span></div>
 
-<div class="viewcode-block" id="Tree.distances_from_root"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.distances_from_root">[docs]</a>    <span class="k">def</span> <span class="nf">distances_from_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.distances_from_root"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distances_from_root">[docs]</a>    <span class="k">def</span> <span class="nf">distances_from_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Generator over the root-to-node distances of this Tree; (node,distance) tuples&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">leaves</span> <span class="ow">or</span> <span class="n">internal</span><span class="p">:</span>
             <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -243,7 +243,7 @@
                 <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()</span> <span class="ow">and</span> <span class="n">leaves</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()</span> <span class="ow">and</span> <span class="n">internal</span><span class="p">):</span>
                     <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Tree.edge_length_sum"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.edge_length_sum">[docs]</a>    <span class="k">def</span> <span class="nf">edge_length_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.edge_length_sum"><a class="viewcode-back" href="../../index.html#treeswift.Tree.edge_length_sum">[docs]</a>    <span class="k">def</span> <span class="nf">edge_length_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the sum of all selected edge lengths in this Tree</span>
 
 <span class="sd">        Args:</span>
@@ -255,7 +255,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">()</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">((</span><span class="n">terminal</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">internal</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())))</span></div>
 
-<div class="viewcode-block" id="Tree.extract_tree"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.extract_tree">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">without</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.extract_tree"><a class="viewcode-back" href="../../index.html#treeswift.Tree.extract_tree">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">without</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Helper function for extract_tree_* functions&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
             <span class="n">labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
@@ -280,7 +280,7 @@
             <span class="n">out</span><span class="o">.</span><span class="n">suppress_unifurcations</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">out</span></div>
 
-<div class="viewcode-block" id="Tree.extract_tree_without"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.extract_tree_without">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree_without</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.extract_tree_without"><a class="viewcode-back" href="../../index.html#treeswift.Tree.extract_tree_without">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree_without</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Extract a copy of this Tree without the leaves labeled by the strings in `labels`</span>
 
 <span class="sd">        Args:</span>
@@ -291,7 +291,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_tree</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.extract_tree_with"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.extract_tree_with">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.extract_tree_with"><a class="viewcode-back" href="../../index.html#treeswift.Tree.extract_tree_with">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Extract a copy of this Tree with only the leaves labeled by the strings in `labels`</span>
 
 <span class="sd">        Args:</span>
@@ -302,7 +302,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_tree</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.furthest_from_root"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.furthest_from_root">[docs]</a>    <span class="k">def</span> <span class="nf">furthest_from_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.furthest_from_root"><a class="viewcode-back" href="../../index.html#treeswift.Tree.furthest_from_root">[docs]</a>    <span class="k">def</span> <span class="nf">furthest_from_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return the Node that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0</span>
 
 <span class="sd">        Returns:</span>
@@ -317,7 +317,7 @@
                 <span class="n">best</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">best</span></div>
 
-<div class="viewcode-block" id="Tree.gamma_statistic"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.gamma_statistic">[docs]</a>    <span class="k">def</span> <span class="nf">gamma_statistic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.gamma_statistic"><a class="viewcode-back" href="../../index.html#treeswift.Tree.gamma_statistic">[docs]</a>    <span class="k">def</span> <span class="nf">gamma_statistic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the Gamma statistic of Pybus and Harvey (2000)</span>
 
 <span class="sd">        Returns:</span>
@@ -339,7 +339,7 @@
         <span class="n">out</span> <span class="o">/=</span> <span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span><span class="o">**</span><span class="mf">0.5</span>
         <span class="k">return</span> <span class="n">out</span></div>
 
-<div class="viewcode-block" id="Tree.height"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.height">[docs]</a>    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.height"><a class="viewcode-back" href="../../index.html#treeswift.Tree.height">[docs]</a>    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the height (i.e., maximum distance from root) of this tree</span>
 
 <span class="sd">        Returns:</span>
@@ -347,7 +347,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances_from_root</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="Tree.label_to_node"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.label_to_node">[docs]</a>    <span class="k">def</span> <span class="nf">label_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.label_to_node"><a class="viewcode-back" href="../../index.html#treeswift.Tree.label_to_node">[docs]</a>    <span class="k">def</span> <span class="nf">label_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return a dictionary mapping labels (strings) to Node objects. If `selection` is `&quot;all&quot;`, the dictionary will contain all nodes. If `selection` is `&quot;leaves&quot;`, the dictionary will only contain leaves. If `selection` is `&quot;internal&quot;`, the dictionary will only contain internal nodes. If `selection` is a `set`, the dictionary will contain all nodes labeled by a label in `selection`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
 
 <span class="sd">        Args:</span>
@@ -370,7 +370,7 @@
             <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Not all given labels exist in the tree&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">label_to_node</span></div>
 
-<div class="viewcode-block" id="Tree.mrca"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.mrca">[docs]</a>    <span class="k">def</span> <span class="nf">mrca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.mrca"><a class="viewcode-back" href="../../index.html#treeswift.Tree.mrca">[docs]</a>    <span class="k">def</span> <span class="nf">mrca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return the Node that is the MRCA of the nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
 
 <span class="sd">        Args:</span>
@@ -390,7 +390,7 @@
                     <span class="k">return</span> <span class="n">a</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;There somehow does not exist an MRCA for the given labels&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.mrca_matrix"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.mrca_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">mrca_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.mrca_matrix"><a class="viewcode-back" href="../../index.html#treeswift.Tree.mrca_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">mrca_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return a dictionary storing all pairwise MRCAs. M[u][v] = MRCA of nodes u and v. Excludes M[u][u] because MRCA of node and itself is itself.</span>
 
 <span class="sd">        Returns:</span>
@@ -415,7 +415,7 @@
                         <span class="n">leaves_below</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">M</span></div>
 
-<div class="viewcode-block" id="Tree.newick"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.newick">[docs]</a>    <span class="k">def</span> <span class="nf">newick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.newick"><a class="viewcode-back" href="../../index.html#treeswift.Tree.newick">[docs]</a>    <span class="k">def</span> <span class="nf">newick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Output this Tree as a Newick string</span>
 
 <span class="sd">        Returns:</span>
@@ -426,7 +426,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%f</span><span class="s1">;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">newick</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.num_lineages_at"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.num_lineages_at">[docs]</a>    <span class="k">def</span> <span class="nf">num_lineages_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.num_lineages_at"><a class="viewcode-back" href="../../index.html#treeswift.Tree.num_lineages_at">[docs]</a>    <span class="k">def</span> <span class="nf">num_lineages_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns the number of lineages of this Tree that exist `distance` away from the root</span>
 
 <span class="sd">        Args:</span>
@@ -453,7 +453,7 @@
                 <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">count</span></div>
 
-<div class="viewcode-block" id="Tree.num_nodes"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.num_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">num_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.num_nodes"><a class="viewcode-back" href="../../index.html#treeswift.Tree.num_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">num_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the total number of selected nodes in this Tree</span>
 
 <span class="sd">        Args:</span>
@@ -469,7 +469,7 @@
                 <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">num</span></div>
 
-<div class="viewcode-block" id="Tree.resolve_polytomies"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.resolve_polytomies">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_polytomies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.resolve_polytomies"><a class="viewcode-back" href="../../index.html#treeswift.Tree.resolve_polytomies">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_polytomies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Arbitrarily resolve polytomies with 0-lengthed edges.&#39;&#39;&#39;</span>
         <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
@@ -481,7 +481,7 @@
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.sackin"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.sackin">[docs]</a>    <span class="k">def</span> <span class="nf">sackin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.sackin"><a class="viewcode-back" href="../../index.html#treeswift.Tree.sackin">[docs]</a>    <span class="k">def</span> <span class="nf">sackin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the Sackin index of this Tree</span>
 
 <span class="sd">        Args:</span>
@@ -510,7 +510,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;normalize must be None, &#39;leaves&#39;, &#39;yule&#39;, or &#39;pda&#39;&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.scale_edges"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.scale_edges">[docs]</a>    <span class="k">def</span> <span class="nf">scale_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.scale_edges"><a class="viewcode-back" href="../../index.html#treeswift.Tree.scale_edges">[docs]</a>    <span class="k">def</span> <span class="nf">scale_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Multiply all edges in this Tree by `multiplier`&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;multiplier must be an int or float&quot;</span><span class="p">)</span>
@@ -518,7 +518,7 @@
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">*=</span> <span class="n">multiplier</span></div>
 
-<div class="viewcode-block" id="Tree.suppress_unifurcations"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.suppress_unifurcations">[docs]</a>    <span class="k">def</span> <span class="nf">suppress_unifurcations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.suppress_unifurcations"><a class="viewcode-back" href="../../index.html#treeswift.Tree.suppress_unifurcations">[docs]</a>    <span class="k">def</span> <span class="nf">suppress_unifurcations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Remove all nodes with only one child and directly attach child to parent&#39;&#39;&#39;</span>
         <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
@@ -538,37 +538,37 @@
                 <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
             <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.traverse_inorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.traverse_inorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.traverse_inorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_inorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform an inorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_inorder</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
-<div class="viewcode-block" id="Tree.traverse_internal"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.traverse_internal">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.traverse_internal"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_internal">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Traverse over the internal nodes of this Tree&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_internal</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
-<div class="viewcode-block" id="Tree.traverse_leaves"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.traverse_leaves">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.traverse_leaves"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_leaves">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Traverse over the leaves of this Tree&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_leaves</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
-<div class="viewcode-block" id="Tree.traverse_levelorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.traverse_levelorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_levelorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.traverse_levelorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_levelorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_levelorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform a levelorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_levelorder</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
-<div class="viewcode-block" id="Tree.traverse_postorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.traverse_postorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_postorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.traverse_postorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_postorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_postorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform a postorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
-<div class="viewcode-block" id="Tree.traverse_preorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.traverse_preorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_preorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.traverse_preorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_preorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_preorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform a preorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
-<div class="viewcode-block" id="Tree.traverse_rootdistorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.traverse_rootdistorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_rootdistorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.traverse_rootdistorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_rootdistorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_rootdistorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform a traversal of the Node objects in this Tree in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from the root&#39;&#39;&#39;</span>
         <span class="n">pq</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">();</span> <span class="n">dist_from_root</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
@@ -588,7 +588,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="p">(</span><span class="o">-</span><span class="n">priority</span><span class="p">,</span><span class="n">node</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.treeness"><a class="viewcode-back" href="../../treeswift.html#treeswift.Tree.treeness">[docs]</a>    <span class="k">def</span> <span class="nf">treeness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.treeness"><a class="viewcode-back" href="../../index.html#treeswift.Tree.treeness">[docs]</a>    <span class="k">def</span> <span class="nf">treeness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the &quot;treeness&quot; (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length</span>
 
 <span class="sd">        Returns:</span>
@@ -602,7 +602,7 @@
                     <span class="n">internal</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
         <span class="k">return</span> <span class="n">internal</span><span class="o">/</span><span class="nb">all</span></div></div>
 
-<div class="viewcode-block" id="read_tree_newick"><a class="viewcode-back" href="../../treeswift.html#treeswift.read_tree_newick">[docs]</a><span class="k">def</span> <span class="nf">read_tree_newick</span><span class="p">(</span><span class="n">tree_string</span><span class="p">):</span>
+<div class="viewcode-block" id="read_tree_newick"><a class="viewcode-back" href="../../index.html#treeswift.read_tree_newick">[docs]</a><span class="k">def</span> <span class="nf">read_tree_newick</span><span class="p">(</span><span class="n">tree_string</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Read a tree from a Newick string</span>
 
 <span class="sd">    Args:</span>

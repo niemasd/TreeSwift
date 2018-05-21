@@ -1,13 +1,12 @@
-.. TreeSwift documentation master file, created by
-   sphinx-quickstart on Sun May 13 20:49:38 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+treeswift package
+=================
 
-Welcome to TreeSwift's documentation!
-=====================================
+`TreeSwift <https://github.com/niemasd/TreeSwift>`_ is a Python library for parsing, manipulating, and iterating over (rooted) tree structures. TreeSwift places an emphasis on speed.
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+Module contents
+---------------
 
-   treeswift
+.. automodule:: treeswift
+    :members:
+    :undoc-members:
+    :show-inheritance:

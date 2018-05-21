@@ -46,7 +46,7 @@
 <span class="n">INORDER_NONBINARY</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t do inorder traversal on non-binary tree&quot;</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
 
-<div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node">[docs]</a><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+<div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node">[docs]</a><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Node class&#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Node constructor</span>
@@ -92,7 +92,7 @@
         <span class="n">out</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
         <span class="k">return</span> <span class="n">out</span>
 
-<div class="viewcode-block" id="Node.add_child"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.add_child">[docs]</a>    <span class="k">def</span> <span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.add_child"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.add_child">[docs]</a>    <span class="k">def</span> <span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Add child to Node object</span>
 
 <span class="sd">        Args:</span>
@@ -102,7 +102,7 @@
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Attempting to add existing child&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">child</span><span class="p">);</span> <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Node.child_nodes"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.child_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">child_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.child_nodes"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.child_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">child_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return a `set` containing this Node object&#39;s children</span>
 
 <span class="sd">        Returns:</span>
@@ -110,7 +110,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Node.is_leaf"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.is_leaf">[docs]</a>    <span class="k">def</span> <span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.is_leaf"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.is_leaf">[docs]</a>    <span class="k">def</span> <span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns True if this is a leaf</span>
 
 <span class="sd">        Returns:</span>
@@ -118,7 +118,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="Node.is_root"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.is_root">[docs]</a>    <span class="k">def</span> <span class="nf">is_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.is_root"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.is_root">[docs]</a>    <span class="k">def</span> <span class="nf">is_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns True if this is the root</span>
 
 <span class="sd">        Returns:</span>
@@ -126,7 +126,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Node.newick"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.newick">[docs]</a>    <span class="k">def</span> <span class="nf">newick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.newick"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.newick">[docs]</a>    <span class="k">def</span> <span class="nf">newick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Recursive Newick string conversion starting at this Node object</span>
 
 <span class="sd">        Returns:</span>
@@ -150,7 +150,7 @@
                 <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
             <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Node.remove_child"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.remove_child">[docs]</a>    <span class="k">def</span> <span class="nf">remove_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.remove_child"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.remove_child">[docs]</a>    <span class="k">def</span> <span class="nf">remove_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Remove child from Node object</span>
 
 <span class="sd">        Args:</span>
@@ -160,7 +160,7 @@
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Attempting to remove non-existent child&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">);</span> <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Node.traverse_ancestors"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.traverse_ancestors">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_ancestors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_self</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.traverse_ancestors"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.traverse_ancestors">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_ancestors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_self</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Traverse over the ancestors of this Node</span>
 
 <span class="sd">        Args:</span>
@@ -170,7 +170,7 @@
         <span class="k">while</span> <span class="n">curr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">curr</span><span class="p">;</span> <span class="n">curr</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">parent</span></div>
 
-<div class="viewcode-block" id="Node.traverse_inorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.traverse_inorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.traverse_inorder"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.traverse_inorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform an inorder traversal starting at this Node object&#39;&#39;&#39;</span>
         <span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
@@ -183,17 +183,17 @@
             <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">traverse_inorder</span><span class="p">():</span>
                 <span class="k">yield</span> <span class="n">y</span></div>
 
-<div class="viewcode-block" id="Node.traverse_internal"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.traverse_internal">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.traverse_internal"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.traverse_internal">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Traverse over the internal nodes below (and including) this Node object&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_levelorder</span><span class="p">(</span><span class="n">leaves</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">n</span></div>
 
-<div class="viewcode-block" id="Node.traverse_leaves"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.traverse_leaves">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.traverse_leaves"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.traverse_leaves">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Traverse over the leaves below this Node object&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_levelorder</span><span class="p">(</span><span class="n">internal</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">n</span></div>
 
-<div class="viewcode-block" id="Node.traverse_levelorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.traverse_levelorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_levelorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.traverse_levelorder"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.traverse_levelorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_levelorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform a levelorder traversal starting at this Node object&#39;&#39;&#39;</span>
         <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
@@ -206,14 +206,14 @@
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">n</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Node.traverse_postorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.traverse_postorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_postorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.traverse_postorder"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.traverse_postorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_postorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform a postorder traversal starting at this Node object&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
                 <span class="k">yield</span> <span class="n">n</span>
         <span class="k">yield</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Node.traverse_preorder"><a class="viewcode-back" href="../../treeswift.html#treeswift.Node.Node.traverse_preorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_preorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Node.traverse_preorder"><a class="viewcode-back" href="../../index.html#treeswift.Node.Node.traverse_preorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_preorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform a preorder traversal starting at this Node object&#39;&#39;&#39;</span>
         <span class="k">yield</span> <span class="bp">self</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
