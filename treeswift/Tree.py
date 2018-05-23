@@ -167,15 +167,14 @@ class Tree:
             if node.is_leaf():
                 leaf_dists[node] = [[node,0]]
             else:
-                children = list(node.children)
-                for c in children:
+                for c in node.children:
                     if c.edge_length is not None:
                         for i in range(len(leaf_dists[c])):
                             leaf_dists[c][i][1] += c.edge_length
-                for c1 in range(0,len(children)-1):
-                    leaves_c1 = leaf_dists[children[c1]]
-                    for c2 in range(c1+1,len(children)):
-                        leaves_c2 = leaf_dists[children[c2]]
+                for c1 in range(0,len(node.children)-1):
+                    leaves_c1 = leaf_dists[node.children[c1]]
+                    for c2 in range(c1+1,len(node.children)):
+                        leaves_c2 = leaf_dists[node.children[c2]]
                         for i in range(len(leaves_c1)):
                             for j in range(len(leaves_c2)):
                                 u,ud = leaves_c1[i]; v,vd = leaves_c2[j]; d = ud+vd
@@ -185,9 +184,9 @@ class Tree:
                                 if v not in M:
                                     M[v] = dict()
                                 M[v][u] = d
-                leaf_dists[node] = leaf_dists[children[0]]; del leaf_dists[children[0]]
-                for i in range(1,len(children)):
-                    leaf_dists[node] += leaf_dists[children[i]]; del leaf_dists[children[i]]
+                leaf_dists[node] = leaf_dists[node.children[0]]; del leaf_dists[node.children[0]]
+                for i in range(1,len(node.children)):
+                    leaf_dists[node] += leaf_dists[node.children[i]]; del leaf_dists[node.children[i]]
         return M
 
     def distances_from_root(self, leaves=True, internal=True):
@@ -364,15 +363,14 @@ class Tree:
             if node.is_leaf():
                 leaves_below[node].append(node); M[node] = dict()
             else:
-                children = list(node.children)
-                for i in range(len(children)-1):
-                    for l1 in leaves_below[children[i]]:
+                for i in range(len(node.children)-1):
+                    for l1 in leaves_below[node.children[i]]:
                         leaves_below[node].append(l1)
-                        for j in range(i+1, len(children)):
-                            for l2 in leaves_below[children[j]]:
+                        for j in range(i+1, len(node.children)):
+                            for l2 in leaves_below[node.children[j]]:
                                 M[l1][l2] = node; M[l2][l1] = node
-                if len(children) != 1:
-                    for l2 in leaves_below[children[-1]]:
+                if len(node.children) != 1:
+                    for l2 in leaves_below[node.children[-1]]:
                         leaves_below[node].append(l2)
         return M
 

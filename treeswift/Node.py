@@ -19,7 +19,7 @@ class Node:
         Returns:
             Node object
         '''
-        self.children = set()          # set of child Node objects
+        self.children = list()         # list of child Node objects
         self.parent = None             # parent Node object (None for root)
         self.label = label             # label
         self.edge_length = edge_length # length of incident edge
@@ -59,15 +59,13 @@ class Node:
         Args:
             child (Node): The child Node to be added
         '''
-        if child in self.children:
-            raise RuntimeError("Attempting to add existing child")
-        self.children.add(child); child.parent = self
+        self.children.append(child); child.parent = self
 
     def child_nodes(self):
-        '''Return a `set` containing this Node object's children
+        '''Return a `list` containing this Node object's children
 
         Returns:
-            set: A `set` containing this Node object's children
+            set: A `list` containing this Node object's children
         '''
         return copy(self.children)
 
@@ -117,9 +115,10 @@ class Node:
         Args:
             child (Node): The child to remove
         '''
-        if child not in self.children:
+        try:
+            self.children.remove(child); child.parent = None
+        except:
             raise RuntimeError("Attempting to remove non-existent child")
-        self.children.remove(child); child.parent = None
 
     def traverse_ancestors(self, include_self=True):
         '''Traverse over the ancestors of this Node
@@ -133,15 +132,14 @@ class Node:
 
     def traverse_inorder(self):
         '''Perform an inorder traversal starting at this Node object'''
-        c = list(self.children)
-        if len(c) != 0 and len(c) != 2:
+        if len(self.children) != 0 and len(self.children) != 2:
             raise RuntimeError(INORDER_NONBINARY)
-        if len(c) != 0:
-            for y in c[0].traverse_inorder():
+        if len(self.children) != 0:
+            for y in self.children[0].traverse_inorder():
                 yield y
         yield self
-        if len(c) != 0:
-            for y in c[1].traverse_inorder():
+        if len(self.children) != 0:
+            for y in self.children[1].traverse_inorder():
                 yield y
 
     def traverse_internal(self):
