@@ -586,6 +586,8 @@ def read_tree_newick(newick):
         lines = ts.splitlines()
         if len(lines) != 1:
             return [read_tree_newick(l) for l in lines]
+    if ts[0] == '[':
+        ts = ']'.join(ts.split(']')[1:]).strip()
     t = Tree(); n = t.root; i = 0
     while i < len(ts):
         if ts[i] == ';':
@@ -609,3 +611,30 @@ def read_tree_newick(newick):
             i -= 1; n.label = label
         i += 1
     return t
+
+def read_tree_nexus(nexus):
+    '''Read a tree from a Nexus string or file
+
+    Args:
+        nexus (str): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)
+
+    Returns:
+        dict of Tree: A dictionary of the trees represented by `nexus`, where keys are tree names (`str`) and values are `Tree` objects
+    '''
+    if nexus.lower().endswith('.gz'): # gzipped file
+        f = gopen(nexus)
+    elif isfile(nexus): # plain-text file
+        f = open(nexus)
+    else:
+        f = nexus.splitlines()
+    trees = dict()
+    for line in f:
+        if isinstance(line,bytes):
+            l = line.decode().strip()
+        else:
+            l = line.strip()
+        if l.lower().startswith('tree '):
+            i = l.index('='); left = l[:i].strip(); right = l[i+1:].strip()
+            name = ' '.join(left.split(' ')[1:])
+            trees[name] = read_tree_newick(right)
+    return trees

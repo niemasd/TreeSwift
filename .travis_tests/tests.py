@@ -3,11 +3,14 @@ from copy import copy
 from gzip import open as gopen
 from os.path import dirname,realpath
 from random import sample
-from treeswift import read_tree_newick
+from treeswift import read_tree_newick,read_tree_nexus
 PATH = dirname(realpath(__file__))
-TREE_FILE = '%s/test.tre'%PATH
-TREE_GZIP = '%s/test.tre.gz'%PATH
-TREE_STR = open(TREE_FILE).read().strip()
+NEWICK_FILE = '%s/test.tre'%PATH
+NEWICK_GZIP = '%s/test.tre.gz'%PATH
+NEWICK_STR = open(NEWICK_FILE).read().strip()
+NEXUS_FILE = '%s/test.nex'%PATH
+NEXUS_GZIP = '%s/test.nex.gz'%PATH
+NEXUS_STR = open(NEXUS_FILE).read().strip()
 
 # tests
 def test_avg_branch_length(t):
@@ -110,9 +113,9 @@ def test_treeness(t):
 # run tests
 if __name__ == "__main__":
     tests = [v for k,v in locals().items() if callable(v) and v.__module__ == __name__]
-    t_file = read_tree_newick(TREE_FILE)
-    t_gzip = read_tree_newick(TREE_GZIP)
-    t_str = read_tree_newick(TREE_STR)
-    for t in [t_file, t_gzip, t_str]:
+    trees = [read_tree_newick(NEWICK_FILE), read_tree_newick(NEWICK_GZIP), read_tree_newick(NEWICK_STR)]
+    for nex in [NEXUS_FILE, NEXUS_GZIP, NEXUS_STR]:
+        trees += read_tree_nexus(nex).values()
+    for t in trees:
         for test in tests:
             test(t)
