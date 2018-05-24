@@ -41,6 +41,7 @@
 <span class="kn">from</span> <span class="nn">treeswift.Node</span> <span class="k">import</span> <span class="n">Node</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">gzip</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">isfile</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
 <span class="k">try</span><span class="p">:</span>                <span class="c1"># Python 3</span>
     <span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span><span class="p">,</span><span class="n">PriorityQueue</span>
@@ -600,17 +601,22 @@
                     <span class="n">internal</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
         <span class="k">return</span> <span class="n">internal</span><span class="o">/</span><span class="nb">all</span></div></div>
 
-<div class="viewcode-block" id="read_tree_newick"><a class="viewcode-back" href="../../index.html#treeswift.read_tree_newick">[docs]</a><span class="k">def</span> <span class="nf">read_tree_newick</span><span class="p">(</span><span class="n">tree_string</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Read a tree from a Newick string</span>
+<div class="viewcode-block" id="read_tree_newick"><a class="viewcode-back" href="../../index.html#treeswift.read_tree_newick">[docs]</a><span class="k">def</span> <span class="nf">read_tree_newick</span><span class="p">(</span><span class="n">newick</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Read a tree from a Newick string or file</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        tree_string (str): Newick string</span>
+<span class="sd">        newick (str): Either a Newick string or the path to a Newick file (plain-text or gzipped)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Tree: The tree represented by `tree_string`</span>
+<span class="sd">        Tree: The tree represented by `newick`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">ts</span> <span class="o">=</span> <span class="n">tree_string</span><span class="o">.</span><span class="n">strip</span><span class="p">();</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">();</span> <span class="n">n</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">root</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">newick</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span> <span class="c1"># gzipped file</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">gopen</span><span class="p">(</span><span class="n">newick</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">isfile</span><span class="p">(</span><span class="n">newick</span><span class="p">):</span> <span class="c1"># plain-text file</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">newick</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">newick</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">();</span> <span class="n">n</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">root</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;;&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">!=</span> <span class="n">t</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
