@@ -31,7 +31,7 @@ def test_coalescence_waiting_times(t):
     for l in t.coalescence_waiting_times(backward=False):
         pass
 def test_collapse_short_branches(t):
-    t.collapse_short_branches(float('inf'))
+    copy(t).collapse_short_branches(float('inf'))
 def test_copy(t):
     o = copy(t)
 def test_diameter(t):
@@ -74,15 +74,16 @@ def test_num_nodes(t):
     o = t.num_nodes(leaves=False)
     o = t.num_nodes(internal=False)
 def test_resolve_polytomies(t):
-    t.collapse_short_branches(float('inf'))
-    t.resolve_polytomies()
+    t2 = copy(t)
+    t2.collapse_short_branches(float('inf'))
+    t2.resolve_polytomies()
 def test_sackin(t):
     o = t.sackin()
     o = t.sackin(None)
     o = t.sackin('yule')
     o = t.sackin('pda')
 def test_scale_edges(t):
-    t.scale_edges(1.5)
+    copy(t).scale_edges(1.5)
 def test_traverse_inorder(t):
     for n in t.traverse_inorder():
         pass
