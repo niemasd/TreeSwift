@@ -4,7 +4,10 @@ from gzip import open as gopen
 from os.path import dirname,realpath
 from random import sample
 from treeswift import read_tree_newick
-TREESTR = gopen('%s/test.tre.gz'%dirname(realpath(__file__))).read().decode().strip()
+PATH = dirname(realpath(__file__))
+TREE_FILE = '%s/test.tre'%PATH
+TREE_GZIP = '%s/test.tre.gz'%PATH
+TREE_STR = open(TREE_FILE).read().strip()
 
 # tests
 def test_avg_branch_length(t):
@@ -106,5 +109,9 @@ def test_treeness(t):
 # run tests
 if __name__ == "__main__":
     tests = [v for k,v in locals().items() if callable(v) and v.__module__ == __name__]
-    for test in tests:
-        test(read_tree_newick(TREESTR))
+    t_file = read_tree_newick(TREE_FILE)
+    t_gzip = read_tree_newick(TREE_GZIP)
+    t_str = read_tree_newick(TREE_STR)
+    for t in [t_file, t_gzip, t_str]:
+        for test in tests:
+            test(t)

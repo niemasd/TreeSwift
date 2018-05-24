@@ -2,6 +2,7 @@
 from treeswift.Node import Node
 from copy import copy
 from gzip import open as gopen
+from os.path import isfile
 from warnings import warn
 try:                # Python 3
     from queue import Queue,PriorityQueue
@@ -561,17 +562,22 @@ class Tree:
                     internal += node.edge_length
         return internal/all
 
-def read_tree_newick(tree_string):
-    '''Read a tree from a Newick string
+def read_tree_newick(newick):
+    '''Read a tree from a Newick string or file
 
     Args:
-        tree_string (str): Newick string
+        newick (str): Either a Newick string or the path to a Newick file (plain-text or gzipped)
 
     Returns:
-        Tree: The tree represented by `tree_string`
+        Tree: The tree represented by `newick`
     '''
-    ts = tree_string.strip(); t = Tree(); n = t.root
-    i = 0
+    if newick.lower().endswith('.gz'): # gzipped file
+        ts = gopen(newick).read().decode().strip()
+    elif isfile(newick): # plain-text file
+        ts = open(newick).read().strip()
+    else:
+        ts = newick.strip()
+    t = Tree(); n = t.root; i = 0
     while i < len(ts):
         if ts[i] == ';':
             if i != len(ts)-1 or n != t.root:
