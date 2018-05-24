@@ -569,7 +569,7 @@ def read_tree_newick(newick):
         newick (str): Either a Newick string or the path to a Newick file (plain-text or gzipped)
 
     Returns:
-        Tree: The tree represented by `newick`
+        Tree: The tree represented by `newick`. If the Newick file has multiple trees (one per line), a list of `Tree` objects will be returned
     '''
     if newick.lower().endswith('.gz'): # gzipped file
         ts = gopen(newick).read().decode().strip()
