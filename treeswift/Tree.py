@@ -573,10 +573,19 @@ def read_tree_newick(newick):
     '''
     if newick.lower().endswith('.gz'): # gzipped file
         ts = gopen(newick).read().decode().strip()
+        lines = ts.splitlines()
+        if len(lines) != 1:
+            return [read_tree_newick(l) for l in lines]
     elif isfile(newick): # plain-text file
         ts = open(newick).read().strip()
+        lines = ts.splitlines()
+        if len(lines) != 1:
+            return [read_tree_newick(l) for l in lines]
     else:
         ts = newick.strip()
+        lines = ts.splitlines()
+        if len(lines) != 1:
+            return [read_tree_newick(l) for l in lines]
     t = Tree(); n = t.root; i = 0
     while i < len(ts):
         if ts[i] == ';':
