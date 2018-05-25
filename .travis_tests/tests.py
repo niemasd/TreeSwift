@@ -3,7 +3,7 @@ from copy import copy
 from gzip import open as gopen
 from os.path import dirname,realpath
 from random import sample
-from treeswift import read_tree_newick,read_tree_nexus
+from treeswift import read_tree_newick,read_tree_nexml,read_tree_nexus
 PATH = dirname(realpath(__file__))
 NEWICK_FILE = '%s/test.tre'%PATH
 NEWICK_GZIP = '%s/test.tre.gz'%PATH
@@ -123,4 +123,4 @@ if __name__ == "__main__":
         for test in tests:
             test(t)
     for nexml in [NEXML_FILE, NEXML_GZIP, NEXML_STR]:
-        read_tree_newick(nexml)
+        read_tree_nexml(nexml)
