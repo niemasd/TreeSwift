@@ -9,6 +9,7 @@ try:                # Python 3
 except ImportError: # Python 2
     from Queue import Queue,PriorityQueue
 INVALID_NEWICK = "Tree not valid Newick tree"
+INVALID_NEXML = "Invalid valid NeXML File"
 
 class Tree:
     '''Tree class'''
@@ -611,6 +612,119 @@ def read_tree_newick(newick):
             i -= 1; n.label = label
         i += 1
     return t
+
+def read_tree_nexml(nexml):
+    '''Read a tree from a NeXML string or file
+
+    Args:
+        nexml (str): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)
+
+    Returns:
+        dict of Tree: A dictionary of the trees represented by `nexml`, where keys are tree names (`str`) and values are `Tree` objects
+    '''
+    if nexml.lower().endswith('.gz'): # gzipped file
+        f = gopen(nexml)
+    elif isfile(nexml): # plain-text file
+        f = open(nexml)
+    else:
+        f = nexml.splitlines()
+    trees = dict(); id_to_node = dict(); tree_id = None
+    for line in f:
+        if isinstance(line,bytes):
+            l = line.decode().strip()
+        else:
+            l = line.strip()
+        l_lower = l.lower()
+        # start of tree
+        if l_lower.startswith('<tree '):
+            if tree_id is not None:
+                raise ValueError(INVALID_NEXML)
+            parts = l.split()
+            for part in parts:
+                if '=' in part:
+                    k,v = part.split('='); k = k.strip()
+                    if k.lower() == 'id':
+                        tree_id = v.split('"')[1]; break
+            if tree_id is None:
+                raise ValueError(INVALID_NEXML)
+            trees[tree_id] = Tree(); trees[tree_id].root = None
+        # end of tree
+        elif l_lower.replace(' ','').startswith('</tree>'):
+            if tree_id is None:
+                raise ValueError(INVALID_NEXML)
+            id_to_node = dict(); tree_id = None
+        # node
+        elif l_lower.startswith('<node '):
+            if tree_id is None:
+                raise ValueError(INVALID_NEXML)
+            node_id = None; node_label = None; is_root = False
+            k = ''; v = ''; in_key = True; in_quote = False
+            for i in range(6, len(l)):
+                if l[i] == '"' or l[i] == "'":
+                    in_quote = not in_quote
+                if not in_quote and in_key and l[i] == '=':
+                    in_key = False
+                elif not in_quote and not in_key and (l[i] == '"' or l[i] == "'"):
+                    k = k.strip()
+                    if k.lower() == 'id':
+                        node_id = v
+                    elif k.lower() == 'label':
+                        node_label = v
+                    elif k.lower() == 'root' and v.strip().lower() == 'true':
+                        is_root = True
+                    in_key = True; k = ''; v = ''
+                elif in_key and not (l[i] == '"' or l[i] == "'"):
+                    k += l[i]
+                elif not in_key and not (l[i] == '"' or l[i] == "'"):
+                    v += l[i]
+            if node_id is None or node_id in id_to_node:
+                raise ValueError(INVALID_NEXML)
+            id_to_node[node_id] = Node(label=node_label)
+            if is_root:
+                if trees[tree_id].root is not None:
+                    raise ValueError(INVALID_NEXML)
+                trees[tree_id].root = id_to_node[node_id]
+        # edge
+        elif l_lower.startswith('<edge '):
+            if tree_id is None:
+                raise ValueError(INVALID_NEXML)
+            source = None; target = None; length = None
+            parts = l.split()
+            for part in parts:
+                if '=' in part:
+                    k,v = part.split('='); k = k.strip(); k_lower = k.lower()
+                    if k_lower == 'source':
+                        source = v.split('"')[1]
+                    elif k_lower == 'target':
+                        target = v.split('"')[1]
+                    elif k_lower == 'length':
+                        length = float(v.split('"')[1])
+            if source is None or target is None or length is None:
+                raise ValueError(INVALID_NEXML)
+            if source not in id_to_node:
+                raise ValueError(INVALID_NEXML)
+            if target not in id_to_node:
+                raise ValueError(INVALID_NEXML)
+            id_to_node[source].add_child(id_to_node[target])
+            id_to_node[target].edge_length = length
+        elif l_lower.startswith('<rootedge '):
+            if tree_id is None:
+                raise ValueError(INVALID_NEXML)
+            root_node = None; length = None
+            parts = l.split()
+            for part in parts:
+                if '=' in part:
+                    k,v = part.split('='); k = k.strip(); k_lower = k.lower()
+                    if k_lower == 'target':
+                        root_node = id_to_node[v.split('"')[1]]
+                    elif k_lower == 'length':
+                        length = float(v.split('"')[1])
+            if trees[tree_id].root is None:
+                raise ValueError(INVALID_NEXML)
+            if root_node is not None and trees[tree_id].root != root_node:
+                raise ValueError(INVALID_NEXML)
+            trees[tree_id].root.edge_length = length
+    return trees
 
 def read_tree_nexus(nexus):
     '''Read a tree from a Nexus string or file

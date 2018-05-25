@@ -11,6 +11,9 @@ NEWICK_STR = open(NEWICK_FILE).read().strip()
 NEXUS_FILE = '%s/test.nex'%PATH
 NEXUS_GZIP = '%s/test.nex.gz'%PATH
 NEXUS_STR = open(NEXUS_FILE).read().strip()
+NEXML_FILE = '%s/test.nexml'%PATH
+NEXML_GZIP = '%s/test.nexml.gz'%PATH
+NEXML_STR = open(NEXML_FILE).read().strip()
 
 # tests
 def test_avg_branch_length(t):
@@ -119,3 +122,5 @@ if __name__ == "__main__":
     for t in trees:
         for test in tests:
             test(t)
+    for nexml in [NEXML_FILE, NEXML_GZIP, NEXML_STR]:
+        read_tree_newick(nexml)
