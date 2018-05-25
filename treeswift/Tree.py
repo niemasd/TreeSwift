@@ -563,6 +563,17 @@ class Tree:
                     internal += node.edge_length
         return internal/all
 
+    def write_tree_newick(self, filename):
+        '''Write this Tree to a Newick file
+
+        Args:
+            filename (str): Path to desired output file (plain-text or gzipped)
+        '''
+        if filename.lower().endswith('.gz'): # gzipped file
+            f = gopen(filename,'wb',9); f.write(self.newick().encode()); f.close()
+        else: # plain-text file
+            f = open(filename,'w'); f.write(self.newick()); f.close()
+
 def read_tree_newick(newick):
     '''Read a tree from a Newick string or file
 

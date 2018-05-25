@@ -112,6 +112,11 @@ def test_traverse_rootdistorder(t):
         pass
 def test_treeness(t):
     o = t.treeness()
+def test_write_tree_newick(t):
+    t.write_tree_newick('test_write_tree_newick.tre')
+    read_tree_newick('test_write_tree_newick.tre')
+    t.write_tree_newick('test_write_tree_newick.tre.gz')
+    read_tree_newick('test_write_tree_newick.tre.gz')
 
 # run tests
 if __name__ == "__main__":
