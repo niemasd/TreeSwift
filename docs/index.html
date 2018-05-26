@@ -164,8 +164,9 @@
 <dd><p>Compute the average length of the selected branches of this Tree. Edges with length None will be treated as 0-length</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>terminal (bool): True to include terminal branches, otherwise False
-internal (bool): True to include internal branches, otherwise False</dd>
+<dd><p class="first">terminal (bool): True to include terminal branches, otherwise False</p>
+<p class="last">internal (bool): True to include internal branches, otherwise False</p>
+</dd>
 <dt>Returns:</dt>
 <dd>The average length of the selected branches</dd>
 </dl>
@@ -177,8 +178,9 @@ internal (bool): True to include internal branches, otherwise False</dd>
 <dd><p>Generator over the lengths of the selected branches of this Tree. Edges with length None will be output as 0-length</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>terminal (bool): True to include terminal branches, otherwise False
-internal (bool): True to include internal branches, otherwise False</dd>
+<dd><p class="first">terminal (bool): True to include terminal branches, otherwise False</p>
+<p class="last">internal (bool): True to include internal branches, otherwise False</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -254,8 +256,9 @@ internal (bool): True to include internal branches, otherwise False</dd>
 <dd><p>Compute the sum of all selected edge lengths in this Tree</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>terminal (bool): <cite>True</cite> to include terminal branches, otherwise <cite>False</cite>
-internal (bool): <cite>True</cite> to include internal branches, otherwise <cite>False</cite></dd>
+<dd><p class="first">terminal (bool): <cite>True</cite> to include terminal branches, otherwise <cite>False</cite></p>
+<p class="last">internal (bool): <cite>True</cite> to include internal branches, otherwise <cite>False</cite></p>
+</dd>
 <dt>Returns:</dt>
 <dd>float: Sum of all selected edge lengths in this Tree</dd>
 </dl>
@@ -273,7 +276,9 @@ internal (bool): <cite>True</cite> to include internal branches, otherwise <cite
 <dd><p>Extract a copy of this Tree with only the leaves labeled by the strings in <cite>labels</cite></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>leaves (set): Set of leaf labels to include.</dd>
+<dd><p class="first">leaves (set): Set of leaf labels to include.</p>
+<p class="last">suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</p>
+</dd>
 <dt>Returns:</dt>
 <dd>Tree: Copy of this Tree, including only the leaves labeled by the strings in <cite>labels</cite></dd>
 </dl>
@@ -285,7 +290,9 @@ internal (bool): <cite>True</cite> to include internal branches, otherwise <cite
 <dd><p>Extract a copy of this Tree without the leaves labeled by the strings in <cite>labels</cite></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>labels (set): Set of leaf labels to exclude</dd>
+<dd><p class="first">labels (set): Set of leaf labels to exclude</p>
+<p class="last">suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</p>
+</dd>
 <dt>Returns:</dt>
 <dd>Tree: Copy of this Tree, exluding the leaves labeled by the strings in <cite>labels</cite></dd>
 </dl>
@@ -383,10 +390,24 @@ internal (bool): <cite>True</cite> to include internal branches, otherwise <cite
 <dd><p>Compute the total number of selected nodes in this Tree</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>leaves (bool): True to include leaves, otherwise False
-internal (bool): True to include internal nodes, otherwise False</dd>
+<dd><p class="first">leaves (bool): True to include leaves, otherwise False</p>
+<p class="last">internal (bool): True to include internal nodes, otherwise False</p>
+</dd>
 <dt>Returns:</dt>
 <dd>int: The total number of selected nodes in this Tree</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.reroot">
+<code class="descname">reroot</code><span class="sig-paren">(</span><em>node</em>, <em>length</em>, <em>suppress_unifurcations=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.reroot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.reroot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reroot this Tree at <cite>length</cite> up the incident edge of <cite>node</cite></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">node (Node): The node on whose incident edge this <cite>Tree</cite> will be rerooted</p>
+<p>length (float): The distance up the specified edge at which to reroot this <cite>Tree</cite></p>
+<p class="last">suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</p>
+</dd>
 </dl>
 </dd></dl>
 

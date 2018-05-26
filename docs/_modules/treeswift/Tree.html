@@ -78,6 +78,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            terminal (bool): True to include terminal branches, otherwise False</span>
+
 <span class="sd">            internal (bool): True to include internal branches, otherwise False</span>
 
 <span class="sd">        Returns:</span>
@@ -96,6 +97,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            terminal (bool): True to include terminal branches, otherwise False</span>
+
 <span class="sd">            internal (bool): True to include internal branches, otherwise False</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
@@ -249,6 +251,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            terminal (bool): `True` to include terminal branches, otherwise `False`</span>
+
 <span class="sd">            internal (bool): `True` to include internal branches, otherwise `False`</span>
 
 <span class="sd">        Returns:</span>
@@ -287,6 +290,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            labels (set): Set of leaf labels to exclude</span>
 
+<span class="sd">            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            Tree: Copy of this Tree, exluding the leaves labeled by the strings in `labels`</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -297,6 +302,8 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            leaves (set): Set of leaf labels to include.</span>
+
+<span class="sd">            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Tree: Copy of this Tree, including only the leaves labeled by the strings in `labels`</span>
@@ -458,6 +465,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            leaves (bool): True to include leaves, otherwise False</span>
+
 <span class="sd">            internal (bool): True to include internal nodes, otherwise False</span>
 
 <span class="sd">        Returns:</span>
@@ -468,6 +476,36 @@
             <span class="k">if</span> <span class="p">(</span><span class="n">leaves</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">internal</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()):</span>
                 <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">num</span></div>
+
+<div class="viewcode-block" id="Tree.reroot"><a class="viewcode-back" href="../../index.html#treeswift.Tree.reroot">[docs]</a>    <span class="k">def</span> <span class="nf">reroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reroot this Tree at `length` up the incident edge of `node`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node (Node): The node on whose incident edge this `Tree` will be rerooted</span>
+
+<span class="sd">            length (float): The distance up the specified edge at which to reroot this `Tree`</span>
+
+<span class="sd">            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Attempting to reroot a tree with a root edge&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Attempting to reroot at non-zero length on 0-length edge&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specified length at which to reroot must be positive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specified length must be shorter than the edge at which to reroot&quot;</span><span class="p">)</span>
+        <span class="n">ancestors</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">traverse_ancestors</span><span class="p">(</span><span class="n">include_self</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ancestors</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">ancestors</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">ancestors</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">remove_child</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span>
+        <span class="n">sibling</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">;</span> <span class="n">sibling</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">();</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="p">,</span><span class="n">sibling</span><span class="p">]</span>
+        <span class="n">sibling</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">-</span> <span class="n">length</span><span class="p">;</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="k">if</span> <span class="n">suppress_unifurcations</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">suppress_unifurcations</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Tree.resolve_polytomies"><a class="viewcode-back" href="../../index.html#treeswift.Tree.resolve_polytomies">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_polytomies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Arbitrarily resolve polytomies with 0-lengthed edges.&#39;&#39;&#39;</span>

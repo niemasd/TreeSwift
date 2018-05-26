@@ -39,6 +39,7 @@ class Tree:
 
         Args:
             terminal (bool): True to include terminal branches, otherwise False
+
             internal (bool): True to include internal branches, otherwise False
 
         Returns:
@@ -57,6 +58,7 @@ class Tree:
 
         Args:
             terminal (bool): True to include terminal branches, otherwise False
+
             internal (bool): True to include internal branches, otherwise False
         '''
         for node in self.traverse_preorder():
@@ -210,6 +212,7 @@ class Tree:
 
         Args:
             terminal (bool): `True` to include terminal branches, otherwise `False`
+
             internal (bool): `True` to include internal branches, otherwise `False`
 
         Returns:
@@ -248,6 +251,8 @@ class Tree:
         Args:
             labels (set): Set of leaf labels to exclude
 
+            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
+
         Returns:
             Tree: Copy of this Tree, exluding the leaves labeled by the strings in `labels`
         '''
@@ -258,6 +263,8 @@ class Tree:
 
         Args:
             leaves (set): Set of leaf labels to include.
+
+            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
 
         Returns:
             Tree: Copy of this Tree, including only the leaves labeled by the strings in `labels`
@@ -419,6 +426,7 @@ class Tree:
 
         Args:
             leaves (bool): True to include leaves, otherwise False
+
             internal (bool): True to include internal nodes, otherwise False
 
         Returns:
@@ -429,6 +437,36 @@ class Tree:
             if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
                 num += 1
         return num
+
+    def reroot(self, node, length, suppress_unifurcations=True):
+        '''Reroot this Tree at `length` up the incident edge of `node`
+
+        Args:
+            node (Node): The node on whose incident edge this `Tree` will be rerooted
+
+            length (float): The distance up the specified edge at which to reroot this `Tree`
+
+            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
+        '''
+        if self.root.edge_length is not None:
+            raise ValueError("Attempting to reroot a tree with a root edge")
+        if (node.edge_length is None or node.edge_length == 0) and length != 0:
+            raise ValueError("Attempting to reroot at non-zero length on 0-length edge")
+        if length < 0:
+            raise ValueError("Specified length at which to reroot must be positive")
+        if length > node.edge_length:
+            raise ValueError("Specified length must be shorter than the edge at which to reroot")
+        ancestors = [a for a in node.traverse_ancestors(include_self=False)]
+        for i in range(len(ancestors)-2,-1,-1):
+            child = ancestors[i]; parent = ancestors[i+1]
+            parent.remove_child(child)
+            child.add_child(parent)
+            parent.edge_length = child.edge_length
+        sibling = node.parent; sibling.children.remove(node)
+        self.root = Node(); self.root.children = [node,sibling]
+        sibling.edge_length = node.edge_length - length; node.edge_length = length
+        if suppress_unifurcations:
+            self.suppress_unifurcations()
 
     def resolve_polytomies(self):
         '''Arbitrarily resolve polytomies with 0-lengthed edges.'''
