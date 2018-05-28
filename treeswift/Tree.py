@@ -251,7 +251,7 @@ class Tree:
         Returns:
             float: Sum of all selected edge lengths in this Tree
         '''
-        if not isinstance(leaves, bool):
+        if not isinstance(terminal, bool):
             raise TypeError("leaves must be a bool")
         if not isinstance(internal, bool):
             raise TypeError("internal must be a bool")
@@ -684,7 +684,7 @@ def read_tree_newick(newick):
     Returns:
         Tree: The tree represented by `newick`. If the Newick file has multiple trees (one per line), a list of `Tree` objects will be returned
     '''
-    if not isinstance(newick, str):
+    if not isinstance(newick, str) and not isinstance(newick, unicode):
         raise TypeError("newick must be a str")
     if newick.lower().endswith('.gz'): # gzipped file
         ts = gopen(newick).read().decode().strip()
