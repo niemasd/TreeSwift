@@ -14,7 +14,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 setup(
     name='treeswift',  # Required
-    version='1.0.37',  # Required
+    version='1.0.38',  # Required
     description='TreeSwift: Fast tree module for Python 2 and 3',  # Required
     long_description='TreeSwift is a Python library for parsing, manipulating, and iterating over (rooted) tree structures. TreeSwift places an emphasis on speed.',  # Optional
     long_description_content_type='text/plain',  # Optional (see note above)
