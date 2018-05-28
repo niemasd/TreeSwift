@@ -38,6 +38,8 @@ def test_coalescence_waiting_times(t):
         pass
 def test_collapse_short_branches(t):
     copy(t).collapse_short_branches(float('inf'))
+def test_contract_low_support(t):
+    copy(t).contract_low_support(float('inf'))
 def test_copy(t):
     o = copy(t)
 def test_diameter(t):

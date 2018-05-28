@@ -59,6 +59,8 @@ class Node:
         Args:
             child (Node): The child Node to be added
         '''
+        if not isinstance(child, Node):
+            raise TypeError("child must be a Node")
         self.children.append(child); child.parent = self
 
     def child_nodes(self):
@@ -125,6 +127,8 @@ class Node:
         Args:
             child (Node): The child to remove
         '''
+        if not isinstance(child, Node):
+            raise TypeError("child must be a Node")
         try:
             self.children.remove(child); child.parent = None
         except:
@@ -136,6 +140,8 @@ class Node:
         Args:
             include_self (bool): True to include self in the traversal, otherwise False
         '''
+        if not isinstance(include_self, bool):
+            raise TypeError("include_self must be a bool")
         curr = {True:self,False:self.parent}[include_self]
         while curr is not None:
             yield curr; curr = curr.parent
@@ -164,6 +170,10 @@ class Node:
 
     def traverse_levelorder(self, leaves=True, internal=True):
         '''Perform a levelorder traversal starting at this Node object'''
+        if not isinstance(leaves, bool):
+            raise TypeError("leaves must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
         q = Queue(); q.put(self)
         while not q.empty():
             n = q.get()

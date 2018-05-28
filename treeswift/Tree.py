@@ -45,6 +45,10 @@ class Tree:
         Returns:
             The average length of the selected branches
         '''
+        if not isinstance(terminal, bool):
+            raise TypeError("terminal must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
         if not internal and not terminal:
             raise RuntimeError("Must select either internal or terminal branches (or both)")
         tot = 0.; num = 0
@@ -61,6 +65,10 @@ class Tree:
 
             internal (bool): True to include internal branches, otherwise False
         '''
+        if not isinstance(terminal, bool):
+            raise TypeError("terminal must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
         for node in self.traverse_preorder():
             if (internal and not node.is_leaf()) or (terminal and node.is_leaf()):
                 if node.edge_length is None:
@@ -89,6 +97,8 @@ class Tree:
         Args:
             backward (bool): True to go backward in time (i.e., leaves to root), otherwise False
         '''
+        if not isinstance(backward, bool):
+            raise TypeError("backward must be a bool")
         pq = PriorityQueue()
         if backward:
             mult = -1
@@ -106,6 +116,8 @@ class Tree:
         Args:
             backward (bool): True to go backward in time (i.e., leaves to root), otherwise False
         '''
+        if not isinstance(backward, bool):
+            raise TypeError("backward must be a bool")
         pq = PriorityQueue(); lowest_leaf_dist = float('-inf')
         if backward:
             mult = -1
@@ -212,6 +224,10 @@ class Tree:
 
     def distances_from_root(self, leaves=True, internal=True):
         '''Generator over the root-to-node distances of this Tree; (node,distance) tuples'''
+        if not isinstance(leaves, bool):
+            raise TypeError("leaves must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
         if leaves or internal:
             d = dict()
             for node in self.traverse_preorder():
@@ -235,12 +251,21 @@ class Tree:
         Returns:
             float: Sum of all selected edge lengths in this Tree
         '''
+        if not isinstance(leaves, bool):
+            raise TypeError("leaves must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
         return sum(node.edge_length for node in self.traverse_preorder() if node.edge_length is not None and ((terminal and node.is_leaf()) or (internal and not node.is_leaf())))
 
     def extract_tree(self, labels, without, suppress_unifurcations=True):
         '''Helper function for extract_tree_* functions'''
+        if not isinstance(suppress_unifurcations, bool):
+            raise TypeError("suppress_unifurcations must be a bool")
         if labels is not None and not isinstance(labels, set):
-            labels = set(labels)
+            try:
+                labels = set(labels)
+            except:
+                raise TypeError("labels must be iterable")
         label_to_leaf = dict(); keep = set()
         for node in self.traverse_leaves():
             label_to_leaf[str(node)] = node
@@ -365,6 +390,11 @@ class Tree:
         Returns:
             Node: The MRCA of the Node objects labeled by a label in `labels`
         '''
+        if not isinstance(labels,set):
+            try:
+                labels = set(labels)
+            except:
+                raise TypeError("labels must be iterable")
         l2n = self.label_to_node(labels)
         count = dict()
         for node in l2n.values():
@@ -420,6 +450,8 @@ class Tree:
         Returns:
             int: The number of lineages that exist `distance` away from the root
         '''
+        if not isinstance(distance, float) and not isinstance(distance, int):
+            raise TypeError("distance must be an int or a float")
         if distance < 0:
             raise RuntimeError("distance cannot be negative")
         d = dict(); q = Queue(); q.put(self.root); count = 0
@@ -449,6 +481,10 @@ class Tree:
         Returns:
             int: The total number of selected nodes in this Tree
         '''
+        if not isinstance(leaves, bool):
+            raise TypeError("leaves must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
         num = 0
         for node in self.traverse_preorder():
             if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
@@ -465,6 +501,12 @@ class Tree:
 
             suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
         '''
+        if not isinstance(node, Node):
+            raise TypeError("node must be a Node")
+        if not isinstance(length, float) and not isinstance(length, int):
+            raise TypeError("length must be a float or an int")
+        if not isinstance(suppress_unifurcations, bool):
+            raise TypeError("suppress_unifurcations must be a bool")
         if self.root.edge_length is not None:
             raise ValueError("Attempting to reroot a tree with a root edge")
         if (node.edge_length is None or node.edge_length == 0) and length != 0:
@@ -529,7 +571,7 @@ class Tree:
     def scale_edges(self, multiplier):
         '''Multiply all edges in this Tree by `multiplier`'''
         if not isinstance(multiplier,int) and not isinstance(multiplier,float):
-            raise RuntimeError("multiplier must be an int or float")
+            raise TypeError("multiplier must be an int or float")
         for node in self.traverse_preorder():
             if node.edge_length is not None:
                 node.edge_length *= multiplier
@@ -586,6 +628,8 @@ class Tree:
 
     def traverse_rootdistorder(self, ascending=True):
         '''Perform a traversal of the Node objects in this Tree in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from the root'''
+        if not isinstance(ascending, bool):
+            raise TypeError("ascending must be a bool")
         pq = PriorityQueue(); dist_from_root = dict()
         for node in self.traverse_preorder():
             if node.is_root():
@@ -624,6 +668,8 @@ class Tree:
         Args:
             filename (str): Path to desired output file (plain-text or gzipped)
         '''
+        if not isinstance(filename, str):
+            raise TypeError("filename must be a str")
         if filename.lower().endswith('.gz'): # gzipped file
             f = gopen(filename,'wb',9); f.write(self.newick().encode()); f.close()
         else: # plain-text file
@@ -638,6 +684,8 @@ def read_tree_newick(newick):
     Returns:
         Tree: The tree represented by `newick`. If the Newick file has multiple trees (one per line), a list of `Tree` objects will be returned
     '''
+    if not isinstance(newick, str):
+        raise TypeError("newick must be a str")
     if newick.lower().endswith('.gz'): # gzipped file
         ts = gopen(newick).read().decode().strip()
         lines = ts.splitlines()
@@ -688,6 +736,8 @@ def read_tree_nexml(nexml):
     Returns:
         dict of Tree: A dictionary of the trees represented by `nexml`, where keys are tree names (`str`) and values are `Tree` objects
     '''
+    if not isinstance(nexml, str):
+        raise TypeError("nexml must be a str")
     if nexml.lower().endswith('.gz'): # gzipped file
         f = gopen(nexml)
     elif isfile(nexml): # plain-text file
@@ -801,6 +851,8 @@ def read_tree_nexus(nexus):
     Returns:
         dict of Tree: A dictionary of the trees represented by `nexus`, where keys are tree names (`str`) and values are `Tree` objects
     '''
+    if not isinstance(nexus, str):
+        raise TypeError("nexus must be a str")
     if nexus.lower().endswith('.gz'): # gzipped file
         f = gopen(nexus)
     elif isfile(nexus): # plain-text file
