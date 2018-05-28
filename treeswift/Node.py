@@ -69,6 +69,16 @@ class Node:
         '''
         return copy(self.children)
 
+    def contract(self):
+        '''Contract this `Node` by directly connecting its children to its parent'''
+        if self.is_root():
+            return
+        for c in self.children:
+            if self.edge_length is not None and c.edge_length is not None:
+                c.edge_length += self.edge_length
+            self.parent.add_child(c)
+        self.parent.remove_child(self)
+
     def is_leaf(self):
         '''Returns True if this is a leaf
 

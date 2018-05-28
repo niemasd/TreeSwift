@@ -66,6 +66,12 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Node.contract">
+<code class="descname">contract</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.contract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.contract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contract this <cite>Node</cite> by directly connecting its children to its parent</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Node.is_leaf">
 <code class="descname">is_leaf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.is_leaf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.is_leaf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if this is a leaf</p>
@@ -221,6 +227,16 @@
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>threshold (float): The threshold to use when collapsing branches</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.contract_low_support">
+<code class="descname">contract_low_support</code><span class="sig-paren">(</span><em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.contract_low_support"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.contract_low_support" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contract internal nodes labeled by a number (e.g. branch support) below <cite>threshold</cite></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>threshold (float): The support threshold to use when contracting nodes</dd>
 </dl>
 </dd></dl>
 

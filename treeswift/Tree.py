@@ -143,6 +143,23 @@ class Tree:
             for c in next.children:
                 q.put(c)
 
+    def contract_low_support(self, threshold):
+        '''Contract internal nodes labeled by a number (e.g. branch support) below `threshold`
+
+        Args:
+            threshold (float): The support threshold to use when contracting nodes'''
+        if not isinstance(threshold, float) and not isinstance(threshold, int):
+            raise TypeError("threshold must be float or int")
+        to_contract = list()
+        for node in self.traverse_preorder():
+            try:
+                if float(str(node)) < threshold:
+                    to_contract.append(node)
+            except:
+                pass
+        for node in to_contract:
+            node.contract()
+
     def diameter(self):
         '''Compute the diameter (maximum leaf pairwise distance) of this Tree
 
