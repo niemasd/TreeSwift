@@ -1,13 +1,14 @@
 #! /usr/bin/env python
 from treeswift.Node import Node
+from collections import deque
 from copy import copy
 from gzip import open as gopen
 from os.path import isfile
 from warnings import warn
 try:                # Python 3
-    from queue import Queue,PriorityQueue
+    from queue import PriorityQueue
 except ImportError: # Python 2
-    from Queue import Queue,PriorityQueue
+    from Queue import PriorityQueue
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid valid NeXML File"
 
@@ -142,9 +143,9 @@ class Tree:
             raise RuntimeError("threshold must be an integer or a float")
         elif threshold < 0:
             raise RuntimeError("threshold cannot be negative")
-        q = Queue(); q.put(self.root)
-        while not q.empty():
-            next = q.get()
+        q = deque(); q.append(self.root)
+        while len(q) != 0:
+            next = q.popleft()
             if next.edge_length is None or next.edge_length <= threshold:
                 if next.is_root():
                     next.edge_length = None
@@ -153,7 +154,7 @@ class Tree:
                     for c in next.children:
                         parent.add_child(c)
             for c in next.children:
-                q.put(c)
+                q.append(c)
 
     def contract_low_support(self, threshold):
         '''Contract internal nodes labeled by a number (e.g. branch support) below `threshold`
@@ -275,14 +276,14 @@ class Tree:
             for a in node.traverse_ancestors(include_self=False):
                 keep.add(a)
         out = Tree(); out.root.label = self.root.label; out.root.edge_length = self.root.edge_length
-        q_old = Queue(); q_old.put(self.root)
-        q_new = Queue(); q_new.put(out.root)
-        while not q_old.empty():
-            n_old = q_old.get(); n_new = q_new.get()
+        q_old = deque(); q_old.append(self.root)
+        q_new = deque(); q_new.append(out.root)
+        while len(q_old) != 0:
+            n_old = q_old.popleft(); n_new = q_new.popleft()
             for c_old in n_old.children:
                 if c_old in keep:
                     c_new = Node(label=str(c_old), edge_length=c_old.edge_length); n_new.add_child(c_new)
-                    q_old.put(c_old); q_new.put(c_new)
+                    q_old.append(c_old); q_new.append(c_new)
         if suppress_unifurcations:
             out.suppress_unifurcations()
         return out
@@ -454,9 +455,9 @@ class Tree:
             raise TypeError("distance must be an int or a float")
         if distance < 0:
             raise RuntimeError("distance cannot be negative")
-        d = dict(); q = Queue(); q.put(self.root); count = 0
-        while not q.empty():
-            node = q.get()
+        d = dict(); q = deque(); q.append(self.root); count = 0
+        while len(q) != 0:
+            node = q.popleft()
             if node.is_root():
                 d[node] = 0
             else:
@@ -465,7 +466,7 @@ class Tree:
                 d[node] += node.edge_length
             if d[node] < distance:
                 for c in node.children:
-                    q.put(c)
+                    q.append(c)
             elif node.parent is None or d[node.parent] < distance:
                 count += 1
         return count
@@ -529,15 +530,15 @@ class Tree:
 
     def resolve_polytomies(self):
         '''Arbitrarily resolve polytomies with 0-lengthed edges.'''
-        q = Queue(); q.put(self.root)
-        while not q.empty():
-            node = q.get()
+        q = deque(); q.append(self.root)
+        while len(q) != 0:
+            node = q.popleft()
             while len(node.children) > 2:
                 c1 = node.children.pop(); c2 = node.children.pop()
                 nn = Node(edge_length=0); node.add_child(nn)
                 nn.add_child(c1); nn.add_child(c2)
             for c in node.children:
-                q.put(c)
+                q.append(c)
 
     def sackin(self, normalize='leaves'):
         '''Compute the Sackin index of this Tree
@@ -578,12 +579,12 @@ class Tree:
 
     def suppress_unifurcations(self):
         '''Remove all nodes with only one child and directly attach child to parent'''
-        q = Queue(); q.put(self.root)
-        while not q.empty():
-            node = q.get()
+        q = deque(); q.append(self.root)
+        while len(q) != 0:
+            node = q.popleft()
             if len(node.children) != 1:
                 for c in node.children:
-                    q.put(c)
+                    q.append(c)
                 continue
             child = node.children.pop()
             if node.is_root():
@@ -594,7 +595,7 @@ class Tree:
                 if child.edge_length is None:
                     child.edge_length = 0
                 child.edge_length += node.edge_length
-            q.put(child)
+            q.append(child)
 
     def traverse_inorder(self):
         '''Perform an inorder traversal of the Node objects in this Tree'''
