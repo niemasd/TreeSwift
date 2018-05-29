@@ -1,9 +1,10 @@
 #! /usr/bin/env python
+from collections import deque
 from copy import copy
 try:                # Python 3
-    from queue import Queue,PriorityQueue
+    from queue import PriorityQueue
 except ImportError: # Python 2
-    from Queue import Queue,PriorityQueue
+    from Queue import PriorityQueue
 INORDER_NONBINARY = "Can't do inorder traversal on non-binary tree"
 INVALID_NEWICK = "Tree not valid Newick tree"
 
@@ -142,21 +143,36 @@ class Node:
         '''
         if not isinstance(include_self, bool):
             raise TypeError("include_self must be a bool")
-        curr = {True:self,False:self.parent}[include_self]
-        while curr is not None:
-            yield curr; curr = curr.parent
+        if include_self:
+            c = self
+        else:
+            c = self.parent
+        while c is not None:
+            yield c; c = c.parent
 
     def traverse_inorder(self):
         '''Perform an inorder traversal starting at this Node object'''
-        if len(self.children) != 0 and len(self.children) != 2:
-            raise RuntimeError(INORDER_NONBINARY)
-        if len(self.children) != 0:
-            for y in self.children[0].traverse_inorder():
-                yield y
-        yield self
-        if len(self.children) != 0:
-            for y in self.children[1].traverse_inorder():
-                yield y
+        c = self; s = deque(); done = False
+        while not done:
+            if c is None:
+                if len(s) == 0:
+                    done = True
+                else:
+                    c = s.pop(); yield c
+                    if len(c.children) == 0:
+                        c = None
+                    elif len(c.children) == 2:
+                        c = c.children[1]
+                    else:
+                        raise RuntimeError(INORDER_NONBINARY)
+            else:
+                s.append(c)
+                if len(c.children) == 0:
+                    c = None
+                elif len(c.children) == 2:
+                    c = c.children[0]
+                else:
+                    raise RuntimeError(INORDER_NONBINARY)
 
     def traverse_internal(self):
         '''Traverse over the internal nodes below (and including) this Node object'''
@@ -172,26 +188,29 @@ class Node:
 
     def traverse_levelorder(self):
         '''Perform a levelorder traversal starting at this Node object'''
-        q = Queue(); q.put(self)
-        while not q.empty():
-            n = q.get()
-            yield n
+        q = deque(); q.append(self)
+        while len(q) != 0:
+            n = q.popleft(); yield n
             for c in n.children:
-                q.put(c)
+                q.append(c)
 
     def traverse_postorder(self):
         '''Perform a postorder traversal starting at this Node object'''
-        for c in self.children:
-            for n in c.traverse_postorder():
-                yield n
-        yield self
+        s1 = deque(); s2 = deque(); s1.append(self)
+        while len(s1) != 0:
+            n = s1.pop(); s2.append(n)
+            for c in n.children:
+                s1.append(c)
+        while len(s2) != 0:
+            yield s2.pop()
 
     def traverse_preorder(self):
         '''Perform a preorder traversal starting at this Node object'''
-        yield self
-        for c in self.children:
-            for n in c.traverse_preorder():
-                yield n
+        s = deque(); s.append(self)
+        while len(s) != 0:
+            n = s.pop(); yield n
+            for c in n.children:
+                s.append(c)
 
     def traverse_rootdistorder(self, ascending=True):
         '''Perform a traversal of the Node objects in the subtree rooted at this Node in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from this Node'''
