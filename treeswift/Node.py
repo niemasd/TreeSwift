@@ -122,6 +122,14 @@ class Node:
                 out.append(self.label)
             return ''.join(out)
 
+    def num_children(self):
+        '''Returns the number of children of this Node
+
+        Returns:
+            int: The number of children of this Node
+        '''
+        return len(self.children)
+
     def remove_child(self, child):
         '''Remove child from Node object
 
