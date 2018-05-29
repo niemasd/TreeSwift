@@ -39,14 +39,15 @@
   <h1>Source code for treeswift.Tree</h1><div class="highlight"><pre>
 <span></span><span class="ch">#! /usr/bin/env python</span>
 <span class="kn">from</span> <span class="nn">treeswift.Node</span> <span class="k">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">gzip</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">isfile</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
 <span class="k">try</span><span class="p">:</span>                <span class="c1"># Python 3</span>
-    <span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span><span class="p">,</span><span class="n">PriorityQueue</span>
+    <span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">PriorityQueue</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span> <span class="c1"># Python 2</span>
-    <span class="kn">from</span> <span class="nn">Queue</span> <span class="k">import</span> <span class="n">Queue</span><span class="p">,</span><span class="n">PriorityQueue</span>
+    <span class="kn">from</span> <span class="nn">Queue</span> <span class="k">import</span> <span class="n">PriorityQueue</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
 <span class="n">INVALID_NEXML</span> <span class="o">=</span> <span class="s2">&quot;Invalid valid NeXML File&quot;</span>
 
@@ -181,9 +182,9 @@
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;threshold must be an integer or a float&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">threshold</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;threshold cannot be negative&quot;</span><span class="p">)</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-            <span class="nb">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
             <span class="k">if</span> <span class="nb">next</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">next</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">next</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
                     <span class="nb">next</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="kc">None</span>
@@ -192,7 +193,7 @@
                     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                         <span class="n">parent</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
+                <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.contract_low_support"><a class="viewcode-back" href="../../index.html#treeswift.Tree.contract_low_support">[docs]</a>    <span class="k">def</span> <span class="nf">contract_low_support</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Contract internal nodes labeled by a number (e.g. branch support) below `threshold`</span>
@@ -314,14 +315,14 @@
             <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">traverse_ancestors</span><span class="p">(</span><span class="n">include_self</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="n">keep</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">();</span> <span class="n">out</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">label</span><span class="p">;</span> <span class="n">out</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span>
-        <span class="n">q_old</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q_old</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">q_new</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q_new</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">q_old</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-            <span class="n">n_old</span> <span class="o">=</span> <span class="n">q_old</span><span class="o">.</span><span class="n">get</span><span class="p">();</span> <span class="n">n_new</span> <span class="o">=</span> <span class="n">q_new</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">q_old</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">q_old</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">q_new</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">q_new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">q_old</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">n_old</span> <span class="o">=</span> <span class="n">q_old</span><span class="o">.</span><span class="n">popleft</span><span class="p">();</span> <span class="n">n_new</span> <span class="o">=</span> <span class="n">q_new</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">c_old</span> <span class="ow">in</span> <span class="n">n_old</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">c_old</span> <span class="ow">in</span> <span class="n">keep</span><span class="p">:</span>
                     <span class="n">c_new</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">c_old</span><span class="p">),</span> <span class="n">edge_length</span><span class="o">=</span><span class="n">c_old</span><span class="o">.</span><span class="n">edge_length</span><span class="p">);</span> <span class="n">n_new</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">c_new</span><span class="p">)</span>
-                    <span class="n">q_old</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c_old</span><span class="p">);</span> <span class="n">q_new</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c_new</span><span class="p">)</span>
+                    <span class="n">q_old</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_old</span><span class="p">);</span> <span class="n">q_new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_new</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">suppress_unifurcations</span><span class="p">:</span>
             <span class="n">out</span><span class="o">.</span><span class="n">suppress_unifurcations</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">out</span></div>
@@ -493,9 +494,9 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;distance must be an int or a float&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;distance cannot be negative&quot;</span><span class="p">)</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">);</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">);</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
                 <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">else</span><span class="p">:</span>
@@ -504,7 +505,7 @@
                 <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
             <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">:</span>
                 <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">count</span></div>
@@ -568,15 +569,15 @@
 
 <div class="viewcode-block" id="Tree.resolve_polytomies"><a class="viewcode-back" href="../../index.html#treeswift.Tree.resolve_polytomies">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_polytomies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Arbitrarily resolve polytomies with 0-lengthed edges.&#39;&#39;&#39;</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
             <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="n">c1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">pop</span><span class="p">();</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
                 <span class="n">nn</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">edge_length</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span> <span class="n">node</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">nn</span><span class="p">)</span>
                 <span class="n">nn</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">c1</span><span class="p">);</span> <span class="n">nn</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
+                <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.sackin"><a class="viewcode-back" href="../../index.html#treeswift.Tree.sackin">[docs]</a>    <span class="k">def</span> <span class="nf">sackin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the Sackin index of this Tree</span>
@@ -617,12 +618,12 @@
 
 <div class="viewcode-block" id="Tree.suppress_unifurcations"><a class="viewcode-back" href="../../index.html#treeswift.Tree.suppress_unifurcations">[docs]</a>    <span class="k">def</span> <span class="nf">suppress_unifurcations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Remove all nodes with only one child and directly attach child to parent&#39;&#39;&#39;</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
                 <span class="k">continue</span>
             <span class="n">child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
@@ -633,7 +634,7 @@
                 <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
-            <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
+            <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_inorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_inorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Perform an inorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
