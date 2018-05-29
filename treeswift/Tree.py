@@ -85,7 +85,10 @@ class Tree:
         '''
         best = (None,float('inf')); d = dict()
         for node in self.traverse_preorder():
-            d[node] = {True:0,False:node.edge_length}[node.edge_length is None]
+            if node.edge_length is None:
+                d[node] = 0
+            else:
+                d[node] = node.edge_length
             if not node.is_root():
                 d[node] += d[node.parent]
             if node.is_leaf() and d[node] < best[1]:
@@ -322,7 +325,10 @@ class Tree:
         '''
         best = (self.root,0); d = dict()
         for node in self.traverse_preorder():
-            d[node] = {True:0,False:node.edge_length}[node.edge_length is None]
+            if node.edge_length is None:
+                d[node] = 0
+            else:
+                d[node] = node.edge_length
             if not node.is_root():
                 d[node] += d[node.parent]
             if d[node] > best[1]:
