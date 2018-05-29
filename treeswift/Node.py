@@ -1,9 +1,9 @@
 #! /usr/bin/env python
 from copy import copy
 try:                # Python 3
-    from queue import Queue
+    from queue import Queue,PriorityQueue
 except ImportError: # Python 2
-    from Queue import Queue
+    from Queue import Queue,PriorityQueue
 INORDER_NONBINARY = "Can't do inorder traversal on non-binary tree"
 INVALID_NEWICK = "Tree not valid Newick tree"
 
