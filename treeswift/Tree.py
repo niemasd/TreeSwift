@@ -628,25 +628,8 @@ class Tree:
 
     def traverse_rootdistorder(self, ascending=True):
         '''Perform a traversal of the Node objects in this Tree in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from the root'''
-        if not isinstance(ascending, bool):
-            raise TypeError("ascending must be a bool")
-        pq = PriorityQueue(); dist_from_root = dict()
-        for node in self.traverse_preorder():
-            if node.is_root():
-                d = 0
-            else:
-                d = dist_from_root[node.parent] + node.edge_length
-            dist_from_root[node] = d
-            if ascending:
-                pq.put((d,node))
-            else:
-                pq.put((-d,node))
-        while not pq.empty():
-            priority,node = pq.get()
-            if ascending:
-                yield (priority,node)
-            else:
-                yield (-priority,node)
+        for node in self.root.traverse_rootdistorder(ascending):
+            yield node
 
     def treeness(self):
         '''Compute the "treeness" (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length

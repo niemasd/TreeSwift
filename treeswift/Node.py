@@ -160,28 +160,22 @@ class Node:
 
     def traverse_internal(self):
         '''Traverse over the internal nodes below (and including) this Node object'''
-        for n in self.traverse_levelorder(leaves=False):
-            yield n
+        for n in self.traverse_preorder():
+            if not n.is_leaf():
+                yield n
 
     def traverse_leaves(self):
         '''Traverse over the leaves below this Node object'''
-        for n in self.traverse_levelorder(internal=False):
-            yield n
+        for n in self.traverse_preorder():
+            if n.is_leaf():
+                yield n
 
-    def traverse_levelorder(self, leaves=True, internal=True):
+    def traverse_levelorder(self):
         '''Perform a levelorder traversal starting at this Node object'''
-        if not isinstance(leaves, bool):
-            raise TypeError("leaves must be a bool")
-        if not isinstance(internal, bool):
-            raise TypeError("internal must be a bool")
         q = Queue(); q.put(self)
         while not q.empty():
             n = q.get()
-            if n.is_leaf():
-                if leaves:
-                    yield n
-            elif internal:
-                yield n
+            yield n
             for c in n.children:
                 q.put(c)
 
@@ -198,3 +192,25 @@ class Node:
         for c in self.children:
             for n in c.traverse_preorder():
                 yield n
+
+    def traverse_rootdistorder(self, ascending=True):
+        '''Perform a traversal of the Node objects in the subtree rooted at this Node in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from this Node'''
+        if not isinstance(ascending, bool):
+            raise TypeError("ascending must be a bool")
+        pq = PriorityQueue(); dist_from_root = dict()
+        for node in self.traverse_preorder():
+            if node == self:
+                d = 0
+            else:
+                d = dist_from_root[node.parent] + node.edge_length
+            dist_from_root[node] = d
+            if ascending:
+                pq.put((d,node))
+            else:
+                pq.put((-d,node))
+        while not pq.empty():
+            priority,node = pq.get()
+            if ascending:
+                yield (priority,node)
+            else:
+                yield (-priority,node)
