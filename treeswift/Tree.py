@@ -308,7 +308,7 @@ class Tree:
             raise TypeError("unlabeled must be a bool")
         if leaves or internal:
             for node in self.traverse_preorder():
-                if ((node.is_leaf() and leaves) or (not node.is_leaf() and internal)) and (unlabeled or node.label is not None):
+                if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (unlabeled or node.label is not None):
                     if node.edge_length is None:
                         yield (node,0)
                     else:
@@ -339,7 +339,7 @@ class Tree:
                     d[node] = d[node.parent]
                 if node.edge_length is not None:
                     d[node] += node.edge_length
-                if ((node.is_leaf() and leaves) or (not node.is_leaf() and internal)) and (unlabeled or node.label is not None):
+                if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (unlabeled or node.label is not None):
                     yield (node,d[node])
 
     def edge_length_sum(self, terminal=True, internal=True):
@@ -510,6 +510,22 @@ class Tree:
         if not isinstance(selection,str) and len(label_to_node) != len(selection):
             warn("Not all given labels exist in the tree")
         return label_to_node
+
+    def labels(self, leaves=True, internal=True):
+        '''Generator over the (non-None) Node labels of this Tree
+
+        Args:
+            leaves (bool): True to include leaves, otherwise False
+
+            internal (bool): True to include internal nodes, otherwise False
+        '''
+        if not isinstance(leaves, bool):
+            raise TypeError("leaves must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
+        for node in self.traverse_preorder():
+            if node.label is not None and ((leaves and node.is_leaf()) or (internal and not node.is_leaf())):
+                yield node.label
 
     def mrca(self, labels):
         '''Return the Node that is the MRCA of the nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained

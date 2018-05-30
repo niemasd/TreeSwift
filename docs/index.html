@@ -425,6 +425,18 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.labels">
+<code class="descname">labels</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator over the (non-None) Node labels of this Tree</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">leaves (bool): True to include leaves, otherwise False</p>
+<p class="last">internal (bool): True to include internal nodes, otherwise False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.mrca">
 <code class="descname">mrca</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.mrca"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.mrca" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Node that is the MRCA of the nodes labeled by a label in <cite>labels</cite>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>

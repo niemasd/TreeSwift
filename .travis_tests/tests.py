@@ -91,6 +91,15 @@ def test_indent(t):
 def test_label_to_node(t):
     for l,n in t.label_to_node().items():
         pass
+def test_labels(t):
+    for l in t.labels():
+        pass
+    for l in t.labels(leaves=False):
+        pass
+    for l in t.labels(internal=False):
+        pass
+    for l in t.labels(leaves=False,internal=False):
+        pass
 def test_mrca(t):
     o = t.mrca(sample([str(l) for l in t.traverse_leaves()],10))
 def test_mrca_matrix(t):
@@ -105,6 +114,7 @@ def test_num_nodes(t):
     o = t.num_nodes()
     o = t.num_nodes(leaves=False)
     o = t.num_nodes(internal=False)
+    o = t.num_nodes(leaves=False,internal=False)
 def test_rename_nodes_condense(t):
     m = dict()
     for l in t.traverse_leaves():
