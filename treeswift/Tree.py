@@ -11,6 +11,7 @@ except ImportError: # Python 2
     from Queue import PriorityQueue
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid valid NeXML File"
+INDENT = '  '
 
 class Tree:
     '''Tree class'''
@@ -462,6 +463,37 @@ class Tree:
             float: The height (i.e., maximum distance from root) of this tree
         '''
         return max(d[1] for d in self.distances_from_root())
+
+    def indent(self):
+        '''Return an indented Newick string, just like nw_indent in Newick Utilities
+
+        Returns:
+            str: An indented Newick string
+        '''
+        s = self.newick(); o = []; l = 0; i = 0
+        while i < len(s):
+            if s[i] == '(':
+                o.append(INDENT*l); o.append('(\n'); l += 1
+            elif s[i] == ')':
+                l -= 1; o.append('\n'); o.append(INDENT*l); o.append(')')
+            elif s[i] == ',':
+                o.append(',\n')
+            elif s[i] == ';':
+                o.append(';')
+            elif s[i] == ':':
+                while s[i] != ')' and s[i] != ',':
+                    o.append(s[i]); i += 1
+                i -= 1
+            else:
+                o.append(INDENT*l)
+                while i < len(s) and s[i] != '(' and s[i] != ')' and s[i] != ':' and s[i] != ';':
+                    o.append(s[i])
+                    if s[i] == ',':
+                        o.append('\n'); o.append(INDENT*l)
+                    i+= 1
+                i -= 1
+            i += 1
+        return ''.join(o)
 
     def label_to_node(self, selection='leaves'):
         '''Return a dictionary mapping labels (strings) to Node objects. If `selection` is `"all"`, the dictionary will contain all nodes. If `selection` is `"leaves"`, the dictionary will only contain leaves. If `selection` is `"internal"`, the dictionary will only contain internal nodes. If `selection` is a `set`, the dictionary will contain all nodes labeled by a label in `selection`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained

@@ -86,6 +86,8 @@ def test_gamma_statistic(t):
     g = t.gamma_statistic()
 def test_height(t):
     h = t.height()
+def test_indent(t):
+    s = t.indent()
 def test_label_to_node(t):
     for l,n in t.label_to_node().items():
         pass

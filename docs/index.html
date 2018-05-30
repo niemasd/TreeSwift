@@ -401,6 +401,16 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.indent">
+<code class="descname">indent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.indent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an indented Newick string, just like nw_indent in Newick Utilities</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>str: An indented Newick string</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.label_to_node">
 <code class="descname">label_to_node</code><span class="sig-paren">(</span><em>selection='leaves'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.label_to_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.label_to_node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dictionary mapping labels (strings) to Node objects. If <cite>selection</cite> is <cite>“all”</cite>, the dictionary will contain all nodes. If <cite>selection</cite> is <cite>“leaves”</cite>, the dictionary will only contain leaves. If <cite>selection</cite> is <cite>“internal”</cite>, the dictionary will only contain internal nodes. If <cite>selection</cite> is a <cite>set</cite>, the dictionary will contain all nodes labeled by a label in <cite>selection</cite>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
