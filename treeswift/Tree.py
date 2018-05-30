@@ -156,8 +156,38 @@ class Tree:
                     parent = next.parent; parent.remove_child(next)
                     for c in next.children:
                         parent.add_child(c)
-            for c in next.children:
-                q.append(c)
+            q.extend(next.children)
+
+    def condense(self):
+        '''If siblings have the same label, merge them. If they have edge lengths, the resulting Node will have the larger of the lengths. Unifurcations will be suppressed'''
+        self.resolve_polytomies(); labels_below = dict(); longest_leaf_dist = dict()
+        for node in self.traverse_postorder():
+            if node.is_leaf():
+                labels_below[node] = [node.label]; longest_leaf_dist[node] = None
+            else:
+                labels_below[node] = set()
+                for c in node.children:
+                    labels_below[node].update(labels_below[c])
+                    d = longest_leaf_dist[c]
+                    if c.edge_length is not None:
+                        if d is None:
+                            d = 0
+                        d += c.edge_length
+                    if node not in longest_leaf_dist or longest_leaf_dist[node] is None or (d is not None and d > longest_leaf_dist[node]):
+                        longest_leaf_dist[node] = d
+        nodes = deque(); nodes.append(self.root)
+        while len(nodes) != 0:
+            node = nodes.pop()
+            if node.is_leaf():
+                continue
+            if len(labels_below[node]) == 1:
+                node.label = labels_below[node].pop(); node.children = list()
+                if longest_leaf_dist[node] is not None:
+                    if node.edge_length is None:
+                        node.edge_length = 0
+                    node.edge_length += longest_leaf_dist[node]
+            else:
+                nodes.extend(node.children)
 
     def contract_low_support(self, threshold):
         '''Contract internal nodes labeled by a number (e.g. branch support) below `threshold`
@@ -512,9 +542,14 @@ class Tree:
             str: Newick string of this Tree
         '''
         if self.root.edge_length is None:
-            return '%s;' % self.root.newick()
+            suffix = ';'
+        elif isinstance(self.root.edge_length,int):
+            suffix = ':%d;' % self.root.edge_length
+        elif isinstance(self.root.edge_length,float) and self.root.edge_length.is_integer():
+            suffix = ':%d;' % int(self.root.edge_length)
         else:
-            return '%s:%f;' % (self.root.newick(), self.root.edge_length)
+            suffix = ':%s;' % str(self.root.edge_length)
+        return '%s%s' % (self.root.newick(),suffix)
 
     def num_lineages_at(self, distance):
         '''Returns the number of lineages of this Tree that exist `distance` away from the root
@@ -539,8 +574,7 @@ class Tree:
             if node.edge_length is not None:
                 d[node] += node.edge_length
             if d[node] < distance:
-                for c in node.children:
-                    q.append(c)
+                q.extend(node.children)
             elif node.parent is None or d[node.parent] < distance:
                 count += 1
         return count
@@ -621,10 +655,9 @@ class Tree:
             node = q.popleft()
             while len(node.children) > 2:
                 c1 = node.children.pop(); c2 = node.children.pop()
-                nn = Node(edge_length=0); node.add_child(nn)
+                nn = Node(); node.add_child(nn)
                 nn.add_child(c1); nn.add_child(c2)
-            for c in node.children:
-                q.append(c)
+            q.extend(node.children)
 
     def sackin(self, normalize='leaves'):
         '''Compute the Sackin index of this Tree
@@ -669,9 +702,7 @@ class Tree:
         while len(q) != 0:
             node = q.popleft()
             if len(node.children) != 1:
-                for c in node.children:
-                    q.append(c)
-                continue
+                q.extend(node.children); continue
             child = node.children.pop()
             if node.is_root():
                 self.root = child; child.parent = None

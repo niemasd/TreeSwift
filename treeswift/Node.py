@@ -114,7 +114,13 @@ class Node:
             for c in self.children:
                 out.append(c.newick())
                 if c.edge_length is not None:
-                    out.append(':%f' % c.edge_length)
+                    if isinstance(c.edge_length,int):
+                        l_str = str(c.edge_length)
+                    elif isinstance(c.edge_length,float) and c.edge_length.is_integer():
+                        l_str = str(int(c.edge_length))
+                    else:
+                        l_str = str(c.edge_length)
+                    out.append(':%s' % l_str)
                 out.append(',')
             out.pop() # trailing comma
             out.append(')')
@@ -198,17 +204,13 @@ class Node:
         '''Perform a levelorder traversal starting at this Node object'''
         q = deque(); q.append(self)
         while len(q) != 0:
-            n = q.popleft(); yield n
-            for c in n.children:
-                q.append(c)
+            n = q.popleft(); yield n; q.extend(n.children)
 
     def traverse_postorder(self):
         '''Perform a postorder traversal starting at this Node object'''
         s1 = deque(); s2 = deque(); s1.append(self)
         while len(s1) != 0:
-            n = s1.pop(); s2.append(n)
-            for c in n.children:
-                s1.append(c)
+            n = s1.pop(); s2.append(n); s1.extend(n.children)
         while len(s2) != 0:
             yield s2.pop()
 
@@ -216,9 +218,7 @@ class Node:
         '''Perform a preorder traversal starting at this Node object'''
         s = deque(); s.append(self)
         while len(s) != 0:
-            n = s.pop(); yield n
-            for c in n.children:
-                s.append(c)
+            n = s.pop(); yield n; s.extend(n.children)
 
     def traverse_rootdistorder(self, ascending=True):
         '''Perform a traversal of the Node objects in the subtree rooted at this Node in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from this Node'''
