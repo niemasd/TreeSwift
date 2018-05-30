@@ -103,11 +103,13 @@ def test_num_nodes(t):
     o = t.num_nodes()
     o = t.num_nodes(leaves=False)
     o = t.num_nodes(internal=False)
-def test_rename_nodes(t):
+def test_rename_nodes_condense(t):
     m = dict()
     for l in t.traverse_leaves():
         m[str(l)] = 'NIEMA'
-    copy(t).rename_nodes(m)
+    t2 = copy(t)
+    t2.rename_nodes(m)
+    t2.condense()
 def test_resolve_polytomies(t):
     t2 = copy(t)
     t2.collapse_short_branches(float('inf'))
