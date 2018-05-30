@@ -198,7 +198,7 @@
             <span class="n">q</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.condense"><a class="viewcode-back" href="../../index.html#treeswift.Tree.condense">[docs]</a>    <span class="k">def</span> <span class="nf">condense</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;If siblings have the same label, merge them. If they have edge lengths, the resulting Node will have the larger of the lengths. Unifurcations will be suppressed&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;If siblings have the same label, merge them. If they have edge lengths, the resulting Node will have the larger of the lengths&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resolve_polytomies</span><span class="p">();</span> <span class="n">labels_below</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">longest_leaf_dist</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>

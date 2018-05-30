@@ -159,7 +159,7 @@ class Tree:
             q.extend(next.children)
 
     def condense(self):
-        '''If siblings have the same label, merge them. If they have edge lengths, the resulting Node will have the larger of the lengths. Unifurcations will be suppressed'''
+        '''If siblings have the same label, merge them. If they have edge lengths, the resulting Node will have the larger of the lengths'''
         self.resolve_polytomies(); labels_below = dict(); longest_leaf_dist = dict()
         for node in self.traverse_postorder():
             if node.is_leaf():
