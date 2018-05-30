@@ -11,7 +11,6 @@ except ImportError: # Python 2
     from Queue import PriorityQueue
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid valid NeXML File"
-INDENT = '  '
 
 class Tree:
     '''Tree class'''
@@ -464,35 +463,29 @@ class Tree:
         '''
         return max(d[1] for d in self.distances_from_root())
 
-    def indent(self):
+    def indent(self, space=4):
         '''Return an indented Newick string, just like nw_indent in Newick Utilities
+
+        Args:
+            space (int): The number of spaces a tab should equal
 
         Returns:
             str: An indented Newick string
         '''
-        s = self.newick(); o = []; l = 0; i = 0
-        while i < len(s):
-            if s[i] == '(':
-                o.append(INDENT*l); o.append('(\n'); l += 1
-            elif s[i] == ')':
-                l -= 1; o.append('\n'); o.append(INDENT*l); o.append(')')
-            elif s[i] == ',':
-                o.append(',\n')
-            elif s[i] == ';':
-                o.append(';')
-            elif s[i] == ':':
-                while i < len(s) and s[i] != ')' and s[i] != ',' and s[i] != ';':
-                    o.append(s[i]); i += 1
-                i -= 1
+        if not isinstance(space,int):
+            raise TypeError("space must be an int")
+        if space < 0:
+            raise ValueError("space must be a non-negative integer")
+        space = ' '*space; o = []; l = 0
+        for c in self.newick():
+            if c == '(':
+                o.append('(\n'); l += 1; o.append(space*l)
+            elif c == ')':
+                o.append('\n'); l -= 1; o.append(space*l); o.append(')')
+            elif c == ',':
+                o.append(',\n'); o.append(space*l)
             else:
-                o.append(INDENT*l)
-                while i < len(s) and s[i] != '(' and s[i] != ')' and s[i] != ':' and s[i] != ';':
-                    o.append(s[i])
-                    if s[i] == ',':
-                        o.append('\n'); o.append(INDENT*l)
-                    i+= 1
-                i -= 1
-            i += 1
+                o.append(c)
         return ''.join(o)
 
     def label_to_node(self, selection='leaves'):
