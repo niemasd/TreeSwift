@@ -481,7 +481,7 @@ class Tree:
             elif s[i] == ';':
                 o.append(';')
             elif s[i] == ':':
-                while s[i] != ')' and s[i] != ',':
+                while i < len(s) and s[i] != ')' and s[i] != ',' and s[i] != ';':
                     o.append(s[i]); i += 1
                 i -= 1
             else:
