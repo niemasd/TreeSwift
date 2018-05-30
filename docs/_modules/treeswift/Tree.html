@@ -692,7 +692,7 @@
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">in</span> <span class="n">renaming_map</span><span class="p">:</span>
                 <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">renaming_map</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Tree.reroot"><a class="viewcode-back" href="../../index.html#treeswift.Tree.reroot">[docs]</a>    <span class="k">def</span> <span class="nf">reroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.reroot"><a class="viewcode-back" href="../../index.html#treeswift.Tree.reroot">[docs]</a>    <span class="k">def</span> <span class="nf">reroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">branch_support</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Reroot this Tree at `length` up the incident edge of `node`</span>
 
 <span class="sd">        Args:</span>
@@ -701,6 +701,8 @@
 <span class="sd">            length (float): The distance up the specified edge at which to reroot this `Tree`</span>
 
 <span class="sd">            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</span>
+
+<span class="sd">            branch_support (bool): True if internal node labels represent branch support values, otherwise False</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;node must be a Node&quot;</span><span class="p">)</span>
@@ -708,13 +710,18 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;length must be a float or an int&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">suppress_unifurcations</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;suppress_unifurcations must be a bool&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">branch_support</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;branch_support must be a bool&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Attempting to reroot a tree with a root edge&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Attempting to reroot at non-zero length on 0-length edge&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specified length at which to reroot must be positive&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specified node has no edge length, so specified length must be None or 0&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specified length must be shorter than the edge at which to reroot&quot;</span><span class="p">)</span>
         <span class="n">ancestors</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">traverse_ancestors</span><span class="p">(</span><span class="n">include_self</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ancestors</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
@@ -722,9 +729,20 @@
             <span class="n">parent</span><span class="o">.</span><span class="n">remove_child</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
             <span class="n">child</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
             <span class="n">parent</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span>
+            <span class="k">if</span> <span class="n">branch_support</span><span class="p">:</span>
+                <span class="n">parent</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">label</span>
+        <span class="k">if</span> <span class="n">branch_support</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">sibling</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">;</span> <span class="n">sibling</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">();</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="p">,</span><span class="n">sibling</span><span class="p">]</span>
-        <span class="n">sibling</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">-</span> <span class="n">length</span><span class="p">;</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">sibling</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sibling</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sibling</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">-</span> <span class="n">length</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="n">length</span>
         <span class="k">if</span> <span class="n">suppress_unifurcations</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">suppress_unifurcations</span><span class="p">()</span></div>
 
@@ -792,6 +810,8 @@
                 <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">child</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span>
             <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_inorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_inorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

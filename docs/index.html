@@ -506,13 +506,14 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.reroot">
-<code class="descname">reroot</code><span class="sig-paren">(</span><em>node</em>, <em>length</em>, <em>suppress_unifurcations=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.reroot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.reroot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">reroot</code><span class="sig-paren">(</span><em>node</em>, <em>length</em>, <em>suppress_unifurcations=True</em>, <em>branch_support=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.reroot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.reroot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reroot this Tree at <cite>length</cite> up the incident edge of <cite>node</cite></p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><p class="first">node (Node): The node on whose incident edge this <cite>Tree</cite> will be rerooted</p>
 <p>length (float): The distance up the specified edge at which to reroot this <cite>Tree</cite></p>
-<p class="last">suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</p>
+<p>suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</p>
+<p class="last">branch_support (bool): True if internal node labels represent branch support values, otherwise False</p>
 </dd>
 </dl>
 </dd></dl>

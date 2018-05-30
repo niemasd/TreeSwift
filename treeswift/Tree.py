@@ -653,7 +653,7 @@ class Tree:
             if node.label in renaming_map:
                 node.label = renaming_map[node.label]
 
-    def reroot(self, node, length, suppress_unifurcations=True):
+    def reroot(self, node, length, suppress_unifurcations=True, branch_support=False):
         '''Reroot this Tree at `length` up the incident edge of `node`
 
         Args:
@@ -662,6 +662,8 @@ class Tree:
             length (float): The distance up the specified edge at which to reroot this `Tree`
 
             suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
+
+            branch_support (bool): True if internal node labels represent branch support values, otherwise False
         '''
         if not isinstance(node, Node):
             raise TypeError("node must be a Node")
@@ -669,13 +671,18 @@ class Tree:
             raise TypeError("length must be a float or an int")
         if not isinstance(suppress_unifurcations, bool):
             raise TypeError("suppress_unifurcations must be a bool")
+        if not isinstance(branch_support, bool):
+            raise TypeError("branch_support must be a bool")
         if self.root.edge_length is not None:
             raise ValueError("Attempting to reroot a tree with a root edge")
         if (node.edge_length is None or node.edge_length == 0) and length != 0:
             raise ValueError("Attempting to reroot at non-zero length on 0-length edge")
         if length < 0:
             raise ValueError("Specified length at which to reroot must be positive")
-        if length > node.edge_length:
+        if node.edge_length is None:
+            if length != 0:
+                raise ValueError("Specified node has no edge length, so specified length must be None or 0")
+        elif length > node.edge_length:
             raise ValueError("Specified length must be shorter than the edge at which to reroot")
         ancestors = [a for a in node.traverse_ancestors(include_self=False)]
         for i in range(len(ancestors)-2,-1,-1):
@@ -683,9 +690,20 @@ class Tree:
             parent.remove_child(child)
             child.add_child(parent)
             parent.edge_length = child.edge_length
+            if branch_support:
+                parent.label = child.label
+        if branch_support:
+            node.parent.label = None
         sibling = node.parent; sibling.children.remove(node)
         self.root = Node(); self.root.children = [node,sibling]
-        sibling.edge_length = node.edge_length - length; node.edge_length = length
+        if node.edge_length is None and (length is None or length == 0):
+            sibling.edge_length = None
+        elif length is None:
+            sibling.edge_length = node.edge_length
+        else:
+            sibling.edge_length = node.edge_length - length
+        if node.edge_length is not None and length != 0:
+            node.edge_length = length
         if suppress_unifurcations:
             self.suppress_unifurcations()
 
@@ -753,6 +771,8 @@ class Tree:
                 if child.edge_length is None:
                     child.edge_length = 0
                 child.edge_length += node.edge_length
+            if child.label is None and node.label is not None:
+                child.label = node.label
             q.append(child)
 
     def traverse_inorder(self):
