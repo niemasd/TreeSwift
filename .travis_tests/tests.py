@@ -44,8 +44,27 @@ def test_copy(t):
     o = copy(t)
 def test_diameter(t):
     d = t.diameter()
+def test_distances_from_parent(t):
+    for n,d in t.distances_from_parent():
+        pass
+    for n,d in t.distances_from_parent(leaves=False):
+        pass
+    for n,d in t.distances_from_parent(internal=False):
+        pass
+    for n,d in t.distances_from_parent(unlabeled=True):
+        pass
+    for n,d in t.distances_from_parent(leaves=False, internal=False, unlabeled=True):
+        pass
 def test_distances_from_root(t):
     for n,d in t.distances_from_root():
+        pass
+    for n,d in t.distances_from_root(leaves=False):
+        pass
+    for n,d in t.distances_from_root(internal=False):
+        pass
+    for n,d in t.distances_from_root(unlabeled=True):
+        pass
+    for n,d in t.distances_from_root(leaves=False, internal=False, unlabeled=True):
         pass
 def test_distance_matrix(t):
     m = t.distance_matrix()

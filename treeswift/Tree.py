@@ -226,12 +226,46 @@ class Tree:
                     leaf_dists[node] += leaf_dists[node.children[i]]; del leaf_dists[node.children[i]]
         return M
 
-    def distances_from_root(self, leaves=True, internal=True):
-        '''Generator over the root-to-node distances of this Tree; (node,distance) tuples'''
+    def distances_from_parent(self, leaves=True, internal=True, unlabeled=False):
+        '''Generator over the node-to-parent distances of this Tree; (node,distance) tuples
+
+        Args:
+            terminal (bool): `True` to include leaves, otherwise `False`
+
+            internal (bool): `True` to include internal nodes, otherwise `False`
+
+            unlabeled (bool): `True` to include unlabeled nodes, otherwise `False`
+        '''
         if not isinstance(leaves, bool):
             raise TypeError("leaves must be a bool")
         if not isinstance(internal, bool):
             raise TypeError("internal must be a bool")
+        if not isinstance(unlabeled, bool):
+            raise TypeError("unlabeled must be a bool")
+        if leaves or internal:
+            for node in self.traverse_preorder():
+                if ((node.is_leaf() and leaves) or (not node.is_leaf() and internal)) and (unlabeled or node.label is not None):
+                    if node.edge_length is None:
+                        yield (node,0)
+                    else:
+                        yield (node,node.edge_length)
+
+    def distances_from_root(self, leaves=True, internal=True, unlabeled=False):
+        '''Generator over the root-to-node distances of this Tree; (node,distance) tuples
+
+        Args:
+            terminal (bool): `True` to include leaves, otherwise `False`
+
+            internal (bool): `True` to include internal nodes, otherwise `False`
+
+            unlabeled (bool): `True` to include unlabeled nodes, otherwise `False`
+        '''
+        if not isinstance(leaves, bool):
+            raise TypeError("leaves must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
+        if not isinstance(unlabeled, bool):
+            raise TypeError("unlabeled must be a bool")
         if leaves or internal:
             d = dict()
             for node in self.traverse_preorder():
@@ -241,7 +275,7 @@ class Tree:
                     d[node] = d[node.parent]
                 if node.edge_length is not None:
                     d[node] += node.edge_length
-                if (node.is_leaf() and leaves) or (not node.is_leaf() and internal):
+                if ((node.is_leaf() and leaves) or (not node.is_leaf() and internal)) and (unlabeled or node.label is not None):
                     yield (node,d[node])
 
     def edge_length_sum(self, terminal=True, internal=True):
