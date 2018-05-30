@@ -359,6 +359,19 @@ class Tree:
             raise TypeError("internal must be a bool")
         return sum(node.edge_length for node in self.traverse_preorder() if node.edge_length is not None and ((terminal and node.is_leaf()) or (internal and not node.is_leaf())))
 
+    def extract_subtree(self, node):
+        '''Return a copy of the subtree rooted at `node`
+
+        Args:
+            node (Node): The root of the desired subtree
+
+        Returns:
+            Tree: A copy of the subtree rooted at `node`
+        '''
+        if not isinstance(node, Node):
+            raise TypeError("node must be a Node")
+        r = self.root; self.root = node; o = copy(self); self.root = r; return o
+
     def extract_tree(self, labels, without, suppress_unifurcations=True):
         '''Helper function for extract_tree_* functions'''
         if not isinstance(suppress_unifurcations, bool):
