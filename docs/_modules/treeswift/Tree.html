@@ -232,6 +232,40 @@
                     <span class="n">best</span> <span class="o">=</span> <span class="n">max_pair</span>
         <span class="k">return</span> <span class="n">best</span></div>
 
+<div class="viewcode-block" id="Tree.distance_between"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distance_between">[docs]</a>    <span class="k">def</span> <span class="nf">distance_between</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the distance between nodes `u` and `v` in this `Tree`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            u (Node): Node `u`</span>
+
+<span class="sd">            v (Node): Node `v`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The distance between nodes `u` and `v`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;u must be a Node&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;v must be a Node&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="n">v</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.</span>
+        <span class="n">u_dists</span> <span class="o">=</span> <span class="p">{</span><span class="n">u</span><span class="p">:</span><span class="mf">0.</span><span class="p">};</span> <span class="n">v_dists</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span><span class="mf">0.</span><span class="p">}</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">parent</span> <span class="c1"># u traversal</span>
+        <span class="k">while</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">u_dists</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">u_dists</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">u_dists</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="o">.</span><span class="n">edge_length</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">parent</span> <span class="c1"># v traversal</span>
+        <span class="k">while</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">v_dists</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">v_dists</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">v_dists</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="o">.</span><span class="n">edge_length</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">u_dists</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">u_dists</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+</span> <span class="n">v_dists</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;u and v are not in the same Tree&quot;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Tree.distance_matrix"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return a distance matrix (2D dictionary) of the leaves of this Tree</span>
 

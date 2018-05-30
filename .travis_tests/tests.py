@@ -44,6 +44,11 @@ def test_copy(t):
     o = copy(t)
 def test_diameter(t):
     d = t.diameter()
+def test_distance_between(t):
+    u,v = list(t.traverse_leaves())[:2]
+    d = t.distance_between(u,v)
+def test_distance_matrix(t):
+    m = t.distance_matrix()
 def test_distances_from_parent(t):
     for n,d in t.distances_from_parent():
         pass
@@ -66,8 +71,6 @@ def test_distances_from_root(t):
         pass
     for n,d in t.distances_from_root(leaves=False, internal=False, unlabeled=True):
         pass
-def test_distance_matrix(t):
-    m = t.distance_matrix()
 def test_edge_length_sum(t):
     o = t.edge_length_sum()
     o = t.edge_length_sum(terminal=False)

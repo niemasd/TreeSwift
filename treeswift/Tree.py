@@ -193,6 +193,40 @@ class Tree:
                     best = max_pair
         return best
 
+    def distance_between(self, u, v):
+        '''Return the distance between nodes `u` and `v` in this `Tree`
+
+        Args:
+            u (Node): Node `u`
+
+            v (Node): Node `v`
+
+        Returns:
+            float: The distance between nodes `u` and `v`
+        '''
+        if not isinstance(u, Node):
+            raise TypeError("u must be a Node")
+        if not isinstance(v, Node):
+            raise TypeError("v must be a Node")
+        if u == v:
+            return 0.
+        u_dists = {u:0.}; v_dists = {v:0.}
+        c = u; p = u.parent # u traversal
+        while p is not None:
+            u_dists[p] = u_dists[c]
+            if c.edge_length is not None:
+                u_dists[p] += c.edge_length
+            c = p; p = p.parent
+        c = v; p = v.parent # v traversal
+        while p is not None:
+            v_dists[p] = v_dists[c]
+            if c.edge_length is not None:
+                v_dists[p] += c.edge_length
+            if p in u_dists:
+                return u_dists[p] + v_dists[p]
+            c = p; p = p.parent
+        raise RuntimeError("u and v are not in the same Tree")
+
     def distance_matrix(self):
         '''Return a distance matrix (2D dictionary) of the leaves of this Tree
 
