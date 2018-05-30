@@ -605,6 +605,18 @@
                 <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">num</span></div>
 
+<div class="viewcode-block" id="Tree.rename_nodes"><a class="viewcode-back" href="../../index.html#treeswift.Tree.rename_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">rename_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renaming_map</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Rename nodes in this Tree</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            renaming_map (dict): A dictionary mapping old labels (keys) to new labels (values)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">renaming_map</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;renaming_map must be a dict&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">in</span> <span class="n">renaming_map</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">renaming_map</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">]</span></div>
+
 <div class="viewcode-block" id="Tree.reroot"><a class="viewcode-back" href="../../index.html#treeswift.Tree.reroot">[docs]</a>    <span class="k">def</span> <span class="nf">reroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Reroot this Tree at `length` up the incident edge of `node`</span>
 

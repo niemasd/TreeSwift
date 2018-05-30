@@ -566,6 +566,18 @@ class Tree:
                 num += 1
         return num
 
+    def rename_nodes(self, renaming_map):
+        '''Rename nodes in this Tree
+
+        Args:
+            renaming_map (dict): A dictionary mapping old labels (keys) to new labels (values)
+        '''
+        if not isinstance(renaming_map, dict):
+            raise TypeError("renaming_map must be a dict")
+        for node in self.traverse_preorder():
+            if node.label in renaming_map:
+                node.label = renaming_map[node.label]
+
     def reroot(self, node, length, suppress_unifurcations=True):
         '''Reroot this Tree at `length` up the incident edge of `node`
 
