@@ -13,35 +13,35 @@ INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid valid NeXML File"
 
 class Tree:
-    '''Tree class'''
+    '''``Tree`` class'''
     def __init__(self):
-        '''Tree constructor'''
+        '''``Tree`` constructor'''
         self.root = Node()  # root Node object
 
     def __str__(self):
-        '''Represent this Tree as a string
+        '''Represent this ``Tree`` as a string
 
         Returns:
-            str: string representation of this Tree (Newick string)
+            ``str``: string representation of this ``Tree`` (Newick string)
         '''
         return self.newick()
 
     def __copy__(self):
-        '''Copy this Tree
+        '''Copy this ``Tree``
 
         Returns:
-            Tree: A copy of this tree
+            ``Tree``: A copy of this tree
         '''
         return self.extract_tree(None, False, False)
 
 
     def avg_branch_length(self, terminal=True, internal=True):
-        '''Compute the average length of the selected branches of this Tree. Edges with length None will be treated as 0-length
+        '''Compute the average length of the selected branches of this ``Tree``. Edges with length ``None`` will be treated as 0-length
 
         Args:
-            terminal (bool): True to include terminal branches, otherwise False
+            ``terminal`` (``bool``): ``True`` to include terminal branches, otherwise ``False``
 
-            internal (bool): True to include internal branches, otherwise False
+            ``internal`` (``bool``): ``True`` to include internal branches, otherwise ``False``
 
         Returns:
             The average length of the selected branches
@@ -59,12 +59,12 @@ class Tree:
         return tot/num
 
     def branch_lengths(self, terminal=True, internal=True):
-        '''Generator over the lengths of the selected branches of this Tree. Edges with length None will be output as 0-length
+        '''Generator over the lengths of the selected branches of this ``Tree``. Edges with length ``None`` will be output as 0-length
 
         Args:
-            terminal (bool): True to include terminal branches, otherwise False
+            ``terminal`` (``bool``): ``True`` to include terminal branches, otherwise ``False``
 
-            internal (bool): True to include internal branches, otherwise False
+            ``internal`` (``bool``): ``True`` to include internal branches, otherwise ``False``
         '''
         if not isinstance(terminal, bool):
             raise TypeError("terminal must be a bool")
@@ -81,7 +81,7 @@ class Tree:
         '''Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0
 
         Returns:
-            tuple: First value is the closest leaf to the root, and second value is the corresponding distance
+            ``tuple``: First value is the closest leaf to the root, and second value is the corresponding distance
         '''
         best = (None,float('inf')); d = dict()
         for node in self.traverse_preorder():
@@ -99,7 +99,7 @@ class Tree:
         '''Generator over the times of successive coalescence events
 
         Args:
-            backward (bool): True to go backward in time (i.e., leaves to root), otherwise False
+            ``backward`` (``bool``): ``True`` to go backward in time (i.e., leaves to root), otherwise ``False``
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
@@ -118,7 +118,7 @@ class Tree:
         '''Generator over the waiting times of successive coalescence events
 
         Args:
-            backward (bool): True to go backward in time (i.e., leaves to root), otherwise False
+            ``backward`` (``bool``): ``True`` to go backward in time (i.e., leaves to root), otherwise ``False``
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
@@ -137,10 +137,10 @@ class Tree:
             next = mult*pq.get(); yield abs(curr-next); curr = next
 
     def collapse_short_branches(self, threshold):
-        '''Collapse internal branches (not terminal branches) with length less than or equal to `threshold`. A branch length of `None` is considered 0
+        '''Collapse internal branches (not terminal branches) with length less than or equal to ``threshold``. A branch length of ``None`` is considered 0
 
         Args:
-            threshold (float): The threshold to use when collapsing branches
+            ``threshold`` (``float``): The threshold to use when collapsing branches
         '''
         if not isinstance(threshold,float) and not isinstance(threshold,int):
             raise RuntimeError("threshold must be an integer or a float")
@@ -159,7 +159,7 @@ class Tree:
             q.extend(next.children)
 
     def condense(self):
-        '''If siblings have the same label, merge them. If they have edge lengths, the resulting Node will have the larger of the lengths'''
+        '''If siblings have the same label, merge them. If they have edge lengths, the resulting ``Node`` will have the larger of the lengths'''
         self.resolve_polytomies(); labels_below = dict(); longest_leaf_dist = dict()
         for node in self.traverse_postorder():
             if node.is_leaf():
@@ -190,10 +190,10 @@ class Tree:
                 nodes.extend(node.children)
 
     def contract_low_support(self, threshold):
-        '''Contract internal nodes labeled by a number (e.g. branch support) below `threshold`
+        '''Contract internal nodes labeled by a number (e.g. branch support) below ``threshold``
 
         Args:
-            threshold (float): The support threshold to use when contracting nodes'''
+            ``threshold`` (``float``): The support threshold to use when contracting nodes'''
         if not isinstance(threshold, float) and not isinstance(threshold, int):
             raise TypeError("threshold must be float or int")
         to_contract = list()
@@ -207,10 +207,10 @@ class Tree:
             node.contract()
 
     def diameter(self):
-        '''Compute the diameter (maximum leaf pairwise distance) of this Tree
+        '''Compute the diameter (maximum leaf pairwise distance) of this ``Tree``
 
         Returns:
-            float: The diameter of this Tree
+            ``float``: The diameter of this Tree
         '''
         d = dict(); best = float('-inf')
         for node in self.traverse_postorder():
@@ -224,15 +224,15 @@ class Tree:
         return best
 
     def distance_between(self, u, v):
-        '''Return the distance between nodes `u` and `v` in this `Tree`
+        '''Return the distance between nodes ``u`` and ``v`` in this ``Tree``
 
         Args:
-            u (Node): Node `u`
+            ``u`` (``Node``): Node ``u``
 
-            v (Node): Node `v`
+            ``v`` (``Node``): Node ``v``
 
         Returns:
-            float: The distance between nodes `u` and `v`
+            ``float``: The distance between nodes ``u`` and ``v``
         '''
         if not isinstance(u, Node):
             raise TypeError("u must be a Node")
@@ -258,10 +258,10 @@ class Tree:
         raise RuntimeError("u and v are not in the same Tree")
 
     def distance_matrix(self):
-        '''Return a distance matrix (2D dictionary) of the leaves of this Tree
+        '''Return a distance matrix (2D dictionary) of the leaves of this ``Tree``
 
         Returns:
-            dict: Distance matrix (2D dictionary) of the leaves of this Tree, where keys are Node objects; M[u][v] = distance from u to v
+            ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are ``Node`` objects; ``M[u][v]`` = distance from ``u`` to ``v``
         '''
         M = dict(); leaf_dists = dict()
         for node in self.traverse_postorder():
@@ -291,14 +291,14 @@ class Tree:
         return M
 
     def distances_from_parent(self, leaves=True, internal=True, unlabeled=False):
-        '''Generator over the node-to-parent distances of this Tree; (node,distance) tuples
+        '''Generator over the node-to-parent distances of this ``Tree``; (node,distance) tuples
 
         Args:
-            terminal (bool): `True` to include leaves, otherwise `False`
+            ``terminal`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
-            internal (bool): `True` to include internal nodes, otherwise `False`
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
 
-            unlabeled (bool): `True` to include unlabeled nodes, otherwise `False`
+            ``unlabeled`` (``bool``): ``True`` to include unlabeled nodes, otherwise ``False``
         '''
         if not isinstance(leaves, bool):
             raise TypeError("leaves must be a bool")
@@ -315,14 +315,14 @@ class Tree:
                         yield (node,node.edge_length)
 
     def distances_from_root(self, leaves=True, internal=True, unlabeled=False):
-        '''Generator over the root-to-node distances of this Tree; (node,distance) tuples
+        '''Generator over the root-to-node distances of this ``Tree``; (node,distance) tuples
 
         Args:
-            terminal (bool): `True` to include leaves, otherwise `False`
+            ``terminal`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
-            internal (bool): `True` to include internal nodes, otherwise `False`
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
 
-            unlabeled (bool): `True` to include unlabeled nodes, otherwise `False`
+            ``unlabeled`` (``bool``): ``True`` to include unlabeled nodes, otherwise ``False``
         '''
         if not isinstance(leaves, bool):
             raise TypeError("leaves must be a bool")
@@ -343,15 +343,15 @@ class Tree:
                     yield (node,d[node])
 
     def edge_length_sum(self, terminal=True, internal=True):
-        '''Compute the sum of all selected edge lengths in this Tree
+        '''Compute the sum of all selected edge lengths in this ``Tree``
 
         Args:
-            terminal (bool): `True` to include terminal branches, otherwise `False`
+            ``terminal`` (``bool``): ``True`` to include terminal branches, otherwise ``False``
 
-            internal (bool): `True` to include internal branches, otherwise `False`
+            ``internal`` (``bool``): ``True`` to include internal branches, otherwise ``False``
 
         Returns:
-            float: Sum of all selected edge lengths in this Tree
+            ``float``: Sum of all selected edge lengths in this ``Tree``
         '''
         if not isinstance(terminal, bool):
             raise TypeError("leaves must be a bool")
@@ -360,20 +360,20 @@ class Tree:
         return sum(node.edge_length for node in self.traverse_preorder() if node.edge_length is not None and ((terminal and node.is_leaf()) or (internal and not node.is_leaf())))
 
     def extract_subtree(self, node):
-        '''Return a copy of the subtree rooted at `node`
+        '''Return a copy of the subtree rooted at ``node``
 
         Args:
-            node (Node): The root of the desired subtree
+            ``node`` (``Node``): The root of the desired subtree
 
         Returns:
-            Tree: A copy of the subtree rooted at `node`
+            ``Tree``: A copy of the subtree rooted at ``node``
         '''
         if not isinstance(node, Node):
             raise TypeError("node must be a Node")
         r = self.root; self.root = node; o = copy(self); self.root = r; return o
 
     def extract_tree(self, labels, without, suppress_unifurcations=True):
-        '''Helper function for extract_tree_* functions'''
+        '''Helper function for ``extract_tree_*`` functions'''
         if not isinstance(suppress_unifurcations, bool):
             raise TypeError("suppress_unifurcations must be a bool")
         if labels is not None and not isinstance(labels, set):
@@ -403,36 +403,36 @@ class Tree:
         return out
 
     def extract_tree_without(self, labels, suppress_unifurcations=True):
-        '''Extract a copy of this Tree without the leaves labeled by the strings in `labels`
+        '''Extract a copy of this ``Tree`` without the leaves labeled by the strings in ``labels``
 
         Args:
-            labels (set): Set of leaf labels to exclude
+            ``labels`` (``set``): Set of leaf labels to exclude
 
-            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
+            ``suppress_unifurcations`` (``bool``): ``True`` to suppress unifurcations, otherwise ``False``
 
         Returns:
-            Tree: Copy of this Tree, exluding the leaves labeled by the strings in `labels`
+            ``Tree``: Copy of this ``Tree``, exluding the leaves labeled by the strings in ``labels``
         '''
         return self.extract_tree(labels, True, suppress_unifurcations)
 
     def extract_tree_with(self, labels, suppress_unifurcations=True):
-        '''Extract a copy of this Tree with only the leaves labeled by the strings in `labels`
+        '''Extract a copy of this ``Tree`` with only the leaves labeled by the strings in ``labels``
 
         Args:
-            leaves (set): Set of leaf labels to include.
+            ``leaves`` (``set``): Set of leaf labels to include.
 
-            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
+            ``suppress_unifurcations`` (``bool``): ``True`` to suppress unifurcations, otherwise ``False``
 
         Returns:
-            Tree: Copy of this Tree, including only the leaves labeled by the strings in `labels`
+            Tree: Copy of this Tree, including only the leaves labeled by the strings in ``labels``
         '''
         return self.extract_tree(labels, False, suppress_unifurcations)
 
     def furthest_from_root(self):
-        '''Return the Node that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0
+        '''Return the ``Node`` that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0
 
         Returns:
-            tuple: First value is the furthest Node from the root, and second value is the corresponding distance
+            ``tuple``: First value is the furthest ``Node`` from the root, and second value is the corresponding distance
         '''
         best = (self.root,0); d = dict()
         for node in self.traverse_preorder():
@@ -450,7 +450,7 @@ class Tree:
         '''Compute the Gamma statistic of Pybus and Harvey (2000)
 
         Returns:
-            float: The Gamma statistic of Pybus and Harvey (2000)
+            ``float``: The Gamma statistic of Pybus and Harvey (2000)
         '''
         t = copy(self); t.resolve_polytomies() # need fully bifurcating tree
         G = [g for g in t.coalescence_times(backward=False)]
@@ -469,21 +469,21 @@ class Tree:
         return out
 
     def height(self):
-        '''Compute the height (i.e., maximum distance from root) of this tree
+        '''Compute the height (i.e., maximum distance from root) of this ``Tree``
 
         Returns:
-            float: The height (i.e., maximum distance from root) of this tree
+            ``float``: The height (i.e., maximum distance from root) of this ``Tree``
         '''
         return max(d[1] for d in self.distances_from_root())
 
     def indent(self, space=4):
-        '''Return an indented Newick string, just like nw_indent in Newick Utilities
+        '''Return an indented Newick string, just like ``nw_indent`` in Newick Utilities
 
         Args:
-            space (int): The number of spaces a tab should equal
+            ``space`` (``int``): The number of spaces a tab should equal
 
         Returns:
-            str: An indented Newick string
+            ``str``: An indented Newick string
         '''
         if not isinstance(space,int):
             raise TypeError("space must be an int")
@@ -502,13 +502,22 @@ class Tree:
         return ''.join(o)
 
     def label_to_node(self, selection='leaves'):
-        '''Return a dictionary mapping labels (strings) to Node objects. If `selection` is `"all"`, the dictionary will contain all nodes. If `selection` is `"leaves"`, the dictionary will only contain leaves. If `selection` is `"internal"`, the dictionary will only contain internal nodes. If `selection` is a `set`, the dictionary will contain all nodes labeled by a label in `selection`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
+        '''Return a dictionary mapping labels (strings) to ``Node`` objects
+            * If ``selection`` is ``"all"``, the dictionary will contain all nodes
+            * If ``selection`` is ``"leaves"``, the dictionary will only contain leaves
+            * If ``selection`` is ``"internal"``, the dictionary will only contain internal nodes
+            * If ``selection`` is a ``set``, the dictionary will contain all nodes labeled by a label in ``selection``
+            * If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
 
         Args:
-            selection (str or set): `"all"` to select all nodes, `"leaves"` to select leaves, `"internal"` to select internal nodes, or a `set` of labels to specify nodes to select
+            ``selection`` (``str`` or ``set``): The selection of nodes to get
+                * ``"all"`` to select all nodes
+                * ``"leaves"`` to select leaves
+                * ``"internal"`` to select internal nodes
+                * A ``set`` of labels to specify nodes to select
 
         Returns:
-            dict: Dictionary mapping labels to the corresponding nodes
+            ``dict``: Dictionary mapping labels to the corresponding nodes
         '''
         if not isinstance(selection,set) and not isinstance(selection,list) and (not isinstance(selection,str) or not (selection != 'all' or selection != 'leaves' or selection != 'internal')):
             raise RuntimeError('"selection" must be one of the strings "all", "leaves", or "internal", or it must be a set containing Node labels')
@@ -525,12 +534,12 @@ class Tree:
         return label_to_node
 
     def labels(self, leaves=True, internal=True):
-        '''Generator over the (non-None) Node labels of this Tree
+        '''Generator over the (non-``None``) ``Node`` labels of this ``Tree``
 
         Args:
-            leaves (bool): True to include leaves, otherwise False
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
-            internal (bool): True to include internal nodes, otherwise False
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
         if not isinstance(leaves, bool):
             raise TypeError("leaves must be a bool")
@@ -540,14 +549,22 @@ class Tree:
             if node.label is not None and ((leaves and node.is_leaf()) or (internal and not node.is_leaf())):
                 yield node.label
 
-    def mrca(self, labels):
-        '''Return the Node that is the MRCA of the nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
+    def ladderize(self, ascending=True):
+        '''Ladderize this ``Tree`` by sorting each ``Node``'s children by total number of descendants
 
         Args:
-            labels (set): Set of leaf labels
+            ``ascending`` (``bool``): ``True`` to sort in ascending order of ``mode``, otherwise ``False``
+        '''
+        self.order('num_descendants_then_edge_length_then_label', ascending=ascending)
+
+    def mrca(self, labels):
+        '''Return the Node that is the MRCA of the nodes labeled by a label in ``labels``. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
+
+        Args:
+            ``labels`` (``set``): Set of leaf labels
 
         Returns:
-            Node: The MRCA of the Node objects labeled by a label in `labels`
+            ``Node``: The MRCA of the ``Node`` objects labeled by a label in ``labels``
         '''
         if not isinstance(labels,set):
             try:
@@ -566,10 +583,10 @@ class Tree:
         raise RuntimeError("There somehow does not exist an MRCA for the given labels")
 
     def mrca_matrix(self):
-        '''Return a dictionary storing all pairwise MRCAs. M[u][v] = MRCA of nodes u and v. Excludes M[u][u] because MRCA of node and itself is itself.
+        '''Return a dictionary storing all pairwise MRCAs. ``M[u][v]`` = MRCA of nodes ``u`` and ``v``. Excludes ``M[u][u]`` because MRCA of node and itself is itself
 
         Returns:
-            dict: M[u][v] = MRCA of nodes u and v
+            ``dict``: ``M[u][v]`` = MRCA of nodes ``u`` and ``v``
         '''
         M = dict()
         leaves_below = dict()
@@ -590,10 +607,10 @@ class Tree:
         return M
 
     def newick(self):
-        '''Output this Tree as a Newick string
+        '''Output this ``Tree`` as a Newick string
 
         Returns:
-            str: Newick string of this Tree
+            ``str``: Newick string of this ``Tree``
         '''
         if self.root.edge_length is None:
             suffix = ';'
@@ -606,13 +623,13 @@ class Tree:
         return '%s%s' % (self.root.newick(),suffix)
 
     def num_lineages_at(self, distance):
-        '''Returns the number of lineages of this Tree that exist `distance` away from the root
+        '''Returns the number of lineages of this ``Tree`` that exist ``distance`` away from the root
 
         Args:
-            distance (float): The distance away from the root
+            ``distance`` (``float``): The distance away from the root
 
         Returns:
-            int: The number of lineages that exist `distance` away from the root
+            ``int``: The number of lineages that exist ``distance`` away from the root
         '''
         if not isinstance(distance, float) and not isinstance(distance, int):
             raise TypeError("distance must be an int or a float")
@@ -634,15 +651,15 @@ class Tree:
         return count
 
     def num_nodes(self, leaves=True, internal=True):
-        '''Compute the total number of selected nodes in this Tree
+        '''Compute the total number of selected nodes in this ``Tree``
 
         Args:
-            leaves (bool): True to include leaves, otherwise False
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
-            internal (bool): True to include internal nodes, otherwise False
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
 
         Returns:
-            int: The total number of selected nodes in this Tree
+            ``int``: The total number of selected nodes in this ``Tree``
         '''
         if not isinstance(leaves, bool):
             raise TypeError("leaves must be a bool")
@@ -653,6 +670,75 @@ class Tree:
             if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
                 num += 1
         return num
+
+    def order(self, mode, ascending=True):
+        '''Order the children of the nodes in this ``Tree`` based on ``mode``
+
+        Args:
+            ``mode`` (``str``): How to order the children of the nodes of this ``Tree``
+                * ``"edge_length"`` = order by incident edge length
+                * ``"edge_length_then_label"`` = order by incident edge length, then by node label
+                * ``"edge_length_then_label_then_num_descendants"`` = order by incident edge length, then by node label, then by number of descendants
+                * ``"edge_length_then_num_descendants"`` = order by incident edge length, then by number of descendants
+                * ``"edge_length_then_num_descendants_then_label"`` = order by incident edge length, then by number of descendants, then by node label
+                * ``"label"`` = order by node label
+                * ``"label_then_edge_length"`` = order by node label, then by incident edge length
+                * ``"label_then_edge_length_then_num_descendants"`` = order by node label, then by incident edge length, then by number of descendants
+                * ``"label_then_num_descendants"`` = order by node label, then by number of descendants
+                * ``"label_then_num_descendants_then_edge_length"`` = order by node label, then by number of descendants, then by incident edge length
+                * ``"num_descendants"`` = order by number of descendants
+                * ``"num_descendants_then_label"`` = order by number of descendants, then by node label
+                * ``"num_descendants_then_label_then_edge_length"`` = order by number of descendants, then by node label, then by incident edge length
+                * ``"num_descendants_then_edge_length"`` = order by number of descendants, then by incident edge length
+                * ``"num_descendants_then_edge_length_then_label"`` = order by number of descendants, then by incident edge length, then by node label
+
+            ``ascending`` (``bool``): ``True`` to sort in ascending order of ``mode``, otherwise ``False``
+        '''
+        if not isinstance(mode, str):
+            raise TypeError("mode must be a str")
+        if not isinstance(ascending, bool):
+            raise TypeError("ascending must be a bool")
+        if 'num_descendants' in mode:
+            num_descendants = dict()
+            for node in self.traverse_postorder():
+                if node.is_leaf():
+                    num_descendants[node] = 0
+                else:
+                    num_descendants[node] = sum(num_descendants[c] for c in node.children) + len(node.children)
+        if mode == 'edge_length':
+            k = lambda node: (node.edge_length is not None, node.edge_length)
+        elif mode == 'edge_length_then_label':
+            k = lambda node: (node.edge_length is not None, node.edge_length, node.label is not None, node.label)
+        elif mode == 'edge_length_then_label_then_num_descendants':
+            k = lambda node: (node.edge_length is not None, node.edge_length, node.label is not None, node.label, num_descendants[node])
+        elif mode == 'edge_length_then_num_descendants':
+            k = lambda node: (node.edge_length is not None, node.edge_length, num_descendants[node])
+        elif mode == 'edge_length_then_num_descendants_then_label':
+            k = lambda node: (node.edge_length is not None, node.edge_length, num_descendants[node], node.label is not None, node.label)
+        elif mode == 'label':
+            k = lambda node: (node.label is not None, node.label)
+        elif mode == 'label_then_edge_length':
+            k = lambda node: (node.label is not None, node.label, node.edge_length is not None, node.edge_length)
+        elif mode == 'label_then_edge_length_then_num_descendants':
+            k = lambda node: (node.label is not None, node.label, node.edge_length is not None, node.edge_length, num_descendants[node])
+        elif mode == 'label_then_num_descendants':
+            k = lambda node: (node.label is not None, node.label, num_descendants[node])
+        elif mode == 'label_then_num_descendants_then_edge_length':
+            k = lambda node: (node.label is not None, node.label, num_descendants[node], node.edge_length is not None, node.edge_length)
+        elif mode == 'num_descendants':
+            k = lambda node: num_descendants[node]
+        elif mode == 'num_descendants_then_label':
+            k = lambda node: (num_descendants[node], node.label is not None, node.label)
+        elif mode == 'num_descendants_then_label_then_edge_length':
+            k = lambda node: (num_descendants[node], node.label is not None, node.label, node.edge_length is not None, node.edge_length)
+        elif mode == 'num_descendants_then_edge_length':
+            k = lambda node: (num_descendants[node], node.edge_length is not None, node.edge_length)
+        elif mode == 'num_descendants_then_edge_length_then_label':
+            k = lambda node: (num_descendants[node], node.edge_length is not None, node.edge_length, node.label is not None, node.label)
+        else:
+            raise ValueError("Invalid choice for mode")
+        for node in self.traverse_preorder():
+            node.children.sort(key=k, reverse=not ascending)
 
     def rename_nodes(self, renaming_map):
         '''Rename nodes in this Tree
@@ -667,12 +753,12 @@ class Tree:
                 node.label = renaming_map[node.label]
 
     def reroot(self, node, length, suppress_unifurcations=True, branch_support=False):
-        '''Reroot this Tree at `length` up the incident edge of `node`
+        '''Reroot this Tree at ``length`` up the incident edge of ``node``
 
         Args:
-            node (Node): The node on whose incident edge this `Tree` will be rerooted
+            node (Node): The node on whose incident edge this ``Tree`` will be rerooted
 
-            length (float): The distance up the specified edge at which to reroot this `Tree`
+            length (float): The distance up the specified edge at which to reroot this ``Tree``
 
             suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
 
@@ -761,7 +847,7 @@ class Tree:
             raise RuntimeError("normalize must be None, 'leaves', 'yule', or 'pda'")
 
     def scale_edges(self, multiplier):
-        '''Multiply all edges in this Tree by `multiplier`'''
+        '''Multiply all edges in this Tree by ``multiplier``'''
         if not isinstance(multiplier,int) and not isinstance(multiplier,float):
             raise TypeError("multiplier must be an int or float")
         for node in self.traverse_preorder():
@@ -819,7 +905,7 @@ class Tree:
             yield node
 
     def traverse_rootdistorder(self, ascending=True):
-        '''Perform a traversal of the Node objects in this Tree in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from the root'''
+        '''Perform a traversal of the Node objects in this Tree in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root'''
         for node in self.root.traverse_rootdistorder(ascending):
             yield node
 
@@ -857,7 +943,7 @@ def read_tree_newick(newick):
         newick (str): Either a Newick string or the path to a Newick file (plain-text or gzipped)
 
     Returns:
-        Tree: The tree represented by `newick`. If the Newick file has multiple trees (one per line), a list of `Tree` objects will be returned
+        Tree: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned
     '''
     if not isinstance(newick, str) and not isinstance(newick, unicode):
         raise TypeError("newick must be a str")
@@ -878,6 +964,7 @@ def read_tree_newick(newick):
             return [read_tree_newick(l) for l in lines]
     if ts[0] == '[':
         ts = ']'.join(ts.split(']')[1:]).strip()
+    ts = ts.replace(', ',',')
     t = Tree(); n = t.root; i = 0
     while i < len(ts):
         if ts[i] == ';':
@@ -909,7 +996,7 @@ def read_tree_nexml(nexml):
         nexml (str): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)
 
     Returns:
-        dict of Tree: A dictionary of the trees represented by `nexml`, where keys are tree names (`str`) and values are `Tree` objects
+        dict of Tree: A dictionary of the trees represented by ``nexml``, where keys are tree names (``str``) and values are ``Tree`` objects
     '''
     if not isinstance(nexml, str):
         raise TypeError("nexml must be a str")
@@ -1024,7 +1111,7 @@ def read_tree_nexus(nexus):
         nexus (str): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)
 
     Returns:
-        dict of Tree: A dictionary of the trees represented by `nexus`, where keys are tree names (`str`) and values are `Tree` objects
+        dict of Tree: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects
     '''
     if not isinstance(nexus, str):
         raise TypeError("nexus must be a str")

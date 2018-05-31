@@ -100,6 +100,9 @@ def test_labels(t):
         pass
     for l in t.labels(leaves=False,internal=False):
         pass
+def test_ladderize(t):
+    t.ladderize()
+    t.ladderize(ascending=False)
 def test_mrca(t):
     o = t.mrca(sample([str(l) for l in t.traverse_leaves()],10))
 def test_mrca_matrix(t):
@@ -115,6 +118,22 @@ def test_num_nodes(t):
     o = t.num_nodes(leaves=False)
     o = t.num_nodes(internal=False)
     o = t.num_nodes(leaves=False,internal=False)
+def test_order(t):
+    t.order('edge_length')
+    t.order('edge_length_then_label')
+    t.order('edge_length_then_label_then_num_descendants')
+    t.order('edge_length_then_num_descendants')
+    t.order('edge_length_then_num_descendants_then_label')
+    t.order('label')
+    t.order('label_then_edge_length')
+    t.order('label_then_edge_length_then_num_descendants')
+    t.order('label_then_num_descendants')
+    t.order('label_then_num_descendants_then_edge_length')
+    t.order('num_descendants')
+    t.order('num_descendants_then_label')
+    t.order('num_descendants_then_label_then_edge_length')
+    t.order('num_descendants_then_edge_length')
+    t.order('num_descendants_then_edge_length_then_label')
 def test_rename_nodes_condense(t):
     m = dict()
     for l in t.traverse_leaves():

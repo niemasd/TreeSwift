@@ -52,35 +52,35 @@
 <span class="n">INVALID_NEXML</span> <span class="o">=</span> <span class="s2">&quot;Invalid valid NeXML File&quot;</span>
 
 <div class="viewcode-block" id="Tree"><a class="viewcode-back" href="../../index.html#treeswift.Tree">[docs]</a><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Tree class&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;``Tree`` class&#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Tree constructor&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;``Tree`` constructor&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">()</span>  <span class="c1"># root Node object</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Represent this Tree as a string</span>
+        <span class="sd">&#39;&#39;&#39;Represent this ``Tree`` as a string</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            str: string representation of this Tree (Newick string)</span>
+<span class="sd">            ``str``: string representation of this ``Tree`` (Newick string)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">newick</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Copy this Tree</span>
+        <span class="sd">&#39;&#39;&#39;Copy this ``Tree``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tree: A copy of this tree</span>
+<span class="sd">            ``Tree``: A copy of this tree</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_tree</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Tree.avg_branch_length"><a class="viewcode-back" href="../../index.html#treeswift.Tree.avg_branch_length">[docs]</a>    <span class="k">def</span> <span class="nf">avg_branch_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Compute the average length of the selected branches of this Tree. Edges with length None will be treated as 0-length</span>
+        <span class="sd">&#39;&#39;&#39;Compute the average length of the selected branches of this ``Tree``. Edges with length ``None`` will be treated as 0-length</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            terminal (bool): True to include terminal branches, otherwise False</span>
+<span class="sd">            ``terminal`` (``bool``): ``True`` to include terminal branches, otherwise ``False``</span>
 
-<span class="sd">            internal (bool): True to include internal branches, otherwise False</span>
+<span class="sd">            ``internal`` (``bool``): ``True`` to include internal branches, otherwise ``False``</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The average length of the selected branches</span>
@@ -98,12 +98,12 @@
         <span class="k">return</span> <span class="n">tot</span><span class="o">/</span><span class="n">num</span></div>
 
 <div class="viewcode-block" id="Tree.branch_lengths"><a class="viewcode-back" href="../../index.html#treeswift.Tree.branch_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">branch_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Generator over the lengths of the selected branches of this Tree. Edges with length None will be output as 0-length</span>
+        <span class="sd">&#39;&#39;&#39;Generator over the lengths of the selected branches of this ``Tree``. Edges with length ``None`` will be output as 0-length</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            terminal (bool): True to include terminal branches, otherwise False</span>
+<span class="sd">            ``terminal`` (``bool``): ``True`` to include terminal branches, otherwise ``False``</span>
 
-<span class="sd">            internal (bool): True to include internal branches, otherwise False</span>
+<span class="sd">            ``internal`` (``bool``): ``True`` to include internal branches, otherwise ``False``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">terminal</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;terminal must be a bool&quot;</span><span class="p">)</span>
@@ -120,7 +120,7 @@
         <span class="sd">&#39;&#39;&#39;Return the leaf that is closest to the root and the corresponding distance. Edges with no length will be considered to have a length of 0</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple: First value is the closest leaf to the root, and second value is the corresponding distance</span>
+<span class="sd">            ``tuple``: First value is the closest leaf to the root, and second value is the corresponding distance</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">best</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">));</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
@@ -138,7 +138,7 @@
         <span class="sd">&#39;&#39;&#39;Generator over the times of successive coalescence events</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            backward (bool): True to go backward in time (i.e., leaves to root), otherwise False</span>
+<span class="sd">            ``backward`` (``bool``): ``True`` to go backward in time (i.e., leaves to root), otherwise ``False``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backward</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;backward must be a bool&quot;</span><span class="p">)</span>
@@ -157,7 +157,7 @@
         <span class="sd">&#39;&#39;&#39;Generator over the waiting times of successive coalescence events</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            backward (bool): True to go backward in time (i.e., leaves to root), otherwise False</span>
+<span class="sd">            ``backward`` (``bool``): ``True`` to go backward in time (i.e., leaves to root), otherwise ``False``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backward</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;backward must be a bool&quot;</span><span class="p">)</span>
@@ -176,10 +176,10 @@
             <span class="nb">next</span> <span class="o">=</span> <span class="n">mult</span><span class="o">*</span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">();</span> <span class="k">yield</span> <span class="nb">abs</span><span class="p">(</span><span class="n">curr</span><span class="o">-</span><span class="nb">next</span><span class="p">);</span> <span class="n">curr</span> <span class="o">=</span> <span class="nb">next</span></div>
 
 <div class="viewcode-block" id="Tree.collapse_short_branches"><a class="viewcode-back" href="../../index.html#treeswift.Tree.collapse_short_branches">[docs]</a>    <span class="k">def</span> <span class="nf">collapse_short_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Collapse internal branches (not terminal branches) with length less than or equal to `threshold`. A branch length of `None` is considered 0</span>
+        <span class="sd">&#39;&#39;&#39;Collapse internal branches (not terminal branches) with length less than or equal to ``threshold``. A branch length of ``None`` is considered 0</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            threshold (float): The threshold to use when collapsing branches</span>
+<span class="sd">            ``threshold`` (``float``): The threshold to use when collapsing branches</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span><span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;threshold must be an integer or a float&quot;</span><span class="p">)</span>
@@ -198,7 +198,7 @@
             <span class="n">q</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.condense"><a class="viewcode-back" href="../../index.html#treeswift.Tree.condense">[docs]</a>    <span class="k">def</span> <span class="nf">condense</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;If siblings have the same label, merge them. If they have edge lengths, the resulting Node will have the larger of the lengths&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;If siblings have the same label, merge them. If they have edge lengths, the resulting ``Node`` will have the larger of the lengths&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resolve_polytomies</span><span class="p">();</span> <span class="n">labels_below</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">longest_leaf_dist</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
@@ -229,10 +229,10 @@
                 <span class="n">nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.contract_low_support"><a class="viewcode-back" href="../../index.html#treeswift.Tree.contract_low_support">[docs]</a>    <span class="k">def</span> <span class="nf">contract_low_support</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Contract internal nodes labeled by a number (e.g. branch support) below `threshold`</span>
+        <span class="sd">&#39;&#39;&#39;Contract internal nodes labeled by a number (e.g. branch support) below ``threshold``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            threshold (float): The support threshold to use when contracting nodes&#39;&#39;&#39;</span>
+<span class="sd">            ``threshold`` (``float``): The support threshold to use when contracting nodes&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;threshold must be float or int&quot;</span><span class="p">)</span>
         <span class="n">to_contract</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -246,10 +246,10 @@
             <span class="n">node</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Tree.diameter"><a class="viewcode-back" href="../../index.html#treeswift.Tree.diameter">[docs]</a>    <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Compute the diameter (maximum leaf pairwise distance) of this Tree</span>
+        <span class="sd">&#39;&#39;&#39;Compute the diameter (maximum leaf pairwise distance) of this ``Tree``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float: The diameter of this Tree</span>
+<span class="sd">            ``float``: The diameter of this Tree</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">best</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
@@ -263,15 +263,15 @@
         <span class="k">return</span> <span class="n">best</span></div>
 
 <div class="viewcode-block" id="Tree.distance_between"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distance_between">[docs]</a>    <span class="k">def</span> <span class="nf">distance_between</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Return the distance between nodes `u` and `v` in this `Tree`</span>
+        <span class="sd">&#39;&#39;&#39;Return the distance between nodes ``u`` and ``v`` in this ``Tree``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            u (Node): Node `u`</span>
+<span class="sd">            ``u`` (``Node``): Node ``u``</span>
 
-<span class="sd">            v (Node): Node `v`</span>
+<span class="sd">            ``v`` (``Node``): Node ``v``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float: The distance between nodes `u` and `v`</span>
+<span class="sd">            ``float``: The distance between nodes ``u`` and ``v``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;u must be a Node&quot;</span><span class="p">)</span>
@@ -297,10 +297,10 @@
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;u and v are not in the same Tree&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.distance_matrix"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">distance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Return a distance matrix (2D dictionary) of the leaves of this Tree</span>
+        <span class="sd">&#39;&#39;&#39;Return a distance matrix (2D dictionary) of the leaves of this ``Tree``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Distance matrix (2D dictionary) of the leaves of this Tree, where keys are Node objects; M[u][v] = distance from u to v</span>
+<span class="sd">            ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are ``Node`` objects; ``M[u][v]`` = distance from ``u`` to ``v``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">M</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">leaf_dists</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
@@ -330,14 +330,14 @@
         <span class="k">return</span> <span class="n">M</span></div>
 
 <div class="viewcode-block" id="Tree.distances_from_parent"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distances_from_parent">[docs]</a>    <span class="k">def</span> <span class="nf">distances_from_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unlabeled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Generator over the node-to-parent distances of this Tree; (node,distance) tuples</span>
+        <span class="sd">&#39;&#39;&#39;Generator over the node-to-parent distances of this ``Tree``; (node,distance) tuples</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            terminal (bool): `True` to include leaves, otherwise `False`</span>
+<span class="sd">            ``terminal`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
-<span class="sd">            internal (bool): `True` to include internal nodes, otherwise `False`</span>
+<span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
 
-<span class="sd">            unlabeled (bool): `True` to include unlabeled nodes, otherwise `False`</span>
+<span class="sd">            ``unlabeled`` (``bool``): ``True`` to include unlabeled nodes, otherwise ``False``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;leaves must be a bool&quot;</span><span class="p">)</span>
@@ -354,14 +354,14 @@
                         <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.distances_from_root"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distances_from_root">[docs]</a>    <span class="k">def</span> <span class="nf">distances_from_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unlabeled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Generator over the root-to-node distances of this Tree; (node,distance) tuples</span>
+        <span class="sd">&#39;&#39;&#39;Generator over the root-to-node distances of this ``Tree``; (node,distance) tuples</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            terminal (bool): `True` to include leaves, otherwise `False`</span>
+<span class="sd">            ``terminal`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
-<span class="sd">            internal (bool): `True` to include internal nodes, otherwise `False`</span>
+<span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
 
-<span class="sd">            unlabeled (bool): `True` to include unlabeled nodes, otherwise `False`</span>
+<span class="sd">            ``unlabeled`` (``bool``): ``True`` to include unlabeled nodes, otherwise ``False``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;leaves must be a bool&quot;</span><span class="p">)</span>
@@ -382,15 +382,15 @@
                     <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Tree.edge_length_sum"><a class="viewcode-back" href="../../index.html#treeswift.Tree.edge_length_sum">[docs]</a>    <span class="k">def</span> <span class="nf">edge_length_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Compute the sum of all selected edge lengths in this Tree</span>
+        <span class="sd">&#39;&#39;&#39;Compute the sum of all selected edge lengths in this ``Tree``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            terminal (bool): `True` to include terminal branches, otherwise `False`</span>
+<span class="sd">            ``terminal`` (``bool``): ``True`` to include terminal branches, otherwise ``False``</span>
 
-<span class="sd">            internal (bool): `True` to include internal branches, otherwise `False`</span>
+<span class="sd">            ``internal`` (``bool``): ``True`` to include internal branches, otherwise ``False``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float: Sum of all selected edge lengths in this Tree</span>
+<span class="sd">            ``float``: Sum of all selected edge lengths in this ``Tree``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">terminal</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;leaves must be a bool&quot;</span><span class="p">)</span>
@@ -399,20 +399,20 @@
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">()</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">((</span><span class="n">terminal</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">internal</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())))</span></div>
 
 <div class="viewcode-block" id="Tree.extract_subtree"><a class="viewcode-back" href="../../index.html#treeswift.Tree.extract_subtree">[docs]</a>    <span class="k">def</span> <span class="nf">extract_subtree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Return a copy of the subtree rooted at `node`</span>
+        <span class="sd">&#39;&#39;&#39;Return a copy of the subtree rooted at ``node``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            node (Node): The root of the desired subtree</span>
+<span class="sd">            ``node`` (``Node``): The root of the desired subtree</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tree: A copy of the subtree rooted at `node`</span>
+<span class="sd">            ``Tree``: A copy of the subtree rooted at ``node``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;node must be a Node&quot;</span><span class="p">)</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">;</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span> <span class="n">o</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">);</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span> <span class="k">return</span> <span class="n">o</span></div>
 
 <div class="viewcode-block" id="Tree.extract_tree"><a class="viewcode-back" href="../../index.html#treeswift.Tree.extract_tree">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">without</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Helper function for extract_tree_* functions&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Helper function for ``extract_tree_*`` functions&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">suppress_unifurcations</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;suppress_unifurcations must be a bool&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
@@ -442,36 +442,36 @@
         <span class="k">return</span> <span class="n">out</span></div>
 
 <div class="viewcode-block" id="Tree.extract_tree_without"><a class="viewcode-back" href="../../index.html#treeswift.Tree.extract_tree_without">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree_without</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Extract a copy of this Tree without the leaves labeled by the strings in `labels`</span>
+        <span class="sd">&#39;&#39;&#39;Extract a copy of this ``Tree`` without the leaves labeled by the strings in ``labels``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            labels (set): Set of leaf labels to exclude</span>
+<span class="sd">            ``labels`` (``set``): Set of leaf labels to exclude</span>
 
-<span class="sd">            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</span>
+<span class="sd">            ``suppress_unifurcations`` (``bool``): ``True`` to suppress unifurcations, otherwise ``False``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tree: Copy of this Tree, exluding the leaves labeled by the strings in `labels`</span>
+<span class="sd">            ``Tree``: Copy of this ``Tree``, exluding the leaves labeled by the strings in ``labels``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_tree</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.extract_tree_with"><a class="viewcode-back" href="../../index.html#treeswift.Tree.extract_tree_with">[docs]</a>    <span class="k">def</span> <span class="nf">extract_tree_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Extract a copy of this Tree with only the leaves labeled by the strings in `labels`</span>
+        <span class="sd">&#39;&#39;&#39;Extract a copy of this ``Tree`` with only the leaves labeled by the strings in ``labels``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            leaves (set): Set of leaf labels to include.</span>
+<span class="sd">            ``leaves`` (``set``): Set of leaf labels to include.</span>
 
-<span class="sd">            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</span>
+<span class="sd">            ``suppress_unifurcations`` (``bool``): ``True`` to suppress unifurcations, otherwise ``False``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tree: Copy of this Tree, including only the leaves labeled by the strings in `labels`</span>
+<span class="sd">            Tree: Copy of this Tree, including only the leaves labeled by the strings in ``labels``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_tree</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.furthest_from_root"><a class="viewcode-back" href="../../index.html#treeswift.Tree.furthest_from_root">[docs]</a>    <span class="k">def</span> <span class="nf">furthest_from_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Return the Node that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0</span>
+        <span class="sd">&#39;&#39;&#39;Return the ``Node`` that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple: First value is the furthest Node from the root, and second value is the corresponding distance</span>
+<span class="sd">            ``tuple``: First value is the furthest ``Node`` from the root, and second value is the corresponding distance</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">best</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
@@ -489,7 +489,7 @@
         <span class="sd">&#39;&#39;&#39;Compute the Gamma statistic of Pybus and Harvey (2000)</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float: The Gamma statistic of Pybus and Harvey (2000)</span>
+<span class="sd">            ``float``: The Gamma statistic of Pybus and Harvey (2000)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">);</span> <span class="n">t</span><span class="o">.</span><span class="n">resolve_polytomies</span><span class="p">()</span> <span class="c1"># need fully bifurcating tree</span>
         <span class="n">G</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">coalescence_times</span><span class="p">(</span><span class="n">backward</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
@@ -508,21 +508,21 @@
         <span class="k">return</span> <span class="n">out</span></div>
 
 <div class="viewcode-block" id="Tree.height"><a class="viewcode-back" href="../../index.html#treeswift.Tree.height">[docs]</a>    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Compute the height (i.e., maximum distance from root) of this tree</span>
+        <span class="sd">&#39;&#39;&#39;Compute the height (i.e., maximum distance from root) of this ``Tree``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float: The height (i.e., maximum distance from root) of this tree</span>
+<span class="sd">            ``float``: The height (i.e., maximum distance from root) of this ``Tree``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances_from_root</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="Tree.indent"><a class="viewcode-back" href="../../index.html#treeswift.Tree.indent">[docs]</a>    <span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Return an indented Newick string, just like nw_indent in Newick Utilities</span>
+        <span class="sd">&#39;&#39;&#39;Return an indented Newick string, just like ``nw_indent`` in Newick Utilities</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            space (int): The number of spaces a tab should equal</span>
+<span class="sd">            ``space`` (``int``): The number of spaces a tab should equal</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            str: An indented Newick string</span>
+<span class="sd">            ``str``: An indented Newick string</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">space</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;space must be an int&quot;</span><span class="p">)</span>
@@ -541,13 +541,22 @@
         <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.label_to_node"><a class="viewcode-back" href="../../index.html#treeswift.Tree.label_to_node">[docs]</a>    <span class="k">def</span> <span class="nf">label_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Return a dictionary mapping labels (strings) to Node objects. If `selection` is `&quot;all&quot;`, the dictionary will contain all nodes. If `selection` is `&quot;leaves&quot;`, the dictionary will only contain leaves. If `selection` is `&quot;internal&quot;`, the dictionary will only contain internal nodes. If `selection` is a `set`, the dictionary will contain all nodes labeled by a label in `selection`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
+        <span class="sd">&#39;&#39;&#39;Return a dictionary mapping labels (strings) to ``Node`` objects</span>
+<span class="sd">            * If ``selection`` is ``&quot;all&quot;``, the dictionary will contain all nodes</span>
+<span class="sd">            * If ``selection`` is ``&quot;leaves&quot;``, the dictionary will only contain leaves</span>
+<span class="sd">            * If ``selection`` is ``&quot;internal&quot;``, the dictionary will only contain internal nodes</span>
+<span class="sd">            * If ``selection`` is a ``set``, the dictionary will contain all nodes labeled by a label in ``selection``</span>
+<span class="sd">            * If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            selection (str or set): `&quot;all&quot;` to select all nodes, `&quot;leaves&quot;` to select leaves, `&quot;internal&quot;` to select internal nodes, or a `set` of labels to specify nodes to select</span>
+<span class="sd">            ``selection`` (``str`` or ``set``): The selection of nodes to get</span>
+<span class="sd">                * ``&quot;all&quot;`` to select all nodes</span>
+<span class="sd">                * ``&quot;leaves&quot;`` to select leaves</span>
+<span class="sd">                * ``&quot;internal&quot;`` to select internal nodes</span>
+<span class="sd">                * A ``set`` of labels to specify nodes to select</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Dictionary mapping labels to the corresponding nodes</span>
+<span class="sd">            ``dict``: Dictionary mapping labels to the corresponding nodes</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span><span class="nb">set</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span><span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span><span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="n">selection</span> <span class="o">!=</span> <span class="s1">&#39;all&#39;</span> <span class="ow">or</span> <span class="n">selection</span> <span class="o">!=</span> <span class="s1">&#39;leaves&#39;</span> <span class="ow">or</span> <span class="n">selection</span> <span class="o">!=</span> <span class="s1">&#39;internal&#39;</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;&quot;selection&quot; must be one of the strings &quot;all&quot;, &quot;leaves&quot;, or &quot;internal&quot;, or it must be a set containing Node labels&#39;</span><span class="p">)</span>
@@ -564,12 +573,12 @@
         <span class="k">return</span> <span class="n">label_to_node</span></div>
 
 <div class="viewcode-block" id="Tree.labels"><a class="viewcode-back" href="../../index.html#treeswift.Tree.labels">[docs]</a>    <span class="k">def</span> <span class="nf">labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Generator over the (non-None) Node labels of this Tree</span>
+        <span class="sd">&#39;&#39;&#39;Generator over the (non-``None``) ``Node`` labels of this ``Tree``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            leaves (bool): True to include leaves, otherwise False</span>
+<span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
-<span class="sd">            internal (bool): True to include internal nodes, otherwise False</span>
+<span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;leaves must be a bool&quot;</span><span class="p">)</span>
@@ -579,14 +588,22 @@
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">((</span><span class="n">leaves</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">internal</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())):</span>
                 <span class="k">yield</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span></div>
 
-<div class="viewcode-block" id="Tree.mrca"><a class="viewcode-back" href="../../index.html#treeswift.Tree.mrca">[docs]</a>    <span class="k">def</span> <span class="nf">mrca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Return the Node that is the MRCA of the nodes labeled by a label in `labels`. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
+<div class="viewcode-block" id="Tree.ladderize"><a class="viewcode-back" href="../../index.html#treeswift.Tree.ladderize">[docs]</a>    <span class="k">def</span> <span class="nf">ladderize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Ladderize this ``Tree`` by sorting each ``Node``&#39;s children by total number of descendants</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            labels (set): Set of leaf labels</span>
+<span class="sd">            ``ascending`` (``bool``): ``True`` to sort in ascending order of ``mode``, otherwise ``False``</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="s1">&#39;num_descendants_then_edge_length_then_label&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="n">ascending</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Tree.mrca"><a class="viewcode-back" href="../../index.html#treeswift.Tree.mrca">[docs]</a>    <span class="k">def</span> <span class="nf">mrca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the Node that is the MRCA of the nodes labeled by a label in ``labels``. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``labels`` (``set``): Set of leaf labels</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Node: The MRCA of the Node objects labeled by a label in `labels`</span>
+<span class="sd">            ``Node``: The MRCA of the ``Node`` objects labeled by a label in ``labels``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="nb">set</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
@@ -605,10 +622,10 @@
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;There somehow does not exist an MRCA for the given labels&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.mrca_matrix"><a class="viewcode-back" href="../../index.html#treeswift.Tree.mrca_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">mrca_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Return a dictionary storing all pairwise MRCAs. M[u][v] = MRCA of nodes u and v. Excludes M[u][u] because MRCA of node and itself is itself.</span>
+        <span class="sd">&#39;&#39;&#39;Return a dictionary storing all pairwise MRCAs. ``M[u][v]`` = MRCA of nodes ``u`` and ``v``. Excludes ``M[u][u]`` because MRCA of node and itself is itself</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: M[u][v] = MRCA of nodes u and v</span>
+<span class="sd">            ``dict``: ``M[u][v]`` = MRCA of nodes ``u`` and ``v``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">M</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">leaves_below</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -629,10 +646,10 @@
         <span class="k">return</span> <span class="n">M</span></div>
 
 <div class="viewcode-block" id="Tree.newick"><a class="viewcode-back" href="../../index.html#treeswift.Tree.newick">[docs]</a>    <span class="k">def</span> <span class="nf">newick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Output this Tree as a Newick string</span>
+        <span class="sd">&#39;&#39;&#39;Output this ``Tree`` as a Newick string</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            str: Newick string of this Tree</span>
+<span class="sd">            ``str``: Newick string of this ``Tree``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span>
@@ -645,13 +662,13 @@
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">newick</span><span class="p">(),</span><span class="n">suffix</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.num_lineages_at"><a class="viewcode-back" href="../../index.html#treeswift.Tree.num_lineages_at">[docs]</a>    <span class="k">def</span> <span class="nf">num_lineages_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Returns the number of lineages of this Tree that exist `distance` away from the root</span>
+        <span class="sd">&#39;&#39;&#39;Returns the number of lineages of this ``Tree`` that exist ``distance`` away from the root</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            distance (float): The distance away from the root</span>
+<span class="sd">            ``distance`` (``float``): The distance away from the root</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            int: The number of lineages that exist `distance` away from the root</span>
+<span class="sd">            ``int``: The number of lineages that exist ``distance`` away from the root</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;distance must be an int or a float&quot;</span><span class="p">)</span>
@@ -673,15 +690,15 @@
         <span class="k">return</span> <span class="n">count</span></div>
 
 <div class="viewcode-block" id="Tree.num_nodes"><a class="viewcode-back" href="../../index.html#treeswift.Tree.num_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">num_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Compute the total number of selected nodes in this Tree</span>
+        <span class="sd">&#39;&#39;&#39;Compute the total number of selected nodes in this ``Tree``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            leaves (bool): True to include leaves, otherwise False</span>
+<span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
-<span class="sd">            internal (bool): True to include internal nodes, otherwise False</span>
+<span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            int: The total number of selected nodes in this Tree</span>
+<span class="sd">            ``int``: The total number of selected nodes in this ``Tree``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;leaves must be a bool&quot;</span><span class="p">)</span>
@@ -692,6 +709,75 @@
             <span class="k">if</span> <span class="p">(</span><span class="n">leaves</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">internal</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()):</span>
                 <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">num</span></div>
+
+<div class="viewcode-block" id="Tree.order"><a class="viewcode-back" href="../../index.html#treeswift.Tree.order">[docs]</a>    <span class="k">def</span> <span class="nf">order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Order the children of the nodes in this ``Tree`` based on ``mode``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``mode`` (``str``): How to order the children of the nodes of this ``Tree``</span>
+<span class="sd">                * ``&quot;edge_length&quot;`` = order by incident edge length</span>
+<span class="sd">                * ``&quot;edge_length_then_label&quot;`` = order by incident edge length, then by node label</span>
+<span class="sd">                * ``&quot;edge_length_then_label_then_num_descendants&quot;`` = order by incident edge length, then by node label, then by number of descendants</span>
+<span class="sd">                * ``&quot;edge_length_then_num_descendants&quot;`` = order by incident edge length, then by number of descendants</span>
+<span class="sd">                * ``&quot;edge_length_then_num_descendants_then_label&quot;`` = order by incident edge length, then by number of descendants, then by node label</span>
+<span class="sd">                * ``&quot;label&quot;`` = order by node label</span>
+<span class="sd">                * ``&quot;label_then_edge_length&quot;`` = order by node label, then by incident edge length</span>
+<span class="sd">                * ``&quot;label_then_edge_length_then_num_descendants&quot;`` = order by node label, then by incident edge length, then by number of descendants</span>
+<span class="sd">                * ``&quot;label_then_num_descendants&quot;`` = order by node label, then by number of descendants</span>
+<span class="sd">                * ``&quot;label_then_num_descendants_then_edge_length&quot;`` = order by node label, then by number of descendants, then by incident edge length</span>
+<span class="sd">                * ``&quot;num_descendants&quot;`` = order by number of descendants</span>
+<span class="sd">                * ``&quot;num_descendants_then_label&quot;`` = order by number of descendants, then by node label</span>
+<span class="sd">                * ``&quot;num_descendants_then_label_then_edge_length&quot;`` = order by number of descendants, then by node label, then by incident edge length</span>
+<span class="sd">                * ``&quot;num_descendants_then_edge_length&quot;`` = order by number of descendants, then by incident edge length</span>
+<span class="sd">                * ``&quot;num_descendants_then_edge_length_then_label&quot;`` = order by number of descendants, then by incident edge length, then by node label</span>
+
+<span class="sd">            ``ascending`` (``bool``): ``True`` to sort in ascending order of ``mode``, otherwise ``False``</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;mode must be a str&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ascending</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;ascending must be a bool&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;num_descendants&#39;</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
+            <span class="n">num_descendants</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                    <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">num_descendants</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;edge_length&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;edge_length_then_label&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;edge_length_then_label_then_num_descendants&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;edge_length_then_num_descendants&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;edge_length_then_num_descendants_then_label&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;label_then_edge_length&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;label_then_edge_length_then_num_descendants&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;label_then_num_descendants&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;label_then_num_descendants_then_edge_length&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;num_descendants&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;num_descendants_then_label&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;num_descendants_then_label_then_edge_length&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;num_descendants_then_edge_length&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;num_descendants_then_edge_length_then_label&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">num_descendants</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid choice for mode&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="ow">not</span> <span class="n">ascending</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.rename_nodes"><a class="viewcode-back" href="../../index.html#treeswift.Tree.rename_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">rename_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renaming_map</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Rename nodes in this Tree</span>
@@ -706,12 +792,12 @@
                 <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">renaming_map</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Tree.reroot"><a class="viewcode-back" href="../../index.html#treeswift.Tree.reroot">[docs]</a>    <span class="k">def</span> <span class="nf">reroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">branch_support</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Reroot this Tree at `length` up the incident edge of `node`</span>
+        <span class="sd">&#39;&#39;&#39;Reroot this Tree at ``length`` up the incident edge of ``node``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            node (Node): The node on whose incident edge this `Tree` will be rerooted</span>
+<span class="sd">            node (Node): The node on whose incident edge this ``Tree`` will be rerooted</span>
 
-<span class="sd">            length (float): The distance up the specified edge at which to reroot this `Tree`</span>
+<span class="sd">            length (float): The distance up the specified edge at which to reroot this ``Tree``</span>
 
 <span class="sd">            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</span>
 
@@ -800,7 +886,7 @@
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;normalize must be None, &#39;leaves&#39;, &#39;yule&#39;, or &#39;pda&#39;&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.scale_edges"><a class="viewcode-back" href="../../index.html#treeswift.Tree.scale_edges">[docs]</a>    <span class="k">def</span> <span class="nf">scale_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Multiply all edges in this Tree by `multiplier`&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Multiply all edges in this Tree by ``multiplier``&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;multiplier must be an int or float&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
@@ -858,7 +944,7 @@
             <span class="k">yield</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_rootdistorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_rootdistorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_rootdistorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Perform a traversal of the Node objects in this Tree in either ascending (`ascending=True`) or descending (`ascending=False`) order of distance from the root&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Perform a traversal of the Node objects in this Tree in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_rootdistorder</span><span class="p">(</span><span class="n">ascending</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
@@ -896,7 +982,7 @@
 <span class="sd">        newick (str): Either a Newick string or the path to a Newick file (plain-text or gzipped)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Tree: The tree represented by `newick`. If the Newick file has multiple trees (one per line), a list of `Tree` objects will be returned</span>
+<span class="sd">        Tree: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">newick</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">newick</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;newick must be a str&quot;</span><span class="p">)</span>
@@ -917,6 +1003,7 @@
             <span class="k">return</span> <span class="p">[</span><span class="n">read_tree_newick</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">ts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;[&#39;</span><span class="p">:</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="s1">&#39;]&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">();</span> <span class="n">n</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">root</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;;&#39;</span><span class="p">:</span>
@@ -948,7 +1035,7 @@
 <span class="sd">        nexml (str): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        dict of Tree: A dictionary of the trees represented by `nexml`, where keys are tree names (`str`) and values are `Tree` objects</span>
+<span class="sd">        dict of Tree: A dictionary of the trees represented by ``nexml``, where keys are tree names (``str``) and values are ``Tree`` objects</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nexml</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nexml must be a str&quot;</span><span class="p">)</span>
@@ -1063,7 +1150,7 @@
 <span class="sd">        nexus (str): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        dict of Tree: A dictionary of the trees represented by `nexus`, where keys are tree names (`str`) and values are `Tree` objects</span>
+<span class="sd">        dict of Tree: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nexus</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nexus must be a str&quot;</span><span class="p">)</span>
