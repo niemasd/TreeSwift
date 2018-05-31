@@ -44,133 +44,133 @@
 <dt id="treeswift.Node">
 <em class="property">class </em><code class="descclassname">treeswift.</code><code class="descname">Node</code><span class="sig-paren">(</span><em>label=None</em>, <em>edge_length=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Node class</p>
+<p><code class="docutils literal notranslate"><span class="pre">Node</span></code> class</p>
 <dl class="method">
 <dt id="treeswift.Node.add_child">
 <code class="descname">add_child</code><span class="sig-paren">(</span><em>child</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.add_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.add_child" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add child to Node object</p>
+<dd><p>Add child to <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>child (Node): The child Node to be added</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">child</span></code> (<code class="docutils literal notranslate"><span class="pre">Node</span></code>): The child <code class="docutils literal notranslate"><span class="pre">Node</span></code> to be added</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.child_nodes">
 <code class="descname">child_nodes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.child_nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.child_nodes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a <cite>list</cite> containing this Node object’s children</p>
+<dd><p>Return a <code class="docutils literal notranslate"><span class="pre">list</span></code> containing this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object’s children</p>
 <dl class="docutils">
 <dt>Returns:</dt>
-<dd>set: A <cite>list</cite> containing this Node object’s children</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">list</span></code>: A <code class="docutils literal notranslate"><span class="pre">list</span></code> containing this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object’s children</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.contract">
 <code class="descname">contract</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.contract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.contract" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contract this <cite>Node</cite> by directly connecting its children to its parent</p>
+<dd><p>Contract this <code class="docutils literal notranslate"><span class="pre">Node</span></code> by directly connecting its children to its parent</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.is_leaf">
 <code class="descname">is_leaf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.is_leaf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.is_leaf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if this is a leaf</p>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if this is a leaf</p>
 <dl class="docutils">
 <dt>Returns:</dt>
-<dd>bool: True if this is a leaf, otherwise False</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">bool</span></code>: <code class="docutils literal notranslate"><span class="pre">True</span></code> if this is a leaf, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.is_root">
 <code class="descname">is_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.is_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.is_root" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if this is the root</p>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if this is the <code class="docutils literal notranslate"><span class="pre">root</span></code></p>
 <dl class="docutils">
 <dt>Returns:</dt>
-<dd>bool: True if this is the root, otherwise False</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">bool</span></code>: <code class="docutils literal notranslate"><span class="pre">True</span></code> if this is the root, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.newick">
 <code class="descname">newick</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.newick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.newick" title="Permalink to this definition">¶</a></dt>
-<dd><p>Recursive Newick string conversion starting at this Node object</p>
+<dd><p>Recursive Newick string conversion starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 <dl class="docutils">
 <dt>Returns:</dt>
-<dd>str: Recursive Newick string conversion starting at this Node object</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">str</span></code>: Recursive Newick string conversion starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.num_children">
 <code class="descname">num_children</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.num_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.num_children" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the number of children of this Node</p>
+<dd><p>Returns the number of children of this <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
 <dl class="docutils">
 <dt>Returns:</dt>
-<dd>int: The number of children of this Node</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">int</span></code>: The number of children of this <code class="docutils literal notranslate"><span class="pre">Node</span></code></dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.remove_child">
 <code class="descname">remove_child</code><span class="sig-paren">(</span><em>child</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.remove_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.remove_child" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove child from Node object</p>
+<dd><p>Remove child from <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>child (Node): The child to remove</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">child</span></code> (<code class="docutils literal notranslate"><span class="pre">Node</span></code>): The child to remove</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_ancestors">
 <code class="descname">traverse_ancestors</code><span class="sig-paren">(</span><em>include_self=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_ancestors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_ancestors" title="Permalink to this definition">¶</a></dt>
-<dd><p>Traverse over the ancestors of this Node</p>
+<dd><p>Traverse over the ancestors of this <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>include_self (bool): True to include self in the traversal, otherwise False</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">include_self</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include self in the traversal, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_inorder">
 <code class="descname">traverse_inorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_inorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_inorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform an inorder traversal starting at this Node object</p>
+<dd><p>Perform an inorder traversal starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_internal">
 <code class="descname">traverse_internal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_internal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_internal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Traverse over the internal nodes below (and including) this Node object</p>
+<dd><p>Traverse over the internal nodes below (and including) this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_leaves">
 <code class="descname">traverse_leaves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_leaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_leaves" title="Permalink to this definition">¶</a></dt>
-<dd><p>Traverse over the leaves below this Node object</p>
+<dd><p>Traverse over the leaves below this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_levelorder">
 <code class="descname">traverse_levelorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_levelorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_levelorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a levelorder traversal starting at this Node object</p>
+<dd><p>Perform a levelorder traversal starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_postorder">
 <code class="descname">traverse_postorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_postorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_postorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a postorder traversal starting at this Node object</p>
+<dd><p>Perform a postorder traversal starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_preorder">
 <code class="descname">traverse_preorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_preorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_preorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a preorder traversal starting at this Node object</p>
+<dd><p>Perform a preorder traversal starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_rootdistorder">
 <code class="descname">traverse_rootdistorder</code><span class="sig-paren">(</span><em>ascending=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_rootdistorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_rootdistorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a traversal of the Node objects in the subtree rooted at this Node in either ascending (<cite>ascending=True</cite>) or descending (<cite>ascending=False</cite>) order of distance from this Node</p>
+<dd><p>Perform a traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in the subtree rooted at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> in either ascending (<code class="docutils literal notranslate"><span class="pre">ascending=True</span></code>) or descending (<code class="docutils literal notranslate"><span class="pre">ascending=False</span></code>) order of distance from this <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
 </dd></dl>
 
 </dd></dl>
@@ -427,28 +427,19 @@
 <dl class="method">
 <dt id="treeswift.Tree.label_to_node">
 <code class="descname">label_to_node</code><span class="sig-paren">(</span><em>selection='leaves'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.label_to_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.label_to_node" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Return a dictionary mapping labels (strings) to <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects</dt>
-<dd><ul class="first last simple">
-<li>If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, the dictionary will contain all nodes</li>
-<li>If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code>, the dictionary will only contain leaves</li>
-<li>If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;internal&quot;</span></code>, the dictionary will only contain internal nodes</li>
-<li>If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is a <code class="docutils literal notranslate"><span class="pre">set</span></code>, the dictionary will contain all nodes labeled by a label in <code class="docutils literal notranslate"><span class="pre">selection</span></code></li>
-<li>If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</li>
-</ul>
-</dd>
+<dd><p>Return a dictionary mapping labels (strings) to <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects
+* If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, the dictionary will contain all nodes
+* If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code>, the dictionary will only contain leaves
+* If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;internal&quot;</span></code>, the dictionary will only contain internal nodes
+* If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is a <code class="docutils literal notranslate"><span class="pre">set</span></code>, the dictionary will contain all nodes labeled by a label in <code class="docutils literal notranslate"><span class="pre">selection</span></code>
+* If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
+<dl class="docutils">
 <dt>Args:</dt>
-<dd><dl class="first last docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">selection</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">set</span></code>): The selection of nodes to get</dt>
-<dd><ul class="first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> to select all nodes</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code> to select leaves</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;internal&quot;</span></code> to select internal nodes</li>
-<li>A <code class="docutils literal notranslate"><span class="pre">set</span></code> of labels to specify nodes to select</li>
-</ul>
-</dd>
-</dl>
-</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">selection</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">set</span></code>): The selection of nodes to get
+* <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> to select all nodes
+* <code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code> to select leaves
+* <code class="docutils literal notranslate"><span class="pre">&quot;internal&quot;</span></code> to select internal nodes
+* A <code class="docutils literal notranslate"><span class="pre">set</span></code> of labels to specify nodes to select</dd>
 <dt>Returns:</dt>
 <dd><code class="docutils literal notranslate"><span class="pre">dict</span></code>: Dictionary mapping labels to the corresponding nodes</dd>
 </dl>
@@ -540,27 +531,22 @@
 <dd><p>Order the children of the nodes in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> based on <code class="docutils literal notranslate"><span class="pre">mode</span></code></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">mode</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): How to order the children of the nodes of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></dt>
-<dd><ul class="first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length&quot;</span></code> = order by incident edge length</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_label&quot;</span></code> = order by incident edge length, then by node label</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_label_then_num_descendants&quot;</span></code> = order by incident edge length, then by node label, then by number of descendants</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_num_descendants&quot;</span></code> = order by incident edge length, then by number of descendants</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_num_descendants_then_label&quot;</span></code> = order by incident edge length, then by number of descendants, then by node label</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;label&quot;</span></code> = order by node label</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;label_then_edge_length&quot;</span></code> = order by node label, then by incident edge length</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;label_then_edge_length_then_num_descendants&quot;</span></code> = order by node label, then by incident edge length, then by number of descendants</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;label_then_num_descendants&quot;</span></code> = order by node label, then by number of descendants</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;label_then_num_descendants_then_edge_length&quot;</span></code> = order by node label, then by number of descendants, then by incident edge length</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants&quot;</span></code> = order by number of descendants</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_label&quot;</span></code> = order by number of descendants, then by node label</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_label_then_edge_length&quot;</span></code> = order by number of descendants, then by node label, then by incident edge length</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_edge_length&quot;</span></code> = order by number of descendants, then by incident edge length</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_edge_length_then_label&quot;</span></code> = order by number of descendants, then by incident edge length, then by node label</li>
-</ul>
-</dd>
-</dl>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">mode</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): How to order the children of the nodes of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code>
+* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length&quot;</span></code> = order by incident edge length
+* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_label&quot;</span></code> = order by incident edge length, then by node label
+* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_label_then_num_descendants&quot;</span></code> = order by incident edge length, then by node label, then by number of descendants
+* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_num_descendants&quot;</span></code> = order by incident edge length, then by number of descendants
+* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_num_descendants_then_label&quot;</span></code> = order by incident edge length, then by number of descendants, then by node label
+* <code class="docutils literal notranslate"><span class="pre">&quot;label&quot;</span></code> = order by node label
+* <code class="docutils literal notranslate"><span class="pre">&quot;label_then_edge_length&quot;</span></code> = order by node label, then by incident edge length
+* <code class="docutils literal notranslate"><span class="pre">&quot;label_then_edge_length_then_num_descendants&quot;</span></code> = order by node label, then by incident edge length, then by number of descendants
+* <code class="docutils literal notranslate"><span class="pre">&quot;label_then_num_descendants&quot;</span></code> = order by node label, then by number of descendants
+* <code class="docutils literal notranslate"><span class="pre">&quot;label_then_num_descendants_then_edge_length&quot;</span></code> = order by node label, then by number of descendants, then by incident edge length
+* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants&quot;</span></code> = order by number of descendants
+* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_label&quot;</span></code> = order by number of descendants, then by node label
+* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_label_then_edge_length&quot;</span></code> = order by number of descendants, then by node label, then by incident edge length
+* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_edge_length&quot;</span></code> = order by number of descendants, then by incident edge length
+* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_edge_length_then_label&quot;</span></code> = order by number of descendants, then by incident edge length, then by node label</p>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">ascending</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to sort in ascending order of <code class="docutils literal notranslate"><span class="pre">mode</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
@@ -569,23 +555,23 @@
 <dl class="method">
 <dt id="treeswift.Tree.rename_nodes">
 <code class="descname">rename_nodes</code><span class="sig-paren">(</span><em>renaming_map</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.rename_nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.rename_nodes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Rename nodes in this Tree</p>
+<dd><p>Rename nodes in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>renaming_map (dict): A dictionary mapping old labels (keys) to new labels (values)</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">renaming_map</span></code> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>): A dictionary mapping old labels (keys) to new labels (values)</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.reroot">
 <code class="descname">reroot</code><span class="sig-paren">(</span><em>node</em>, <em>length</em>, <em>suppress_unifurcations=True</em>, <em>branch_support=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.reroot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.reroot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reroot this Tree at <code class="docutils literal notranslate"><span class="pre">length</span></code> up the incident edge of <code class="docutils literal notranslate"><span class="pre">node</span></code></p>
+<dd><p>Reroot this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> at <code class="docutils literal notranslate"><span class="pre">length</span></code> up the incident edge of <code class="docutils literal notranslate"><span class="pre">node</span></code></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><p class="first">node (Node): The node on whose incident edge this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> will be rerooted</p>
-<p>length (float): The distance up the specified edge at which to reroot this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
-<p>suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</p>
-<p class="last">branch_support (bool): True if internal node labels represent branch support values, otherwise False</p>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">node</span></code> (<code class="docutils literal notranslate"><span class="pre">Node</span></code>): The <code class="docutils literal notranslate"><span class="pre">Node</span></code> on whose incident edge this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> will be rerooted</p>
+<p><code class="docutils literal notranslate"><span class="pre">length</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The distance up the specified edge at which to reroot this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">suppress_unifurcations</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to suppress unifurcations, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">branch_support</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> if internal node labels represent branch support values, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -599,20 +585,23 @@
 <dl class="method">
 <dt id="treeswift.Tree.sackin">
 <code class="descname">sackin</code><span class="sig-paren">(</span><em>normalize='leaves'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.sackin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.sackin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the Sackin index of this Tree</p>
+<dd><p>Compute the Sackin index of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>normalize (str): None to not normalize, “leaves” to normalize by the number of leaves, “yule” to normalize to the Yule model, or “pda” to normalize to the Proportional to Distinguishable
-Arrangements model</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">normalize</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): How to normalize the Sackin index (if at all)
+* <code class="docutils literal notranslate"><span class="pre">None</span></code> to not normalize
+* <code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code> to normalize by the number of leaves
+* <code class="docutils literal notranslate"><span class="pre">&quot;yule&quot;</span></code> to normalize to the Yule model
+* <code class="docutils literal notranslate"><span class="pre">&quot;pda&quot;</span></code> to normalize to the Proportional to Distinguishable Arrangements model</dd>
 <dt>Returns:</dt>
-<dd>float: Sackin index (either normalized or not)</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">float</span></code>: Sackin index (either normalized or not)</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.scale_edges">
 <code class="descname">scale_edges</code><span class="sig-paren">(</span><em>multiplier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.scale_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.scale_edges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multiply all edges in this Tree by <code class="docutils literal notranslate"><span class="pre">multiplier</span></code></p>
+<dd><p>Multiply all edges in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> by <code class="docutils literal notranslate"><span class="pre">multiplier</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -624,62 +613,62 @@ Arrangements model</dd>
 <dl class="method">
 <dt id="treeswift.Tree.traverse_inorder">
 <code class="descname">traverse_inorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_inorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_inorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform an inorder traversal of the Node objects in this Tree</p>
+<dd><p>Perform an inorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_internal">
 <code class="descname">traverse_internal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_internal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_internal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Traverse over the internal nodes of this Tree</p>
+<dd><p>Traverse over the internal nodes of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_leaves">
 <code class="descname">traverse_leaves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_leaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_leaves" title="Permalink to this definition">¶</a></dt>
-<dd><p>Traverse over the leaves of this Tree</p>
+<dd><p>Traverse over the leaves of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_levelorder">
 <code class="descname">traverse_levelorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_levelorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_levelorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a levelorder traversal of the Node objects in this Tree</p>
+<dd><p>Perform a levelorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_postorder">
 <code class="descname">traverse_postorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_postorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_postorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a postorder traversal of the Node objects in this Tree</p>
+<dd><p>Perform a postorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_preorder">
 <code class="descname">traverse_preorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_preorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_preorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a preorder traversal of the Node objects in this Tree</p>
+<dd><p>Perform a preorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_rootdistorder">
 <code class="descname">traverse_rootdistorder</code><span class="sig-paren">(</span><em>ascending=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_rootdistorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_rootdistorder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a traversal of the Node objects in this Tree in either ascending (<code class="docutils literal notranslate"><span class="pre">ascending=True</span></code>) or descending (<code class="docutils literal notranslate"><span class="pre">ascending=False</span></code>) order of distance from the root</p>
+<dd><p>Perform a traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> in either ascending (<code class="docutils literal notranslate"><span class="pre">ascending=True</span></code>) or descending (<code class="docutils literal notranslate"><span class="pre">ascending=False</span></code>) order of distance from the root</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.treeness">
 <code class="descname">treeness</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.treeness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.treeness" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the “treeness” (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length</p>
+<dd><p>Compute the <cite>treeness</cite> (sum of internal branch lengths / sum of all branch lengths) of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code>. Branch lengths of <code class="docutils literal notranslate"><span class="pre">None</span></code> are considered 0 length</p>
 <dl class="docutils">
 <dt>Returns:</dt>
-<dd>float: “Treeness” of this Tree (sum of internal branch lengths / sum of all branch lengths)</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">float</span></code>: <cite>Treeness</cite> of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> (sum of internal branch lengths / sum of all branch lengths)</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.write_tree_newick">
 <code class="descname">write_tree_newick</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.write_tree_newick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.write_tree_newick" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write this Tree to a Newick file</p>
+<dd><p>Write this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> to a Newick file</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>filename (str): Path to desired output file (plain-text or gzipped)</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">filename</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Path to desired output file (plain-text or gzipped)</dd>
 </dl>
 </dd></dl>
 
@@ -691,9 +680,9 @@ Arrangements model</dd>
 <dd><p>Read a tree from a Newick string or file</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>newick (str): Either a Newick string or the path to a Newick file (plain-text or gzipped)</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">newick</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Either a Newick string or the path to a Newick file (plain-text or gzipped)</dd>
 <dt>Returns:</dt>
-<dd>Tree: The tree represented by <code class="docutils literal notranslate"><span class="pre">newick</span></code>. If the Newick file has multiple trees (one per line), a list of <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects will be returned</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">Tree</span></code>: The tree represented by <code class="docutils literal notranslate"><span class="pre">newick</span></code>. If the Newick file has multiple trees (one per line), a list of <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects will be returned</dd>
 </dl>
 </dd></dl>
 
@@ -703,9 +692,9 @@ Arrangements model</dd>
 <dd><p>Read a tree from a NeXML string or file</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>nexml (str): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">nexml</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)</dd>
 <dt>Returns:</dt>
-<dd>dict of Tree: A dictionary of the trees represented by <code class="docutils literal notranslate"><span class="pre">nexml</span></code>, where keys are tree names (<code class="docutils literal notranslate"><span class="pre">str</span></code>) and values are <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">dict</span></code> of <code class="docutils literal notranslate"><span class="pre">Tree</span></code>: A dictionary of the trees represented by <code class="docutils literal notranslate"><span class="pre">nexml</span></code>, where keys are tree names (<code class="docutils literal notranslate"><span class="pre">str</span></code>) and values are <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects</dd>
 </dl>
 </dd></dl>
 
@@ -715,9 +704,9 @@ Arrangements model</dd>
 <dd><p>Read a tree from a Nexus string or file</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd>nexus (str): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">nexus</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)</dd>
 <dt>Returns:</dt>
-<dd>dict of Tree: A dictionary of the trees represented by <code class="docutils literal notranslate"><span class="pre">nexus</span></code>, where keys are tree names (<code class="docutils literal notranslate"><span class="pre">str</span></code>) and values are <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">dict</span></code> of <code class="docutils literal notranslate"><span class="pre">Tree</span></code>: A dictionary of the trees represented by <code class="docutils literal notranslate"><span class="pre">nexus</span></code>, where keys are tree names (<code class="docutils literal notranslate"><span class="pre">str</span></code>) and values are <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects</dd>
 </dl>
 </dd></dl>
 

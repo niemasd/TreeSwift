@@ -542,18 +542,18 @@
 
 <div class="viewcode-block" id="Tree.label_to_node"><a class="viewcode-back" href="../../index.html#treeswift.Tree.label_to_node">[docs]</a>    <span class="k">def</span> <span class="nf">label_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return a dictionary mapping labels (strings) to ``Node`` objects</span>
-<span class="sd">            * If ``selection`` is ``&quot;all&quot;``, the dictionary will contain all nodes</span>
-<span class="sd">            * If ``selection`` is ``&quot;leaves&quot;``, the dictionary will only contain leaves</span>
-<span class="sd">            * If ``selection`` is ``&quot;internal&quot;``, the dictionary will only contain internal nodes</span>
-<span class="sd">            * If ``selection`` is a ``set``, the dictionary will contain all nodes labeled by a label in ``selection``</span>
-<span class="sd">            * If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
+<span class="sd">        * If ``selection`` is ``&quot;all&quot;``, the dictionary will contain all nodes</span>
+<span class="sd">        * If ``selection`` is ``&quot;leaves&quot;``, the dictionary will only contain leaves</span>
+<span class="sd">        * If ``selection`` is ``&quot;internal&quot;``, the dictionary will only contain internal nodes</span>
+<span class="sd">        * If ``selection`` is a ``set``, the dictionary will contain all nodes labeled by a label in ``selection``</span>
+<span class="sd">        * If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``selection`` (``str`` or ``set``): The selection of nodes to get</span>
-<span class="sd">                * ``&quot;all&quot;`` to select all nodes</span>
-<span class="sd">                * ``&quot;leaves&quot;`` to select leaves</span>
-<span class="sd">                * ``&quot;internal&quot;`` to select internal nodes</span>
-<span class="sd">                * A ``set`` of labels to specify nodes to select</span>
+<span class="sd">            * ``&quot;all&quot;`` to select all nodes</span>
+<span class="sd">            * ``&quot;leaves&quot;`` to select leaves</span>
+<span class="sd">            * ``&quot;internal&quot;`` to select internal nodes</span>
+<span class="sd">            * A ``set`` of labels to specify nodes to select</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``dict``: Dictionary mapping labels to the corresponding nodes</span>
@@ -715,21 +715,21 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``mode`` (``str``): How to order the children of the nodes of this ``Tree``</span>
-<span class="sd">                * ``&quot;edge_length&quot;`` = order by incident edge length</span>
-<span class="sd">                * ``&quot;edge_length_then_label&quot;`` = order by incident edge length, then by node label</span>
-<span class="sd">                * ``&quot;edge_length_then_label_then_num_descendants&quot;`` = order by incident edge length, then by node label, then by number of descendants</span>
-<span class="sd">                * ``&quot;edge_length_then_num_descendants&quot;`` = order by incident edge length, then by number of descendants</span>
-<span class="sd">                * ``&quot;edge_length_then_num_descendants_then_label&quot;`` = order by incident edge length, then by number of descendants, then by node label</span>
-<span class="sd">                * ``&quot;label&quot;`` = order by node label</span>
-<span class="sd">                * ``&quot;label_then_edge_length&quot;`` = order by node label, then by incident edge length</span>
-<span class="sd">                * ``&quot;label_then_edge_length_then_num_descendants&quot;`` = order by node label, then by incident edge length, then by number of descendants</span>
-<span class="sd">                * ``&quot;label_then_num_descendants&quot;`` = order by node label, then by number of descendants</span>
-<span class="sd">                * ``&quot;label_then_num_descendants_then_edge_length&quot;`` = order by node label, then by number of descendants, then by incident edge length</span>
-<span class="sd">                * ``&quot;num_descendants&quot;`` = order by number of descendants</span>
-<span class="sd">                * ``&quot;num_descendants_then_label&quot;`` = order by number of descendants, then by node label</span>
-<span class="sd">                * ``&quot;num_descendants_then_label_then_edge_length&quot;`` = order by number of descendants, then by node label, then by incident edge length</span>
-<span class="sd">                * ``&quot;num_descendants_then_edge_length&quot;`` = order by number of descendants, then by incident edge length</span>
-<span class="sd">                * ``&quot;num_descendants_then_edge_length_then_label&quot;`` = order by number of descendants, then by incident edge length, then by node label</span>
+<span class="sd">            * ``&quot;edge_length&quot;`` = order by incident edge length</span>
+<span class="sd">            * ``&quot;edge_length_then_label&quot;`` = order by incident edge length, then by node label</span>
+<span class="sd">            * ``&quot;edge_length_then_label_then_num_descendants&quot;`` = order by incident edge length, then by node label, then by number of descendants</span>
+<span class="sd">            * ``&quot;edge_length_then_num_descendants&quot;`` = order by incident edge length, then by number of descendants</span>
+<span class="sd">            * ``&quot;edge_length_then_num_descendants_then_label&quot;`` = order by incident edge length, then by number of descendants, then by node label</span>
+<span class="sd">            * ``&quot;label&quot;`` = order by node label</span>
+<span class="sd">            * ``&quot;label_then_edge_length&quot;`` = order by node label, then by incident edge length</span>
+<span class="sd">            * ``&quot;label_then_edge_length_then_num_descendants&quot;`` = order by node label, then by incident edge length, then by number of descendants</span>
+<span class="sd">            * ``&quot;label_then_num_descendants&quot;`` = order by node label, then by number of descendants</span>
+<span class="sd">            * ``&quot;label_then_num_descendants_then_edge_length&quot;`` = order by node label, then by number of descendants, then by incident edge length</span>
+<span class="sd">            * ``&quot;num_descendants&quot;`` = order by number of descendants</span>
+<span class="sd">            * ``&quot;num_descendants_then_label&quot;`` = order by number of descendants, then by node label</span>
+<span class="sd">            * ``&quot;num_descendants_then_label_then_edge_length&quot;`` = order by number of descendants, then by node label, then by incident edge length</span>
+<span class="sd">            * ``&quot;num_descendants_then_edge_length&quot;`` = order by number of descendants, then by incident edge length</span>
+<span class="sd">            * ``&quot;num_descendants_then_edge_length_then_label&quot;`` = order by number of descendants, then by incident edge length, then by node label</span>
 
 <span class="sd">            ``ascending`` (``bool``): ``True`` to sort in ascending order of ``mode``, otherwise ``False``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -780,10 +780,10 @@
             <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="ow">not</span> <span class="n">ascending</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.rename_nodes"><a class="viewcode-back" href="../../index.html#treeswift.Tree.rename_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">rename_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renaming_map</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Rename nodes in this Tree</span>
+        <span class="sd">&#39;&#39;&#39;Rename nodes in this ``Tree``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            renaming_map (dict): A dictionary mapping old labels (keys) to new labels (values)</span>
+<span class="sd">            ``renaming_map`` (``dict``): A dictionary mapping old labels (keys) to new labels (values)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">renaming_map</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;renaming_map must be a dict&quot;</span><span class="p">)</span>
@@ -792,16 +792,16 @@
                 <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">renaming_map</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Tree.reroot"><a class="viewcode-back" href="../../index.html#treeswift.Tree.reroot">[docs]</a>    <span class="k">def</span> <span class="nf">reroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">suppress_unifurcations</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">branch_support</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Reroot this Tree at ``length`` up the incident edge of ``node``</span>
+        <span class="sd">&#39;&#39;&#39;Reroot this ``Tree`` at ``length`` up the incident edge of ``node``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            node (Node): The node on whose incident edge this ``Tree`` will be rerooted</span>
+<span class="sd">            ``node`` (``Node``): The ``Node`` on whose incident edge this ``Tree`` will be rerooted</span>
 
-<span class="sd">            length (float): The distance up the specified edge at which to reroot this ``Tree``</span>
+<span class="sd">            ``length`` (``float``): The distance up the specified edge at which to reroot this ``Tree``</span>
 
-<span class="sd">            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False</span>
+<span class="sd">            ``suppress_unifurcations`` (``bool``): ``True`` to suppress unifurcations, otherwise ``False``</span>
 
-<span class="sd">            branch_support (bool): True if internal node labels represent branch support values, otherwise False</span>
+<span class="sd">            ``branch_support`` (``bool``): ``True`` if internal node labels represent branch support values, otherwise ``False``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;node must be a Node&quot;</span><span class="p">)</span>
@@ -857,14 +857,17 @@
             <span class="n">q</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.sackin"><a class="viewcode-back" href="../../index.html#treeswift.Tree.sackin">[docs]</a>    <span class="k">def</span> <span class="nf">sackin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Compute the Sackin index of this Tree</span>
+        <span class="sd">&#39;&#39;&#39;Compute the Sackin index of this ``Tree``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            normalize (str): None to not normalize, &quot;leaves&quot; to normalize by the number of leaves, &quot;yule&quot; to normalize to the Yule model, or &quot;pda&quot; to normalize to the Proportional to Distinguishable</span>
-<span class="sd">            Arrangements model</span>
+<span class="sd">            ``normalize`` (``str``): How to normalize the Sackin index (if at all)</span>
+<span class="sd">            * ``None`` to not normalize</span>
+<span class="sd">            * ``&quot;leaves&quot;`` to normalize by the number of leaves</span>
+<span class="sd">            * ``&quot;yule&quot;`` to normalize to the Yule model</span>
+<span class="sd">            * ``&quot;pda&quot;`` to normalize to the Proportional to Distinguishable Arrangements model</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float: Sackin index (either normalized or not)</span>
+<span class="sd">            ``float``: Sackin index (either normalized or not)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">num_nodes_from_root</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">sackin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">num_leaves</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
@@ -886,7 +889,7 @@
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;normalize must be None, &#39;leaves&#39;, &#39;yule&#39;, or &#39;pda&#39;&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.scale_edges"><a class="viewcode-back" href="../../index.html#treeswift.Tree.scale_edges">[docs]</a>    <span class="k">def</span> <span class="nf">scale_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Multiply all edges in this Tree by ``multiplier``&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Multiply all edges in this ``Tree`` by ``multiplier``&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;multiplier must be an int or float&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
@@ -914,45 +917,45 @@
             <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_inorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_inorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Perform an inorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Perform an inorder traversal of the ``Node`` objects in this ``Tree``&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_inorder</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_internal"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_internal">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Traverse over the internal nodes of this Tree&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Traverse over the internal nodes of this ``Tree``&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_internal</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_leaves"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_leaves">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Traverse over the leaves of this Tree&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Traverse over the leaves of this ``Tree``&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_leaves</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_levelorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_levelorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_levelorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Perform a levelorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Perform a levelorder traversal of the ``Node`` objects in this ``Tree``&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_levelorder</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_postorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_postorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_postorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Perform a postorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Perform a postorder traversal of the ``Node`` objects in this ``Tree``&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_preorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_preorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_preorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Perform a preorder traversal of the Node objects in this Tree&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Perform a preorder traversal of the ``Node`` objects in this ``Tree``&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.traverse_rootdistorder"><a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_rootdistorder">[docs]</a>    <span class="k">def</span> <span class="nf">traverse_rootdistorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Perform a traversal of the Node objects in this Tree in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Perform a traversal of the ``Node`` objects in this ``Tree`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_rootdistorder</span><span class="p">(</span><span class="n">ascending</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.treeness"><a class="viewcode-back" href="../../index.html#treeswift.Tree.treeness">[docs]</a>    <span class="k">def</span> <span class="nf">treeness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Compute the &quot;treeness&quot; (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length</span>
+        <span class="sd">&#39;&#39;&#39;Compute the `treeness` (sum of internal branch lengths / sum of all branch lengths) of this ``Tree``. Branch lengths of ``None`` are considered 0 length</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float: &quot;Treeness&quot; of this Tree (sum of internal branch lengths / sum of all branch lengths)</span>
+<span class="sd">            ``float``: `Treeness` of this ``Tree`` (sum of internal branch lengths / sum of all branch lengths)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">internal</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span> <span class="nb">all</span> <span class="o">=</span> <span class="mf">0.</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
@@ -963,10 +966,10 @@
         <span class="k">return</span> <span class="n">internal</span><span class="o">/</span><span class="nb">all</span></div>
 
 <div class="viewcode-block" id="Tree.write_tree_newick"><a class="viewcode-back" href="../../index.html#treeswift.Tree.write_tree_newick">[docs]</a>    <span class="k">def</span> <span class="nf">write_tree_newick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Write this Tree to a Newick file</span>
+        <span class="sd">&#39;&#39;&#39;Write this ``Tree`` to a Newick file</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            filename (str): Path to desired output file (plain-text or gzipped)</span>
+<span class="sd">            ``filename`` (``str``): Path to desired output file (plain-text or gzipped)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filename must be a str&quot;</span><span class="p">)</span>
@@ -979,10 +982,10 @@
     <span class="sd">&#39;&#39;&#39;Read a tree from a Newick string or file</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        newick (str): Either a Newick string or the path to a Newick file (plain-text or gzipped)</span>
+<span class="sd">        ``newick`` (``str``): Either a Newick string or the path to a Newick file (plain-text or gzipped)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Tree: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned</span>
+<span class="sd">        ``Tree``: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">newick</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">newick</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;newick must be a str&quot;</span><span class="p">)</span>
@@ -1032,10 +1035,10 @@
     <span class="sd">&#39;&#39;&#39;Read a tree from a NeXML string or file</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        nexml (str): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)</span>
+<span class="sd">        ``nexml`` (``str``): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        dict of Tree: A dictionary of the trees represented by ``nexml``, where keys are tree names (``str``) and values are ``Tree`` objects</span>
+<span class="sd">        ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexml``, where keys are tree names (``str``) and values are ``Tree`` objects</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nexml</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nexml must be a str&quot;</span><span class="p">)</span>
@@ -1147,10 +1150,10 @@
     <span class="sd">&#39;&#39;&#39;Read a tree from a Nexus string or file</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        nexus (str): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)</span>
+<span class="sd">        ``nexus`` (``str``): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        dict of Tree: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects</span>
+<span class="sd">        ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nexus</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nexus must be a str&quot;</span><span class="p">)</span>

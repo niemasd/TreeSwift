@@ -503,18 +503,18 @@ class Tree:
 
     def label_to_node(self, selection='leaves'):
         '''Return a dictionary mapping labels (strings) to ``Node`` objects
-            * If ``selection`` is ``"all"``, the dictionary will contain all nodes
-            * If ``selection`` is ``"leaves"``, the dictionary will only contain leaves
-            * If ``selection`` is ``"internal"``, the dictionary will only contain internal nodes
-            * If ``selection`` is a ``set``, the dictionary will contain all nodes labeled by a label in ``selection``
-            * If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
+        * If ``selection`` is ``"all"``, the dictionary will contain all nodes
+        * If ``selection`` is ``"leaves"``, the dictionary will only contain leaves
+        * If ``selection`` is ``"internal"``, the dictionary will only contain internal nodes
+        * If ``selection`` is a ``set``, the dictionary will contain all nodes labeled by a label in ``selection``
+        * If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
 
         Args:
             ``selection`` (``str`` or ``set``): The selection of nodes to get
-                * ``"all"`` to select all nodes
-                * ``"leaves"`` to select leaves
-                * ``"internal"`` to select internal nodes
-                * A ``set`` of labels to specify nodes to select
+            * ``"all"`` to select all nodes
+            * ``"leaves"`` to select leaves
+            * ``"internal"`` to select internal nodes
+            * A ``set`` of labels to specify nodes to select
 
         Returns:
             ``dict``: Dictionary mapping labels to the corresponding nodes
@@ -676,21 +676,21 @@ class Tree:
 
         Args:
             ``mode`` (``str``): How to order the children of the nodes of this ``Tree``
-                * ``"edge_length"`` = order by incident edge length
-                * ``"edge_length_then_label"`` = order by incident edge length, then by node label
-                * ``"edge_length_then_label_then_num_descendants"`` = order by incident edge length, then by node label, then by number of descendants
-                * ``"edge_length_then_num_descendants"`` = order by incident edge length, then by number of descendants
-                * ``"edge_length_then_num_descendants_then_label"`` = order by incident edge length, then by number of descendants, then by node label
-                * ``"label"`` = order by node label
-                * ``"label_then_edge_length"`` = order by node label, then by incident edge length
-                * ``"label_then_edge_length_then_num_descendants"`` = order by node label, then by incident edge length, then by number of descendants
-                * ``"label_then_num_descendants"`` = order by node label, then by number of descendants
-                * ``"label_then_num_descendants_then_edge_length"`` = order by node label, then by number of descendants, then by incident edge length
-                * ``"num_descendants"`` = order by number of descendants
-                * ``"num_descendants_then_label"`` = order by number of descendants, then by node label
-                * ``"num_descendants_then_label_then_edge_length"`` = order by number of descendants, then by node label, then by incident edge length
-                * ``"num_descendants_then_edge_length"`` = order by number of descendants, then by incident edge length
-                * ``"num_descendants_then_edge_length_then_label"`` = order by number of descendants, then by incident edge length, then by node label
+            * ``"edge_length"`` = order by incident edge length
+            * ``"edge_length_then_label"`` = order by incident edge length, then by node label
+            * ``"edge_length_then_label_then_num_descendants"`` = order by incident edge length, then by node label, then by number of descendants
+            * ``"edge_length_then_num_descendants"`` = order by incident edge length, then by number of descendants
+            * ``"edge_length_then_num_descendants_then_label"`` = order by incident edge length, then by number of descendants, then by node label
+            * ``"label"`` = order by node label
+            * ``"label_then_edge_length"`` = order by node label, then by incident edge length
+            * ``"label_then_edge_length_then_num_descendants"`` = order by node label, then by incident edge length, then by number of descendants
+            * ``"label_then_num_descendants"`` = order by node label, then by number of descendants
+            * ``"label_then_num_descendants_then_edge_length"`` = order by node label, then by number of descendants, then by incident edge length
+            * ``"num_descendants"`` = order by number of descendants
+            * ``"num_descendants_then_label"`` = order by number of descendants, then by node label
+            * ``"num_descendants_then_label_then_edge_length"`` = order by number of descendants, then by node label, then by incident edge length
+            * ``"num_descendants_then_edge_length"`` = order by number of descendants, then by incident edge length
+            * ``"num_descendants_then_edge_length_then_label"`` = order by number of descendants, then by incident edge length, then by node label
 
             ``ascending`` (``bool``): ``True`` to sort in ascending order of ``mode``, otherwise ``False``
         '''
@@ -741,10 +741,10 @@ class Tree:
             node.children.sort(key=k, reverse=not ascending)
 
     def rename_nodes(self, renaming_map):
-        '''Rename nodes in this Tree
+        '''Rename nodes in this ``Tree``
 
         Args:
-            renaming_map (dict): A dictionary mapping old labels (keys) to new labels (values)
+            ``renaming_map`` (``dict``): A dictionary mapping old labels (keys) to new labels (values)
         '''
         if not isinstance(renaming_map, dict):
             raise TypeError("renaming_map must be a dict")
@@ -753,16 +753,16 @@ class Tree:
                 node.label = renaming_map[node.label]
 
     def reroot(self, node, length, suppress_unifurcations=True, branch_support=False):
-        '''Reroot this Tree at ``length`` up the incident edge of ``node``
+        '''Reroot this ``Tree`` at ``length`` up the incident edge of ``node``
 
         Args:
-            node (Node): The node on whose incident edge this ``Tree`` will be rerooted
+            ``node`` (``Node``): The ``Node`` on whose incident edge this ``Tree`` will be rerooted
 
-            length (float): The distance up the specified edge at which to reroot this ``Tree``
+            ``length`` (``float``): The distance up the specified edge at which to reroot this ``Tree``
 
-            suppress_unifurcations (bool): True to suppress unifurcations, otherwise False
+            ``suppress_unifurcations`` (``bool``): ``True`` to suppress unifurcations, otherwise ``False``
 
-            branch_support (bool): True if internal node labels represent branch support values, otherwise False
+            ``branch_support`` (``bool``): ``True`` if internal node labels represent branch support values, otherwise ``False``
         '''
         if not isinstance(node, Node):
             raise TypeError("node must be a Node")
@@ -818,14 +818,17 @@ class Tree:
             q.extend(node.children)
 
     def sackin(self, normalize='leaves'):
-        '''Compute the Sackin index of this Tree
+        '''Compute the Sackin index of this ``Tree``
 
         Args:
-            normalize (str): None to not normalize, "leaves" to normalize by the number of leaves, "yule" to normalize to the Yule model, or "pda" to normalize to the Proportional to Distinguishable
-            Arrangements model
+            ``normalize`` (``str``): How to normalize the Sackin index (if at all)
+            * ``None`` to not normalize
+            * ``"leaves"`` to normalize by the number of leaves
+            * ``"yule"`` to normalize to the Yule model
+            * ``"pda"`` to normalize to the Proportional to Distinguishable Arrangements model
 
         Returns:
-            float: Sackin index (either normalized or not)
+            ``float``: Sackin index (either normalized or not)
         '''
         num_nodes_from_root = dict(); sackin = 0; num_leaves = 0
         for node in self.traverse_preorder():
@@ -847,7 +850,7 @@ class Tree:
             raise RuntimeError("normalize must be None, 'leaves', 'yule', or 'pda'")
 
     def scale_edges(self, multiplier):
-        '''Multiply all edges in this Tree by ``multiplier``'''
+        '''Multiply all edges in this ``Tree`` by ``multiplier``'''
         if not isinstance(multiplier,int) and not isinstance(multiplier,float):
             raise TypeError("multiplier must be an int or float")
         for node in self.traverse_preorder():
@@ -875,45 +878,45 @@ class Tree:
             q.append(child)
 
     def traverse_inorder(self):
-        '''Perform an inorder traversal of the Node objects in this Tree'''
+        '''Perform an inorder traversal of the ``Node`` objects in this ``Tree``'''
         for node in self.root.traverse_inorder():
             yield node
 
     def traverse_internal(self):
-        '''Traverse over the internal nodes of this Tree'''
+        '''Traverse over the internal nodes of this ``Tree``'''
         for node in self.root.traverse_internal():
             yield node
 
     def traverse_leaves(self):
-        '''Traverse over the leaves of this Tree'''
+        '''Traverse over the leaves of this ``Tree``'''
         for node in self.root.traverse_leaves():
             yield node
 
     def traverse_levelorder(self):
-        '''Perform a levelorder traversal of the Node objects in this Tree'''
+        '''Perform a levelorder traversal of the ``Node`` objects in this ``Tree``'''
         for node in self.root.traverse_levelorder():
             yield node
 
     def traverse_postorder(self):
-        '''Perform a postorder traversal of the Node objects in this Tree'''
+        '''Perform a postorder traversal of the ``Node`` objects in this ``Tree``'''
         for node in self.root.traverse_postorder():
             yield node
 
     def traverse_preorder(self):
-        '''Perform a preorder traversal of the Node objects in this Tree'''
+        '''Perform a preorder traversal of the ``Node`` objects in this ``Tree``'''
         for node in self.root.traverse_preorder():
             yield node
 
     def traverse_rootdistorder(self, ascending=True):
-        '''Perform a traversal of the Node objects in this Tree in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root'''
+        '''Perform a traversal of the ``Node`` objects in this ``Tree`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root'''
         for node in self.root.traverse_rootdistorder(ascending):
             yield node
 
     def treeness(self):
-        '''Compute the "treeness" (sum of internal branch lengths / sum of all branch lengths) of this Tree. Branch lengths of None are considered 0 length
+        '''Compute the `treeness` (sum of internal branch lengths / sum of all branch lengths) of this ``Tree``. Branch lengths of ``None`` are considered 0 length
 
         Returns:
-            float: "Treeness" of this Tree (sum of internal branch lengths / sum of all branch lengths)
+            ``float``: `Treeness` of this ``Tree`` (sum of internal branch lengths / sum of all branch lengths)
         '''
         internal = 0.; all = 0.
         for node in self.traverse_preorder():
@@ -924,10 +927,10 @@ class Tree:
         return internal/all
 
     def write_tree_newick(self, filename):
-        '''Write this Tree to a Newick file
+        '''Write this ``Tree`` to a Newick file
 
         Args:
-            filename (str): Path to desired output file (plain-text or gzipped)
+            ``filename`` (``str``): Path to desired output file (plain-text or gzipped)
         '''
         if not isinstance(filename, str):
             raise TypeError("filename must be a str")
@@ -940,10 +943,10 @@ def read_tree_newick(newick):
     '''Read a tree from a Newick string or file
 
     Args:
-        newick (str): Either a Newick string or the path to a Newick file (plain-text or gzipped)
+        ``newick`` (``str``): Either a Newick string or the path to a Newick file (plain-text or gzipped)
 
     Returns:
-        Tree: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned
+        ``Tree``: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned
     '''
     if not isinstance(newick, str) and not isinstance(newick, unicode):
         raise TypeError("newick must be a str")
@@ -993,10 +996,10 @@ def read_tree_nexml(nexml):
     '''Read a tree from a NeXML string or file
 
     Args:
-        nexml (str): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)
+        ``nexml`` (``str``): Either a NeXML string or the path to a NeXML file (plain-text or gzipped)
 
     Returns:
-        dict of Tree: A dictionary of the trees represented by ``nexml``, where keys are tree names (``str``) and values are ``Tree`` objects
+        ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexml``, where keys are tree names (``str``) and values are ``Tree`` objects
     '''
     if not isinstance(nexml, str):
         raise TypeError("nexml must be a str")
@@ -1108,10 +1111,10 @@ def read_tree_nexus(nexus):
     '''Read a tree from a Nexus string or file
 
     Args:
-        nexus (str): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)
+        ``nexus`` (``str``): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)
 
     Returns:
-        dict of Tree: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects
+        ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects
     '''
     if not isinstance(nexus, str):
         raise TypeError("nexus must be a str")
