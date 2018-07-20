@@ -159,10 +159,10 @@ def test_sackin(t):
 def test_scale_edges(t):
     copy(t).scale_edges(1.5)
 def test_set_edge_length(t):
-    for n in t.traverse_preorder():
+    for n in copy(t).traverse_preorder():
         n.set_edge_length(0)
 def test_set_label(t):
-    for n in t.traverse_preorder():
+    for n in copy(t).traverse_preorder():
         n.set_label('NIEMA')
 def test_traverse_inorder(t):
     for n in t.traverse_inorder():
