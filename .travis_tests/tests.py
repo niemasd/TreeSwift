@@ -84,6 +84,12 @@ def test_furthest_from_root(t):
     n,d = t.furthest_from_root()
 def test_gamma_statistic(t):
     g = t.gamma_statistic()
+def test_get_edge_length(t):
+    for n in t.traverse_preorder():
+        l = n.get_edge_length()
+def test_get_label(t):
+    for n in t.traverse_preorder():
+        l = n.get_label()
 def test_height(t):
     h = t.height()
 def test_indent(t):
@@ -152,6 +158,12 @@ def test_sackin(t):
     o = t.sackin('pda')
 def test_scale_edges(t):
     copy(t).scale_edges(1.5)
+def test_set_edge_length(t):
+    for n in t.traverse_preorder():
+        n.set_edge_length(0)
+def test_set_label(t):
+    for n in t.traverse_preorder():
+        n.set_label('NIEMA')
 def test_traverse_inorder(t):
     for n in t.traverse_inorder():
         pass

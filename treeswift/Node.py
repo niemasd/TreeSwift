@@ -86,6 +86,30 @@ class Node:
             self.parent.add_child(c)
         self.parent.remove_child(self)
 
+    def get_edge_length(self):
+        '''Return the length of the edge incident to this ``Node``
+
+        Returns:
+            ``float``: The length of the edge incident to this ``Node``
+        '''
+        return self.edge_length
+
+    def get_label(self):
+        '''Return the label of this ``Node``
+
+        Returns:
+            ``object``: The label of this ``Node``
+        '''
+        return self.label
+
+    def get_parent(self):
+        '''Return the parent of this ``Node``
+
+        Returns:
+            ``Node``: The parent of this ``Node``
+        '''
+        return self.parent
+
     def is_leaf(self):
         '''Returns ``True`` if this is a leaf
 
@@ -112,7 +136,7 @@ class Node:
             if self.label is None:
                 return ''
             else:
-                return self.label
+                return str(self.label)
         else:
             out = ['(']
             for c in self.children:
@@ -129,7 +153,7 @@ class Node:
             out.pop() # trailing comma
             out.append(')')
             if self.label is not None:
-                out.append(self.label)
+                out.append(str(self.label))
             return ''.join(out)
 
     def num_children(self):
@@ -152,6 +176,35 @@ class Node:
             self.children.remove(child); child.parent = None
         except:
             raise RuntimeError("Attempting to remove non-existent child")
+
+    def set_edge_length(self, length):
+        '''Set the length of the edge incident to this ``Node``
+
+        Args:
+            ``length``: The new length of the edge incident to this ``Node``
+        '''
+        try:
+            self.edge_length = float(length)
+        except:
+            raise TypeError("length must be a float")
+
+    def set_label(self, label):
+        '''Set the label of this ``Node`` object
+
+        Args:
+            ``label``: The new label
+        '''
+        self.label = label
+
+    def set_parent(self, parent):
+        '''Set the parent of this ``Node`` object. Use this carefully, otherwise you may damage the structure of this ``Tree`` object.
+
+        Args:
+            ``Node``: The new parent of this ``Node``
+        '''
+        if not isinstance(parent, Node):
+            raise TypeError("parent must be a Node")
+        self.parent = parent
 
     def traverse_ancestors(self, include_self=True):
         '''Traverse over the ancestors of this ``Node``
