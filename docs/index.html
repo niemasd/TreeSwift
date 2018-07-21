@@ -9,7 +9,7 @@
     <title>treeswift package &#8212; TreeSwift  documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -72,6 +72,36 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Node.get_edge_length">
+<code class="descname">get_edge_length</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.get_edge_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.get_edge_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the length of the edge incident to this <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">float</span></code>: The length of the edge incident to this <code class="docutils literal notranslate"><span class="pre">Node</span></code></dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Node.get_label">
+<code class="descname">get_label</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.get_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the label of this <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">object</span></code>: The label of this <code class="docutils literal notranslate"><span class="pre">Node</span></code></dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Node.get_parent">
+<code class="descname">get_parent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.get_parent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.get_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the parent of this <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The parent of this <code class="docutils literal notranslate"><span class="pre">Node</span></code></dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Node.is_leaf">
 <code class="descname">is_leaf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.is_leaf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.is_leaf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if this is a leaf</p>
@@ -118,6 +148,36 @@
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><code class="docutils literal notranslate"><span class="pre">child</span></code> (<code class="docutils literal notranslate"><span class="pre">Node</span></code>): The child to remove</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Node.set_edge_length">
+<code class="descname">set_edge_length</code><span class="sig-paren">(</span><em>length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.set_edge_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.set_edge_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the length of the edge incident to this <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">length</span></code>: The new length of the edge incident to this <code class="docutils literal notranslate"><span class="pre">Node</span></code></dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Node.set_label">
+<code class="descname">set_label</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.set_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.set_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the label of this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">label</span></code>: The new label</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Node.set_parent">
+<code class="descname">set_parent</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.set_parent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.set_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parent of this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object. Use this carefully, otherwise you may damage the structure of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> object.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The new parent of this <code class="docutils literal notranslate"><span class="pre">Node</span></code></dd>
 </dl>
 </dd></dl>
 
@@ -764,7 +824,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Niema Moshiri.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
     </div>
   </body>
 </html>
