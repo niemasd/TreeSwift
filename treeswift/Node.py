@@ -130,34 +130,38 @@ class Node:
         return self.parent is None
 
     def newick(self):
-        '''Recursive Newick string conversion starting at this ``Node`` object
+        '''Newick string conversion starting at this ``Node`` object
 
         Returns:
-            ``str``: Recursive Newick string conversion starting at this ``Node`` object
+            ``str``: Newick string conversion starting at this ``Node`` object
         '''
-        if self.is_leaf():
-            if self.label is None:
-                return ''
+        node_to_str = dict()
+        for node in self.traverse_postorder():
+            if node.is_leaf():
+                if node.label is None:
+                    node_to_str[node] = ''
+                else:
+                    node_to_str[node] = str(node.label)
             else:
-                return str(self.label)
-        else:
-            out = ['(']
-            for c in self.children:
-                out.append(c.newick())
-                if c.edge_length is not None:
-                    if isinstance(c.edge_length,int):
-                        l_str = str(c.edge_length)
-                    elif isinstance(c.edge_length,float) and c.edge_length.is_integer():
-                        l_str = str(int(c.edge_length))
-                    else:
-                        l_str = str(c.edge_length)
-                    out.append(':%s' % l_str)
-                out.append(',')
-            out.pop() # trailing comma
-            out.append(')')
-            if self.label is not None:
-                out.append(str(self.label))
-            return ''.join(out)
+                out = ['(']
+                for c in node.children:
+                    out.append(node_to_str[c])
+                    if c.edge_length is not None:
+                        if isinstance(c.edge_length,int):
+                            l_str = str(c.edge_length)
+                        elif isinstance(c.edge_length,float) and c.edge_length.is_integer():
+                            l_str = str(int(c.edge_length))
+                        else:
+                            l_str = str(c.edge_length)
+                        out.append(':%s' % l_str)
+                    out.append(',')
+                    del node_to_str[c]
+                out.pop() # trailing comma
+                out.append(')')
+                if node.label is not None:
+                    out.append(str(node.label))
+                node_to_str[node] = ''.join(out)
+        return node_to_str[self]
 
     def num_children(self):
         '''Returns the number of children of this ``Node``
