@@ -877,9 +877,15 @@ class Tree:
                 child.label = node.label
             q.append(child)
 
-    def traverse_inorder(self):
-        '''Perform an inorder traversal of the ``Node`` objects in this ``Tree``'''
-        for node in self.root.traverse_inorder():
+    def traverse_inorder(self, leaves=True, internal=True):
+        '''Perform an inorder traversal of the ``Node`` objects in this ``Tree``
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
+        for node in self.root.traverse_inorder(leaves=leaves, internal=internal):
             yield node
 
     def traverse_internal(self):
@@ -892,24 +898,44 @@ class Tree:
         for node in self.root.traverse_leaves():
             yield node
 
-    def traverse_levelorder(self):
+    def traverse_levelorder(self, leaves=True, internal=True):
         '''Perform a levelorder traversal of the ``Node`` objects in this ``Tree``'''
-        for node in self.root.traverse_levelorder():
+        for node in self.root.traverse_levelorder(leaves=leaves, internal=internal):
             yield node
 
-    def traverse_postorder(self):
-        '''Perform a postorder traversal of the ``Node`` objects in this ``Tree``'''
-        for node in self.root.traverse_postorder():
+    def traverse_postorder(self, leaves=True, internal=True):
+        '''Perform a postorder traversal of the ``Node`` objects in this ``Tree``
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
+        for node in self.root.traverse_postorder(leaves=leaves, internal=internal):
             yield node
 
-    def traverse_preorder(self):
-        '''Perform a preorder traversal of the ``Node`` objects in this ``Tree``'''
-        for node in self.root.traverse_preorder():
+    def traverse_preorder(self, leaves=True, internal=True):
+        '''Perform a preorder traversal of the ``Node`` objects in this ``Tree``
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
+        for node in self.root.traverse_preorder(leaves=leaves, internal=internal):
             yield node
 
-    def traverse_rootdistorder(self, ascending=True):
-        '''Perform a traversal of the ``Node`` objects in this ``Tree`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root'''
-        for node in self.root.traverse_rootdistorder(ascending):
+    def traverse_rootdistorder(self, ascending=True, leaves=True, internal=True):
+        '''Perform a traversal of the ``Node`` objects in this ``Tree`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root
+
+        Args:
+            ``ascending`` (``bool``): ``True`` to perform traversal in ascending distance from the root, otherwise ``False`` for descending
+
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
+        for node in self.root.traverse_rootdistorder(ascending=ascending, leaves=leaves, internal=internal):
             yield node
 
     def treeness(self):

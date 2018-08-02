@@ -193,8 +193,14 @@
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_inorder">
-<code class="descname">traverse_inorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_inorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_inorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_inorder</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_inorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_inorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an inorder traversal starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -211,26 +217,51 @@
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_levelorder">
-<code class="descname">traverse_levelorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_levelorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_levelorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_levelorder</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_levelorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_levelorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a levelorder traversal starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_postorder">
-<code class="descname">traverse_postorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_postorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_postorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_postorder</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_postorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_postorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a postorder traversal starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_preorder">
-<code class="descname">traverse_preorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_preorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_preorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_preorder</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_preorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_preorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a preorder traversal starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Node.traverse_rootdistorder">
-<code class="descname">traverse_rootdistorder</code><span class="sig-paren">(</span><em>ascending=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_rootdistorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_rootdistorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_rootdistorder</code><span class="sig-paren">(</span><em>ascending=True</em>, <em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_rootdistorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Node.traverse_rootdistorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in the subtree rooted at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> in either ascending (<code class="docutils literal notranslate"><span class="pre">ascending=True</span></code>) or descending (<code class="docutils literal notranslate"><span class="pre">ascending=False</span></code>) order of distance from this <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">ascending</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to perform traversal in ascending distance from the root, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> for descending</p>
+<p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -672,8 +703,14 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_inorder">
-<code class="descname">traverse_inorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_inorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_inorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_inorder</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_inorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_inorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an inorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -690,26 +727,45 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_levelorder">
-<code class="descname">traverse_levelorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_levelorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_levelorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_levelorder</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_levelorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_levelorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a levelorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_postorder">
-<code class="descname">traverse_postorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_postorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_postorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_postorder</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_postorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_postorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a postorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_preorder">
-<code class="descname">traverse_preorder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_preorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_preorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_preorder</code><span class="sig-paren">(</span><em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_preorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_preorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a preorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="treeswift.Tree.traverse_rootdistorder">
-<code class="descname">traverse_rootdistorder</code><span class="sig-paren">(</span><em>ascending=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_rootdistorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_rootdistorder" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traverse_rootdistorder</code><span class="sig-paren">(</span><em>ascending=True</em>, <em>leaves=True</em>, <em>internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_rootdistorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.traverse_rootdistorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> in either ascending (<code class="docutils literal notranslate"><span class="pre">ascending=True</span></code>) or descending (<code class="docutils literal notranslate"><span class="pre">ascending=False</span></code>) order of distance from the root</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">ascending</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to perform traversal in ascending distance from the root, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> for descending</p>
+<p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">

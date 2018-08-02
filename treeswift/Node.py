@@ -221,15 +221,23 @@ class Node:
         while c is not None:
             yield c; c = c.parent
 
-    def traverse_inorder(self):
-        '''Perform an inorder traversal starting at this ``Node`` object'''
+    def traverse_inorder(self, leaves=True, internal=True):
+        '''Perform an inorder traversal starting at this ``Node`` object
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
         c = self; s = deque(); done = False
         while not done:
             if c is None:
                 if len(s) == 0:
                     done = True
                 else:
-                    c = s.pop(); yield c
+                    c = s.pop()
+                    if (leaves and c.is_leaf()) or (internal and not c.is_leaf()):
+                        yield c
                     if len(c.children) == 0:
                         c = None
                     elif len(c.children) == 2:
@@ -247,38 +255,70 @@ class Node:
 
     def traverse_internal(self):
         '''Traverse over the internal nodes below (and including) this ``Node`` object'''
-        for n in self.traverse_preorder():
-            if not n.is_leaf():
-                yield n
+        for n in self.traverse_preorder(leaves=False):
+            yield n
 
     def traverse_leaves(self):
         '''Traverse over the leaves below this ``Node`` object'''
-        for n in self.traverse_preorder():
-            if n.is_leaf():
-                yield n
+        for n in self.traverse_preorder(internal=False):
+            yield n
 
-    def traverse_levelorder(self):
-        '''Perform a levelorder traversal starting at this ``Node`` object'''
+    def traverse_levelorder(self, leaves=True, internal=True):
+        '''Perform a levelorder traversal starting at this ``Node`` object
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
         q = deque(); q.append(self)
         while len(q) != 0:
-            n = q.popleft(); yield n; q.extend(n.children)
+            n = q.popleft()
+            if (leaves and n.is_leaf()) or (internal and not n.is_leaf()):
+                yield n
+            q.extend(n.children)
 
-    def traverse_postorder(self):
-        '''Perform a postorder traversal starting at this ``Node`` object'''
+    def traverse_postorder(self, leaves=True, internal=True):
+        '''Perform a postorder traversal starting at this ``Node`` object
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
         s1 = deque(); s2 = deque(); s1.append(self)
         while len(s1) != 0:
             n = s1.pop(); s2.append(n); s1.extend(n.children)
         while len(s2) != 0:
-            yield s2.pop()
+            n = s2.pop()
+            if (leaves and n.is_leaf()) or (internal and not n.is_leaf()):
+                yield n
 
-    def traverse_preorder(self):
-        '''Perform a preorder traversal starting at this ``Node`` object'''
+    def traverse_preorder(self, leaves=True, internal=True):
+        '''Perform a preorder traversal starting at this ``Node`` object
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
         s = deque(); s.append(self)
         while len(s) != 0:
-            n = s.pop(); yield n; s.extend(n.children)
+            n = s.pop()
+            if (leaves and n.is_leaf()) or (internal and not n.is_leaf()):
+                yield n
+            s.extend(n.children)
 
-    def traverse_rootdistorder(self, ascending=True):
-        '''Perform a traversal of the ``Node`` objects in the subtree rooted at this ``Node`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from this ``Node``'''
+    def traverse_rootdistorder(self, ascending=True, leaves=True, internal=True):
+        '''Perform a traversal of the ``Node`` objects in the subtree rooted at this ``Node`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from this ``Node``
+
+        Args:
+            ``ascending`` (``bool``): ``True`` to perform traversal in ascending distance from the root, otherwise ``False`` for descending
+
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+        '''
         if not isinstance(ascending, bool):
             raise TypeError("ascending must be a bool")
         pq = PriorityQueue(); dist_from_root = dict()
@@ -294,7 +334,8 @@ class Node:
                 pq.put((-d,node))
         while not pq.empty():
             priority,node = pq.get()
-            if ascending:
-                yield (priority,node)
-            else:
-                yield (-priority,node)
+            if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
+                if ascending:
+                    yield (priority,node)
+                else:
+                    yield (-priority,node)
