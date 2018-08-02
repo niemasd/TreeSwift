@@ -4,6 +4,7 @@ from collections import deque
 from copy import copy
 from gzip import open as gopen
 from os.path import isfile
+from sys import version_info
 from warnings import warn
 try:                # Python 3
     from queue import PriorityQueue
@@ -975,7 +976,10 @@ def read_tree_newick(newick):
         ``Tree``: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned
     '''
     if not isinstance(newick, str):
-        raise TypeError("newick must be a str")
+        try:
+            newick = str(newick)
+        except:
+            raise TypeError("newick must be a str")
     if newick.lower().endswith('.gz'): # gzipped file
         ts = gopen(newick).read().decode().strip()
         lines = ts.splitlines()

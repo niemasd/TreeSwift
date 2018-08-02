@@ -43,6 +43,7 @@
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">gzip</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">isfile</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">version_info</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
 <span class="k">try</span><span class="p">:</span>                <span class="c1"># Python 3</span>
     <span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">PriorityQueue</span>
@@ -1014,7 +1015,10 @@
 <span class="sd">        ``Tree``: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">newick</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;newick must be a str&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">newick</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">newick</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;newick must be a str&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">newick</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span> <span class="c1"># gzipped file</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">gopen</span><span class="p">(</span><span class="n">newick</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
