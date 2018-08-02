@@ -34,7 +34,10 @@ class Node:
             return True
         elif other.label is None:
             return False
-        return self.label < other.label
+        try:
+            return float(self.label) < float(other.label)
+        except:
+            return str(self.label) < str(other.label)
 
     def __str__(self):
         '''Represent ``Node`` as a string (currently returns ``Node`` label as a string)
