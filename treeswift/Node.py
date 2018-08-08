@@ -1,9 +1,10 @@
 #! /usr/bin/env python
+from collections import deque
 from copy import copy
 try:                # Python 3
-    from queue import PriorityQueue,Queue
+    from queue import PriorityQueue
 except ImportError: # Python 2
-    from Queue import PriorityQueue,Queue
+    from Queue import PriorityQueue
 INORDER_NONBINARY = "Can't do inorder traversal on non-binary tree"
 INVALID_NEWICK = "Tree not valid Newick tree"
 
@@ -235,7 +236,7 @@ class Node:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        c = self; s = list(); done = False
+        c = self; s = deque(); done = False
         while not done:
             if c is None:
                 if len(s) == 0:
@@ -277,13 +278,12 @@ class Node:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        q = Queue(); q.put(self)
-        while not q.empty():
-            n = q.get()
+        q = deque(); q.append(self)
+        while len(q) != 0:
+            n = q.popleft()
             if (leaves and n.is_leaf()) or (internal and not n.is_leaf()):
                 yield n
-            for c in n.children:
-                q.put(c)
+            q.extend(n.children)
 
     def traverse_postorder(self, leaves=True, internal=True):
         '''Perform a postorder traversal starting at this ``Node`` object
@@ -293,7 +293,7 @@ class Node:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        s1 = [self]; s2 = list()
+        s1 = deque(); s2 = deque(); s1.append(self)
         while len(s1) != 0:
             n = s1.pop(); s2.append(n); s1.extend(n.children)
         while len(s2) != 0:
@@ -309,7 +309,7 @@ class Node:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        s = [self]
+        s = deque(); s.append(self)
         while len(s) != 0:
             n = s.pop()
             if (leaves and n.is_leaf()) or (internal and not n.is_leaf()):
