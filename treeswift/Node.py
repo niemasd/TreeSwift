@@ -1,10 +1,6 @@
 #! /usr/bin/env python
 from collections import deque
 from copy import copy
-try:                # Python 3
-    from queue import PriorityQueue
-except ImportError: # Python 2
-    from Queue import PriorityQueue
 INORDER_NONBINARY = "Can't do inorder traversal on non-binary tree"
 INVALID_NEWICK = "Tree not valid Newick tree"
 
@@ -328,21 +324,15 @@ class Node:
         '''
         if not isinstance(ascending, bool):
             raise TypeError("ascending must be a bool")
-        pq = PriorityQueue(); dist_from_root = dict()
+        nodes = list(); dist_from_root = dict()
         for node in self.traverse_preorder():
             if node == self:
                 d = 0
             else:
                 d = dist_from_root[node.parent] + node.edge_length
             dist_from_root[node] = d
-            if ascending:
-                pq.put((d,node))
-            else:
-                pq.put((-d,node))
-        while not pq.empty():
-            priority,node = pq.get()
             if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
-                if ascending:
-                    yield (priority,node)
-                else:
-                    yield (-priority,node)
+                nodes.append((d,node))
+        nodes.sort(reverse=(not ascending))
+        for e in nodes:
+            yield e

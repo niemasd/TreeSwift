@@ -6,10 +6,6 @@ from gzip import open as gopen
 from os.path import isfile
 from sys import version_info
 from warnings import warn
-try:                # Python 3
-    from queue import PriorityQueue
-except ImportError: # Python 2
-    from Queue import PriorityQueue
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid valid NeXML File"
 
@@ -104,16 +100,8 @@ class Tree:
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
-        pq = PriorityQueue()
-        if backward:
-            mult = -1
-        else:
-            mult = 1
-        for n,d in self.distances_from_root():
-            if len(n.children) > 1:
-                pq.put(mult*d)
-        while not pq.empty():
-            yield mult*pq.get()
+        for dist in sorted((d for n,d in self.distances_from_root() if len(n.children) > 1), reverse=backward):
+            yield dist
 
     def coalescence_waiting_times(self, backward=True):
         '''Generator over the waiting times of successive coalescence events
@@ -123,19 +111,16 @@ class Tree:
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
-        pq = PriorityQueue(); lowest_leaf_dist = float('-inf')
-        if backward:
-            mult = -1
-        else:
-            mult = 1
+        times = list(); lowest_leaf_dist = float('-inf')
         for n,d in self.distances_from_root():
             if len(n.children) > 1:
-                pq.put(mult*d)
+                times.append(d)
             elif len(n.children) == 0 and d > lowest_leaf_dist:
                 lowest_leaf_dist = d
-        pq.put(mult*lowest_leaf_dist); curr = mult*pq.get()
-        while not pq.empty():
-            next = mult*pq.get(); yield abs(curr-next); curr = next
+        times.append(lowest_leaf_dist)
+        times.sort(reverse=backward)
+        for i in range(len(times)-1):
+            yield abs(times[i]-times[i+1])
 
     def collapse_short_branches(self, threshold):
         '''Collapse internal branches (not terminal branches) with length less than or equal to ``threshold``. A branch length of ``None`` is considered 0

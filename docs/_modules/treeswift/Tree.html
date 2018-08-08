@@ -45,10 +45,6 @@
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">isfile</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">version_info</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
-<span class="k">try</span><span class="p">:</span>                <span class="c1"># Python 3</span>
-    <span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">PriorityQueue</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span> <span class="c1"># Python 2</span>
-    <span class="kn">from</span> <span class="nn">Queue</span> <span class="k">import</span> <span class="n">PriorityQueue</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
 <span class="n">INVALID_NEXML</span> <span class="o">=</span> <span class="s2">&quot;Invalid valid NeXML File&quot;</span>
 
@@ -143,16 +139,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backward</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;backward must be a bool&quot;</span><span class="p">)</span>
-        <span class="n">pq</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">backward</span><span class="p">:</span>
-            <span class="n">mult</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">mult</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances_from_root</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">mult</span><span class="o">*</span><span class="n">d</span><span class="p">)</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">pq</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-            <span class="k">yield</span> <span class="n">mult</span><span class="o">*</span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span></div>
+        <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">d</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances_from_root</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="n">backward</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">dist</span></div>
 
 <div class="viewcode-block" id="Tree.coalescence_waiting_times"><a class="viewcode-back" href="../../index.html#treeswift.Tree.coalescence_waiting_times">[docs]</a>    <span class="k">def</span> <span class="nf">coalescence_waiting_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backward</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Generator over the waiting times of successive coalescence events</span>
@@ -162,19 +150,16 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backward</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;backward must be a bool&quot;</span><span class="p">)</span>
-        <span class="n">pq</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">();</span> <span class="n">lowest_leaf_dist</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">backward</span><span class="p">:</span>
-            <span class="n">mult</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">mult</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="nb">list</span><span class="p">();</span> <span class="n">lowest_leaf_dist</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances_from_root</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">mult</span><span class="o">*</span><span class="n">d</span><span class="p">)</span>
+                <span class="n">times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="n">lowest_leaf_dist</span><span class="p">:</span>
                 <span class="n">lowest_leaf_dist</span> <span class="o">=</span> <span class="n">d</span>
-        <span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">mult</span><span class="o">*</span><span class="n">lowest_leaf_dist</span><span class="p">);</span> <span class="n">curr</span> <span class="o">=</span> <span class="n">mult</span><span class="o">*</span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">pq</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-            <span class="nb">next</span> <span class="o">=</span> <span class="n">mult</span><span class="o">*</span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">();</span> <span class="k">yield</span> <span class="nb">abs</span><span class="p">(</span><span class="n">curr</span><span class="o">-</span><span class="nb">next</span><span class="p">);</span> <span class="n">curr</span> <span class="o">=</span> <span class="nb">next</span></div>
+        <span class="n">times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lowest_leaf_dist</span><span class="p">)</span>
+        <span class="n">times</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="n">backward</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="nb">abs</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Tree.collapse_short_branches"><a class="viewcode-back" href="../../index.html#treeswift.Tree.collapse_short_branches">[docs]</a>    <span class="k">def</span> <span class="nf">collapse_short_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Collapse internal branches (not terminal branches) with length less than or equal to ``threshold``. A branch length of ``None`` is considered 0</span>
