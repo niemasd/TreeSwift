@@ -550,7 +550,7 @@ class Tree:
             ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary
 
         Returns:
-            ``dict``: A dictionary in which each ``(t,n)`` pair denotes the first time ``t`` at which ``n`` lineages existed
+            ``dict``: A dictionary in which each ``(t,n)`` pair denotes the number of lineages ``n`` that existed at time ``t``
         '''
         lineages = {0:1}; num_lineages = 1; root_length = {True:0,False:self.root.edge_length}[self.root.edge_length is None]
         for t,n in self.traverse_rootdistorder():

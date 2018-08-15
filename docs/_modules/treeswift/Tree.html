@@ -589,7 +589,7 @@
 <span class="sd">            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            ``dict``: A dictionary in which each ``(t,n)`` pair denotes the first time ``t`` at which ``n`` lineages existed</span>
+<span class="sd">            ``dict``: A dictionary in which each ``(t,n)`` pair denotes the number of lineages ``n`` that existed at time ``t``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">lineages</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">};</span> <span class="n">num_lineages</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">root_length</span> <span class="o">=</span> <span class="p">{</span><span class="kc">True</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="kc">False</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span><span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">t</span><span class="p">,</span><span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_rootdistorder</span><span class="p">():</span>
