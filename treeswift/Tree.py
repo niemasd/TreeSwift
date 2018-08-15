@@ -563,6 +563,11 @@ class Tree:
                 fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True)) # integer y ticks
                 times = sorted(lineages.keys())
                 for i in range(len(times)-1):
+                    if i == 0:
+                        prev = 0
+                    else:
+                        prev = lineages[times[i-1]]
+                    plt.plot([times[i],times[i]], [prev,lineages[times[i]]], color='black')
                     plt.plot([times[i],times[i+1]], [lineages[times[i]],lineages[times[i]]], color='black')
                 plt.ylim(ymin=0)
                 plt.title("Lineages Through Time")
