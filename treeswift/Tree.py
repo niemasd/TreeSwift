@@ -543,6 +543,18 @@ class Tree:
         '''
         self.order('num_descendants_then_edge_length_then_label', ascending=ascending)
 
+    def lineages_through_time(self):
+        '''Compute the number of lineages through time. If seaborn is installed, a plot is shown as well
+
+        Returns:
+            ``dict``: A dictionary in which each ``(t,n)`` pair denotes the first time ``t`` at which ``n`` lineages existed
+        '''
+        lineages = {0:1}; num_lineages = 1; root_length = {True:0,False:self.root.edge_length}[self.root.edge_length is None]
+        for t,n in self.traverse_rootdistorder():
+            num_lineages += len(n.children)-1
+            lineages[t+root_length] = num_lineages
+        return lineages
+
     def mrca(self, labels):
         '''Return the Node that is the MRCA of the nodes labeled by a label in ``labels``. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
 
