@@ -553,6 +553,20 @@ class Tree:
         for t,n in self.traverse_rootdistorder():
             num_lineages += len(n.children)-1
             lineages[t+root_length] = num_lineages
+        try:
+            import matplotlib.pyplot as plt; from matplotlib.ticker import MaxNLocator
+            fig = plt.figure()
+            fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True)) # integer y ticks
+            times = sorted(lineages.keys())
+            for i in range(len(times)-1):
+                plt.plot([times[i],times[i+1]], [lineages[times[i]],lineages[times[i]]], color='black')
+            plt.ylim(ymin=0)
+            plt.title("Lineages Through Time")
+            plt.xlabel("Time")
+            plt.ylabel("Number of Lineages")
+            plt.show()
+        except:
+            warn("Unable to import matplotlib, so visualization will not be produced (but dictionary will still be returned")
         return lineages
 
     def mrca(self, labels):

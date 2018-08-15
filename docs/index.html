@@ -559,6 +559,16 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.lineages_through_time">
+<code class="descname">lineages_through_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.lineages_through_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.lineages_through_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the number of lineages through time. If seaborn is installed, a plot is shown as well</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">dict</span></code>: A dictionary in which each <code class="docutils literal notranslate"><span class="pre">(t,n)</span></code> pair denotes the first time <code class="docutils literal notranslate"><span class="pre">t</span></code> at which <code class="docutils literal notranslate"><span class="pre">n</span></code> lineages existed</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.mrca">
 <code class="descname">mrca</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.mrca"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.mrca" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Node that is the MRCA of the nodes labeled by a label in <code class="docutils literal notranslate"><span class="pre">labels</span></code>. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
