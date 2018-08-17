@@ -192,6 +192,16 @@ class Tree:
         for node in to_contract:
             node.contract()
 
+    def deroot(self, label='OLDROOT'):
+        '''If the tree has a root edge, drop the edge to be a child of the root node
+        
+        Args:
+            ``label`` (``str``): The desired label of the new child
+        '''
+        if self.root.edge_length is not None:
+            self.root.add_child(Node(edge_length=self.root.edge_length,label=label))
+            self.root.edge_length = None
+
     def diameter(self):
         '''Compute the diameter (maximum leaf pairwise distance) of this ``Tree``
 
@@ -641,7 +651,10 @@ class Tree:
             suffix = ':%d;' % int(self.root.edge_length)
         else:
             suffix = ':%s;' % str(self.root.edge_length)
-        return '%s%s' % (self.root.newick(),suffix)
+        if self.root.edge_length is None:
+            return '%s%s' % (self.root.newick(),suffix)
+        else:
+            return '[&R] %s%s' % (self.root.newick(),suffix)
 
     def num_lineages_at(self, distance):
         '''Returns the number of lineages of this ``Tree`` that exist ``distance`` away from the root
