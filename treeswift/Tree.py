@@ -1162,7 +1162,8 @@ def read_tree_nexml(nexml):
             if root_node is not None and trees[tree_id].root != root_node:
                 raise ValueError(INVALID_NEXML)
             trees[tree_id].root.edge_length = length
-    f.close()
+    if hasattr(f,'close'):
+        f.close()
     return trees
 
 def read_tree_nexus(nexus):
@@ -1192,5 +1193,6 @@ def read_tree_nexus(nexus):
             i = l.index('='); left = l[:i].strip(); right = l[i+1:].strip()
             name = ' '.join(left.split(' ')[1:])
             trees[name] = read_tree_newick(right)
-    f.close()
+    if hasattr(f,'close'):
+        f.close()
     return trees
