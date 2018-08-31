@@ -1014,20 +1014,14 @@ def read_tree_newick(newick):
         except:
             raise TypeError("newick must be a str")
     if newick.lower().endswith('.gz'): # gzipped file
-        ts = gopen(newick).read().decode().strip()
-        lines = ts.splitlines()
-        if len(lines) != 1:
-            return [read_tree_newick(l) for l in lines]
+        f = gopen(newick); ts = f.read().decode().strip(); f.close()
     elif isfile(newick): # plain-text file
-        ts = open(newick).read().strip()
-        lines = ts.splitlines()
-        if len(lines) != 1:
-            return [read_tree_newick(l) for l in lines]
+        f = open(newick); ts = f.read().strip(); f.close()
     else:
         ts = newick.strip()
-        lines = ts.splitlines()
-        if len(lines) != 1:
-            return [read_tree_newick(l) for l in lines]
+    lines = ts.splitlines()
+    if len(lines) != 1:
+        return [read_tree_newick(l) for l in lines]
     if ts[0] == '[':
         ts = ']'.join(ts.split(']')[1:]).strip()
     ts = ts.replace(', ',',')
@@ -1168,6 +1162,7 @@ def read_tree_nexml(nexml):
             if root_node is not None and trees[tree_id].root != root_node:
                 raise ValueError(INVALID_NEXML)
             trees[tree_id].root.edge_length = length
+    f.close()
     return trees
 
 def read_tree_nexus(nexus):
@@ -1197,4 +1192,5 @@ def read_tree_nexus(nexus):
             i = l.index('='); left = l[:i].strip(); right = l[i+1:].strip()
             name = ' '.join(left.split(' ')[1:])
             trees[name] = read_tree_newick(right)
+    f.close()
     return trees
