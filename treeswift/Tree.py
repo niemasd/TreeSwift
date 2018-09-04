@@ -194,7 +194,7 @@ class Tree:
 
     def deroot(self, label='OLDROOT'):
         '''If the tree has a root edge, drop the edge to be a child of the root node
-        
+
         Args:
             ``label`` (``str``): The desired label of the new child
         '''
@@ -553,11 +553,18 @@ class Tree:
         '''
         self.order('num_descendants_then_edge_length_then_label', ascending=ascending)
 
-    def lineages_through_time(self, show_plot=True):
+    def lineages_through_time(self, show_plot=True, xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
         '''Compute the number of lineages through time. If seaborn is installed, a plot is shown as well
 
         Args:
             ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary
+            ``title`` (``str``): The title of the resulting plot
+            ``xmin`` (``float``): The minimum value of the horizontal axis in the resulting plot
+            ``xmax`` (``float``): The maximum value of the horizontal axis in the resulting plot
+            ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
+            ``ymin`` (``float``): The minimum value of the vertical axis in the resulting plot
+            ``ymax`` (``float``): The maximum value of the vertical axis in the resulting plot
+            ``ylabel`` (``str``): The label of the vertical axis in the resulting plot
 
         Returns:
             ``dict``: A dictionary in which each ``(t,n)`` pair denotes the number of lineages ``n`` that existed at time ``t``
@@ -579,10 +586,34 @@ class Tree:
                         prev = lineages[times[i-1]]
                     plt.plot([times[i],times[i]], [prev,lineages[times[i]]], color='black')
                     plt.plot([times[i],times[i+1]], [lineages[times[i]],lineages[times[i]]], color='black')
-                plt.ylim(ymin=0)
-                plt.title("Lineages Through Time")
-                plt.xlabel("Time")
-                plt.ylabel("Number of Lineages")
+                if xmin is not None and not isinstance(xmin,int) and not isinstance(xmin,float):
+                    warn("xmin is invalid, so using the default"); xmin = None
+                if xmax is not None and not isinstance(xmax,int) and not isinstance(xmax,float):
+                    warn("xmax is invalid, so using the default"); xmax = None
+                plt.xlim(xmin=xmin, xmax=xmax)
+                if ymin is not None and not isinstance(ymin,int) and not isinstance(ymin,float):
+                    warn("ymin is invalid, so using the default"); ymin = None
+                if ymax is not None and not isinstance(ymax,int) and not isinstance(ymax,float):
+                    warn("ymax is invalid, so using the default"); ymax = None
+                plt.ylim(ymin=ymin, ymax=ymax)
+                if title is not None and not isinstance(title,str):
+                    warn("title is invalid, so using the default"); title = None
+                if title is None:
+                    plt.title("Lineages Through Time")
+                else:
+                    plt.title(title)
+                if xlabel is not None and not isinstance(xlabel,str):
+                    warn("xlabel is invalid, so using the default"); xlabel = None
+                if xlabel is None:
+                    plt.xlabel("Time")
+                else:
+                    plt.xlabel(xlabel)
+                if ylabel is not None and not isinstance(ylabel,str):
+                    warn("ylabel is invalid, so using the default"); ylabel = None
+                if ylabel is None:
+                    plt.ylabel("Number of Lineages")
+                else:
+                    plt.ylabel(ylabel)
                 plt.show()
             except:
                 warn("Unable to import matplotlib, so visualization will not be produced (but dictionary will still be returned")

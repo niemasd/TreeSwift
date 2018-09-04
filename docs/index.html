@@ -570,11 +570,18 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.lineages_through_time">
-<code class="descname">lineages_through_time</code><span class="sig-paren">(</span><em>show_plot=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.lineages_through_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.lineages_through_time" title="Permalink to this definition">¶</a></dt>
+<code class="descname">lineages_through_time</code><span class="sig-paren">(</span><em>show_plot=True</em>, <em>xmin=None</em>, <em>xmax=None</em>, <em>ymin=None</em>, <em>ymax=None</em>, <em>title=None</em>, <em>xlabel=None</em>, <em>ylabel=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.lineages_through_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.lineages_through_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the number of lineages through time. If seaborn is installed, a plot is shown as well</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to only return the dictionary</dd>
+<dd><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to only return the dictionary
+<code class="docutils literal notranslate"><span class="pre">title</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The title of the resulting plot
+<code class="docutils literal notranslate"><span class="pre">xmin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the horizontal axis in the resulting plot
+<code class="docutils literal notranslate"><span class="pre">xmax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the horizontal axis in the resulting plot
+<code class="docutils literal notranslate"><span class="pre">xlabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the horizontal axis in the resulting plot
+<code class="docutils literal notranslate"><span class="pre">ymin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the vertical axis in the resulting plot
+<code class="docutils literal notranslate"><span class="pre">ymax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the vertical axis in the resulting plot
+<code class="docutils literal notranslate"><span class="pre">ylabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the vertical axis in the resulting plot</dd>
 <dt>Returns:</dt>
 <dd><code class="docutils literal notranslate"><span class="pre">dict</span></code>: A dictionary in which each <code class="docutils literal notranslate"><span class="pre">(t,n)</span></code> pair denotes the number of lineages <code class="docutils literal notranslate"><span class="pre">n</span></code> that existed at time <code class="docutils literal notranslate"><span class="pre">t</span></code></dd>
 </dl>
