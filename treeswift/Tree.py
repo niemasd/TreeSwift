@@ -1028,38 +1028,43 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
         TREESWIFT_FIGURE.XMAX = times[-1]
     if ymax > TREESWIFT_FIGURE.YMAX:
         TREESWIFT_FIGURE.YMAX = ymax
-    #TREESWIFT_FIGURE.gca().set_xlim(xmax=xmax*1.2); TREESWIFT_FIGURE.gca().set_ylim(ymax=int(ymax*1.1))
-    if xmin is not None and not isinstance(xmin,int) and not isinstance(xmin,float):
-        warn("xmin is invalid, so using the default"); xmin = None
-    if xmax is not None and not isinstance(xmax,int) and not isinstance(xmax,float):
-        warn("xmax is invalid, so using the default"); xmax = None
-    plt.xlim(xmin=xmin, xmax=xmax)
-    if ymin is not None and not isinstance(ymin,int) and not isinstance(ymin,float):
-        warn("ymin is invalid, so using the default"); ymin = None
-    if ymax is not None and not isinstance(ymax,int) and not isinstance(ymax,float):
-        warn("ymax is invalid, so using the default"); ymax = None
-    plt.ylim(ymin=ymin, ymax=ymax)
-    if title is not None and not isinstance(title,str):
-        warn("title is invalid, so using the default"); title = None
-    if title is None:
-        plt.title("Lineages Through Time")
-    else:
-        plt.title(title)
-    if xlabel is not None and not isinstance(xlabel,str):
-        warn("xlabel is invalid, so using the default"); xlabel = None
-    if xlabel is None:
-        plt.xlabel("Time")
-    else:
-        plt.xlabel(xlabel)
-    if ylabel is not None and not isinstance(ylabel,str):
-        warn("ylabel is invalid, so using the default"); ylabel = None
-    if ylabel is None:
-        plt.ylabel("Number of Lineages")
-    else:
-        plt.ylabel(ylabel)
     if show_plot:
-        TREESWIFT_FIGURE.gca().set_xlim(xmin=TREESWIFT_FIGURE.XMIN,xmax=TREESWIFT_FIGURE.XMAX)
-        TREESWIFT_FIGURE.gca().set_ylim(ymin=TREESWIFT_FIGURE.YMIN,ymax=TREESWIFT_FIGURE.YMAX)
+        if xmin is None:
+            xmin = TREESWIFT_FIGURE.XMIN
+        elif not isinstance(xmin,int) and not isinstance(xmin,float):
+            warn("xmin is invalid, so using the default"); xmin = TREESWIFT_FIGURE.XMIN
+        if xmax is None:
+            xmax = TREESWIFT_FIGURE.XMAX
+        elif not isinstance(xmax,int) and not isinstance(xmax,float):
+            warn("xmax is invalid, so using the default"); xmax = TREESWIFT_FIGURE.XMAX
+        plt.xlim(xmin=xmin, xmax=xmax)
+        if ymin is None:
+            ymin = TREESWIFT_FIGURE.YMIN
+        elif not isinstance(ymin,int) and not isinstance(ymin,float):
+            warn("ymin is invalid, so using the default"); ymin = TREESWIFT_FIGURE.YMIN
+        if ymax is None:
+            ymax = TREESWIFT_FIGURE.YMAX
+        elif not isinstance(ymax,int) and not isinstance(ymax,float):
+            warn("ymax is invalid, so using the default"); ymax = TREESWIFT_FIGURE.YMAX
+        plt.ylim(ymin=ymin, ymax=ymax)
+        if title is not None and not isinstance(title,str):
+            warn("title is invalid, so using the default"); title = None
+        if title is None:
+            plt.title("Lineages Through Time")
+        else:
+            plt.title(title)
+        if xlabel is not None and not isinstance(xlabel,str):
+            warn("xlabel is invalid, so using the default"); xlabel = None
+        if xlabel is None:
+            plt.xlabel("Time")
+        else:
+            plt.xlabel(xlabel)
+        if ylabel is not None and not isinstance(ylabel,str):
+            warn("ylabel is invalid, so using the default"); ylabel = None
+        if ylabel is None:
+            plt.ylabel("Number of Lineages")
+        else:
+            plt.ylabel(ylabel)
         plt.show(); TREESWIFT_FIGURE = None
 
 def read_tree_newick(newick):
@@ -1078,7 +1083,7 @@ def read_tree_newick(newick):
             raise TypeError("newick must be a str")
     if newick.lower().endswith('.gz'): # gzipped file
         f = gopen(expanduser(newick)); ts = f.read().decode().strip(); f.close()
-    elif isfile(newick): # plain-text file
+    elif isfile(expanduser(newick)): # plain-text file
         f = open(expanduser(newick)); ts = f.read().strip(); f.close()
     else:
         ts = newick.strip()
@@ -1125,7 +1130,7 @@ def read_tree_nexml(nexml):
         raise TypeError("nexml must be a str")
     if nexml.lower().endswith('.gz'): # gzipped file
         f = gopen(expanduser(nexml))
-    elif isfile(nexml): # plain-text file
+    elif isfile(expanduser(nexml)): # plain-text file
         f = open(expanduser(nexml))
     else:
         f = nexml.splitlines()
@@ -1242,7 +1247,7 @@ def read_tree_nexus(nexus):
         raise TypeError("nexus must be a str")
     if nexus.lower().endswith('.gz'): # gzipped file
         f = gopen(expanduser(nexus))
-    elif isfile(nexus): # plain-text file
+    elif isfile(expanduser(nexus)): # plain-text file
         f = open(expanduser(nexus))
     else:
         f = nexus.splitlines()
