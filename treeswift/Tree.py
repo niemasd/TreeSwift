@@ -557,9 +557,8 @@ class Tree:
         '''Compute the number of lineages through time. If seaborn is installed, a plot is shown as well
 
         Args:
-            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary
-            ``clear_fig`` (``bool``): ``True`` to clear the PyPlot figure after showing, otherwise ``False``
-            ``color`` (``str``): The hexadecimal color of the resulting plot
+            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.
+            ``color`` (``str``): The color of the resulting plot
             ``title`` (``str``): The title of the resulting plot
             ``xmin`` (``float``): The minimum value of the horizontal axis in the resulting plot
             ``xmax`` (``float``): The maximum value of the horizontal axis in the resulting plot
@@ -997,6 +996,15 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
 
     Args:
         ``lineages`` (``dict``): The ``lineages`` dictionary returned by a ``Tree`` object's ``lineages_through_time()`` function call
+        ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.
+        ``color`` (``str``): The color of the resulting plot
+        ``title`` (``str``): The title of the resulting plot
+        ``xmin`` (``float``): The minimum value of the horizontal axis in the resulting plot
+        ``xmax`` (``float``): The maximum value of the horizontal axis in the resulting plot
+        ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
+        ``ymin`` (``float``): The minimum value of the vertical axis in the resulting plot
+        ``ymax`` (``float``): The maximum value of the vertical axis in the resulting plot
+        ``ylabel`` (``str``): The label of the vertical axis in the resulting plot
     '''
     import matplotlib.pyplot as plt; from matplotlib.ticker import MaxNLocator
     if 'TREESWIFT_FIGURE' not in globals():
