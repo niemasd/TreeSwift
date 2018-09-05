@@ -570,11 +570,13 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.lineages_through_time">
-<code class="descname">lineages_through_time</code><span class="sig-paren">(</span><em>show_plot=True</em>, <em>xmin=None</em>, <em>xmax=None</em>, <em>ymin=None</em>, <em>ymax=None</em>, <em>title=None</em>, <em>xlabel=None</em>, <em>ylabel=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.lineages_through_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.lineages_through_time" title="Permalink to this definition">¶</a></dt>
+<code class="descname">lineages_through_time</code><span class="sig-paren">(</span><em>show_plot=True</em>, <em>color='#000000'</em>, <em>xmin=None</em>, <em>xmax=None</em>, <em>ymin=None</em>, <em>ymax=None</em>, <em>title=None</em>, <em>xlabel=None</em>, <em>ylabel=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.lineages_through_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.lineages_through_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the number of lineages through time. If seaborn is installed, a plot is shown as well</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to only return the dictionary
+<code class="docutils literal notranslate"><span class="pre">clear_fig</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to clear the PyPlot figure after showing, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="docutils literal notranslate"><span class="pre">color</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The hexadecimal color of the resulting plot
 <code class="docutils literal notranslate"><span class="pre">title</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The title of the resulting plot
 <code class="docutils literal notranslate"><span class="pre">xmin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the horizontal axis in the resulting plot
 <code class="docutils literal notranslate"><span class="pre">xmax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the horizontal axis in the resulting plot

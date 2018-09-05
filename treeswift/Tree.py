@@ -3,7 +3,7 @@ from treeswift.Node import Node
 from collections import deque
 from copy import copy
 from gzip import open as gopen
-from os.path import isfile
+from os.path import expanduser,isfile
 from sys import version_info
 from warnings import warn
 INVALID_NEWICK = "Tree not valid Newick tree"
@@ -553,11 +553,13 @@ class Tree:
         '''
         self.order('num_descendants_then_edge_length_then_label', ascending=ascending)
 
-    def lineages_through_time(self, show_plot=True, xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
+    def lineages_through_time(self, show_plot=True, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
         '''Compute the number of lineages through time. If seaborn is installed, a plot is shown as well
 
         Args:
             ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary
+            ``clear_fig`` (``bool``): ``True`` to clear the PyPlot figure after showing, otherwise ``False``
+            ``color`` (``str``): The hexadecimal color of the resulting plot
             ``title`` (``str``): The title of the resulting plot
             ``xmin`` (``float``): The minimum value of the horizontal axis in the resulting plot
             ``xmax`` (``float``): The maximum value of the horizontal axis in the resulting plot
@@ -573,50 +575,10 @@ class Tree:
         for t,n in self.traverse_rootdistorder():
             num_lineages += len(n.children)-1
             lineages[t+root_length] = num_lineages
-        if show_plot:
-            try:
-                import matplotlib.pyplot as plt; from matplotlib.ticker import MaxNLocator
-                fig = plt.figure()
-                fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True)) # integer y ticks
-                times = sorted(lineages.keys())
-                for i in range(len(times)-1):
-                    if i == 0:
-                        prev = 0
-                    else:
-                        prev = lineages[times[i-1]]
-                    plt.plot([times[i],times[i]], [prev,lineages[times[i]]], color='black')
-                    plt.plot([times[i],times[i+1]], [lineages[times[i]],lineages[times[i]]], color='black')
-                if xmin is not None and not isinstance(xmin,int) and not isinstance(xmin,float):
-                    warn("xmin is invalid, so using the default"); xmin = None
-                if xmax is not None and not isinstance(xmax,int) and not isinstance(xmax,float):
-                    warn("xmax is invalid, so using the default"); xmax = None
-                plt.xlim(xmin=xmin, xmax=xmax)
-                if ymin is not None and not isinstance(ymin,int) and not isinstance(ymin,float):
-                    warn("ymin is invalid, so using the default"); ymin = None
-                if ymax is not None and not isinstance(ymax,int) and not isinstance(ymax,float):
-                    warn("ymax is invalid, so using the default"); ymax = None
-                plt.ylim(ymin=ymin, ymax=ymax)
-                if title is not None and not isinstance(title,str):
-                    warn("title is invalid, so using the default"); title = None
-                if title is None:
-                    plt.title("Lineages Through Time")
-                else:
-                    plt.title(title)
-                if xlabel is not None and not isinstance(xlabel,str):
-                    warn("xlabel is invalid, so using the default"); xlabel = None
-                if xlabel is None:
-                    plt.xlabel("Time")
-                else:
-                    plt.xlabel(xlabel)
-                if ylabel is not None and not isinstance(ylabel,str):
-                    warn("ylabel is invalid, so using the default"); ylabel = None
-                if ylabel is None:
-                    plt.ylabel("Number of Lineages")
-                else:
-                    plt.ylabel(ylabel)
-                plt.show()
-            except:
-                warn("Unable to import matplotlib, so visualization will not be produced (but dictionary will still be returned")
+        try:
+            plot_ltt(lineages, show_plot=show_plot, color=color, xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, title=title, xlabel=xlabel, ylabel=ylabel)
+        except Exception as e:
+            warn("Unable to produce visualization  (but dictionary will still be returned)"); print(e)
         return lineages
 
     def mrca(self, labels):
@@ -1026,9 +988,71 @@ class Tree:
         if not isinstance(filename, str):
             raise TypeError("filename must be a str")
         if filename.lower().endswith('.gz'): # gzipped file
-            f = gopen(filename,'wb',9); f.write(self.newick().encode()); f.close()
+            f = gopen(expanduser(filename),'wb',9); f.write(self.newick().encode()); f.close()
         else: # plain-text file
-            f = open(filename,'w'); f.write(self.newick()); f.close()
+            f = open(expanduser(filename),'w'); f.write(self.newick()); f.close()
+
+def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
+    '''Plot the Lineages Through Time (LTT) curve of a given tree
+
+    Args:
+        ``lineages`` (``dict``): The ``lineages`` dictionary returned by a ``Tree`` object's ``lineages_through_time()`` function call
+    '''
+    import matplotlib.pyplot as plt; from matplotlib.ticker import MaxNLocator
+    if 'TREESWIFT_FIGURE' not in globals():
+        global TREESWIFT_FIGURE; TREESWIFT_FIGURE = None
+    if TREESWIFT_FIGURE is None:
+        TREESWIFT_FIGURE = plt.figure()
+        TREESWIFT_FIGURE.gca().yaxis.set_major_locator(MaxNLocator(integer=True)) # integer y ticks
+        TREESWIFT_FIGURE.XMIN = 0; TREESWIFT_FIGURE.XMAX = 0
+        TREESWIFT_FIGURE.YMIN = 0; TREESWIFT_FIGURE.YMAX = 0
+    times = sorted(lineages.keys()); ymax = 0
+    for i in range(len(times)-1):
+        if i == 0:
+            prev = 0
+        else:
+            prev = lineages[times[i-1]]
+        if lineages[times[i]] > ymax:
+            ymax = lineages[times[i]]
+        TREESWIFT_FIGURE.gca().plot([times[i],times[i]], [prev,lineages[times[i]]], color=color)
+        TREESWIFT_FIGURE.gca().plot([times[i],times[i+1]], [lineages[times[i]],lineages[times[i]]], color=color)
+    if times[-1] > TREESWIFT_FIGURE.XMAX:
+        TREESWIFT_FIGURE.XMAX = times[-1]
+    if ymax > TREESWIFT_FIGURE.YMAX:
+        TREESWIFT_FIGURE.YMAX = ymax
+    #TREESWIFT_FIGURE.gca().set_xlim(xmax=xmax*1.2); TREESWIFT_FIGURE.gca().set_ylim(ymax=int(ymax*1.1))
+    if xmin is not None and not isinstance(xmin,int) and not isinstance(xmin,float):
+        warn("xmin is invalid, so using the default"); xmin = None
+    if xmax is not None and not isinstance(xmax,int) and not isinstance(xmax,float):
+        warn("xmax is invalid, so using the default"); xmax = None
+    plt.xlim(xmin=xmin, xmax=xmax)
+    if ymin is not None and not isinstance(ymin,int) and not isinstance(ymin,float):
+        warn("ymin is invalid, so using the default"); ymin = None
+    if ymax is not None and not isinstance(ymax,int) and not isinstance(ymax,float):
+        warn("ymax is invalid, so using the default"); ymax = None
+    plt.ylim(ymin=ymin, ymax=ymax)
+    if title is not None and not isinstance(title,str):
+        warn("title is invalid, so using the default"); title = None
+    if title is None:
+        plt.title("Lineages Through Time")
+    else:
+        plt.title(title)
+    if xlabel is not None and not isinstance(xlabel,str):
+        warn("xlabel is invalid, so using the default"); xlabel = None
+    if xlabel is None:
+        plt.xlabel("Time")
+    else:
+        plt.xlabel(xlabel)
+    if ylabel is not None and not isinstance(ylabel,str):
+        warn("ylabel is invalid, so using the default"); ylabel = None
+    if ylabel is None:
+        plt.ylabel("Number of Lineages")
+    else:
+        plt.ylabel(ylabel)
+    if show_plot:
+        TREESWIFT_FIGURE.gca().set_xlim(xmin=TREESWIFT_FIGURE.XMIN,xmax=TREESWIFT_FIGURE.XMAX)
+        TREESWIFT_FIGURE.gca().set_ylim(ymin=TREESWIFT_FIGURE.YMIN,ymax=TREESWIFT_FIGURE.YMAX)
+        plt.show(); TREESWIFT_FIGURE = None
 
 def read_tree_newick(newick):
     '''Read a tree from a Newick string or file
@@ -1045,9 +1069,9 @@ def read_tree_newick(newick):
         except:
             raise TypeError("newick must be a str")
     if newick.lower().endswith('.gz'): # gzipped file
-        f = gopen(newick); ts = f.read().decode().strip(); f.close()
+        f = gopen(expanduser(newick)); ts = f.read().decode().strip(); f.close()
     elif isfile(newick): # plain-text file
-        f = open(newick); ts = f.read().strip(); f.close()
+        f = open(expanduser(newick)); ts = f.read().strip(); f.close()
     else:
         ts = newick.strip()
     lines = ts.splitlines()
@@ -1092,9 +1116,9 @@ def read_tree_nexml(nexml):
     if not isinstance(nexml, str):
         raise TypeError("nexml must be a str")
     if nexml.lower().endswith('.gz'): # gzipped file
-        f = gopen(nexml)
+        f = gopen(expanduser(nexml))
     elif isfile(nexml): # plain-text file
-        f = open(nexml)
+        f = open(expanduser(nexml))
     else:
         f = nexml.splitlines()
     trees = dict(); id_to_node = dict(); tree_id = None
@@ -1209,9 +1233,9 @@ def read_tree_nexus(nexus):
     if not isinstance(nexus, str):
         raise TypeError("nexus must be a str")
     if nexus.lower().endswith('.gz'): # gzipped file
-        f = gopen(nexus)
+        f = gopen(expanduser(nexus))
     elif isfile(nexus): # plain-text file
-        f = open(nexus)
+        f = open(expanduser(nexus))
     else:
         f = nexus.splitlines()
     trees = dict()
