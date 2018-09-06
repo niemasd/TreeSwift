@@ -1121,7 +1121,7 @@ def read_tree_newick(newick):
         ``newick`` (``str``): Either a Newick string or the path to a Newick file (plain-text or gzipped)
 
     Returns:
-        ``Tree``: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a list of ``Tree`` objects will be returned
+        ``Tree``: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a ``list`` of ``Tree`` objects will be returned
     '''
     if not isinstance(newick, str):
         try:
@@ -1314,3 +1314,25 @@ def read_tree_nexus(nexus):
     if hasattr(f,'close'):
         f.close()
     return trees
+
+def read_tree(input, schema):
+    '''Read a tree from a string or file
+
+    Args:
+        ``input`` (``str``): Either a tree string or a path to a tree file (plain-text or gzipped)
+
+        ``schema`` (``str``): The schema of ``input`` (Newick, NeXML, or Nexus)
+
+    Returns:
+        * If the input is Newick, either a ``Tree`` object if ``input`` contains a single tree, or a ``list`` of ``Tree`` objects if ``input`` contains multiple trees (one per line)
+
+        * If the input is NeXML or Nexus, a ``dict`` of trees represented by ``input``, where keys are tree names (``str``) and values are ``Tree`` objects
+    '''
+    schema_to_function = {
+        'newick': read_tree_newick,
+        'nexml': read_tree_nexml,
+        'nexus': read_tree_nexus
+    }
+    if schema.lower() not in schema_to_function:
+        raise ValueError("Invalid schema: %s (valid options: %s)" % (schema, ', '.join(sorted(schema_to_function.keys()))))
+    return schema_to_function[schema.lower()](input)
