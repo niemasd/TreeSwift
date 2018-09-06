@@ -3,6 +3,7 @@ from treeswift.Node import Node
 from collections import deque
 from copy import copy
 from gzip import open as gopen
+from math import ceil
 from os.path import expanduser,isfile
 from sys import version_info
 from warnings import warn
@@ -499,17 +500,26 @@ class Tree:
 
     def label_to_node(self, selection='leaves'):
         '''Return a dictionary mapping labels (strings) to ``Node`` objects
+
         * If ``selection`` is ``"all"``, the dictionary will contain all nodes
+
         * If ``selection`` is ``"leaves"``, the dictionary will only contain leaves
+
         * If ``selection`` is ``"internal"``, the dictionary will only contain internal nodes
+
         * If ``selection`` is a ``set``, the dictionary will contain all nodes labeled by a label in ``selection``
+
         * If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
 
         Args:
             ``selection`` (``str`` or ``set``): The selection of nodes to get
+
             * ``"all"`` to select all nodes
+
             * ``"leaves"`` to select leaves
+
             * ``"internal"`` to select internal nodes
+
             * A ``set`` of labels to specify nodes to select
 
         Returns:
@@ -558,13 +568,21 @@ class Tree:
 
         Args:
             ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.
+
             ``color`` (``str``): The color of the resulting plot
+
             ``title`` (``str``): The title of the resulting plot
+
             ``xmin`` (``float``): The minimum value of the horizontal axis in the resulting plot
+
             ``xmax`` (``float``): The maximum value of the horizontal axis in the resulting plot
+
             ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
+
             ``ymin`` (``float``): The minimum value of the vertical axis in the resulting plot
+
             ``ymax`` (``float``): The maximum value of the vertical axis in the resulting plot
+
             ``ylabel`` (``str``): The label of the vertical axis in the resulting plot
 
         Returns:
@@ -579,6 +597,7 @@ class Tree:
         except Exception as e:
             warn("Unable to produce visualization  (but dictionary will still be returned)"); print(e)
         return lineages
+    ltt = lineages_through_time # shorthand alias
 
     def mrca(self, labels):
         '''Return the Node that is the MRCA of the nodes labeled by a label in ``labels``. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained
@@ -702,20 +721,35 @@ class Tree:
 
         Args:
             ``mode`` (``str``): How to order the children of the nodes of this ``Tree``
+
             * ``"edge_length"`` = order by incident edge length
+
             * ``"edge_length_then_label"`` = order by incident edge length, then by node label
+
             * ``"edge_length_then_label_then_num_descendants"`` = order by incident edge length, then by node label, then by number of descendants
+
             * ``"edge_length_then_num_descendants"`` = order by incident edge length, then by number of descendants
+
             * ``"edge_length_then_num_descendants_then_label"`` = order by incident edge length, then by number of descendants, then by node label
+
             * ``"label"`` = order by node label
+
             * ``"label_then_edge_length"`` = order by node label, then by incident edge length
+
             * ``"label_then_edge_length_then_num_descendants"`` = order by node label, then by incident edge length, then by number of descendants
+
             * ``"label_then_num_descendants"`` = order by node label, then by number of descendants
+
             * ``"label_then_num_descendants_then_edge_length"`` = order by node label, then by number of descendants, then by incident edge length
+
             * ``"num_descendants"`` = order by number of descendants
+
             * ``"num_descendants_then_label"`` = order by number of descendants, then by node label
+
             * ``"num_descendants_then_label_then_edge_length"`` = order by number of descendants, then by node label, then by incident edge length
+
             * ``"num_descendants_then_edge_length"`` = order by number of descendants, then by incident edge length
+
             * ``"num_descendants_then_edge_length_then_label"`` = order by number of descendants, then by incident edge length, then by node label
 
             ``ascending`` (``bool``): ``True`` to sort in ascending order of ``mode``, otherwise ``False``
@@ -848,9 +882,13 @@ class Tree:
 
         Args:
             ``normalize`` (``str``): How to normalize the Sackin index (if at all)
+
             * ``None`` to not normalize
+
             * ``"leaves"`` to normalize by the number of leaves
+
             * ``"yule"`` to normalize to the Yule model
+
             * ``"pda"`` to normalize to the Proportional to Distinguishable Arrangements model
 
         Returns:
@@ -996,14 +1034,23 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
 
     Args:
         ``lineages`` (``dict``): The ``lineages`` dictionary returned by a ``Tree`` object's ``lineages_through_time()`` function call
+
         ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.
+
         ``color`` (``str``): The color of the resulting plot
+
         ``title`` (``str``): The title of the resulting plot
+
         ``xmin`` (``float``): The minimum value of the horizontal axis in the resulting plot
+
         ``xmax`` (``float``): The maximum value of the horizontal axis in the resulting plot
+
         ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
+
         ``ymin`` (``float``): The minimum value of the vertical axis in the resulting plot
+
         ``ymax`` (``float``): The maximum value of the vertical axis in the resulting plot
+
         ``ylabel`` (``str``): The label of the vertical axis in the resulting plot
     '''
     import matplotlib.pyplot as plt; from matplotlib.ticker import MaxNLocator
@@ -1014,20 +1061,20 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
         TREESWIFT_FIGURE.gca().yaxis.set_major_locator(MaxNLocator(integer=True)) # integer y ticks
         TREESWIFT_FIGURE.XMIN = 0; TREESWIFT_FIGURE.XMAX = 0
         TREESWIFT_FIGURE.YMIN = 0; TREESWIFT_FIGURE.YMAX = 0
-    times = sorted(lineages.keys()); ymax = 0
+    times = sorted(lineages.keys()); max_y = 0
     for i in range(len(times)-1):
         if i == 0:
             prev = 0
         else:
             prev = lineages[times[i-1]]
-        if lineages[times[i]] > ymax:
-            ymax = lineages[times[i]]
+        if lineages[times[i]] > max_y:
+            max_y = lineages[times[i]]
         TREESWIFT_FIGURE.gca().plot([times[i],times[i]], [prev,lineages[times[i]]], color=color)
         TREESWIFT_FIGURE.gca().plot([times[i],times[i+1]], [lineages[times[i]],lineages[times[i]]], color=color)
     if times[-1] > TREESWIFT_FIGURE.XMAX:
         TREESWIFT_FIGURE.XMAX = times[-1]
-    if ymax > TREESWIFT_FIGURE.YMAX:
-        TREESWIFT_FIGURE.YMAX = ymax
+    if max_y > TREESWIFT_FIGURE.YMAX:
+        TREESWIFT_FIGURE.YMAX = max_y
     if show_plot:
         if xmin is None:
             xmin = TREESWIFT_FIGURE.XMIN
@@ -1043,9 +1090,9 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
         elif not isinstance(ymin,int) and not isinstance(ymin,float):
             warn("ymin is invalid, so using the default"); ymin = TREESWIFT_FIGURE.YMIN
         if ymax is None:
-            ymax = TREESWIFT_FIGURE.YMAX
+            ymax = ceil(TREESWIFT_FIGURE.YMAX*1.1)
         elif not isinstance(ymax,int) and not isinstance(ymax,float):
-            warn("ymax is invalid, so using the default"); ymax = TREESWIFT_FIGURE.YMAX
+            warn("ymax is invalid, so using the default"); ymax = ceil(TREESWIFT_FIGURE.YMAX*1.1)
         plt.ylim(ymin=ymin, ymax=ymax)
         if title is not None and not isinstance(title,str):
             warn("title is invalid, so using the default"); title = None

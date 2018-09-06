@@ -528,19 +528,24 @@
 <dl class="method">
 <dt id="treeswift.Tree.label_to_node">
 <code class="descname">label_to_node</code><span class="sig-paren">(</span><em>selection='leaves'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.label_to_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.label_to_node" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dictionary mapping labels (strings) to <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects
-* If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, the dictionary will contain all nodes
-* If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code>, the dictionary will only contain leaves
-* If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;internal&quot;</span></code>, the dictionary will only contain internal nodes
-* If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is a <code class="docutils literal notranslate"><span class="pre">set</span></code>, the dictionary will contain all nodes labeled by a label in <code class="docutils literal notranslate"><span class="pre">selection</span></code>
-* If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</p>
+<dd><p>Return a dictionary mapping labels (strings) to <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects</p>
+<ul class="simple">
+<li>If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, the dictionary will contain all nodes</li>
+<li>If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code>, the dictionary will only contain leaves</li>
+<li>If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;internal&quot;</span></code>, the dictionary will only contain internal nodes</li>
+<li>If <code class="docutils literal notranslate"><span class="pre">selection</span></code> is a <code class="docutils literal notranslate"><span class="pre">set</span></code>, the dictionary will contain all nodes labeled by a label in <code class="docutils literal notranslate"><span class="pre">selection</span></code></li>
+<li>If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</li>
+</ul>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><code class="docutils literal notranslate"><span class="pre">selection</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">set</span></code>): The selection of nodes to get
-* <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> to select all nodes
-* <code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code> to select leaves
-* <code class="docutils literal notranslate"><span class="pre">&quot;internal&quot;</span></code> to select internal nodes
-* A <code class="docutils literal notranslate"><span class="pre">set</span></code> of labels to specify nodes to select</dd>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">selection</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">set</span></code>): The selection of nodes to get</p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> to select all nodes</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code> to select leaves</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;internal&quot;</span></code> to select internal nodes</li>
+<li>A <code class="docutils literal notranslate"><span class="pre">set</span></code> of labels to specify nodes to select</li>
+</ul>
+</dd>
 <dt>Returns:</dt>
 <dd><code class="docutils literal notranslate"><span class="pre">dict</span></code>: Dictionary mapping labels to the corresponding nodes</dd>
 </dl>
@@ -574,15 +579,37 @@
 <dd><p>Compute the number of lineages through time. If seaborn is installed, a plot is shown as well</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to only return the dictionary. To plot multiple LTTs on the same figure, set <code class="docutils literal notranslate"><span class="pre">show_plot</span></code> to False for all but the last plot.
-<code class="docutils literal notranslate"><span class="pre">color</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The color of the resulting plot
-<code class="docutils literal notranslate"><span class="pre">title</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The title of the resulting plot
-<code class="docutils literal notranslate"><span class="pre">xmin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the horizontal axis in the resulting plot
-<code class="docutils literal notranslate"><span class="pre">xmax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the horizontal axis in the resulting plot
-<code class="docutils literal notranslate"><span class="pre">xlabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the horizontal axis in the resulting plot
-<code class="docutils literal notranslate"><span class="pre">ymin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the vertical axis in the resulting plot
-<code class="docutils literal notranslate"><span class="pre">ymax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the vertical axis in the resulting plot
-<code class="docutils literal notranslate"><span class="pre">ylabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the vertical axis in the resulting plot</dd>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to only return the dictionary. To plot multiple LTTs on the same figure, set <code class="docutils literal notranslate"><span class="pre">show_plot</span></code> to False for all but the last plot.</p>
+<p><code class="docutils literal notranslate"><span class="pre">color</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The color of the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">title</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The title of the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">xmin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the horizontal axis in the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">xmax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the horizontal axis in the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">xlabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the horizontal axis in the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">ymin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the vertical axis in the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">ymax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the vertical axis in the resulting plot</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">ylabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the vertical axis in the resulting plot</p>
+</dd>
+<dt>Returns:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">dict</span></code>: A dictionary in which each <code class="docutils literal notranslate"><span class="pre">(t,n)</span></code> pair denotes the number of lineages <code class="docutils literal notranslate"><span class="pre">n</span></code> that existed at time <code class="docutils literal notranslate"><span class="pre">t</span></code></dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="treeswift.Tree.ltt">
+<code class="descname">ltt</code><span class="sig-paren">(</span><em>show_plot=True</em>, <em>color='#000000'</em>, <em>xmin=None</em>, <em>xmax=None</em>, <em>ymin=None</em>, <em>ymax=None</em>, <em>title=None</em>, <em>xlabel=None</em>, <em>ylabel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#treeswift.Tree.ltt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the number of lineages through time. If seaborn is installed, a plot is shown as well</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to only return the dictionary. To plot multiple LTTs on the same figure, set <code class="docutils literal notranslate"><span class="pre">show_plot</span></code> to False for all but the last plot.</p>
+<p><code class="docutils literal notranslate"><span class="pre">color</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The color of the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">title</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The title of the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">xmin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the horizontal axis in the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">xmax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the horizontal axis in the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">xlabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the horizontal axis in the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">ymin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the vertical axis in the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">ymax</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The maximum value of the vertical axis in the resulting plot</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">ylabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the vertical axis in the resulting plot</p>
+</dd>
 <dt>Returns:</dt>
 <dd><code class="docutils literal notranslate"><span class="pre">dict</span></code>: A dictionary in which each <code class="docutils literal notranslate"><span class="pre">(t,n)</span></code> pair denotes the number of lineages <code class="docutils literal notranslate"><span class="pre">n</span></code> that existed at time <code class="docutils literal notranslate"><span class="pre">t</span></code></dd>
 </dl>
@@ -652,22 +679,24 @@
 <dd><p>Order the children of the nodes in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> based on <code class="docutils literal notranslate"><span class="pre">mode</span></code></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">mode</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): How to order the children of the nodes of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code>
-* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length&quot;</span></code> = order by incident edge length
-* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_label&quot;</span></code> = order by incident edge length, then by node label
-* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_label_then_num_descendants&quot;</span></code> = order by incident edge length, then by node label, then by number of descendants
-* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_num_descendants&quot;</span></code> = order by incident edge length, then by number of descendants
-* <code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_num_descendants_then_label&quot;</span></code> = order by incident edge length, then by number of descendants, then by node label
-* <code class="docutils literal notranslate"><span class="pre">&quot;label&quot;</span></code> = order by node label
-* <code class="docutils literal notranslate"><span class="pre">&quot;label_then_edge_length&quot;</span></code> = order by node label, then by incident edge length
-* <code class="docutils literal notranslate"><span class="pre">&quot;label_then_edge_length_then_num_descendants&quot;</span></code> = order by node label, then by incident edge length, then by number of descendants
-* <code class="docutils literal notranslate"><span class="pre">&quot;label_then_num_descendants&quot;</span></code> = order by node label, then by number of descendants
-* <code class="docutils literal notranslate"><span class="pre">&quot;label_then_num_descendants_then_edge_length&quot;</span></code> = order by node label, then by number of descendants, then by incident edge length
-* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants&quot;</span></code> = order by number of descendants
-* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_label&quot;</span></code> = order by number of descendants, then by node label
-* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_label_then_edge_length&quot;</span></code> = order by number of descendants, then by node label, then by incident edge length
-* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_edge_length&quot;</span></code> = order by number of descendants, then by incident edge length
-* <code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_edge_length_then_label&quot;</span></code> = order by number of descendants, then by incident edge length, then by node label</p>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">mode</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): How to order the children of the nodes of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length&quot;</span></code> = order by incident edge length</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_label&quot;</span></code> = order by incident edge length, then by node label</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_label_then_num_descendants&quot;</span></code> = order by incident edge length, then by node label, then by number of descendants</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_num_descendants&quot;</span></code> = order by incident edge length, then by number of descendants</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;edge_length_then_num_descendants_then_label&quot;</span></code> = order by incident edge length, then by number of descendants, then by node label</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;label&quot;</span></code> = order by node label</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;label_then_edge_length&quot;</span></code> = order by node label, then by incident edge length</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;label_then_edge_length_then_num_descendants&quot;</span></code> = order by node label, then by incident edge length, then by number of descendants</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;label_then_num_descendants&quot;</span></code> = order by node label, then by number of descendants</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;label_then_num_descendants_then_edge_length&quot;</span></code> = order by node label, then by number of descendants, then by incident edge length</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants&quot;</span></code> = order by number of descendants</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_label&quot;</span></code> = order by number of descendants, then by node label</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_label_then_edge_length&quot;</span></code> = order by number of descendants, then by node label, then by incident edge length</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_edge_length&quot;</span></code> = order by number of descendants, then by incident edge length</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;num_descendants_then_edge_length_then_label&quot;</span></code> = order by number of descendants, then by incident edge length, then by node label</li>
+</ul>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">ascending</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to sort in ascending order of <code class="docutils literal notranslate"><span class="pre">mode</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
@@ -709,11 +738,14 @@
 <dd><p>Compute the Sackin index of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><code class="docutils literal notranslate"><span class="pre">normalize</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): How to normalize the Sackin index (if at all)
-* <code class="docutils literal notranslate"><span class="pre">None</span></code> to not normalize
-* <code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code> to normalize by the number of leaves
-* <code class="docutils literal notranslate"><span class="pre">&quot;yule&quot;</span></code> to normalize to the Yule model
-* <code class="docutils literal notranslate"><span class="pre">&quot;pda&quot;</span></code> to normalize to the Proportional to Distinguishable Arrangements model</dd>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">normalize</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): How to normalize the Sackin index (if at all)</p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">None</span></code> to not normalize</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;leaves&quot;</span></code> to normalize by the number of leaves</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;yule&quot;</span></code> to normalize to the Yule model</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;pda&quot;</span></code> to normalize to the Proportional to Distinguishable Arrangements model</li>
+</ul>
+</dd>
 <dt>Returns:</dt>
 <dd><code class="docutils literal notranslate"><span class="pre">float</span></code>: Sackin index (either normalized or not)</dd>
 </dl>

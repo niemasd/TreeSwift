@@ -42,6 +42,7 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">gzip</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">ceil</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">expanduser</span><span class="p">,</span><span class="n">isfile</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">version_info</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
@@ -538,17 +539,26 @@
 
 <div class="viewcode-block" id="Tree.label_to_node"><a class="viewcode-back" href="../../index.html#treeswift.Tree.label_to_node">[docs]</a>    <span class="k">def</span> <span class="nf">label_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return a dictionary mapping labels (strings) to ``Node`` objects</span>
+
 <span class="sd">        * If ``selection`` is ``&quot;all&quot;``, the dictionary will contain all nodes</span>
+
 <span class="sd">        * If ``selection`` is ``&quot;leaves&quot;``, the dictionary will only contain leaves</span>
+
 <span class="sd">        * If ``selection`` is ``&quot;internal&quot;``, the dictionary will only contain internal nodes</span>
+
 <span class="sd">        * If ``selection`` is a ``set``, the dictionary will contain all nodes labeled by a label in ``selection``</span>
+
 <span class="sd">        * If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``selection`` (``str`` or ``set``): The selection of nodes to get</span>
+
 <span class="sd">            * ``&quot;all&quot;`` to select all nodes</span>
+
 <span class="sd">            * ``&quot;leaves&quot;`` to select leaves</span>
+
 <span class="sd">            * ``&quot;internal&quot;`` to select internal nodes</span>
+
 <span class="sd">            * A ``set`` of labels to specify nodes to select</span>
 
 <span class="sd">        Returns:</span>
@@ -597,13 +607,21 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.</span>
+
 <span class="sd">            ``color`` (``str``): The color of the resulting plot</span>
+
 <span class="sd">            ``title`` (``str``): The title of the resulting plot</span>
+
 <span class="sd">            ``xmin`` (``float``): The minimum value of the horizontal axis in the resulting plot</span>
+
 <span class="sd">            ``xmax`` (``float``): The maximum value of the horizontal axis in the resulting plot</span>
+
 <span class="sd">            ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot</span>
+
 <span class="sd">            ``ymin`` (``float``): The minimum value of the vertical axis in the resulting plot</span>
+
 <span class="sd">            ``ymax`` (``float``): The maximum value of the vertical axis in the resulting plot</span>
+
 <span class="sd">            ``ylabel`` (``str``): The label of the vertical axis in the resulting plot</span>
 
 <span class="sd">        Returns:</span>
@@ -618,6 +636,7 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unable to produce visualization  (but dictionary will still be returned)&quot;</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">lineages</span></div>
+    <span class="n">ltt</span> <span class="o">=</span> <span class="n">lineages_through_time</span> <span class="c1"># shorthand alias</span>
 
 <div class="viewcode-block" id="Tree.mrca"><a class="viewcode-back" href="../../index.html#treeswift.Tree.mrca">[docs]</a>    <span class="k">def</span> <span class="nf">mrca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Return the Node that is the MRCA of the nodes labeled by a label in ``labels``. If multiple nodes are labeled by a given label, only the last (preorder traversal) will be obtained</span>
@@ -741,20 +760,35 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``mode`` (``str``): How to order the children of the nodes of this ``Tree``</span>
+
 <span class="sd">            * ``&quot;edge_length&quot;`` = order by incident edge length</span>
+
 <span class="sd">            * ``&quot;edge_length_then_label&quot;`` = order by incident edge length, then by node label</span>
+
 <span class="sd">            * ``&quot;edge_length_then_label_then_num_descendants&quot;`` = order by incident edge length, then by node label, then by number of descendants</span>
+
 <span class="sd">            * ``&quot;edge_length_then_num_descendants&quot;`` = order by incident edge length, then by number of descendants</span>
+
 <span class="sd">            * ``&quot;edge_length_then_num_descendants_then_label&quot;`` = order by incident edge length, then by number of descendants, then by node label</span>
+
 <span class="sd">            * ``&quot;label&quot;`` = order by node label</span>
+
 <span class="sd">            * ``&quot;label_then_edge_length&quot;`` = order by node label, then by incident edge length</span>
+
 <span class="sd">            * ``&quot;label_then_edge_length_then_num_descendants&quot;`` = order by node label, then by incident edge length, then by number of descendants</span>
+
 <span class="sd">            * ``&quot;label_then_num_descendants&quot;`` = order by node label, then by number of descendants</span>
+
 <span class="sd">            * ``&quot;label_then_num_descendants_then_edge_length&quot;`` = order by node label, then by number of descendants, then by incident edge length</span>
+
 <span class="sd">            * ``&quot;num_descendants&quot;`` = order by number of descendants</span>
+
 <span class="sd">            * ``&quot;num_descendants_then_label&quot;`` = order by number of descendants, then by node label</span>
+
 <span class="sd">            * ``&quot;num_descendants_then_label_then_edge_length&quot;`` = order by number of descendants, then by node label, then by incident edge length</span>
+
 <span class="sd">            * ``&quot;num_descendants_then_edge_length&quot;`` = order by number of descendants, then by incident edge length</span>
+
 <span class="sd">            * ``&quot;num_descendants_then_edge_length_then_label&quot;`` = order by number of descendants, then by incident edge length, then by node label</span>
 
 <span class="sd">            ``ascending`` (``bool``): ``True`` to sort in ascending order of ``mode``, otherwise ``False``</span>
@@ -887,9 +921,13 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``normalize`` (``str``): How to normalize the Sackin index (if at all)</span>
+
 <span class="sd">            * ``None`` to not normalize</span>
+
 <span class="sd">            * ``&quot;leaves&quot;`` to normalize by the number of leaves</span>
+
 <span class="sd">            * ``&quot;yule&quot;`` to normalize to the Yule model</span>
+
 <span class="sd">            * ``&quot;pda&quot;`` to normalize to the Proportional to Distinguishable Arrangements model</span>
 
 <span class="sd">        Returns:</span>
@@ -1035,14 +1073,23 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        ``lineages`` (``dict``): The ``lineages`` dictionary returned by a ``Tree`` object&#39;s ``lineages_through_time()`` function call</span>
+
 <span class="sd">        ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.</span>
+
 <span class="sd">        ``color`` (``str``): The color of the resulting plot</span>
+
 <span class="sd">        ``title`` (``str``): The title of the resulting plot</span>
+
 <span class="sd">        ``xmin`` (``float``): The minimum value of the horizontal axis in the resulting plot</span>
+
 <span class="sd">        ``xmax`` (``float``): The maximum value of the horizontal axis in the resulting plot</span>
+
 <span class="sd">        ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot</span>
+
 <span class="sd">        ``ymin`` (``float``): The minimum value of the vertical axis in the resulting plot</span>
+
 <span class="sd">        ``ymax`` (``float``): The maximum value of the vertical axis in the resulting plot</span>
+
 <span class="sd">        ``ylabel`` (``str``): The label of the vertical axis in the resulting plot</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span><span class="p">;</span> <span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="k">import</span> <span class="n">MaxNLocator</span>
@@ -1053,20 +1100,20 @@
         <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="n">integer</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="c1"># integer y ticks</span>
         <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">XMIN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">XMAX</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMIN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">times</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lineages</span><span class="o">.</span><span class="n">keys</span><span class="p">());</span> <span class="n">ymax</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lineages</span><span class="o">.</span><span class="n">keys</span><span class="p">());</span> <span class="n">max_y</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">prev</span> <span class="o">=</span> <span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-        <span class="k">if</span> <span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&gt;</span> <span class="n">ymax</span><span class="p">:</span>
-            <span class="n">ymax</span> <span class="o">=</span> <span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&gt;</span> <span class="n">max_y</span><span class="p">:</span>
+            <span class="n">max_y</span> <span class="o">=</span> <span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
         <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="n">prev</span><span class="p">,</span><span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]]],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
         <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span><span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]]],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">XMAX</span><span class="p">:</span>
         <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">XMAX</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">ymax</span> <span class="o">&gt;</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span><span class="p">:</span>
-        <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span> <span class="o">=</span> <span class="n">ymax</span>
+    <span class="k">if</span> <span class="n">max_y</span> <span class="o">&gt;</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span><span class="p">:</span>
+        <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span> <span class="o">=</span> <span class="n">max_y</span>
     <span class="k">if</span> <span class="n">show_plot</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">xmin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">xmin</span> <span class="o">=</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">XMIN</span>
@@ -1082,9 +1129,9 @@
         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
             <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;ymin is invalid, so using the default&quot;</span><span class="p">);</span> <span class="n">ymin</span> <span class="o">=</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMIN</span>
         <span class="k">if</span> <span class="n">ymax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ymax</span> <span class="o">=</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span>
+            <span class="n">ymax</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span><span class="o">*</span><span class="mf">1.1</span><span class="p">)</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ymax</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ymax</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
-            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;ymax is invalid, so using the default&quot;</span><span class="p">);</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;ymax is invalid, so using the default&quot;</span><span class="p">);</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMAX</span><span class="o">*</span><span class="mf">1.1</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ymin</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">ymax</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
             <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;title is invalid, so using the default&quot;</span><span class="p">);</span> <span class="n">title</span> <span class="o">=</span> <span class="kc">None</span>
