@@ -1137,31 +1137,34 @@ def read_tree_newick(newick):
     lines = ts.splitlines()
     if len(lines) != 1:
         return [read_tree_newick(l) for l in lines]
-    if ts[0] == '[':
-        ts = ']'.join(ts.split(']')[1:]).strip()
-    ts = ts.replace(', ',',')
-    t = Tree(); n = t.root; i = 0
-    while i < len(ts):
-        if ts[i] == ';':
-            if i != len(ts)-1 or n != t.root:
-                raise RuntimeError(INVALID_NEWICK)
-        elif ts[i] == '(':
-            c = Node(); n.add_child(c); n = c
-        elif ts[i] == ')':
-            n = n.parent
-        elif ts[i] == ',':
-            n = n.parent; c = Node(); n.add_child(c); n = c
-        elif ts[i] == ':':
-            i += 1; ls = ''
-            while ts[i] != ',' and ts[i] != ')' and ts[i] != ';':
-                ls += ts[i]; i += 1
-            n.edge_length = float(ls); i -= 1
-        else:
-            label = ''
-            while ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')':
-                label += ts[i]; i += 1
-            i -= 1; n.label = label
-        i += 1
+    try:
+        if ts[0] == '[':
+            ts = ']'.join(ts.split(']')[1:]).strip()
+        ts = ts.replace(', ',',')
+        t = Tree(); n = t.root; i = 0
+        while i < len(ts):
+            if ts[i] == ';':
+                if i != len(ts)-1 or n != t.root:
+                    raise RuntimeError(INVALID_NEWICK)
+            elif ts[i] == '(':
+                c = Node(); n.add_child(c); n = c
+            elif ts[i] == ')':
+                n = n.parent
+            elif ts[i] == ',':
+                n = n.parent; c = Node(); n.add_child(c); n = c
+            elif ts[i] == ':':
+                i += 1; ls = ''
+                while ts[i] != ',' and ts[i] != ')' and ts[i] != ';':
+                    ls += ts[i]; i += 1
+                n.edge_length = float(ls); i -= 1
+            else:
+                label = ''
+                while ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')':
+                    label += ts[i]; i += 1
+                i -= 1; n.label = label
+            i += 1
+    except Exception as e:
+        raise RuntimeError("Failed to parse string as Newick: %s"%ts)
     return t
 
 def read_tree_nexml(nexml):
