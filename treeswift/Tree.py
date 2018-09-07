@@ -563,11 +563,13 @@ class Tree:
         '''
         self.order('num_descendants_then_edge_length_then_label', ascending=ascending)
 
-    def lineages_through_time(self, show_plot=True, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
+    def lineages_through_time(self, present_day=None, show_plot=True, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
         '''Compute the number of lineages through time. If seaborn is installed, a plot is shown as well
 
         Args:
-            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.
+            ``present_day`` (``float``): The time of the furthest node from the root. If ``None``, the top of the tree will be placed at time 0
+
+            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot
 
             ``color`` (``str``): The color of the resulting plot
 
@@ -588,14 +590,47 @@ class Tree:
         Returns:
             ``dict``: A dictionary in which each ``(t,n)`` pair denotes the number of lineages ``n`` that existed at time ``t``
         '''
-        lineages = {0:1}; num_lineages = 1; root_length = {True:0,False:self.root.edge_length}[self.root.edge_length is None]
-        for t,n in self.traverse_rootdistorder():
-            num_lineages += len(n.children)-1
-            lineages[t+root_length] = num_lineages
+        if present_day is not None and not isinstance(present_day,int) and not isinstance(present_day,float):
+            raise TypeError("present_day must be a float")
+        time = dict()
+        if self.root.edge_length is None:
+            tmproot = self.root
+        else:
+            tmproot = Node(); tmproot.add_child(self.root)
+        for node in tmproot.traverse_preorder():
+            if node.is_root():
+                time[node] = 0.
+            else:
+                time[node] = time[node.parent]
+                if node.edge_length is not None:
+                    time[node] += node.edge_length
+        nodes = sorted((time[node],node) for node in time)
+        lineages = {nodes[0][0]:0}
+        for i in range(len(nodes)):
+            if nodes[i][0] not in lineages:
+                lineages[nodes[i][0]] = lineages[nodes[i-1][0]]
+            if nodes[i][1].edge_length is not None:
+                if nodes[i][1].edge_length >= 0:
+                    lineages[nodes[i][0]] -= 1
+                else:
+                    lineages[nodes[i][0]] += 1
+            for c in nodes[i][1].children:
+                if c.edge_length >= 0:
+                    lineages[nodes[i][0]] += 1
+                else:
+                    lineages[nodes[i][0]] -= 1
+        if present_day is not None:
+            shift = present_day - max(lineages.keys())
+        else:
+            shift = max(0,-min(lineages.keys()))
+        if shift != 0:
+            lineages = {t+shift:lineages[t] for t in lineages}
+        if tmproot != self.root:
+            self.root.parent = None
         try:
             plot_ltt(lineages, show_plot=show_plot, color=color, xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, title=title, xlabel=xlabel, ylabel=ylabel)
         except Exception as e:
-            warn("Unable to produce visualization  (but dictionary will still be returned)"); print(e)
+            warn("Unable to produce visualization (but dictionary will still be returned)"); print(e)
         return lineages
     ltt = lineages_through_time # shorthand alias
 
@@ -1059,22 +1094,28 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
     if TREESWIFT_FIGURE is None:
         TREESWIFT_FIGURE = plt.figure()
         TREESWIFT_FIGURE.gca().yaxis.set_major_locator(MaxNLocator(integer=True)) # integer y ticks
-        TREESWIFT_FIGURE.XMIN = 0; TREESWIFT_FIGURE.XMAX = 0
-        TREESWIFT_FIGURE.YMIN = 0; TREESWIFT_FIGURE.YMAX = 0
-    times = sorted(lineages.keys()); max_y = 0
+        TREESWIFT_FIGURE.XMIN = float('inf'); TREESWIFT_FIGURE.XMAX = float('-inf')
+        TREESWIFT_FIGURE.YMIN = float('inf'); TREESWIFT_FIGURE.YMAX = float('-inf')
+    times = sorted(lineages.keys())
+    if times[0] < TREESWIFT_FIGURE.XMIN:
+        TREESWIFT_FIGURE.XMIN = times[0]
+    if times[-1] > TREESWIFT_FIGURE.XMAX:
+        TREESWIFT_FIGURE.XMAX = times[-1]
     for i in range(len(times)-1):
         if i == 0:
             prev = 0
         else:
             prev = lineages[times[i-1]]
-        if lineages[times[i]] > max_y:
-            max_y = lineages[times[i]]
+        if lineages[times[i]] > TREESWIFT_FIGURE.YMAX:
+            TREESWIFT_FIGURE.YMAX = lineages[times[i]]
+        if lineages[times[i]] < TREESWIFT_FIGURE.YMIN:
+            TREESWIFT_FIGURE.YMIN = lineages[times[i]]
         TREESWIFT_FIGURE.gca().plot([times[i],times[i]], [prev,lineages[times[i]]], color=color)
         TREESWIFT_FIGURE.gca().plot([times[i],times[i+1]], [lineages[times[i]],lineages[times[i]]], color=color)
-    if times[-1] > TREESWIFT_FIGURE.XMAX:
-        TREESWIFT_FIGURE.XMAX = times[-1]
-    if max_y > TREESWIFT_FIGURE.YMAX:
-        TREESWIFT_FIGURE.YMAX = max_y
+    if len(times) > 1:
+        TREESWIFT_FIGURE.gca().plot([times[-1],times[-1]], [lineages[times[-2]],lineages[times[-1]]], color=color)
+        if lineages[times[-1]] < TREESWIFT_FIGURE.YMIN:
+            TREESWIFT_FIGURE.YMIN = lineages[times[-1]]
     if show_plot:
         if xmin is None:
             xmin = TREESWIFT_FIGURE.XMIN
