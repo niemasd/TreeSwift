@@ -624,7 +624,10 @@ class Tree:
         else:
             shift = max(0,-min(lineages.keys()))
         if shift != 0:
-            lineages = {t+shift:lineages[t] for t in lineages}
+            tmp = dict()
+            for t in lineages:
+                tmp[t+shift] = lineages[t]
+            lineages = tmp
         if tmproot != self.root:
             self.root.parent = None
         try:
