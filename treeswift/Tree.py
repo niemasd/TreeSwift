@@ -3,12 +3,13 @@ from treeswift.Node import Node
 from collections import deque
 from copy import copy
 from gzip import open as gopen
-from math import ceil
+from math import ceil,log
 from os.path import expanduser,isfile
 from sys import version_info
 from warnings import warn
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid valid NeXML File"
+EULER_GAMMA = 0.5772156649015328606065120900824024310421
 
 class Tree:
     '''``Tree`` class'''
@@ -144,6 +145,44 @@ class Tree:
                     for c in next.children:
                         parent.add_child(c)
             q.extend(next.children)
+
+    def colless(self, normalize='leaves'):
+        '''Compute the Colless index of this ``Tree``. If the tree has polytomies, they will be randomly resolved
+
+        Args:
+            ``normalize`` (``str``): How to normalize the Colless index (if at all)
+
+            * ``None`` to not normalize
+
+            * ``"leaves"`` to normalize by the number of leaves
+
+            * ``"yule"`` to normalize to the Yule model
+
+            * ``"pda"`` to normalize to the Proportional to Distinguishable Arrangements model
+
+        Returns:
+            ``float``: Colless index (either normalized or not)
+        '''
+        t_res = copy(self); t_res.resolve_polytomies(); leaves_below = dict(); n = 0; I = 0
+        for node in t_res.traverse_postorder():
+            if node.is_leaf():
+                leaves_below[node] = 1; n += 1
+            else:
+                cl,cr = node.children; nl = leaves_below[cl]; nr = leaves_below[cr]
+                leaves_below[node] = nl+nr; I += abs(nl-nr)
+        if normalize is None or normalize is False:
+            return I
+        elif not isinstance(normalize,str):
+            raise TypeError("normalize must be None or a string")
+        normalize = normalize.lower()
+        if normalize == 'leaves':
+            return (2.*I)/((n-1)*(n-2))
+        elif normalize == 'yule':
+            return (I - n*log(n) - n*(EULER_GAMMA-1-log(2)))/n
+        elif normalize == 'pda':
+            return I/(n**1.5)
+        else:
+            raise RuntimeError("normalize must be None, 'leaves', 'yule', or 'pda'")
 
     def condense(self):
         '''If siblings have the same label, merge them. If they have edge lengths, the resulting ``Node`` will have the larger of the lengths'''
@@ -941,7 +980,10 @@ class Tree:
                 num_nodes_from_root[node] -= 1; sackin += num_nodes_from_root[node]; num_leaves += 1
         if normalize is None or normalize is False:
             return sackin
-        elif normalize == 'leaves':
+        elif not isinstance(normalize,str):
+            raise TypeError("normalize must be None or a string")
+        normalize = normalize.lower()
+        if normalize == 'leaves':
             return float(sackin)/num_leaves
         elif normalize == 'yule':
             x = sum(1./i for i in range(2, num_leaves+1))
