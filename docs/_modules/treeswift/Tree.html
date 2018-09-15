@@ -23,6 +23,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">TreeSwift  documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
@@ -39,12 +42,13 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">gzip</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">ceil</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">ceil</span><span class="p">,</span><span class="n">log</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">expanduser</span><span class="p">,</span><span class="n">isfile</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">version_info</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
 <span class="n">INVALID_NEXML</span> <span class="o">=</span> <span class="s2">&quot;Invalid valid NeXML File&quot;</span>
+<span class="n">EULER_GAMMA</span> <span class="o">=</span> <span class="mf">0.5772156649015328606065120900824024310421</span>
 
 <div class="viewcode-block" id="Tree"><a class="viewcode-back" href="../../index.html#treeswift.Tree">[docs]</a><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;``Tree`` class&#39;&#39;&#39;</span>
@@ -180,6 +184,44 @@
                     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                         <span class="n">parent</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="n">q</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">next</span><span class="o">.</span><span class="n">children</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Tree.colless"><a class="viewcode-back" href="../../index.html#treeswift.Tree.colless">[docs]</a>    <span class="k">def</span> <span class="nf">colless</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;leaves&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Compute the Colless index of this ``Tree``. If the tree has polytomies, they will be randomly resolved</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``normalize`` (``str``): How to normalize the Colless index (if at all)</span>
+
+<span class="sd">            * ``None`` to not normalize</span>
+
+<span class="sd">            * ``&quot;leaves&quot;`` to normalize by the number of leaves</span>
+
+<span class="sd">            * ``&quot;yule&quot;`` to normalize to the Yule model</span>
+
+<span class="sd">            * ``&quot;pda&quot;`` to normalize to the Proportional to Distinguishable Arrangements model</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``float``: Colless index (either normalized or not)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">t_res</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">);</span> <span class="n">t_res</span><span class="o">.</span><span class="n">resolve_polytomies</span><span class="p">();</span> <span class="n">leaves_below</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">();</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">t_res</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                <span class="n">leaves_below</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cl</span><span class="p">,</span><span class="n">cr</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">;</span> <span class="n">nl</span> <span class="o">=</span> <span class="n">leaves_below</span><span class="p">[</span><span class="n">cl</span><span class="p">];</span> <span class="n">nr</span> <span class="o">=</span> <span class="n">leaves_below</span><span class="p">[</span><span class="n">cr</span><span class="p">]</span>
+                <span class="n">leaves_below</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">nl</span><span class="o">+</span><span class="n">nr</span><span class="p">;</span> <span class="n">I</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nl</span><span class="o">-</span><span class="n">nr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">normalize</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">normalize</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">I</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">normalize</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;normalize must be None or a string&quot;</span><span class="p">)</span>
+        <span class="n">normalize</span> <span class="o">=</span> <span class="n">normalize</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;leaves&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">I</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;yule&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">I</span> <span class="o">-</span> <span class="n">n</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">EULER_GAMMA</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span><span class="o">/</span><span class="n">n</span>
+        <span class="k">elif</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;pda&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">I</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;normalize must be None, &#39;leaves&#39;, &#39;yule&#39;, or &#39;pda&#39;&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.condense"><a class="viewcode-back" href="../../index.html#treeswift.Tree.condense">[docs]</a>    <span class="k">def</span> <span class="nf">condense</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;If siblings have the same label, merge them. If they have edge lengths, the resulting ``Node`` will have the larger of the lengths&#39;&#39;&#39;</span>
@@ -977,7 +1019,10 @@
                 <span class="n">num_nodes_from_root</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">sackin</span> <span class="o">+=</span> <span class="n">num_nodes_from_root</span><span class="p">[</span><span class="n">node</span><span class="p">];</span> <span class="n">num_leaves</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">normalize</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">normalize</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">sackin</span>
-        <span class="k">elif</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;leaves&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">normalize</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;normalize must be None or a string&quot;</span><span class="p">)</span>
+        <span class="n">normalize</span> <span class="o">=</span> <span class="n">normalize</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;leaves&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">sackin</span><span class="p">)</span><span class="o">/</span><span class="n">num_leaves</span>
         <span class="k">elif</span> <span class="n">normalize</span> <span class="o">==</span> <span class="s1">&#39;yule&#39;</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
@@ -1445,6 +1490,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">TreeSwift  documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>

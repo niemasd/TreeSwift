@@ -147,7 +147,7 @@ class Tree:
             q.extend(next.children)
 
     def colless(self, normalize='leaves'):
-        '''Compute the Colless index of this ``Tree``. If the tree has polytomies, they will be randomly resolved
+        '''Compute the Colless balance index of this ``Tree``. If the tree has polytomies, they will be randomly resolved
 
         Args:
             ``normalize`` (``str``): How to normalize the Colless index (if at all)
@@ -955,7 +955,7 @@ class Tree:
             q.extend(node.children)
 
     def sackin(self, normalize='leaves'):
-        '''Compute the Sackin index of this ``Tree``
+        '''Compute the Sackin balance index of this ``Tree``
 
         Args:
             ``normalize`` (``str``): How to normalize the Sackin index (if at all)
