@@ -13,9 +13,12 @@ EULER_GAMMA = 0.5772156649015328606065120900824024310421
 
 class Tree:
     '''``Tree`` class'''
-    def __init__(self):
+    def __init__(self, is_rooted=True):
         '''``Tree`` constructor'''
+        if not isinstance(is_rooted,bool):
+            raise TypeError("is_rooted must be a bool")
         self.root = Node()  # root Node object
+        self.is_rooted = is_rooted # boolean to see if the tree is rooted or not
 
     def __str__(self):
         '''Represent this ``Tree`` as a string
@@ -739,10 +742,10 @@ class Tree:
             suffix = ':%d;' % int(self.root.edge_length)
         else:
             suffix = ':%s;' % str(self.root.edge_length)
-        if self.root.edge_length is None:
-            return '%s%s' % (self.root.newick(),suffix)
-        else:
+        if self.is_rooted:
             return '[&R] %s%s' % (self.root.newick(),suffix)
+        else:
+            return '%s%s' % (self.root.newick(),suffix)
 
     def num_lineages_at(self, distance):
         '''Returns the number of lineages of this ``Tree`` that exist ``distance`` away from the root
@@ -1200,6 +1203,30 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
             plt.ylabel(ylabel)
         plt.show(); TREESWIFT_FIGURE = None
 
+def read_tree_dendropy(tree):
+    '''Create a TreeSwift tree from a DendroPy tree
+
+    Args:
+        ``tree`` (``dendropy.datamodel.treemodel``): A Dendropy ``Tree`` object
+
+    Returns:
+        ``Tree``: A TreeSwift tree created from ``tree``
+    '''
+    out = Tree(is_rooted={True:True,False:False}[tree.is_rooted == True]); d2t = dict()
+    if not hasattr(tree, 'preorder_node_iter') or not hasattr(tree, 'seed_node') or not hasattr(tree, 'is_rooted'):
+        raise TypeError("tree must be a DendroPy Tree object")
+    for node in tree.preorder_node_iter():
+        if node == tree.seed_node:
+            curr = out.root
+        else:
+            curr = Node(); d2t[node.parent_node].add_child(curr)
+        d2t[node] = curr; curr.edge_length = node.edge_length
+        if hasattr(node, 'taxon') and node.taxon is not None:
+            curr.label = node.taxon.label
+        else:
+            curr.label = node.label
+    return out
+
 def read_tree_newick(newick):
     '''Read a tree from a Newick string or file
 
@@ -1224,10 +1251,13 @@ def read_tree_newick(newick):
     if len(lines) != 1:
         return [read_tree_newick(l) for l in lines]
     try:
-        if ts[0] == '[':
+        t = Tree()
+        if ts.startswith('[&R]'):
             ts = ']'.join(ts.split(']')[1:]).strip()
+        else:
+            t.is_rooted = False
         ts = ts.replace(', ',',')
-        t = Tree(); n = t.root; i = 0
+        n = t.root; i = 0
         while i < len(ts):
             if ts[i] == ';':
                 if i != len(ts)-1 or n != t.root:
@@ -1415,6 +1445,7 @@ def read_tree(input, schema):
         * If the input is NeXML or Nexus, a ``dict`` of trees represented by ``input``, where keys are tree names (``str``) and values are ``Tree`` objects
     '''
     schema_to_function = {
+        'dendropy': read_tree_dendropy,
         'newick': read_tree_newick,
         'nexml': read_tree_nexml,
         'nexus': read_tree_nexus
