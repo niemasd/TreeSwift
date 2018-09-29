@@ -1212,9 +1212,11 @@ def read_tree_dendropy(tree):
     Returns:
         ``Tree``: A TreeSwift tree created from ``tree``
     '''
-    out = Tree(is_rooted={True:True,False:False}[tree.is_rooted == True]); d2t = dict()
+    out = Tree(); d2t = dict()
     if not hasattr(tree, 'preorder_node_iter') or not hasattr(tree, 'seed_node') or not hasattr(tree, 'is_rooted'):
         raise TypeError("tree must be a DendroPy Tree object")
+    if tree.is_rooted != True:
+        out.is_rooted = False
     for node in tree.preorder_node_iter():
         if node == tree.seed_node:
             curr = out.root
