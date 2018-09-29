@@ -1254,7 +1254,8 @@ def read_tree_newick(newick):
         return [read_tree_newick(l) for l in lines]
     try:
         t = Tree(); t.is_rooted = ts.startswith('[&R]')
-        ts = ']'.join(ts.split(']')[1:]).strip(); ts = ts.replace(', ',',')
+        if ts[0] == '[':
+            ts = ']'.join(ts.split(']')[1:]).strip(); ts = ts.replace(', ',',')
         n = t.root; i = 0
         while i < len(ts):
             if ts[i] == ';':
