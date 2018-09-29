@@ -874,6 +874,24 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="treeswift.read_tree">
+<code class="descclassname">treeswift.</code><code class="descname">read_tree</code><span class="sig-paren">(</span><em>input</em>, <em>schema</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#read_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.read_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a tree from a string or file</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">input</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Either a tree string or a path to a tree file (plain-text or gzipped)</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">schema</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The schema of <code class="docutils literal notranslate"><span class="pre">input</span></code> (Newick, NeXML, or Nexus)</p>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>If the input is Newick, either a <code class="docutils literal notranslate"><span class="pre">Tree</span></code> object if <code class="docutils literal notranslate"><span class="pre">input</span></code> contains a single tree, or a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects if <code class="docutils literal notranslate"><span class="pre">input</span></code> contains multiple trees (one per line)</li>
+<li>If the input is NeXML or Nexus, a <code class="docutils literal notranslate"><span class="pre">dict</span></code> of trees represented by <code class="docutils literal notranslate"><span class="pre">input</span></code>, where keys are tree names (<code class="docutils literal notranslate"><span class="pre">str</span></code>) and values are <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="treeswift.read_tree_dendropy">
 <code class="descclassname">treeswift.</code><code class="descname">read_tree_dendropy</code><span class="sig-paren">(</span><em>tree</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#read_tree_dendropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.read_tree_dendropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a TreeSwift tree from a DendroPy tree</p>
