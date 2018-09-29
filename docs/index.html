@@ -886,6 +886,18 @@
 </dd></dl>
 
 <dl class="function">
+<dt>
+<code class="descclassname">treeswift.</code><code class="descname">read_tree_newick</code><span class="sig-paren">(</span><em>newick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#read_tree_newick"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Read a tree from a Newick string or file</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">newick</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Either a Newick string or the path to a Newick file (plain-text or gzipped)</dd>
+<dt>Returns:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">Tree</span></code>: The tree represented by <code class="docutils literal notranslate"><span class="pre">newick</span></code>. If the Newick file has multiple trees (one per line), a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects will be returned</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="treeswift.read_tree_nexml">
 <code class="descclassname">treeswift.</code><code class="descname">read_tree_nexml</code><span class="sig-paren">(</span><em>nexml</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#read_tree_nexml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.read_tree_nexml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a tree from a NeXML string or file</p>
