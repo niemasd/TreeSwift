@@ -892,59 +892,45 @@ class Tree:
             if node.label in renaming_map:
                 node.label = renaming_map[node.label]
 
-    def reroot(self, node, length, suppress_unifurcations=True, branch_support=False):
-        '''Reroot this ``Tree`` at ``length`` up the incident edge of ``node``
+    def reroot(self, node, length=None, branch_support=False):
+        '''Reroot this ``Tree`` at ``length`` up the incident edge of ``node``. If 0 or ``None``, reroot at the node (not on the incident edge)
 
         Args:
             ``node`` (``Node``): The ``Node`` on whose incident edge this ``Tree`` will be rerooted
 
-            ``length`` (``float``): The distance up the specified edge at which to reroot this ``Tree``
-
-            ``suppress_unifurcations`` (``bool``): ``True`` to suppress unifurcations, otherwise ``False``
+            ``length`` (``float``): The distance up the specified edge at which to reroot this ``Tree``. If 0 or ``None``, reroot at the node (not on the incident edge)
 
             ``branch_support`` (``bool``): ``True`` if internal node labels represent branch support values, otherwise ``False``
         '''
         if not isinstance(node, Node):
             raise TypeError("node must be a Node")
-        if not isinstance(length, float) and not isinstance(length, int):
-            raise TypeError("length must be a float or an int")
-        if not isinstance(suppress_unifurcations, bool):
-            raise TypeError("suppress_unifurcations must be a bool")
+        if length is not None and not isinstance(length, float) and not isinstance(length, int):
+            raise TypeError("length must be a float")
         if not isinstance(branch_support, bool):
             raise TypeError("branch_support must be a bool")
-        if self.root.edge_length is not None:
-            raise ValueError("Attempting to reroot a tree with a root edge")
-        if (node.edge_length is None or node.edge_length == 0) and length != 0:
-            raise ValueError("Attempting to reroot at non-zero length on 0-length edge")
-        if length < 0:
+        if length is not None and length < 0:
             raise ValueError("Specified length at which to reroot must be positive")
         if node.edge_length is None:
-            if length != 0:
+            if length is not None and length != 0:
                 raise ValueError("Specified node has no edge length, so specified length must be None or 0")
-        elif length > node.edge_length:
+        elif length is not None and length > node.edge_length:
             raise ValueError("Specified length must be shorter than the edge at which to reroot")
-        ancestors = [a for a in node.traverse_ancestors(include_self=False)]
-        for i in range(len(ancestors)-2,-1,-1):
-            child = ancestors[i]; parent = ancestors[i+1]
-            parent.remove_child(child)
-            child.add_child(parent)
-            parent.edge_length = child.edge_length
+        if length is not None and length > 0:
+            newnode = Node(edge_length=node.edge_length-length); node.edge_length -= length
+            if not node.is_root():
+                p = node.parent; p.children.remove(node); p.add_child(newnode)
+            newnode.add_child(node); node = newnode
+        if node.is_root():
+            return
+        elif self.root.edge_length is not None:
+            newnode = Node(label='ROOT'); newnode.add_child(self.root); self.root = newnode
+        ancestors = [a for a in node.traverse_ancestors(include_self=True) if not a.is_root()]
+        for i in range(len(ancestors)-1, -1, -1):
+            curr = ancestors[i]; curr.parent.edge_length = curr.edge_length; curr.edge_length = None
             if branch_support:
-                parent.label = child.label
-        if branch_support:
-            node.parent.label = None
-        sibling = node.parent; sibling.children.remove(node)
-        self.root = Node(); self.root.children = [node,sibling]
-        if node.edge_length is None and (length is None or length == 0):
-            sibling.edge_length = None
-        elif length is None:
-            sibling.edge_length = node.edge_length
-        else:
-            sibling.edge_length = node.edge_length - length
-        if node.edge_length is not None and length != 0:
-            node.edge_length = length
-        if suppress_unifurcations:
-            self.suppress_unifurcations()
+                curr.parent.label = curr.label; curr.label = None
+            curr.parent.children.remove(curr); curr.add_child(curr.parent); curr.parent = None
+        self.root = node; self.is_rooted = True
 
     def resolve_polytomies(self):
         '''Arbitrarily resolve polytomies with 0-lengthed edges.'''
@@ -1434,9 +1420,9 @@ def read_tree(input, schema):
     '''Read a tree from a string or file
 
     Args:
-        ``input`` (``str``): Either a tree string or a path to a tree file (plain-text or gzipped)
+        ``input`` (``str``): Either a tree string, a path to a tree file (plain-text or gzipped), or a DendroPy Tree object
 
-        ``schema`` (``str``): The schema of ``input`` (Newick, NeXML, or Nexus)
+        ``schema`` (``str``): The schema of ``input`` (DendroPy, Newick, NeXML, or Nexus)
 
     Returns:
         * If the input is Newick, either a ``Tree`` object if ``input`` contains a single tree, or a ``list`` of ``Tree`` objects if ``input`` contains multiple trees (one per line)

@@ -735,13 +735,12 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.reroot">
-<code class="descname">reroot</code><span class="sig-paren">(</span><em>node</em>, <em>length</em>, <em>suppress_unifurcations=True</em>, <em>branch_support=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.reroot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.reroot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reroot this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> at <code class="docutils literal notranslate"><span class="pre">length</span></code> up the incident edge of <code class="docutils literal notranslate"><span class="pre">node</span></code></p>
+<code class="descname">reroot</code><span class="sig-paren">(</span><em>node</em>, <em>length=None</em>, <em>branch_support=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.reroot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.reroot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reroot this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> at <code class="docutils literal notranslate"><span class="pre">length</span></code> up the incident edge of <code class="docutils literal notranslate"><span class="pre">node</span></code>. If 0 or <code class="docutils literal notranslate"><span class="pre">None</span></code>, reroot at the node (not on the incident edge)</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><p class="first"><code class="docutils literal notranslate"><span class="pre">node</span></code> (<code class="docutils literal notranslate"><span class="pre">Node</span></code>): The <code class="docutils literal notranslate"><span class="pre">Node</span></code> on whose incident edge this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> will be rerooted</p>
-<p><code class="docutils literal notranslate"><span class="pre">length</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The distance up the specified edge at which to reroot this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">suppress_unifurcations</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to suppress unifurcations, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">length</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The distance up the specified edge at which to reroot this <code class="docutils literal notranslate"><span class="pre">Tree</span></code>. If 0 or <code class="docutils literal notranslate"><span class="pre">None</span></code>, reroot at the node (not on the incident edge)</p>
 <p class="last"><code class="docutils literal notranslate"><span class="pre">branch_support</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> if internal node labels represent branch support values, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
@@ -879,8 +878,8 @@
 <dd><p>Read a tree from a string or file</p>
 <dl class="docutils">
 <dt>Args:</dt>
-<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">input</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Either a tree string or a path to a tree file (plain-text or gzipped)</p>
-<p class="last"><code class="docutils literal notranslate"><span class="pre">schema</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The schema of <code class="docutils literal notranslate"><span class="pre">input</span></code> (Newick, NeXML, or Nexus)</p>
+<dd><p class="first"><code class="docutils literal notranslate"><span class="pre">input</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Either a tree string, a path to a tree file (plain-text or gzipped), or a DendroPy Tree object</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">schema</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The schema of <code class="docutils literal notranslate"><span class="pre">input</span></code> (DendroPy, Newick, NeXML, or Nexus)</p>
 </dd>
 <dt>Returns:</dt>
 <dd><ul class="first last simple">
