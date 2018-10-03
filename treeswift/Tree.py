@@ -1085,7 +1085,7 @@ class Tree:
                     internal += node.edge_length
         return internal/all
 
-    def write_tree_newick(self, filename):
+    def write_tree_newick(self, filename, hide_rooted_prefix=False):
         '''Write this ``Tree`` to a Newick file
 
         Args:
@@ -1093,10 +1093,16 @@ class Tree:
         '''
         if not isinstance(filename, str):
             raise TypeError("filename must be a str")
+        treestr = self.newick()
+        if hide_rooted_prefix:
+            if treestr.startswith('[&R]'):
+                treestr = treestr[4:].strip()
+            else:
+                warn("Specified hide_rooted_prefix, but tree was not rooted")
         if filename.lower().endswith('.gz'): # gzipped file
-            f = gopen(expanduser(filename),'wb',9); f.write(self.newick().encode()); f.close()
+            f = gopen(expanduser(filename),'wb',9); f.write(treestr.encode()); f.close()
         else: # plain-text file
-            f = open(expanduser(filename),'w'); f.write(self.newick()); f.close()
+            f = open(expanduser(filename),'w'); f.write(treestr); f.close()
 
 def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
     '''Plot the Lineages Through Time (LTT) curve of a given tree
