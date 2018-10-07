@@ -1165,7 +1165,7 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
             xmax = TREESWIFT_FIGURE.XMAX
         elif not isinstance(xmax,int) and not isinstance(xmax,float):
             warn("xmax is invalid, so using the default"); xmax = TREESWIFT_FIGURE.XMAX
-        plt.xlim(xmin=xmin, xmax=xmax)
+        plt.xlim(left=xmin, right=xmax)
         if ymin is None:
             ymin = TREESWIFT_FIGURE.YMIN
         elif not isinstance(ymin,int) and not isinstance(ymin,float):
@@ -1174,7 +1174,7 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
             ymax = ceil(TREESWIFT_FIGURE.YMAX*1.1)
         elif not isinstance(ymax,int) and not isinstance(ymax,float):
             warn("ymax is invalid, so using the default"); ymax = ceil(TREESWIFT_FIGURE.YMAX*1.1)
-        plt.ylim(ymin=ymin, ymax=ymax)
+        plt.ylim(bottom=ymin, top=ymax)
         if title is not None and not isinstance(title,str):
             warn("title is invalid, so using the default"); title = None
         if title is None:
