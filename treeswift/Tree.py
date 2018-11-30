@@ -300,7 +300,7 @@ class Tree:
         '''Return a distance matrix (2D dictionary) of the leaves of this ``Tree``
 
         Returns:
-            ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are ``Node`` objects; ``M[u][v]`` = distance from ``u`` to ``v``
+            ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are labels of leaves; ``M[u][v]`` = distance from ``u`` to ``v``
         '''
         M = dict(); leaf_dists = dict()
         for node in self.traverse_postorder():
