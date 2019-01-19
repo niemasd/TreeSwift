@@ -296,8 +296,11 @@ class Tree:
             c = p; p = p.parent
         raise RuntimeError("u and v are not in the same Tree")
 
-    def distance_matrix(self):
+    def distance_matrix(self, leaf_labels=False):
         '''Return a distance matrix (2D dictionary) of the leaves of this ``Tree``
+
+        Args:
+            ``leaf_labels`` (``bool``): ``True`` to have keys be labels of leaf ``Node`` objects, otherwise ``False`` to have keys be ``Node`` objects
 
         Returns:
             ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are labels of leaves; ``M[u][v]`` = distance from ``u`` to ``v``
@@ -318,12 +321,16 @@ class Tree:
                         for i in range(len(leaves_c1)):
                             for j in range(len(leaves_c2)):
                                 u,ud = leaves_c1[i]; v,vd = leaves_c2[j]; d = ud+vd
-                                if u not in M:
-                                    M[u] = dict()
-                                M[u][v] = d
-                                if v not in M:
-                                    M[v] = dict()
-                                M[v][u] = d
+                                if leaf_labels:
+                                    u_key = u.label; v_key = v.label
+                                else:
+                                    u_key = u; v_key = v
+                                if u_key not in M:
+                                    M[u_key] = dict()
+                                M[u_key][v_key] = d
+                                if v_key not in M:
+                                    M[v_key] = dict()
+                                M[v_key][u_key] = d
                 leaf_dists[node] = leaf_dists[node.children[0]]; del leaf_dists[node.children[0]]
                 for i in range(1,len(node.children)):
                     leaf_dists[node] += leaf_dists[node.children[i]]; del leaf_dists[node.children[i]]

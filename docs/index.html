@@ -408,11 +408,13 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.distance_matrix">
-<code class="descname">distance_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.distance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.distance_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="descname">distance_matrix</code><span class="sig-paren">(</span><em>leaf_labels=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.distance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.distance_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a distance matrix (2D dictionary) of the leaves of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 <dl class="docutils">
+<dt>Args:</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">leaf_labels</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to have keys be labels of leaf <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to have keys be <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects</dd>
 <dt>Returns:</dt>
-<dd><code class="docutils literal notranslate"><span class="pre">dict</span></code>: Distance matrix (2D dictionary) of the leaves of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code>, where keys are <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects; <code class="docutils literal notranslate"><span class="pre">M[u][v]</span></code> = distance from <code class="docutils literal notranslate"><span class="pre">u</span></code> to <code class="docutils literal notranslate"><span class="pre">v</span></code></dd>
+<dd><code class="docutils literal notranslate"><span class="pre">dict</span></code>: Distance matrix (2D dictionary) of the leaves of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code>, where keys are labels of leaves; <code class="docutils literal notranslate"><span class="pre">M[u][v]</span></code> = distance from <code class="docutils literal notranslate"><span class="pre">u</span></code> to <code class="docutils literal notranslate"><span class="pre">v</span></code></dd>
 </dl>
 </dd></dl>
 
