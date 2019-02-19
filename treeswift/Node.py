@@ -187,7 +187,7 @@ class Node:
             node = q.popleft()
             while len(node.children) > 2:
                 c1 = node.children.pop(); c2 = node.children.pop()
-                nn = Node(); node.add_child(nn)
+                nn = Node(edge_length=0); node.add_child(nn)
                 nn.add_child(c1); nn.add_child(c2)
             q.extend(node.children)
 
