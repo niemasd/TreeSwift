@@ -180,6 +180,17 @@ class Node:
         except:
             raise RuntimeError("Attempting to remove non-existent child")
 
+    def resolve_polytomies(self):
+        '''Arbitrarily resolve polytomies below this ``Node`` with 0-lengthed edges.'''
+        q = deque(); q.append(self)
+        while len(q) != 0:
+            node = q.popleft()
+            while len(node.children) > 2:
+                c1 = node.children.pop(); c2 = node.children.pop()
+                nn = Node(); node.add_child(nn)
+                nn.add_child(c1); nn.add_child(c2)
+            q.extend(node.children)
+
     def set_edge_length(self, length):
         '''Set the length of the edge incident to this ``Node``
 
