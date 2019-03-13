@@ -909,6 +909,7 @@ class Tree:
 
             ``branch_support`` (``bool``): ``True`` if internal node labels represent branch support values, otherwise ``False``
         '''
+        warn("TreeSwift's rerooting functionality is poorly tested and likely has bugs. It will be fixed in a future release")
         if not isinstance(node, Node):
             raise TypeError("node must be a Node")
         if length is not None and not isinstance(length, float) and not isinstance(length, int):

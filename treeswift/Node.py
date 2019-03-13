@@ -235,6 +235,31 @@ class Node:
         while c is not None:
             yield c; c = c.parent
 
+    def traverse_bfs(self):
+        '''Perform a Breadth-First Search (BFS) starting at this ``Node`` object'. Yields (``Node``, distance) tuples
+        
+        Args:
+            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
+        '''
+        if not isinstance(include_self, bool):
+            raise TypeError("include_self must be a bool")
+        q = deque(); dist = dict(); dist[self] = 0; q.append((self,0))
+        while len(q) != 0:
+            curr = q.popleft(); yield curr
+            for c in curr[0].children:
+                if c not in dist:
+                    if c.edge_length is None:
+                        el = 0
+                    else:
+                        el = c.edge_length
+                    dist[c] = dist[curr[0]] + el; q.append((c,dist[c]))
+            if curr[0].parent is not None and curr[0].parent not in dist:
+                if curr[0].edge_length is None:
+                    el = 0
+                else:
+                    el = curr[0].edge_length
+                dist[curr[0].parent] = dist[curr[0]] + el; q.append((curr[0].parent,dist[curr[0].parent]))
+
     def traverse_inorder(self, leaves=True, internal=True):
         '''Perform an inorder traversal starting at this ``Node`` object
 
