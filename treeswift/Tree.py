@@ -11,7 +11,6 @@ INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid NeXML file"
 INVALID_NEXUS = "Invalid Nexus file"
 EULER_GAMMA = 0.5772156649015328606065120900824024310421
-NEWICK_SYMBOLS = {':', ',', ';', ')'}
 
 # store bracket open/close for convenience in label parsing
 BRACKET = {
@@ -1288,7 +1287,7 @@ def read_tree_newick(newick):
             # node label
             else:
                 label = ''; bracket = None
-                while bracket is not None or ts[i] in BRACKET or ts[i] not in NEWICK_SYMBOLS:
+                while bracket is not None or ts[i] in BRACKET or (ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')'):
                     if ts[i] in BRACKET and bracket is None:
                         bracket = ts[i]
                     elif bracket is not None and ts[i] == BRACKET[bracket]:
