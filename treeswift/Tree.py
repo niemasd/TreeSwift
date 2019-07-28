@@ -8,8 +8,10 @@ from os.path import expanduser,isfile
 from sys import version_info
 from warnings import warn
 INVALID_NEWICK = "Tree not valid Newick tree"
-INVALID_NEXML = "Invalid valid NeXML File"
+INVALID_NEXML = "Invalid NeXML file"
+INVALID_NEXUS = "Invalid Nexus file"
 EULER_GAMMA = 0.5772156649015328606065120900824024310421
+NEWICK_SYMBOLS = {':', ',', ';', ')'}
 
 # store bracket open/close for convenience in label parsing
 BRACKET = {
@@ -1257,23 +1259,36 @@ def read_tree_newick(newick):
             ts = ']'.join(ts.split(']')[1:]).strip(); ts = ts.replace(', ',',')
         n = t.root; i = 0
         while i < len(ts):
+            # end of Newick string
             if ts[i] == ';':
                 if i != len(ts)-1 or n != t.root:
                     raise RuntimeError(INVALID_NEWICK)
+
+            # go to new child
             elif ts[i] == '(':
                 c = Node(); n.add_child(c); n = c
+
+            # go to parent
             elif ts[i] == ')':
                 n = n.parent
+
+            # go to new sibling
             elif ts[i] == ',':
                 n = n.parent; c = Node(); n.add_child(c); n = c
+
+            # edge length
             elif ts[i] == ':':
                 i += 1; ls = ''
                 while ts[i] != ',' and ts[i] != ')' and ts[i] != ';':
                     ls += ts[i]; i += 1
+                if ls[0] == '[':
+                    n.edge_params = ']'.join(ls.split(']')[:-1]); ls = ls.split(']')[-1]
                 n.edge_length = float(ls); i -= 1
+
+            # node label
             else:
                 label = ''; bracket = None
-                while bracket is not None or ts[i] in BRACKET or (ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')'):
+                while bracket is not None or ts[i] in BRACKET or ts[i] not in NEWICK_SYMBOLS:
                     if ts[i] in BRACKET and bracket is None:
                         bracket = ts[i]
                     elif bracket is not None and ts[i] == BRACKET[bracket]:
@@ -1431,6 +1446,8 @@ def read_tree_nexus(nexus):
             trees[name] = read_tree_newick(right)
     if hasattr(f,'close'):
         f.close()
+    if len(trees) == 0:
+        raise ValueError(INVALID_NEXUS)
     return trees
 
 def read_tree(input, schema):
