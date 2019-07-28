@@ -11,6 +11,12 @@ INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid valid NeXML File"
 EULER_GAMMA = 0.5772156649015328606065120900824024310421
 
+# store bracket open/close for convenience in label parsing
+BRACKET = {
+    '[': ']',
+    '{': '}',
+}
+
 class Tree:
     '''``Tree`` class'''
     def __init__(self, is_rooted=True):
@@ -1266,8 +1272,12 @@ def read_tree_newick(newick):
                     ls += ts[i]; i += 1
                 n.edge_length = float(ls); i -= 1
             else:
-                label = ''
-                while ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')':
+                label = ''; bracket = None
+                while bracket is not None or ts[i] in BRACKET or (ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')'):
+                    if ts[i] in BRACKET and bracket is None:
+                        bracket = ts[i]
+                    elif bracket is not None and ts[i] == BRACKET[bracket]:
+                        bracket = None
                     label += ts[i]; i += 1
                 i -= 1; n.label = label
             i += 1
