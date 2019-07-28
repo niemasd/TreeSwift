@@ -1,5 +1,5 @@
 # Minimal makefile for Sphinx documentation
-#
+SHELL := /bin/bash
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
@@ -18,10 +18,10 @@ help:
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	@if [ "$(@)" == "clean" ]; then \
-		rm -rf "$(DOCSDIR)" ; \
+	$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	if [ "$(@)" == "clean" ]; then \
+		rm -rf "$(DOCSDIR)" "$(BUILDDIR)" ; \
 	fi
-	@if [ "$(@)" == "html" ]; then \
-		rm -rf "$(DOCSDIR)" && cp -R "$(BUILDDIR)/html" "$(DOCSDIR)" ; \
+	if [ "$(@)" == "html" ]; then \
+		rm -rf "$(DOCSDIR)" && cp -R "$(BUILDDIR)/html" "$(DOCSDIR)" && rm -rf "$(BUILDDIR)" ; \
 	fi
