@@ -14,9 +14,10 @@ EULER_GAMMA = 0.5772156649015328606065120900824024310421
 
 # store bracket open/close for convenience in label parsing
 BRACKET = {
-    '[': ']',
-    '{': '}',
-    "'": "'",
+    '[': ']', # square bracket
+    '{': '}', # curly bracket
+    "'": "'", # single-quote
+    '"': '"', # double-quote
 }
 
 class Tree:
