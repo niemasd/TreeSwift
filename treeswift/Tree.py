@@ -1484,8 +1484,7 @@ def read_tree_linkage(linkage):
             raise ValueError(('Corrupt matrix Z. Index to derivative cluster '
                               'is used before it is formed. See row %d, '
                               'column 1') % fj)
-        #nd = Node(i + n, d[fi], d[fj], linkage[i, 2])
-        #          ^ id   ^ left ^ right ^ dist
+
         nd = Node(i+n)
         nd.add_child(d[fi])
         nd.add_child(d[fj])
