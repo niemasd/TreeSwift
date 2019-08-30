@@ -5,8 +5,9 @@ from copy import copy
 from gzip import open as gopen
 from math import ceil,log
 from os.path import expanduser,isfile
-from sys import version_info
 from warnings import warn
+import numpy as np
+from scipy.cluster.hierarchy import is_valid_linkage
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid NeXML file"
 INVALID_NEXUS = "Invalid Nexus file"
@@ -1451,6 +1452,54 @@ def read_tree_nexus(nexus):
         raise ValueError(INVALID_NEXUS)
     return trees
 
+
+def read_tree_linkage(linkage):
+    '''Read a tree from linkage matrix as specified in scipy docs
+
+    Args:
+        ``linkage`` (``np.ndarray``): Numpy array representing linkage.
+        https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html
+    Returns:
+        ``Tree`` representation of supplied linkage
+    '''
+    if not isinstance(linkage, np.ndarray):
+        raise TypeError("root must be a np.ndarray")
+
+    is_valid_linkage(linkage, throw=True, name='linkage')
+
+    n = linkage.shape[0] + 1
+    d = [None] * (n * 2 - 1)
+    for i in range(0, n):
+        d[i] = Node(i)
+
+    nd = None
+    for i in range(0, n - 1):
+        fi = int(linkage[i, 0])
+        fj = int(linkage[i, 1])
+        if fi > i + n:
+            raise ValueError(('Corrupt matrix Z. Index to derivative cluster '
+                              'is used before it is formed. See row %d, '
+                              'column 0') % fi)
+        if fj > i + n:
+            raise ValueError(('Corrupt matrix Z. Index to derivative cluster '
+                              'is used before it is formed. See row %d, '
+                              'column 1') % fj)
+        #nd = Node(i + n, d[fi], d[fj], linkage[i, 2])
+        #          ^ id   ^ left ^ right ^ dist
+        nd = Node(i+n)
+        nd.add_child(d[fi])
+        nd.add_child(d[fj])
+        d[fi].set_parent(nd)
+        d[fj].set_parent(nd)
+
+        d[n + i] = nd
+
+    return nd
+
+
+def _read_tree_scipy(root):
+    '''Helper method for read_tree_scipy'''
+
 def read_tree(input, schema):
     '''Read a tree from a string or file
 
@@ -1473,3 +1522,4 @@ def read_tree(input, schema):
     if schema.lower() not in schema_to_function:
         raise ValueError("Invalid schema: %s (valid options: %s)" % (schema, ', '.join(sorted(schema_to_function.keys()))))
     return schema_to_function[schema.lower()](input)
+
