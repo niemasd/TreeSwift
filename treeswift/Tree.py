@@ -1456,6 +1456,7 @@ def read_tree_nexus(nexus):
 def read_tree_linkage(linkage):
     '''Read a tree from linkage matrix as specified in scipy docs
 
+    Code largely copied from scipy's to_tree() function
     Args:
         ``linkage`` (``np.ndarray``): Numpy array representing linkage.
         https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html
