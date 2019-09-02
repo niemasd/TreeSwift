@@ -6,8 +6,6 @@ from gzip import open as gopen
 from math import ceil,log
 from os.path import expanduser,isfile
 from warnings import warn
-import numpy as np
-from scipy.cluster.hierarchy import is_valid_linkage
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid NeXML file"
 INVALID_NEXUS = "Invalid Nexus file"
@@ -1453,57 +1451,50 @@ def read_tree_nexus(nexus):
         raise ValueError(INVALID_NEXUS)
     return trees
 
-
 def read_tree_linkage(linkage, return_list=False):
-    '''Read a tree from linkage matrix as specified in scipy docs
+    '''Read a tree from linkage matrix as specified in SciPy documentation. Code largely copied from scipy's to_tree() function
 
-    Code largely copied from scipy's to_tree() function
     Args:
-        ``linkage`` (``np.ndarray``): Numpy array representing linkage.
-        https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html
+        ``linkage`` (``numpy.ndarray``): NumPy array representing linkage
+
+        * https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html
+
     Returns:
         ``Tree`` representation of supplied linkage
-        * If ``return_list`` is True, also returns list nd where nd[i] corresponds to Node with id i
-    '''
-    if not isinstance(linkage, np.ndarray):
-        raise TypeError("root must be a np.ndarray")
 
+        * If ``return_list`` is ``True``, also returns a ``list`` ``nd`` such that ``nd[i]`` corresponds to the ``Node`` with id ``i``
+    '''
+    # check valid input
+    from numpy import ndarray
+    if not isinstance(linkage, ndarray):
+        raise TypeError("root must be a np.ndarray")
+    from scipy.cluster.hierarchy import is_valid_linkage
     is_valid_linkage(linkage, throw=True, name='linkage')
 
+    # prepare
     n = linkage.shape[0] + 1
-    d = [None] * (n * 2 - 1)
-    for i in range(0, n):
-        d[i] = Node(i)
+    d = [Node(i) for i in range(n)] + [None]*(n-1)
 
+    # process
     nd = None
-    for i in range(0, n - 1):
-        fi = int(linkage[i, 0])
-        fj = int(linkage[i, 1])
+    for i in range(0, n-1):
+        # check for validity
+        fi = int(linkage[i,0]); fj = int(linkage[i,1])
         if fi > i + n:
-            raise ValueError(('Corrupt matrix Z. Index to derivative cluster '
-                              'is used before it is formed. See row %d, '
-                              'column 0') % fi)
+            raise ValueError('Corrupt matrix Z. Index to derivative cluster is used before it is formed. See row %d, column 0' % fi)
         if fj > i + n:
-            raise ValueError(('Corrupt matrix Z. Index to derivative cluster '
-                              'is used before it is formed. See row %d, '
-                              'column 1') % fj)
+            raise ValueError('Corrupt matrix Z. Index to derivative cluster is used before it is formed. See row %d, column 1') % fj)
 
         nd = Node(i+n, 1)
-        nd.add_child(d[fi])
-        nd.add_child(d[fj])
-        d[fi].set_parent(nd)
-        d[fj].set_parent(nd)
-
+        nd.add_child(d[fi]); nd.add_child(d[fj])
         d[n + i] = nd
 
-    out = Tree()
-    out.root = nd
-
+    # finalize
+    out = Tree(); out.root = nd
     if return_list:
         return out, d
     else:
         return out
-
 
 def read_tree(input, schema):
     '''Read a tree from a string or file
@@ -1528,4 +1519,3 @@ def read_tree(input, schema):
     if schema.lower() not in schema_to_function:
         raise ValueError("Invalid schema: %s (valid options: %s)" % (schema, ', '.join(sorted(schema_to_function.keys()))))
     return schema_to_function[schema.lower()](input)
-
