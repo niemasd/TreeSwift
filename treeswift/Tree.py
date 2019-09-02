@@ -5,8 +5,9 @@ from copy import copy
 from gzip import open as gopen
 from math import ceil,log
 from os.path import expanduser,isfile
-from sys import version_info
 from warnings import warn
+import numpy as np
+from scipy.cluster.hierarchy import is_valid_linkage
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid NeXML file"
 INVALID_NEXUS = "Invalid Nexus file"
@@ -344,6 +345,7 @@ class Tree:
                 for i in range(1,len(node.children)):
                     leaf_dists[node] += leaf_dists[node.children[i]]; del leaf_dists[node.children[i]]
         return M
+
 
     def distances_from_parent(self, leaves=True, internal=True, unlabeled=False):
         '''Generator over the node-to-parent distances of this ``Tree``; (node,distance) tuples
@@ -1451,13 +1453,65 @@ def read_tree_nexus(nexus):
         raise ValueError(INVALID_NEXUS)
     return trees
 
+
+def read_tree_linkage(linkage, return_list=False):
+    '''Read a tree from linkage matrix as specified in scipy docs
+
+    Code largely copied from scipy's to_tree() function
+    Args:
+        ``linkage`` (``np.ndarray``): Numpy array representing linkage.
+        https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html
+    Returns:
+        ``Tree`` representation of supplied linkage
+        * If ``return_list`` is True, also returns list nd where nd[i] corresponds to Node with id i
+    '''
+    if not isinstance(linkage, np.ndarray):
+        raise TypeError("root must be a np.ndarray")
+
+    is_valid_linkage(linkage, throw=True, name='linkage')
+
+    n = linkage.shape[0] + 1
+    d = [None] * (n * 2 - 1)
+    for i in range(0, n):
+        d[i] = Node(i)
+
+    nd = None
+    for i in range(0, n - 1):
+        fi = int(linkage[i, 0])
+        fj = int(linkage[i, 1])
+        if fi > i + n:
+            raise ValueError(('Corrupt matrix Z. Index to derivative cluster '
+                              'is used before it is formed. See row %d, '
+                              'column 0') % fi)
+        if fj > i + n:
+            raise ValueError(('Corrupt matrix Z. Index to derivative cluster '
+                              'is used before it is formed. See row %d, '
+                              'column 1') % fj)
+
+        nd = Node(i+n, 1)
+        nd.add_child(d[fi])
+        nd.add_child(d[fj])
+        d[fi].set_parent(nd)
+        d[fj].set_parent(nd)
+
+        d[n + i] = nd
+
+    out = Tree()
+    out.root = nd
+
+    if return_list:
+        return out, d
+    else:
+        return out
+
+
 def read_tree(input, schema):
     '''Read a tree from a string or file
 
     Args:
         ``input`` (``str``): Either a tree string, a path to a tree file (plain-text or gzipped), or a DendroPy Tree object
 
-        ``schema`` (``str``): The schema of ``input`` (DendroPy, Newick, NeXML, or Nexus)
+        ``schema`` (``str``): The schema of ``input`` (DendroPy, Newick, NeXML, Nexus, or linkage)
 
     Returns:
         * If the input is Newick, either a ``Tree`` object if ``input`` contains a single tree, or a ``list`` of ``Tree`` objects if ``input`` contains multiple trees (one per line)
@@ -1468,8 +1522,10 @@ def read_tree(input, schema):
         'dendropy': read_tree_dendropy,
         'newick': read_tree_newick,
         'nexml': read_tree_nexml,
-        'nexus': read_tree_nexus
+        'nexus': read_tree_nexus,
+        'linkage': read_tree_linkage
     }
     if schema.lower() not in schema_to_function:
         raise ValueError("Invalid schema: %s (valid options: %s)" % (schema, ', '.join(sorted(schema_to_function.keys()))))
     return schema_to_function[schema.lower()](input)
+
