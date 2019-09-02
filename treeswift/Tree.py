@@ -1483,7 +1483,7 @@ def read_tree_linkage(linkage, return_list=False):
         if fi > i + n:
             raise ValueError('Corrupt matrix Z. Index to derivative cluster is used before it is formed. See row %d, column 0' % fi)
         if fj > i + n:
-            raise ValueError('Corrupt matrix Z. Index to derivative cluster is used before it is formed. See row %d, column 1') % fj)
+            raise ValueError('Corrupt matrix Z. Index to derivative cluster is used before it is formed. See row %d, column 1' % fj)
 
         nd = Node(i+n, 1)
         nd.add_child(d[fi]); nd.add_child(d[fj])
