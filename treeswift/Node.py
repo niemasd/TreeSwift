@@ -362,7 +362,7 @@ class Node:
             raise TypeError("ascending must be a bool")
         nodes = list(); dist_from_root = dict()
         for node in self.traverse_preorder():
-            if node == self:
+            if node == self or node.edge_length is None:
                 d = 0
             else:
                 d = dist_from_root[node.parent] + node.edge_length
