@@ -374,11 +374,15 @@ class Node:
         for e in nodes:
             yield e
    
-    def leaf_dijkstra(self, k=None):
+    def leaf_dijkstra(self, k=None, return_label=True):
         '''Get the k nearest neighbors from this ``Node`` using branch lengths. If a branch lengthdoesn't exist, it is assumed to bo 0.
 
         Args:
             ``k`` (``int``): Number of nearest neighbor leaves we want before stopping search. Set to ``None`` to search entire ``Tree``
+            ``return_label`` (``bool``): If ``True`` returns ``Node`` labels instead of ``Node`` objects.
+        
+        Returns:
+            ``list`` of tuples where first element is distance and second element is node
         '''
         if not self.is_leaf():
             raise TypeError("Function only to be called on leaf nodes")
@@ -391,7 +395,10 @@ class Node:
             dist, node = heapq.heappop(to_visit)
             visited.add(node)
             if node.is_leaf():
-                heapq.heappush(neighbors, (dist, node))
+                if return_label:
+                    heapq.heappush(neighbors, (dist, node.label))
+                else:
+                    heapq.heappush(neighbors, (dist, node))
             if node.parent is not None and node.parent not in visited:
                 add_d = 0 if node.edge_length is None else node.edge_length
                 heapq.heappush(to_visit, (dist + add_d, node.parent))
@@ -404,12 +411,3 @@ class Node:
 
         neighbors.sort()
         return neighbors
-
-
-
-
-
-
-
-
-

@@ -10,13 +10,11 @@ class TestNode(TestCase):
 
         b = nodes[5]
         obs = b.leaf_dijkstra()
-        obs = [(d, n.label) for d,n in obs]
         exp = [(3.1,"C"), (3.1,"D"), (5.300000000000001,"A")]
         self.assertEqual(obs, exp)
         
         a = nodes[6]
         obs = a.leaf_dijkstra(2)
-        obs = [(d, n.label) for d,n in obs]
         exp = [(4.2,"C"), (4.2,"D")]
         self.assertEqual(obs, exp)
         
@@ -25,7 +23,6 @@ class TestNode(TestCase):
 
         a = nodes[7]
         obs = a.leaf_dijkstra(3)
-        obs = [(d, n.label) for d,n in obs]
         exp = [(3.3,"D"), (3.5,"C"), (4.3,"B")]
         self.assertEqual(obs, exp)
 
