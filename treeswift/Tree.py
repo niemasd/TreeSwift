@@ -1081,6 +1081,23 @@ class Tree:
         for node in self.root.traverse_rootdistorder(ascending=ascending, leaves=leaves, internal=internal):
             yield node
 
+    def get_nearest_neighbors(self, k=None, return_label=True):
+        '''For each leaf in ``Tree``, get the its k nearest neighbor leaves by edge length.
+
+        Args:
+            ``k`` (``int``): Number of nearest neighbor leaves we want before stopping search. Set to ``None`` to search entire ``Tree`` for each leaf in tree
+            ``return_label`` (``bool``): If ``True`` returns ``Node`` labels instead of ``Node`` objects.
+        
+        Returns:
+            ``dict`` where keys are ``Node`` or node labels, values are sorted ``list`` of nearest neighbors of key where entries are tuples where first element is distance from key node to neighbor and second element is neighbor
+        '''
+        leaves = self.traverse_leaves()
+        if return_label:
+          leaf_nn = {l.label:l.leaf_dijkstra(k, return_label) for l in leaves}
+        else:
+          leaf_nn = {l:l.leaf_dijkstra(k, return_label) for l in leaves}
+        return leaf_nn
+
     def treeness(self):
         '''Compute the `treeness` (sum of internal branch lengths / sum of all branch lengths) of this ``Tree``. Branch lengths of ``None`` are considered 0 length
 

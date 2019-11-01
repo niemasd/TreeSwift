@@ -382,12 +382,14 @@ class Node:
             ``return_label`` (``bool``): If ``True`` returns ``Node`` labels instead of ``Node`` objects.
         
         Returns:
-            ``list`` of tuples where first element is distance and second element is node
+            ``list`` of nearest neighbors to ``Node`` where entries are tuples where first element is distance and second element is neighbor
         '''
         if not self.is_leaf():
             raise TypeError("Function only to be called on leaf nodes")
         if k is not None and not isinstance(k, int):
             raise TypeError("k must be an int")
+        if not isinstance(return_label, bool):
+            raise TypeError("return_label must be a bool")
         to_visit = []; neighbors = []
         heapq.heappush(to_visit, (self.edge_length, self.parent))
         visited = set([self])
