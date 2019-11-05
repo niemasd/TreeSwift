@@ -6,6 +6,7 @@ from gzip import open as gopen
 from math import ceil,log
 from os.path import expanduser,isfile
 from warnings import warn
+from tqdm import tqdm
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid NeXML file"
 INVALID_NEXUS = "Invalid Nexus file"
@@ -314,7 +315,7 @@ class Tree:
             ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are labels of leaves; ``M[u][v]`` = distance from ``u`` to ``v``
         '''
         M = dict(); leaf_dists = dict()
-        for node in self.traverse_postorder():
+        for node in tqdm(self.traverse_postorder()):
             if node.is_leaf():
                 leaf_dists[node] = [[node,0]]
             else:
