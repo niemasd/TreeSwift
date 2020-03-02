@@ -596,11 +596,12 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.lineages_through_time">
-<code class="sig-name descname">lineages_through_time</code><span class="sig-paren">(</span><em class="sig-param">present_day=None</em>, <em class="sig-param">show_plot=True</em>, <em class="sig-param">color='#000000'</em>, <em class="sig-param">xmin=None</em>, <em class="sig-param">xmax=None</em>, <em class="sig-param">ymin=None</em>, <em class="sig-param">ymax=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">xlabel=None</em>, <em class="sig-param">ylabel=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.lineages_through_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.lineages_through_time" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lineages_through_time</code><span class="sig-paren">(</span><em class="sig-param">present_day=None</em>, <em class="sig-param">show_plot=True</em>, <em class="sig-param">export_filename=None</em>, <em class="sig-param">color='#000000'</em>, <em class="sig-param">xmin=None</em>, <em class="sig-param">xmax=None</em>, <em class="sig-param">ymin=None</em>, <em class="sig-param">ymax=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">xlabel=None</em>, <em class="sig-param">ylabel=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.lineages_through_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.lineages_through_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the number of lineages through time. If seaborn is installed, a plot is shown as well</p>
 <dl>
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">present_day</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The time of the furthest node from the root. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the top of the tree will be placed at time 0</p>
 <p><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to only return the dictionary. To plot multiple LTTs on the same figure, set <code class="docutils literal notranslate"><span class="pre">show_plot</span></code> to False for all but the last plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">export_filename</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): File to which the LTT figure will be exported (otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code> to not save to file)</p>
 <p><code class="docutils literal notranslate"><span class="pre">color</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The color of the resulting plot</p>
 <p><code class="docutils literal notranslate"><span class="pre">title</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The title of the resulting plot</p>
 <p><code class="docutils literal notranslate"><span class="pre">xmin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the horizontal axis in the resulting plot</p>
@@ -617,11 +618,12 @@
 
 <dl class="method">
 <dt id="treeswift.Tree.ltt">
-<code class="sig-name descname">ltt</code><span class="sig-paren">(</span><em class="sig-param">present_day=None</em>, <em class="sig-param">show_plot=True</em>, <em class="sig-param">color='#000000'</em>, <em class="sig-param">xmin=None</em>, <em class="sig-param">xmax=None</em>, <em class="sig-param">ymin=None</em>, <em class="sig-param">ymax=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">xlabel=None</em>, <em class="sig-param">ylabel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#treeswift.Tree.ltt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ltt</code><span class="sig-paren">(</span><em class="sig-param">present_day=None</em>, <em class="sig-param">show_plot=True</em>, <em class="sig-param">export_filename=None</em>, <em class="sig-param">color='#000000'</em>, <em class="sig-param">xmin=None</em>, <em class="sig-param">xmax=None</em>, <em class="sig-param">ymin=None</em>, <em class="sig-param">ymax=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">xlabel=None</em>, <em class="sig-param">ylabel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#treeswift.Tree.ltt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the number of lineages through time. If seaborn is installed, a plot is shown as well</p>
 <dl>
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">present_day</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The time of the furthest node from the root. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the top of the tree will be placed at time 0</p>
 <p><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to only return the dictionary. To plot multiple LTTs on the same figure, set <code class="docutils literal notranslate"><span class="pre">show_plot</span></code> to False for all but the last plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">export_filename</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): File to which the LTT figure will be exported (otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code> to not save to file)</p>
 <p><code class="docutils literal notranslate"><span class="pre">color</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The color of the resulting plot</p>
 <p><code class="docutils literal notranslate"><span class="pre">title</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The title of the resulting plot</p>
 <p><code class="docutils literal notranslate"><span class="pre">xmin</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): The minimum value of the horizontal axis in the resulting plot</p>
@@ -870,7 +872,7 @@
 <dd><p>Read a tree from a string or file</p>
 <dl>
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">input</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Either a tree string, a path to a tree file (plain-text or gzipped), or a DendroPy Tree object</p>
-<p><code class="docutils literal notranslate"><span class="pre">schema</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The schema of <code class="docutils literal notranslate"><span class="pre">input</span></code> (DendroPy, Newick, NeXML, or Nexus)</p>
+<p><code class="docutils literal notranslate"><span class="pre">schema</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The schema of <code class="docutils literal notranslate"><span class="pre">input</span></code> (DendroPy, Newick, NeXML, Nexus, or linkage)</p>
 </dd>
 <dt>Returns:</dt><dd><ul class="simple">
 <li><p>If the input is Newick, either a <code class="docutils literal notranslate"><span class="pre">Tree</span></code> object if <code class="docutils literal notranslate"><span class="pre">input</span></code> contains a single tree, or a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">Tree</span></code> objects if <code class="docutils literal notranslate"><span class="pre">input</span></code> contains multiple trees (one per line)</p></li>
@@ -980,7 +982,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Niema Moshiri.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
   </body>
 </html>

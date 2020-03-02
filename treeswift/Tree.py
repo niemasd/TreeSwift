@@ -621,13 +621,15 @@ class Tree:
         '''
         self.order('num_descendants_then_edge_length_then_label', ascending=ascending)
 
-    def lineages_through_time(self, present_day=None, show_plot=True, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
+    def lineages_through_time(self, present_day=None, show_plot=True, export_filename=None, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
         '''Compute the number of lineages through time. If seaborn is installed, a plot is shown as well
 
         Args:
             ``present_day`` (``float``): The time of the furthest node from the root. If ``None``, the top of the tree will be placed at time 0
 
             ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot
+
+            ``export_filename`` (``str``): File to which the LTT figure will be exported (otherwise ``None`` to not save to file)
 
             ``color`` (``str``): The color of the resulting plot
 
@@ -689,7 +691,7 @@ class Tree:
         if tmproot != self.root:
             self.root.parent = None
         try:
-            plot_ltt(lineages, show_plot=show_plot, color=color, xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, title=title, xlabel=xlabel, ylabel=ylabel)
+            plot_ltt(lineages, show_plot=show_plot, export_filename=export_filename, color=color, xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, title=title, xlabel=xlabel, ylabel=ylabel)
         except Exception as e:
             warn("Unable to produce visualization (but dictionary will still be returned)"); print(e)
         return lineages
@@ -1114,13 +1116,15 @@ class Tree:
         else: # plain-text file
             f = open(expanduser(filename),'w'); f.write(treestr); f.close()
 
-def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
+def plot_ltt(lineages, show_plot=True, export_filename=None, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
     '''Plot the Lineages Through Time (LTT) curve of a given tree
 
     Args:
         ``lineages`` (``dict``): The ``lineages`` dictionary returned by a ``Tree`` object's ``lineages_through_time()`` function call
 
         ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.
+
+        ``export_filename`` (``str``): File to which the LTT figure will be exported (otherwise ``None`` to not save to file)
 
         ``color`` (``str``): The color of the resulting plot
 
@@ -1166,7 +1170,7 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
         TREESWIFT_FIGURE.gca().plot([times[-1],times[-1]], [lineages[times[-2]],lineages[times[-1]]], color=color)
         if lineages[times[-1]] < TREESWIFT_FIGURE.YMIN:
             TREESWIFT_FIGURE.YMIN = lineages[times[-1]]
-    if show_plot:
+    if show_plot or export_filename is not None:
         if xmin is None:
             xmin = TREESWIFT_FIGURE.XMIN
         elif not isinstance(xmin,int) and not isinstance(xmin,float):
@@ -1203,7 +1207,11 @@ def plot_ltt(lineages, show_plot=True, color='#000000', xmin=None, xmax=None, ym
             plt.ylabel("Number of Lineages")
         else:
             plt.ylabel(ylabel)
-        plt.show(); TREESWIFT_FIGURE = None
+        if show_plot:
+            plt.show()
+        if export_filename is not None:
+            TREESWIFT_FIGURE.savefig(export_filename)
+        TREESWIFT_FIGURE = None
 
 def read_tree_dendropy(tree):
     '''Create a TreeSwift tree from a DendroPy tree

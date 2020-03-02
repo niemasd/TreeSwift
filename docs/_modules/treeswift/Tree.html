@@ -38,14 +38,13 @@
             
   <h1>Source code for treeswift.Tree</h1><div class="highlight"><pre>
 <span></span><span class="ch">#! /usr/bin/env python</span>
-<span class="kn">from</span> <span class="nn">treeswift.Node</span> <span class="k">import</span> <span class="n">Node</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
-<span class="kn">from</span> <span class="nn">gzip</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">ceil</span><span class="p">,</span><span class="n">log</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">expanduser</span><span class="p">,</span><span class="n">isfile</span>
-<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">version_info</span>
-<span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
+<span class="kn">from</span> <span class="nn">treeswift.Node</span> <span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">from</span> <span class="nn">gzip</span> <span class="kn">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span><span class="p">,</span><span class="n">log</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span><span class="p">,</span><span class="n">isfile</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
 <span class="n">INVALID_NEXML</span> <span class="o">=</span> <span class="s2">&quot;Invalid NeXML file&quot;</span>
 <span class="n">INVALID_NEXUS</span> <span class="o">=</span> <span class="s2">&quot;Invalid Nexus file&quot;</span>
@@ -61,14 +60,14 @@
 
 <div class="viewcode-block" id="Tree"><a class="viewcode-back" href="../../index.html#treeswift.Tree">[docs]</a><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;``Tree`` class&#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_rooted</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_rooted</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;``Tree`` constructor&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">is_rooted</span><span class="p">,</span><span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;is_rooted must be a bool&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">()</span>  <span class="c1"># root Node object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_rooted</span> <span class="o">=</span> <span class="n">is_rooted</span> <span class="c1"># boolean to see if the tree is rooted or not</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Represent this ``Tree`` as a string</span>
 
 <span class="sd">        Returns:</span>
@@ -384,6 +383,7 @@
                     <span class="n">leaf_dists</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="n">leaf_dists</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span> <span class="k">del</span> <span class="n">leaf_dists</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
         <span class="k">return</span> <span class="n">M</span></div>
 
+
 <div class="viewcode-block" id="Tree.distances_from_parent"><a class="viewcode-back" href="../../index.html#treeswift.Tree.distances_from_parent">[docs]</a>    <span class="k">def</span> <span class="nf">distances_from_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unlabeled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Generator over the node-to-parent distances of this ``Tree``; (node,distance) tuples</span>
 
@@ -660,13 +660,15 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="s1">&#39;num_descendants_then_edge_length_then_label&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="n">ascending</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Tree.lineages_through_time"><a class="viewcode-back" href="../../index.html#treeswift.Tree.lineages_through_time">[docs]</a>    <span class="k">def</span> <span class="nf">lineages_through_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">present_day</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#000000&#39;</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.lineages_through_time"><a class="viewcode-back" href="../../index.html#treeswift.Tree.lineages_through_time">[docs]</a>    <span class="k">def</span> <span class="nf">lineages_through_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">present_day</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">export_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#000000&#39;</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the number of lineages through time. If seaborn is installed, a plot is shown as well</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``present_day`` (``float``): The time of the furthest node from the root. If ``None``, the top of the tree will be placed at time 0</span>
 
 <span class="sd">            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot</span>
+
+<span class="sd">            ``export_filename`` (``str``): File to which the LTT figure will be exported (otherwise ``None`` to not save to file)</span>
 
 <span class="sd">            ``color`` (``str``): The color of the resulting plot</span>
 
@@ -728,7 +730,7 @@
         <span class="k">if</span> <span class="n">tmproot</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">plot_ltt</span><span class="p">(</span><span class="n">lineages</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="n">show_plot</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">ymax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">)</span>
+            <span class="n">plot_ltt</span><span class="p">(</span><span class="n">lineages</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="n">show_plot</span><span class="p">,</span> <span class="n">export_filename</span><span class="o">=</span><span class="n">export_filename</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">ymax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unable to produce visualization (but dictionary will still be returned)&quot;</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">lineages</span></div>
@@ -1153,13 +1155,15 @@
         <span class="k">else</span><span class="p">:</span> <span class="c1"># plain-text file</span>
             <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">);</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">treestr</span><span class="p">);</span> <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 
-<span class="k">def</span> <span class="nf">plot_ltt</span><span class="p">(</span><span class="n">lineages</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#000000&#39;</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot_ltt</span><span class="p">(</span><span class="n">lineages</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">export_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#000000&#39;</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Plot the Lineages Through Time (LTT) curve of a given tree</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        ``lineages`` (``dict``): The ``lineages`` dictionary returned by a ``Tree`` object&#39;s ``lineages_through_time()`` function call</span>
 
 <span class="sd">        ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False`` to only return the dictionary. To plot multiple LTTs on the same figure, set ``show_plot`` to False for all but the last plot.</span>
+
+<span class="sd">        ``export_filename`` (``str``): File to which the LTT figure will be exported (otherwise ``None`` to not save to file)</span>
 
 <span class="sd">        ``color`` (``str``): The color of the resulting plot</span>
 
@@ -1177,7 +1181,7 @@
 
 <span class="sd">        ``ylabel`` (``str``): The label of the vertical axis in the resulting plot</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span><span class="p">;</span> <span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="k">import</span> <span class="n">MaxNLocator</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span><span class="p">;</span> <span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MaxNLocator</span>
     <span class="k">if</span> <span class="s1">&#39;TREESWIFT_FIGURE&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">():</span>
         <span class="k">global</span> <span class="n">TREESWIFT_FIGURE</span><span class="p">;</span> <span class="n">TREESWIFT_FIGURE</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">TREESWIFT_FIGURE</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1205,7 +1209,7 @@
         <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]],</span><span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMIN</span><span class="p">:</span>
             <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">YMIN</span> <span class="o">=</span> <span class="n">lineages</span><span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-    <span class="k">if</span> <span class="n">show_plot</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">show_plot</span> <span class="ow">or</span> <span class="n">export_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">xmin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">xmin</span> <span class="o">=</span> <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">XMIN</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
@@ -1242,7 +1246,11 @@
             <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Number of Lineages&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span> <span class="n">TREESWIFT_FIGURE</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">show_plot</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">export_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">TREESWIFT_FIGURE</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">export_filename</span><span class="p">)</span>
+        <span class="n">TREESWIFT_FIGURE</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="read_tree_dendropy"><a class="viewcode-back" href="../../index.html#treeswift.read_tree_dendropy">[docs]</a><span class="k">def</span> <span class="nf">read_tree_dendropy</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Create a TreeSwift tree from a DendroPy tree</span>
@@ -1490,13 +1498,58 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">INVALID_NEXUS</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">trees</span></div>
 
+<span class="k">def</span> <span class="nf">read_tree_linkage</span><span class="p">(</span><span class="n">linkage</span><span class="p">,</span> <span class="n">return_list</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Read a tree from linkage matrix as specified in SciPy documentation. Code largely copied from scipy&#39;s to_tree() function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ``linkage`` (``numpy.ndarray``): NumPy array representing linkage</span>
+
+<span class="sd">        * https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ``Tree`` representation of supplied linkage</span>
+
+<span class="sd">        * If ``return_list`` is ``True``, also returns a ``list`` ``nd`` such that ``nd[i]`` corresponds to the ``Node`` with id ``i``</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># check valid input</span>
+    <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">ndarray</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">linkage</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;root must be a np.ndarray&quot;</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">is_valid_linkage</span>
+    <span class="n">is_valid_linkage</span><span class="p">(</span><span class="n">linkage</span><span class="p">,</span> <span class="n">throw</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;linkage&#39;</span><span class="p">)</span>
+
+    <span class="c1"># prepare</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">linkage</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">Node</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># process</span>
+    <span class="n">nd</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># check for validity</span>
+        <span class="n">fi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linkage</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]);</span> <span class="n">fj</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linkage</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">fi</span> <span class="o">&gt;</span> <span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Corrupt matrix Z. Index to derivative cluster is used before it is formed. See row </span><span class="si">%d</span><span class="s1">, column 0&#39;</span> <span class="o">%</span> <span class="n">fi</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fj</span> <span class="o">&gt;</span> <span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Corrupt matrix Z. Index to derivative cluster is used before it is formed. See row </span><span class="si">%d</span><span class="s1">, column 1&#39;</span> <span class="o">%</span> <span class="n">fj</span><span class="p">)</span>
+
+        <span class="n">nd</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">nd</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">fi</span><span class="p">]);</span> <span class="n">nd</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">fj</span><span class="p">])</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nd</span>
+
+    <span class="c1"># finalize</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">();</span> <span class="n">out</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">nd</span>
+    <span class="k">if</span> <span class="n">return_list</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">d</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">out</span>
+
 <div class="viewcode-block" id="read_tree"><a class="viewcode-back" href="../../index.html#treeswift.read_tree">[docs]</a><span class="k">def</span> <span class="nf">read_tree</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Read a tree from a string or file</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        ``input`` (``str``): Either a tree string, a path to a tree file (plain-text or gzipped), or a DendroPy Tree object</span>
 
-<span class="sd">        ``schema`` (``str``): The schema of ``input`` (DendroPy, Newick, NeXML, or Nexus)</span>
+<span class="sd">        ``schema`` (``str``): The schema of ``input`` (DendroPy, Newick, NeXML, Nexus, or linkage)</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        * If the input is Newick, either a ``Tree`` object if ``input`` contains a single tree, or a ``list`` of ``Tree`` objects if ``input`` contains multiple trees (one per line)</span>
@@ -1507,7 +1560,8 @@
         <span class="s1">&#39;dendropy&#39;</span><span class="p">:</span> <span class="n">read_tree_dendropy</span><span class="p">,</span>
         <span class="s1">&#39;newick&#39;</span><span class="p">:</span> <span class="n">read_tree_newick</span><span class="p">,</span>
         <span class="s1">&#39;nexml&#39;</span><span class="p">:</span> <span class="n">read_tree_nexml</span><span class="p">,</span>
-        <span class="s1">&#39;nexus&#39;</span><span class="p">:</span> <span class="n">read_tree_nexus</span>
+        <span class="s1">&#39;nexus&#39;</span><span class="p">:</span> <span class="n">read_tree_nexus</span><span class="p">,</span>
+        <span class="s1">&#39;linkage&#39;</span><span class="p">:</span> <span class="n">read_tree_linkage</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="n">schema</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">schema_to_function</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid schema: </span><span class="si">%s</span><span class="s2"> (valid options: </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">schema_to_function</span><span class="o">.</span><span class="n">keys</span><span class="p">()))))</span>
@@ -1548,7 +1602,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Niema Moshiri.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
   </body>
 </html>
