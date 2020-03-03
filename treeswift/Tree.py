@@ -474,13 +474,16 @@ class Tree:
                 plt.text(x[node], y[node], " %s" % str(node), fontsize=label_fontsize, verticalalignment='center')
 
         # show/export
+        if title is not None:
+            plt.title(title)
+        if xlabel is not None:
+            plt.xlabel(xlabel)
         plt.tight_layout()
         if show_plot:
             plt.show()
         if export_filename is not None:
             plt.savefig(export_filename)
         plt.close()
-        exit()
 
     def edge_length_sum(self, terminal=True, internal=True):
         '''Compute the sum of all selected edge lengths in this ``Tree``
