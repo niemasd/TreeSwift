@@ -397,6 +397,91 @@ class Tree:
                 if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (unlabeled or node.label is not None):
                     yield (node,d[node])
 
+    def draw(self, show_plot=True, export_filename=None, show_labels=False, align_labels=False, label_fontsize=8, start_time=0, color='#000000', title=None, xlabel=None):
+        '''Draw this ``Tree``
+
+        Args:
+            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False``
+
+            ``export_filename`` (``str``): File to which the LTT figure will be exported (otherwise ``None`` to not save to file)
+
+            ``show_labels`` (``bool``): ``True`` to show the leaf labels, otherwise ``False``
+
+            ``align_labels`` (``bool``): ``True`` to align the leaf labels (if shown), otherwise ``False`` to just put them by their tips
+
+            ``label_fontsize`` (``int``): Font size of the leaf labels (in points). 8pt = 1/9in --> 1in = 72pt
+
+            ``color`` (``str``): The color of the resulting plot
+
+            ``title`` (``str``): The title of the resulting plot
+
+            ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
+        '''
+        import matplotlib.pyplot as plt
+        from matplotlib.ticker import MaxNLocator
+        from matplotlib import rcParams
+        rcParams['axes.spines.left'] = False # hide left spine
+        rcParams['axes.spines.right'] = False # hide right spine
+        rcParams['axes.spines.top'] = False # hide top spine
+
+        # compute total height needed at each node
+        dy = dict()
+        for node in self.traverse_postorder():
+            if node.is_leaf():
+                dy[node] = 1
+            else:
+                dy[node] = sum(dy[child] for child in node.children)
+
+        # compute y-coordinate of each node
+        y = {self.root:0} # root is at y = 0
+        for node in self.traverse_preorder(leaves=False):
+            y_top = y[node] + (dy[node]/2)
+            for i in range(len(node.children)):
+                y[node.children[i]] = y_top - (dy[node.children[i]]/2)
+                y_top -= dy[node.children[i]]
+
+        # compute x-coordinate of each node
+        x = dict()
+        for node in self.traverse_preorder():
+            if node.is_root():
+                x[node] = start_time
+            else:
+                x[node] = x[node.parent]
+            if node.edge_length is not None:
+                x[node] += node.edge_length
+
+        # compute width and height
+        if show_labels:
+            height_per_leaf = label_fontsize/50. # arbitrarily chose 50 to get it to look nice
+        else:
+            height_per_leaf = 5./50.
+        height = dy[self.root] * height_per_leaf
+        width = 10
+
+        # plot tree
+        fig, ax = plt.subplots(figsize=(width,height))
+        ax.ticklabel_format(useOffset=False) # disable +- from center
+        ax.get_yaxis().set_visible(False) # hide y-axis
+        for node in self.traverse_preorder():
+            if node.edge_length is None:
+                el = 0
+            else:
+                el = node.edge_length
+            ax.plot([x[node]-el,x[node]], [y[node],y[node]], color=color) # horizontal line into node
+            if len(node.children) > 1:
+                ax.plot([x[node],x[node]], [y[node.children[0]],y[node.children[-1]]], color=color)
+            elif node.is_leaf() and show_labels:
+                plt.text(x[node], y[node], " %s" % str(node), fontsize=label_fontsize, verticalalignment='center')
+
+        # show/export
+        plt.tight_layout()
+        if show_plot:
+            plt.show()
+        if export_filename is not None:
+            plt.savefig(export_filename)
+        plt.close()
+        exit()
+
     def edge_length_sum(self, terminal=True, internal=True):
         '''Compute the sum of all selected edge lengths in this ``Tree``
 
