@@ -450,6 +450,22 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="treeswift.Tree.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">show_plot=True</em>, <em class="sig-param">export_filename=None</em>, <em class="sig-param">show_labels=False</em>, <em class="sig-param">align_labels=False</em>, <em class="sig-param">label_fontsize=8</em>, <em class="sig-param">start_time=0</em>, <em class="sig-param">color='#000000'</em>, <em class="sig-param">xlabel=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl>
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">show_plot</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the plot, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">export_filename</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): File to which the LTT figure will be exported (otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code> to not save to file)</p>
+<p><code class="docutils literal notranslate"><span class="pre">show_labels</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to show the leaf labels, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">align_labels</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to align the leaf labels (if shown), otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> to just put them by their tips</p>
+<p><code class="docutils literal notranslate"><span class="pre">label_fontsize</span></code> (<code class="docutils literal notranslate"><span class="pre">int</span></code>): Font size of the leaf labels (in points). 8pt = 1/9in –&gt; 1in = 72pt</p>
+<p><code class="docutils literal notranslate"><span class="pre">color</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The color of the resulting plot</p>
+<p><code class="docutils literal notranslate"><span class="pre">xlabel</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label of the horizontal axis in the resulting plot</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="treeswift.Tree.edge_length_sum">
 <code class="sig-name descname">edge_length_sum</code><span class="sig-paren">(</span><em class="sig-param">terminal=True</em>, <em class="sig-param">internal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.edge_length_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treeswift.Tree.edge_length_sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the sum of all selected edge lengths in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>

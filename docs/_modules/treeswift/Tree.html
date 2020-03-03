@@ -436,6 +436,96 @@
                 <span class="k">if</span> <span class="p">((</span><span class="n">leaves</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">internal</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">unlabeled</span> <span class="ow">or</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
                     <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">])</span></div>
 
+<div class="viewcode-block" id="Tree.draw"><a class="viewcode-back" href="../../index.html#treeswift.Tree.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">export_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">align_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label_fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#000000&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Draw this ``Tree``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False``</span>
+
+<span class="sd">            ``export_filename`` (``str``): File to which the LTT figure will be exported (otherwise ``None`` to not save to file)</span>
+
+<span class="sd">            ``show_labels`` (``bool``): ``True`` to show the leaf labels, otherwise ``False``</span>
+
+<span class="sd">            ``align_labels`` (``bool``): ``True`` to align the leaf labels (if shown), otherwise ``False`` to just put them by their tips</span>
+
+<span class="sd">            ``label_fontsize`` (``int``): Font size of the leaf labels (in points). 8pt = 1/9in --&gt; 1in = 72pt</span>
+
+<span class="sd">            ``color`` (``str``): The color of the resulting plot</span>
+
+<span class="sd">            ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+        <span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MaxNLocator</span>
+        <span class="n">rcParams_orig</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.spines.left&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># hide left spine</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.spines.right&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># hide right spine</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.spines.top&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># hide top spine</span>
+
+        <span class="c1"># compute total height needed at each node</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                <span class="n">dy</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dy</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">dy</span><span class="p">[</span><span class="n">child</span><span class="p">]</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+
+        <span class="c1"># compute y-coordinate of each node</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># root is at y = 0</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">(</span><span class="n">leaves</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">y_top</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">dy</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)):</span>
+                <span class="n">y</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">y_top</span> <span class="o">-</span> <span class="p">(</span><span class="n">dy</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">y_top</span> <span class="o">-=</span> <span class="n">dy</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
+        <span class="c1"># compute x-coordinate of each node</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
+                <span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">start_time</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+
+        <span class="c1"># compute width and height</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># arbitrary choice</span>
+        <span class="k">if</span> <span class="n">show_labels</span><span class="p">:</span>
+            <span class="n">height_per_leaf</span> <span class="o">=</span> <span class="n">label_fontsize</span><span class="o">/</span><span class="mf">50.</span> <span class="c1"># arbitrarily chose 50 to get it to look nice</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">height_per_leaf</span> <span class="o">=</span> <span class="mf">5.</span><span class="o">/</span><span class="mf">50.</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">/</span><span class="mf">8.</span> <span class="c1"># height of x-axis is around 2/8 of an inch</span>
+        <span class="n">height</span> <span class="o">+=</span> <span class="n">dy</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">]</span> <span class="o">*</span> <span class="n">height_per_leaf</span> <span class="c1"># add tree height</span>
+        <span class="k">if</span> <span class="n">xlabel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">height</span> <span class="o">+=</span> <span class="mf">1.</span><span class="o">/</span><span class="mf">8.</span> <span class="c1"># height of x-label is around 1/8 of an inch</span>
+        <span class="n">height</span> <span class="o">+=</span> <span class="mf">4.</span><span class="o">/</span><span class="mf">8.</span> <span class="c1"># arbitrary additional padding to get it to look nice for smaller graphs</span>
+
+        <span class="c1"># plot tree</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span><span class="n">height</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">ticklabel_format</span><span class="p">(</span><span class="n">useOffset</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># disable +- from center</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># hide y-axis</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">el</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">el</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">-</span><span class="n">el</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="p">]],</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">node</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">node</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span> <span class="c1"># horizontal line into node</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="p">]],</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span><span class="n">y</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()</span> <span class="ow">and</span> <span class="n">show_labels</span><span class="p">:</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">label_fontsize</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+        <span class="c1"># show/export</span>
+        <span class="k">if</span> <span class="n">xlabel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">show_plot</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">export_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">export_filename</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span> <span class="o">=</span> <span class="n">rcParams_orig</span></div>
+
 <div class="viewcode-block" id="Tree.edge_length_sum"><a class="viewcode-back" href="../../index.html#treeswift.Tree.edge_length_sum">[docs]</a>    <span class="k">def</span> <span class="nf">edge_length_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the sum of all selected edge lengths in this ``Tree``</span>
 
