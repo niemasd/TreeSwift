@@ -397,7 +397,7 @@ class Tree:
                 if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (unlabeled or node.label is not None):
                     yield (node,d[node])
 
-    def draw(self, show_plot=True, export_filename=None, show_labels=False, align_labels=False, label_fontsize=8, start_time=0, color='#000000', title=None, xlabel=None):
+    def draw(self, show_plot=True, export_filename=None, show_labels=False, align_labels=False, label_fontsize=8, start_time=0, color='#000000', xlabel=None):
         '''Draw this ``Tree``
 
         Args:
@@ -412,8 +412,6 @@ class Tree:
             ``label_fontsize`` (``int``): Font size of the leaf labels (in points). 8pt = 1/9in --> 1in = 72pt
 
             ``color`` (``str``): The color of the resulting plot
-
-            ``title`` (``str``): The title of the resulting plot
 
             ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
         '''
@@ -452,12 +450,16 @@ class Tree:
                 x[node] += node.edge_length
 
         # compute width and height
+        width = 10 # arbitrary choice
         if show_labels:
             height_per_leaf = label_fontsize/50. # arbitrarily chose 50 to get it to look nice
         else:
             height_per_leaf = 5./50.
-        height = dy[self.root] * height_per_leaf
-        width = 10
+        height = 2./8. # height of x-axis is around 2/8 of an inch
+        height += dy[self.root] * height_per_leaf # add tree height
+        if xlabel is not None:
+            height += 1./8. # height of x-label is around 1/8 of an inch
+        height += 4./8. # arbitrary additional padding to get it to look nice for smaller graphs
 
         # plot tree
         fig, ax = plt.subplots(figsize=(width,height))
@@ -475,8 +477,6 @@ class Tree:
                 plt.text(x[node], y[node], " %s" % str(node), fontsize=label_fontsize, verticalalignment='center')
 
         # show/export
-        if title is not None:
-            plt.title(title)
         if xlabel is not None:
             plt.xlabel(xlabel)
         plt.tight_layout()
