@@ -418,7 +418,9 @@ class Tree:
         import matplotlib.pyplot as plt
         from matplotlib.ticker import MaxNLocator
         from matplotlib import rcParams
-        orig = {k:rcParams[k] for k in ['axes.spines.left','axes.spines.right','axes.spines.top']}
+        orig = dict()
+        for k in ['axes.spines.left','axes.spines.right','axes.spines.top']:
+            orig[k] = rcParams[k]
         rcParams['axes.spines.left'] = False # hide left spine
         rcParams['axes.spines.right'] = False # hide right spine
         rcParams['axes.spines.top'] = False # hide top spine
