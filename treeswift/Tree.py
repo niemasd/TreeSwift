@@ -416,12 +416,12 @@ class Tree:
             ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
         '''
         import matplotlib.pyplot as plt
-        import matplotlib as mpl
         from matplotlib.ticker import MaxNLocator
-        rcParams_orig = mpl.rcParams.copy()
-        mpl.rcParams['axes.spines.left'] = False # hide left spine
-        mpl.rcParams['axes.spines.right'] = False # hide right spine
-        mpl.rcParams['axes.spines.top'] = False # hide top spine
+        from matplotlib import rcParams
+        orig = {k:rcParams[k] for k in ['axes.spines.left','axes.spines.right','axes.spines.top']}
+        rcParams['axes.spines.left'] = False # hide left spine
+        rcParams['axes.spines.right'] = False # hide right spine
+        rcParams['axes.spines.top'] = False # hide top spine
 
         # compute total height needed at each node
         dy = dict()
@@ -485,7 +485,8 @@ class Tree:
         if export_filename is not None:
             plt.savefig(export_filename)
         plt.close()
-        mpl.rcParams = rcParams_orig
+        for k in orig:
+            rcParams[k] = orig[k]
 
     def edge_length_sum(self, terminal=True, internal=True):
         '''Compute the sum of all selected edge lengths in this ``Tree``
