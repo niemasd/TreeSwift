@@ -498,7 +498,7 @@ class Tree:
             if legend is None:
                 plt.savefig(export_filename)
             else:
-                plt.savefig(export_filename, bbox_extra_artists=(legend,))#, bbox_inches='tight')
+                plt.savefig(export_filename, bbox_extra_artists=(legend,))
         plt.close()
         for k in orig:
             rcParams[k] = orig[k]
