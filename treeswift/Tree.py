@@ -397,7 +397,7 @@ class Tree:
                 if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (unlabeled or node.label is not None):
                     yield (node,d[node])
 
-    def draw(self, show_plot=True, export_filename=None, show_labels=False, align_labels=False, label_fontsize=8, start_time=0, color='#000000', xlabel=None):
+    def draw(self, show_plot=True, export_filename=None, show_labels=False, align_labels=False, label_fontsize=8, start_time=0, default_color='#000000', xlabel=None):
         '''Draw this ``Tree``
 
         Args:
@@ -411,7 +411,7 @@ class Tree:
 
             ``label_fontsize`` (``int``): Font size of the leaf labels (in points). 8pt = 1/9in --> 1in = 72pt
 
-            ``color`` (``str``): The color of the resulting plot
+            ``default_color`` (``str``): The default color to use if a node doesn't have a ``color`` attribute
 
             ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
         '''
@@ -468,15 +468,19 @@ class Tree:
         ax.ticklabel_format(useOffset=False) # disable +- from center
         ax.get_yaxis().set_visible(False) # hide y-axis
         for node in self.traverse_preorder():
+            if hasattr(node, 'color'):
+                curr_color = node.color
+            else:
+                curr_color = default_color
             if node.edge_length is None:
                 el = 0
             else:
                 el = node.edge_length
-            ax.plot([x[node]-el,x[node]], [y[node],y[node]], color=color) # horizontal line into node
+            ax.plot([x[node]-el,x[node]], [y[node],y[node]], color=curr_color) # horizontal line into node
             if len(node.children) > 1:
-                ax.plot([x[node],x[node]], [y[node.children[0]],y[node.children[-1]]], color=color)
+                ax.plot([x[node],x[node]], [y[node.children[0]],y[node.children[-1]]], color=curr_color)
             elif node.is_leaf() and show_labels:
-                plt.text(x[node], y[node], " %s" % str(node), fontsize=label_fontsize, verticalalignment='center')
+                plt.text(x[node], y[node], " %s" % str(node), fontsize=label_fontsize, verticalalignment='center', color=curr_color)
 
         # show/export
         if xlabel is not None:
