@@ -397,7 +397,7 @@ class Tree:
                 if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (unlabeled or node.label is not None):
                     yield (node,d[node])
 
-    def draw(self, show_plot=True, export_filename=None, show_labels=False, align_labels=False, label_fontsize=8, start_time=0, default_color='#000000', xlabel=None):
+    def draw(self, show_plot=True, export_filename=None, show_labels=False, align_labels=False, label_fontsize=8, start_time=0, default_color='#000000', xlabel=None, handles=None):
         '''Draw this ``Tree``
 
         Args:
@@ -414,6 +414,8 @@ class Tree:
             ``default_color`` (``str``): The default color to use if a node doesn't have a ``color`` attribute
 
             ``xlabel`` (``str``): The label of the horizontal axis in the resulting plot
+
+            ``handles`` (``list``): List of matplotlib ``Patch`` objects for a legend
         '''
         import matplotlib.pyplot as plt
         from matplotlib.ticker import MaxNLocator
@@ -468,7 +470,7 @@ class Tree:
         ax.ticklabel_format(useOffset=False) # disable +- from center
         ax.get_yaxis().set_visible(False) # hide y-axis
         for node in self.traverse_preorder():
-            if hasattr(node, 'color'):
+            if hasattr(node, 'color') and node.color is not None:
                 curr_color = node.color
             else:
                 curr_color = default_color
@@ -485,11 +487,18 @@ class Tree:
         # show/export
         if xlabel is not None:
             plt.xlabel(xlabel)
+        if handles is None:
+            legend = None
+        else:
+            legend = plt.legend(handles=handles, loc='upper right', bbox_to_anchor=(0,1))
         plt.tight_layout()
         if show_plot:
             plt.show()
         if export_filename is not None:
-            plt.savefig(export_filename)
+            if legend is None:
+                plt.savefig(export_filename)
+            else:
+                plt.savefig(export_filename, bbox_extra_artists=(legend,), bbox_inches='tight')
         plt.close()
         for k in orig:
             rcParams[k] = orig[k]
