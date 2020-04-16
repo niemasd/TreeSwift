@@ -403,7 +403,7 @@ class Tree:
         Args:
             ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False``
 
-            ``export_filename`` (``str``): File to which the LTT figure will be exported (otherwise ``None`` to not save to file)
+            ``export_filename`` (``str``): File to which the tree figure will be exported (otherwise ``None`` to not save to file)
 
             ``show_labels`` (``bool``): ``True`` to show the leaf labels, otherwise ``False``
 
