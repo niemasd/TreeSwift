@@ -235,7 +235,7 @@ class Node:
         while c is not None:
             yield c; c = c.parent
 
-    def traverse_bfs(self):
+    def traverse_bfs(self, include_self=True):
         '''Perform a Breadth-First Search (BFS) starting at this ``Node`` object'. Yields (``Node``, distance) tuples
         
         Args:
