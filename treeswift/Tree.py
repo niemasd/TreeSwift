@@ -243,7 +243,7 @@ class Tree:
         for node in to_contract:
             node.contract()
 
-    def deroot(self, label='OLDROOT'):
+    def drop_edge_length_at_root(self, label='OLDROOT'):
         '''If the tree has a root edge, drop the edge to be a child of the root node
 
         Args:
@@ -252,6 +252,21 @@ class Tree:
         if self.root.edge_length is not None:
             self.root.add_child(Node(edge_length=self.root.edge_length,label=label))
             self.root.edge_length = None
+
+    def deroot(self):
+        '''If tree bifurcates at the root, contract an edge incident with the root to create a trifurcation at the root.
+
+        Args:
+            ``label`` (``str``): The desired label of the new child
+        '''
+        if self.root.num_children() == 1:
+            warn("Unable to unroot tree with unifurcation at the root!")
+        elif self.root.num_children() == 2:
+            [left, right] = self.root.child_nodes()
+            if left.is_leaf():
+                right.contract()
+            else:
+                left.contract()
 
     def diameter(self):
         '''Compute the diameter (maximum leaf pairwise distance) of this ``Tree``
