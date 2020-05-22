@@ -1,18 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>treeswift.Tree &#8212; TreeSwift  documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -282,7 +282,7 @@
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">to_contract</span><span class="p">:</span>
             <span class="n">node</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Tree.deroot"><a class="viewcode-back" href="../../index.html#treeswift.Tree.deroot">[docs]</a>    <span class="k">def</span> <span class="nf">deroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OLDROOT&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Tree.drop_edge_length_at_root"><a class="viewcode-back" href="../../index.html#treeswift.Tree.drop_edge_length_at_root">[docs]</a>    <span class="k">def</span> <span class="nf">drop_edge_length_at_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OLDROOT&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;If the tree has a root edge, drop the edge to be a child of the root node</span>
 
 <span class="sd">        Args:</span>
@@ -291,6 +291,21 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="n">edge_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Tree.deroot"><a class="viewcode-back" href="../../index.html#treeswift.Tree.deroot">[docs]</a>    <span class="k">def</span> <span class="nf">deroot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;If tree bifurcates at the root, contract an edge incident with the root to create a trifurcation at the root.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``label`` (``str``): The desired label of the new child</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">num_children</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unable to unroot tree with unifurcation at the root!&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">num_children</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">child_nodes</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">left</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                <span class="n">right</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">left</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Tree.diameter"><a class="viewcode-back" href="../../index.html#treeswift.Tree.diameter">[docs]</a>    <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the diameter (maximum leaf pairwise distance) of this ``Tree``</span>
@@ -442,7 +457,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            ``show_plot`` (``bool``): ``True`` to show the plot, otherwise ``False``</span>
 
-<span class="sd">            ``export_filename`` (``str``): File to which the LTT figure will be exported (otherwise ``None`` to not save to file)</span>
+<span class="sd">            ``export_filename`` (``str``): File to which the tree figure will be exported (otherwise ``None`` to not save to file)</span>
 
 <span class="sd">            ``show_labels`` (``bool``): ``True`` to show the leaf labels, otherwise ``False``</span>
 
@@ -537,7 +552,7 @@
             <span class="k">if</span> <span class="n">legend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">export_filename</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">export_filename</span><span class="p">,</span> <span class="n">bbox_extra_artists</span><span class="o">=</span><span class="p">(</span><span class="n">legend</span><span class="p">,))</span><span class="c1">#, bbox_inches=&#39;tight&#39;)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">export_filename</span><span class="p">,</span> <span class="n">bbox_extra_artists</span><span class="o">=</span><span class="p">(</span><span class="n">legend</span><span class="p">,))</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">orig</span><span class="p">:</span>
             <span class="n">rcParams</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span><span class="p">[</span><span class="n">k</span><span class="p">]</span></div>
@@ -1688,7 +1703,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1708,7 +1723,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Niema Moshiri.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
     </div>
   </body>
 </html>
