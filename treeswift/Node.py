@@ -150,6 +150,8 @@ class Node:
                         else:
                             l_str = str(c.edge_length)
                         out.append(':%s' % l_str)
+                    if hasattr(c, 'edge_params'):
+                        out.append('[%s]' % str(c.edge_params))
                     out.append(',')
                     del node_to_str[c]
                 out.pop() # trailing comma

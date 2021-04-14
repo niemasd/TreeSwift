@@ -873,14 +873,16 @@ class Tree:
         Returns:
             ``str``: Newick string of this ``Tree``
         '''
-        if self.root.edge_length is None:
-            suffix = ';'
-        elif isinstance(self.root.edge_length,int):
-            suffix = ':%d;' % self.root.edge_length
+        suffix = ''
+        if isinstance(self.root.edge_length,int):
+            suffix += ':%d' % self.root.edge_length
         elif isinstance(self.root.edge_length,float) and self.root.edge_length.is_integer():
-            suffix = ':%d;' % int(self.root.edge_length)
+            suffix += ':%d' % int(self.root.edge_length)
         else:
-            suffix = ':%s;' % str(self.root.edge_length)
+            suffix += ':%s' % str(self.root.edge_length)
+        if hasattr(self.root, 'edge_params'):
+            suffix += '[%s]' % self.root.edge_params
+        suffix += ';'
         if self.is_rooted:
             return '[&R] %s%s' % (self.root.newick(),suffix)
         else:
@@ -1387,7 +1389,7 @@ def read_tree_newick(newick):
         t = Tree(); t.is_rooted = ts.startswith('[&R]')
         if ts[0] == '[':
             ts = ']'.join(ts.split(']')[1:]).strip(); ts = ts.replace(', ',',')
-        n = t.root; i = 0
+        n = t.root; i = 0; parse_length = False
         while i < len(ts):
             # end of Newick string
             if ts[i] == ';':
@@ -1417,14 +1419,16 @@ def read_tree_newick(newick):
                         if count == 0:
                             break
                     i += 1
-                n.edge_params = ts[start_ind : i+1] # include first and last [ and ]
+                n.edge_params = ts[start_ind+1 : i] # don't include first and last [ and ]
 
             # edge length
             elif ts[i] == ':':
-                i += 1; ls = ''
+                parse_length = True
+            elif parse_length:
+                ls = ''
                 while ts[i] != ',' and ts[i] != ')' and ts[i] != ';' and ts[i] != '[':
                     ls += ts[i]; i += 1
-                n.edge_length = float(ls); i -= 1
+                n.edge_length = float(ls); i -= 1; parse_length = False
 
             # node label
             else:
