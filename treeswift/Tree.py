@@ -1406,13 +1406,24 @@ def read_tree_newick(newick):
             elif ts[i] == ',':
                 n = n.parent; c = Node(); n.add_child(c); n = c
 
+            # comment (square brackets)
+            elif ts[i] == '[':
+                count = 0; start_ind = i
+                while True:
+                    if ts[i] == '[':
+                        count += 1
+                    elif ts[i] == ']':
+                        count -= 1
+                        if count == 0:
+                            break
+                    i += 1
+                n.edge_params = ts[start_ind : i+1] # include first and last [ and ]
+
             # edge length
             elif ts[i] == ':':
                 i += 1; ls = ''
-                while ts[i] != ',' and ts[i] != ')' and ts[i] != ';':
+                while ts[i] != ',' and ts[i] != ')' and ts[i] != ';' and ts[i] != '[':
                     ls += ts[i]; i += 1
-                if ls[0] == '[':
-                    n.edge_params = ']'.join(ls.split(']')[:-1]); ls = ls.split(']')[-1]
                 n.edge_length = float(ls); i -= 1
 
             # node label
