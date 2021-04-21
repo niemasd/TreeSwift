@@ -878,7 +878,7 @@ class Tree:
             suffix += ':%d' % self.root.edge_length
         elif isinstance(self.root.edge_length,float) and self.root.edge_length.is_integer():
             suffix += ':%d' % int(self.root.edge_length)
-        else:
+        elif self.root.edge_length is not None:
             suffix += ':%s' % str(self.root.edge_length)
         if hasattr(self.root, 'edge_params'):
             suffix += '[%s]' % self.root.edge_params
