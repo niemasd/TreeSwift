@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 from collections import deque
+import heapq
 from copy import copy
 INORDER_NONBINARY = "Can't do inorder traversal on non-binary tree"
 INVALID_NEWICK = "Tree not valid Newick tree"
@@ -374,3 +375,43 @@ class Node:
         nodes.sort(reverse=(not ascending))
         for e in nodes:
             yield e
+   
+    def leaf_dijkstra(self, k=None, return_label=True):
+        '''Get the k nearest neighbors from this ``Node`` using branch lengths. If a branch lengthdoesn't exist, it is assumed to bo 0.
+
+        Args:
+            ``k`` (``int``): Number of nearest neighbor leaves we want before stopping search. Set to ``None`` to search entire ``Tree``
+            ``return_label`` (``bool``): If ``True`` returns ``Node`` labels instead of ``Node`` objects.
+        
+        Returns:
+            ``list`` of nearest neighbors to ``Node`` where entries are tuples where first element is distance and second element is neighbor
+        '''
+        if not self.is_leaf():
+            raise TypeError("Function only to be called on leaf nodes")
+        if k is not None and not isinstance(k, int):
+            raise TypeError("k must be an int")
+        if not isinstance(return_label, bool):
+            raise TypeError("return_label must be a bool")
+        to_visit = []; neighbors = []
+        heapq.heappush(to_visit, (self.edge_length, self.parent))
+        visited = set([self])
+        while len(to_visit) > 0:
+            dist, node = heapq.heappop(to_visit)
+            visited.add(node)
+            if node.is_leaf():
+                if return_label:
+                    heapq.heappush(neighbors, (dist, node.label))
+                else:
+                    heapq.heappush(neighbors, (dist, node))
+            if node.parent is not None and node.parent not in visited:
+                add_d = 0 if node.edge_length is None else node.edge_length
+                heapq.heappush(to_visit, (dist + add_d, node.parent))
+            for child in node.children:
+                if child not in visited:
+                  add_d = 0 if child.edge_length is None else child.edge_length
+                  heapq.heappush(to_visit, (dist + add_d, child))
+            if k is not None and len(neighbors) >= k:
+                break
+
+        neighbors.sort()
+        return neighbors
