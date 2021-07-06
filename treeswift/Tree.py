@@ -226,7 +226,7 @@ class Tree:
             else:
                 nodes.extend(node.children)
 
-    def contract_low_support(self, threshold, terminal=True, internal=True):
+    def contract_low_support(self, threshold, terminal=False, internal=True):
         '''Contract nodes labeled by a number (e.g. branch support) below ``threshold``
 
         Args:
