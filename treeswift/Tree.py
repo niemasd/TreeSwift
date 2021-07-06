@@ -226,17 +226,28 @@ class Tree:
             else:
                 nodes.extend(node.children)
 
-    def contract_low_support(self, threshold):
-        '''Contract internal nodes labeled by a number (e.g. branch support) below ``threshold``
+    def contract_low_support(self, threshold, terminal=True, internal=True):
+        '''Contract nodes labeled by a number (e.g. branch support) below ``threshold``
 
         Args:
-            ``threshold`` (``float``): The support threshold to use when contracting nodes'''
+            ``threshold`` (``float``): The support threshold to use when contracting nodes
+
+            ``terminal`` (``bool``): ``True`` to include terminal branches, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal branches, otherwise ``False``
+        '''
         if not isinstance(threshold, float) and not isinstance(threshold, int):
             raise TypeError("threshold must be float or int")
+        if not isinstance(terminal, bool):
+            raise TypeError("terminal must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
+        if not internal and not terminal:
+            raise RuntimeError("Must select either internal or terminal branches (or both)")
         to_contract = list()
         for node in self.traverse_preorder():
             try:
-                if float(str(node)) < threshold:
+                if ((terminal and node.is_leaf()) or (internal and not node.is_leaf())) and float(str(node)) < threshold:
                     to_contract.append(node)
             except:
                 pass
@@ -277,12 +288,16 @@ class Tree:
         d = dict(); best = float('-inf')
         for node in self.traverse_postorder():
             if node.is_leaf():
+                if node.is_root():
+                    return node.edge_length
                 d[node] = 0
             else:
                 dists = sorted(d[c]+c.edge_length for c in node.children)
-                d[node] = dists[-1]; max_pair = dists[-1]+dists[-2]
-                if max_pair > best:
-                    best = max_pair
+                d[node] = dists[-1]
+                if len(dists) > 1: # ignore unifurcations when computing max pairwise leaf dist
+                    max_pair = dists[-1]+dists[-2]
+                    if max_pair > best:
+                        best = max_pair
         return best
 
     def distance_between(self, u, v):
@@ -364,7 +379,7 @@ class Tree:
         '''Generator over the node-to-parent distances of this ``Tree``; (node,distance) tuples
 
         Args:
-            ``terminal`` (``bool``): ``True`` to include leaves, otherwise ``False``
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
 
@@ -388,7 +403,7 @@ class Tree:
         '''Generator over the root-to-node distances of this ``Tree``; (node,distance) tuples
 
         Args:
-            ``terminal`` (``bool``): ``True`` to include leaves, otherwise ``False``
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
 
@@ -530,7 +545,7 @@ class Tree:
             ``float``: Sum of all selected edge lengths in this ``Tree``
         '''
         if not isinstance(terminal, bool):
-            raise TypeError("leaves must be a bool")
+            raise TypeError("terminal must be a bool")
         if not isinstance(internal, bool):
             raise TypeError("internal must be a bool")
         return sum(node.edge_length for node in self.traverse_preorder() if node.edge_length is not None and ((terminal and node.is_leaf()) or (internal and not node.is_leaf())))

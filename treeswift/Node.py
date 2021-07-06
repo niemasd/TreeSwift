@@ -367,7 +367,9 @@ class Node:
             if node == self:
                 d = 0
             else:
-                d = dist_from_root[node.parent] + node.edge_length
+                d = dist_from_root[node.parent]
+                if node.edge_length is not None:
+                    d += node.edge_length
             dist_from_root[node] = d
             if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
                 nodes.append((d,node))
