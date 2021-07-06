@@ -238,16 +238,10 @@ class Tree:
         '''
         if not isinstance(threshold, float) and not isinstance(threshold, int):
             raise TypeError("threshold must be float or int")
-        if not isinstance(terminal, bool):
-            raise TypeError("terminal must be a bool")
-        if not isinstance(internal, bool):
-            raise TypeError("internal must be a bool")
-        if not internal and not terminal:
-            raise RuntimeError("Must select either internal or terminal branches (or both)")
         to_contract = list()
-        for node in self.traverse_preorder():
+        for node in self.traverse_preorder(leaves=terminal, internal=internal):
             try:
-                if ((terminal and node.is_leaf()) or (internal and not node.is_leaf())) and float(str(node)) < threshold:
+                if float(str(node)) < threshold:
                     to_contract.append(node)
             except:
                 pass
