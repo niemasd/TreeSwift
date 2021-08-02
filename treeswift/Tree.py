@@ -64,7 +64,7 @@ class Tree:
             raise RuntimeError("Must select either internal or terminal branches (or both)")
         tot = 0.; num = 0
         for node in self.traverse_preorder():
-            if node.edge_length is not None and (internal and not node.is_leaf()) or (terminal and node.is_leaf()):
+            if node.edge_length is not None and ((internal and not node.is_leaf()) or (terminal and node.is_leaf())):
                 tot += node.edge_length; num += 1
         return tot/num
 
