@@ -1584,7 +1584,7 @@ def read_tree_nexus(nexus):
             l = line.strip()
         if reading_taxlabels:
             if l == ';':
-                reading_taxlabels = False
+                reading_taxlabels = False; trees['taxlabels'] = taxlabels
             else:
                 taxlabels.append(l)
         elif l.lower().startswith('tree '):
