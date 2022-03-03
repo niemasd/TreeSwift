@@ -1559,11 +1559,13 @@ def read_tree_nexml(nexml):
         f.close()
     return trees
 
-def read_tree_nexus(nexus):
+def read_tree_nexus(nexus, translate=True):
     '''Read a tree from a Nexus string or file
 
     Args:
         ``nexus`` (``str``): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)
+
+        ``translate`` (``bool``): Translate the node labels on the trees (if the Nexus file has a "Translate" section)
 
     Returns:
         ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects
@@ -1576,7 +1578,7 @@ def read_tree_nexus(nexus):
         f = open(expanduser(nexus))
     else:
         f = nexus.splitlines()
-    trees = dict(); taxlabels = None; reading_taxlabels = False
+    trees = dict(); taxlabels = None; tr = None; reading_taxlabels = False; reading_translate = False
     for line in f:
         if isinstance(line,bytes):
             l = line.decode().strip()
@@ -1587,12 +1589,24 @@ def read_tree_nexus(nexus):
                 reading_taxlabels = False; trees['taxlabels'] = taxlabels
             else:
                 taxlabels.append(l)
+        elif reading_translate:
+            if l == ';':
+                reading_translate = False; trees['translate'] = tr
+            else:
+                parts = l.split(' '); tr[parts[0]] = ' '.join(parts[1:])
         elif l.lower().startswith('tree '):
             i = l.index('='); left = l[:i].strip(); right = l[i+1:].strip()
             name = ' '.join(left.split(' ')[1:])
-            trees[name] = read_tree_newick(right)
+            curr_tree = read_tree_newick(right)
+            if translate and tr is not None:
+                for node in curr_tree.traverse_preorder():
+                    if node.label in tr:
+                        node.id = node.label; node.label = tr[node.id]
+            trees[name] = curr_tree
         elif l.lower() == 'taxlabels':
             taxlabels = list(); reading_taxlabels = True
+        elif l.lower() == 'translate':
+            tr = dict(); reading_translate = True
     if hasattr(f,'close'):
         f.close()
     if len(trees) == 0:
