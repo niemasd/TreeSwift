@@ -51,14 +51,6 @@
 <span class="n">INVALID_NEXUS</span> <span class="o">=</span> <span class="s2">&quot;Invalid Nexus file&quot;</span>
 <span class="n">EULER_GAMMA</span> <span class="o">=</span> <span class="mf">0.5772156649015328606065120900824024310421</span>
 
-<span class="c1"># store bracket open/close for convenience in label parsing</span>
-<span class="n">BRACKET</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;[&#39;</span><span class="p">:</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="c1"># square bracket</span>
-    <span class="s1">&#39;{&#39;</span><span class="p">:</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="c1"># curly bracket</span>
-    <span class="s2">&quot;&#39;&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="c1"># single-quote</span>
-    <span class="s1">&#39;&quot;&#39;</span><span class="p">:</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="c1"># double-quote</span>
-<span class="p">}</span>
-
 <div class="viewcode-block" id="Tree"><a class="viewcode-back" href="../../index.html#treeswift.Tree">[docs]</a><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;``Tree`` class&#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_rooted</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -1481,12 +1473,8 @@
 
             <span class="c1"># node label</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span> <span class="n">bracket</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="k">while</span> <span class="n">bracket</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">BRACKET</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;:&#39;</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;,&#39;</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;;&#39;</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;)&#39;</span><span class="p">):</span>
-                    <span class="k">if</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">BRACKET</span> <span class="ow">and</span> <span class="n">bracket</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">bracket</span> <span class="o">=</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                    <span class="k">elif</span> <span class="n">bracket</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">BRACKET</span><span class="p">[</span><span class="n">bracket</span><span class="p">]:</span>
-                        <span class="n">bracket</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">while</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;:&#39;</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;,&#39;</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;;&#39;</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;)&#39;</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;[&#39;</span><span class="p">:</span>
                     <span class="n">label</span> <span class="o">+=</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">n</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -1724,7 +1712,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -1750,7 +1738,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Niema Moshiri.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
     </div>
   </body>
 </html>
