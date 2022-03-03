@@ -1565,7 +1565,7 @@ def read_tree_nexus(nexus, translate=True):
     Args:
         ``nexus`` (``str``): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)
 
-        ``translate`` (``bool``): Translate the node labels on the trees (if the Nexus file has a "Translate" section)
+        ``translate`` (``bool``): Translate the node labels on the trees (if the Nexus file has a "Translate" section). If ``True``, if a node ``x`` was translated, ``x.label`` will be the translated label, and ``x.id`` will be the original label (the "ID")
 
     Returns:
         ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects
