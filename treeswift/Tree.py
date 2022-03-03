@@ -1576,16 +1576,23 @@ def read_tree_nexus(nexus):
         f = open(expanduser(nexus))
     else:
         f = nexus.splitlines()
-    trees = dict()
+    trees = dict(); taxlabels = None; reading_taxlabels = False
     for line in f:
         if isinstance(line,bytes):
             l = line.decode().strip()
         else:
             l = line.strip()
-        if l.lower().startswith('tree '):
+        if reading_taxlabels:
+            if l == ';':
+                reading_taxlabels = False
+            else:
+                taxlabels.append(l)
+        elif l.lower().startswith('tree '):
             i = l.index('='); left = l[:i].strip(); right = l[i+1:].strip()
             name = ' '.join(left.split(' ')[1:])
             trees[name] = read_tree_newick(right)
+        elif l.lower() == 'taxlabels':
+            taxlabels = list(); reading_taxlabels = True
     if hasattr(f,'close'):
         f.close()
     if len(trees) == 0:
