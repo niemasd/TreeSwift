@@ -1598,8 +1598,14 @@ def read_tree_nexus(nexus, translate=True):
                     tmp = tmp[:-1]
                 tr[parts[0]] = tmp
         elif l.lower().startswith('tree '):
-            i = l.index('='); left = l[:i].strip(); right = l[i+1:].strip()
-            name = ' '.join(left.split(' ')[1:])
+            i = l.index(' = '); left = l[:i].strip(); right = l[i+3:].strip()
+            if '[' in left:
+                name = ' '.join(left.split('[')[0].split(' ')[1:]).strip()
+                if 'info' not in trees:
+                    trees['info'] = dict()
+                trees['info'][name] = left.split('[')[1].split(']')[0].strip()
+            else:
+                name = ' '.join(left.split(' ')[1:])
             curr_tree = read_tree_newick(right)
             if translate and tr is not None:
                 for node in curr_tree.traverse_preorder():
