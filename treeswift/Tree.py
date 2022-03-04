@@ -1593,7 +1593,10 @@ def read_tree_nexus(nexus, translate=True):
             if l == ';':
                 reading_translate = False; trees['translate'] = tr
             else:
-                parts = l.split(' '); tr[parts[0]] = ' '.join(parts[1:])
+                parts = l.split(' '); tmp = ' '.join(parts[1:])
+                if tmp.endswith(','):
+                    tmp = tmp[:-1]
+                tr[parts[0]] = tmp
         elif l.lower().startswith('tree '):
             i = l.index('='); left = l[:i].strip(); right = l[i+1:].strip()
             name = ' '.join(left.split(' ')[1:])
