@@ -1605,10 +1605,16 @@
 <span class="sd">    Args:</span>
 <span class="sd">        ``nexus`` (``str``): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)</span>
 
-<span class="sd">        ``translate`` (``bool``): Translate the node labels on the trees (if the Nexus file has a &quot;Translate&quot; section). If ``True``, if a node ``x`` was translated, ``x.label`` will be the translated label, and ``x.id`` will be the original label (the &quot;ID&quot;)</span>
+<span class="sd">        ``translate`` (``bool``): Translate the node labels on the trees (if the Nexus file has a &quot;Translate&quot; section)</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects</span>
+
+<span class="sd">        If the Nexus file had a &quot;Taxlabels&quot; section, the taxon labels will be stored in the output dictionary as a ``list`` associated with key ``&quot;taxlabels&quot;``</span>
+
+<span class="sd">        If any trees in the Nexus file had information (e.g. the first ``...`` in the ``tree STATE_0 [...] = [&amp;R] (...);`` line), all information will be stored in the output dictionary: they will be associated with key ``&quot;info&quot;`` in the output dictionary, and they will be stored in a dictionary where keys are tree names (``str``)</span>
+
+<span class="sd">        If ``translate`` was ``True``, if a node ``x`` was translated, ``x.label`` will be the translated label, and ``x.id`` will be the original label (the &quot;ID&quot;)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nexus</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nexus must be a str&quot;</span><span class="p">)</span>

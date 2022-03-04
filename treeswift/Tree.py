@@ -1565,10 +1565,16 @@ def read_tree_nexus(nexus, translate=True):
     Args:
         ``nexus`` (``str``): Either a Nexus string or the path to a Nexus file (plain-text or gzipped)
 
-        ``translate`` (``bool``): Translate the node labels on the trees (if the Nexus file has a "Translate" section). If ``True``, if a node ``x`` was translated, ``x.label`` will be the translated label, and ``x.id`` will be the original label (the "ID")
+        ``translate`` (``bool``): Translate the node labels on the trees (if the Nexus file has a "Translate" section)
 
     Returns:
         ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexus``, where keys are tree names (``str``) and values are ``Tree`` objects
+
+        If the Nexus file had a "Taxlabels" section, the taxon labels will be stored in the output dictionary as a ``list`` associated with key ``"taxlabels"``
+
+        If any trees in the Nexus file had information (e.g. the first ``...`` in the ``tree STATE_0 [...] = [&R] (...);`` line), all information will be stored in the output dictionary: they will be associated with key ``"info"`` in the output dictionary, and they will be stored in a dictionary where keys are tree names (``str``)
+
+        If ``translate`` was ``True``, if a node ``x`` was translated, ``x.label`` will be the translated label, and ``x.id`` will be the original label (the "ID")
     '''
     if not isinstance(nexus, str):
         raise TypeError("nexus must be a str")
