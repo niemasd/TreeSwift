@@ -1604,7 +1604,18 @@ def read_tree_nexus(nexus, translate=True):
                     tmp = tmp[:-1]
                 tr[parts[0]] = tmp
         elif l.lower().startswith('tree '):
-            i = l.index(' = '); left = l[:i].strip(); right = l[i+3:].strip()
+            # find the `=` that separates the name (and possibly optional info `[...]`) from the actual Newick tree
+            i = l.index('=')
+            try:
+                br = l.index(']'); p = l.index('(')
+                if i < br < p:
+                    i = l.index('=', br)
+            except:
+                pass
+
+            # split tree line and parse each side of `=`
+            i = l.rindex('=', 0, l.index('(')) # find last `=` before first `(` (i.e., before Newick string)
+            left = l[:i].strip(); right = l[i+1:].strip()
             if '[' in left:
                 name = ' '.join(left.split('[')[0].split(' ')[1:]).strip()
                 if 'info' not in trees:

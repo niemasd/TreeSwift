@@ -1,6 +1,14 @@
 # force keep
 !docs/
 
+# tree files
+*.tre
+*.tree
+*.trees
+*.nex
+*.nexus
+*.nwk
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
