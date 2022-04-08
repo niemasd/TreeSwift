@@ -131,35 +131,35 @@ class Node:
         Returns:
             ``str``: Newick string conversion starting at this ``Node`` object
         '''
-        node_to_str = dict()
         for node in self.traverse_postorder():
             if node.is_leaf():
                 if node.label is None:
-                    node_to_str[node] = ''
+                    node.string_rep = ''
                 else:
-                    node_to_str[node] = str(node.label)
+                    node.string_rep = str(node.label)
             else:
                 out = ['(']
                 for c in node.children:
-                    out.append(node_to_str[c])
-                    if c.edge_length is not None:
-                        if isinstance(c.edge_length,int):
-                            l_str = str(c.edge_length)
-                        elif isinstance(c.edge_length,float) and c.edge_length.is_integer():
-                            l_str = str(int(c.edge_length))
-                        else:
-                            l_str = str(c.edge_length)
-                        out.append(':%s' % l_str)
+                    out.append(c.string_rep)
+                    if hasattr(c, 'node_params'):
+                        out.append('[%s]' % str(c.node_params))
+                    if c.edge_length is not None or hasattr(c, 'edge_params'):
+                        out.append(':')
                     if hasattr(c, 'edge_params'):
                         out.append('[%s]' % str(c.edge_params))
+                    if isinstance(c.edge_length, float) and c.edge_length.is_integer():
+                        out.append(str(int(c.edge_length)))
+                    elif c.edge_length is not None:
+                        out.append(str(c.edge_length))
                     out.append(',')
-                    del node_to_str[c]
+                    del c.string_rep
                 out.pop() # trailing comma
                 out.append(')')
                 if node.label is not None:
                     out.append(str(node.label))
-                node_to_str[node] = ''.join(out)
-        return node_to_str[self]
+                node.string_rep = ''.join(out)
+        out = self.string_rep; del self.string_rep
+        return out
 
     def num_children(self):
         '''Returns the number of children of this ``Node``

@@ -876,14 +876,12 @@ class Tree:
         '''
         suffix = ''
         if hasattr(self.root, 'node_params'):
-            suffix += '[%s]' % self.root.node_params
+            suffix += '[%s]' % str(self.root.node_params)
         if self.root.edge_length is not None or hasattr(self.root, 'edge_params'):
             suffix += ':'
         if hasattr(self.root, 'edge_params'):
-            suffix += '[%s]' % self.root.edge_params
-        if isinstance(self.root.edge_length,int):
-            suffix += str(self.root.edge_length)
-        elif isinstance(self.root.edge_length,float) and self.root.edge_length.is_integer():
+            suffix += '[%s]' % str(self.root.edge_params)
+        if isinstance(self.root.edge_length, float) and self.root.edge_length.is_integer():
             suffix += str(int(self.root.edge_length))
         elif self.root.edge_length is not None:
             suffix += str(self.root.edge_length)
