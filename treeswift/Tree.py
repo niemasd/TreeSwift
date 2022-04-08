@@ -875,14 +875,17 @@ class Tree:
             ``str``: Newick string of this ``Tree``
         '''
         suffix = ''
-        if isinstance(self.root.edge_length,int):
-            suffix += ':%d' % self.root.edge_length
-        elif isinstance(self.root.edge_length,float) and self.root.edge_length.is_integer():
-            suffix += ':%d' % int(self.root.edge_length)
-        elif self.root.edge_length is not None:
-            suffix += ':%s' % str(self.root.edge_length)
+        if hasattr(self.root, 'node_params'):
+            suffix += '[%s]' % self.root.node_params
+        suffix += ':'
         if hasattr(self.root, 'edge_params'):
             suffix += '[%s]' % self.root.edge_params
+        if isinstance(self.root.edge_length,int):
+            suffix += str(self.root.edge_length)
+        elif isinstance(self.root.edge_length,float) and self.root.edge_length.is_integer():
+            suffix += str(int(self.root.edge_length))
+        elif self.root.edge_length is not None:
+            suffix += str(self.root.edge_length)
         suffix += ';'
         if self.is_rooted:
             return '[&R] %s%s' % (self.root.newick(),suffix)
@@ -1420,7 +1423,13 @@ def read_tree_newick(newick):
                         if count == 0:
                             break
                     i += 1
-                n.edge_params = ts[start_ind+1 : i] # don't include first and last [ and ]
+
+                # store comment as node_params or edge_params
+                curr_comment = ts[start_ind+1 : i] # don't include first and last [ and ]
+                if parse_length:
+                    n.edge_params = curr_comment
+                else:
+                    n.node_params = curr_comment
 
             # edge length
             elif ts[i] == ':':
