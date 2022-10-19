@@ -385,7 +385,7 @@ class Tree:
                     else:
                         yield (node,node.edge_length)
 
-    def distances_from_root(self, leaves=True, internal=True, unlabeled=False):
+    def distances_from_root(self, leaves=True, internal=True, unlabeled=False, weighted=True):
         '''Generator over the root-to-node distances of this ``Tree``; (node,distance) tuples
 
         Args:
@@ -394,6 +394,8 @@ class Tree:
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
 
             ``unlabeled`` (``bool``): ``True`` to include unlabeled nodes, otherwise ``False``
+
+            ``weighted`` (``bool``): ``True`` to define distance as sum of edge lengths (i.e., weighted distance), or ``False`` to define distance as total number of edges (i.e., unweighted distance). If unweighted, edges with length ``None`` are counted in the height
         '''
         if not isinstance(leaves, bool):
             raise TypeError("leaves must be a bool")
@@ -408,8 +410,11 @@ class Tree:
                     d[node] = 0
                 else:
                     d[node] = d[node.parent]
-                if node.edge_length is not None:
-                    d[node] += node.edge_length
+                if weighted:
+                    if node.edge_length is not None:
+                        d[node] += node.edge_length
+                else:
+                    d[node] += 1
                 if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (unlabeled or node.label is not None):
                     yield (node,d[node])
 
@@ -645,13 +650,13 @@ class Tree:
         out /= (1./(12*(n-2)))**0.5
         return out
 
-    def height(self):
+    def height(self, weighted=True):
         '''Compute the height (i.e., maximum distance from root) of this ``Tree``
 
         Returns:
             ``float``: The height (i.e., maximum distance from root) of this ``Tree``
         '''
-        return max(d[1] for d in self.distances_from_root())
+        return max(d[1] for d in self.distances_from_root(weighted=weighted))
 
     def indent(self, space=4):
         '''Return an indented Newick string, just like ``nw_indent`` in Newick Utilities
