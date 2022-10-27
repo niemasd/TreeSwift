@@ -1066,7 +1066,7 @@ class Tree:
         elif length is not None and length > node.edge_length:
             raise ValueError("Specified length must be shorter than the edge at which to reroot")
         if length is not None and length > 0:
-            newnode = Node(edge_length=node.edge_length-length); node.edge_length -= length
+            newnode = Node(edge_length=node.edge_length-length); node.edge_length = length
             if not node.is_root():
                 p = node.parent; p.children.remove(node); p.add_child(newnode)
             newnode.add_child(node); node = newnode
