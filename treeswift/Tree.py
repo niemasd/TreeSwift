@@ -1388,6 +1388,8 @@ def read_tree_newick(newick):
         f = gopen(expanduser(newick)); ts = f.read().decode().strip(); f.close()
     elif isfile(expanduser(newick)): # plain-text file
         f = open(expanduser(newick)); ts = f.read().strip(); f.close()
+        with open(expanduser(newick)) as f:
+            ts = f.read().strip()
     else:
         ts = newick.strip()
     lines = ts.splitlines()
