@@ -337,7 +337,7 @@ class Tree:
                     if c.edge_length is not None:
                         for i in range(len(leaf_dists[c])):
                             leaf_dists[c][i][1] += c.edge_length
-                for c1 in range(0,len(node.children)-1):
+                for c1 in range(len(node.children)-1):
                     leaves_c1 = leaf_dists[node.children[c1]]
                     for c2 in range(c1+1,len(node.children)):
                         leaves_c2 = leaf_dists[node.children[c2]]
@@ -1644,7 +1644,7 @@ def read_tree_nexus(nexus, translate=True):
             tr = {}; reading_translate = True
     if hasattr(f,'close'):
         f.close()
-    if len(trees) == 0:
+    if not len(trees):
         raise ValueError(INVALID_NEXUS)
     return trees
 
@@ -1674,7 +1674,7 @@ def read_tree_linkage(linkage, return_list=False):
 
     # process
     nd = None
-    for i in range(0, n-1):
+    for i in range(n-1):
         # check for validity
         fi = int(linkage[i,0]); fj = int(linkage[i,1])
         if fi > i + n:
