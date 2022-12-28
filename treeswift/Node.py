@@ -245,7 +245,7 @@ class Node:
         '''
         if not isinstance(include_self, bool):
             raise TypeError("include_self must be a bool")
-        q = deque(); dist = {}; dist[self] = 0; q.append((self,0))
+        q = deque(); dist = {self: 0}; q.append((self,0))
         while len(q) != 0:
             curr = q.popleft(); yield curr
             for c in curr[0].children:
