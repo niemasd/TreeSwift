@@ -635,7 +635,7 @@ class Tree:
             ``float``: The Gamma statistic of Pybus and Harvey (2000)
         '''
         t = copy(self); t.resolve_polytomies() # need fully bifurcating tree
-        G = [g for g in t.coalescence_times(backward=False)]
+        G = list(t.coalescence_times(backward=False))
         n = len(G)+1
         if n <= 2:
             raise RuntimeError("Gamma statistic can only be computed on trees with more than 2 leaves")
