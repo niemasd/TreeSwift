@@ -245,7 +245,7 @@ class Node:
         '''
         if not isinstance(include_self, bool):
             raise TypeError("include_self must be a bool")
-        q = deque(); dist = dict(); dist[self] = 0; q.append((self,0))
+        q = deque(); dist = {}; dist[self] = 0; q.append((self,0))
         while len(q) != 0:
             curr = q.popleft(); yield curr
             for c in curr[0].children:
@@ -362,7 +362,7 @@ class Node:
         '''
         if not isinstance(ascending, bool):
             raise TypeError("ascending must be a bool")
-        nodes = []; dist_from_root = dict()
+        nodes = []; dist_from_root = {}
         for node in self.traverse_preorder():
             if node == self:
                 d = 0

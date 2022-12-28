@@ -85,7 +85,7 @@ class Tree:
         Returns:
             ``tuple``: First value is the closest leaf to the root, and second value is the corresponding distance
         '''
-        best = (None,float('inf')); d = dict()
+        best = (None,float('inf')); d = {}
         for node in self.traverse_preorder():
             if node.edge_length is None:
                 d[node] = 0
@@ -166,7 +166,7 @@ class Tree:
         Returns:
             ``float``: Colless index (either normalized or not)
         '''
-        t_res = copy(self); t_res.resolve_polytomies(); leaves_below = dict(); n = 0; I = 0
+        t_res = copy(self); t_res.resolve_polytomies(); leaves_below = {}; n = 0; I = 0
         for node in t_res.traverse_postorder():
             if node.is_leaf():
                 leaves_below[node] = 1; n += 1
@@ -189,7 +189,7 @@ class Tree:
 
     def condense(self):
         '''If siblings have the same label, merge them. If they have edge lengths, the resulting ``Node`` will have the larger of the lengths'''
-        self.resolve_polytomies(); labels_below = dict(); longest_leaf_dist = dict()
+        self.resolve_polytomies(); labels_below = {}; longest_leaf_dist = dict()
         for node in self.traverse_postorder():
             if node.is_leaf():
                 labels_below[node] = [node.label]; longest_leaf_dist[node] = None
@@ -271,7 +271,7 @@ class Tree:
         Returns:
             ``float``: The diameter of this Tree
         '''
-        d = dict(); best = float('-inf')
+        d = {}; best = float('-inf')
         for node in self.traverse_postorder():
             if node.is_leaf():
                 if node.is_root():
@@ -329,7 +329,7 @@ class Tree:
         Returns:
             ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are labels of leaves; ``M[u][v]`` = distance from ``u`` to ``v``
         '''
-        M = dict(); leaf_dists = dict()
+        M = {}; leaf_dists = dict()
         for node in self.traverse_postorder():
             if node.is_leaf():
                 leaf_dists[node] = [[node,0]]
@@ -350,10 +350,10 @@ class Tree:
                                 else:
                                     u_key = u; v_key = v
                                 if u_key not in M:
-                                    M[u_key] = dict()
+                                    M[u_key] = {}
                                 M[u_key][v_key] = d
                                 if v_key not in M:
-                                    M[v_key] = dict()
+                                    M[v_key] = {}
                                 M[v_key][u_key] = d
                 leaf_dists[node] = leaf_dists[node.children[0]]; del leaf_dists[node.children[0]]
                 for i in range(1,len(node.children)):
@@ -404,7 +404,7 @@ class Tree:
         if not isinstance(unlabeled, bool):
             raise TypeError("unlabeled must be a bool")
         if leaves or internal:
-            d = dict()
+            d = {}
             for node in self.traverse_preorder():
                 if node.is_root():
                     d[node] = 0
@@ -441,7 +441,7 @@ class Tree:
         import matplotlib.pyplot as plt
         from matplotlib.ticker import MaxNLocator
         from matplotlib import rcParams
-        orig = dict()
+        orig = {}
         for k in ['axes.spines.left','axes.spines.right','axes.spines.top']:
             orig[k] = rcParams[k]
         rcParams['axes.spines.left'] = False # hide left spine
@@ -449,7 +449,7 @@ class Tree:
         rcParams['axes.spines.top'] = False # hide top spine
 
         # compute total height needed at each node
-        dy = dict()
+        dy = {}
         for node in self.traverse_postorder():
             if node.is_leaf():
                 dy[node] = 1
@@ -465,7 +465,7 @@ class Tree:
                 y_top -= dy[node.children[i]]
 
         # compute x-coordinate of each node
-        x = dict()
+        x = {}
         for node in self.traverse_preorder():
             if node.is_root():
                 x[node] = start_time
@@ -563,7 +563,7 @@ class Tree:
                 labels = set(labels)
             except:
                 raise TypeError("labels must be iterable")
-        label_to_leaf = dict(); keep = set()
+        label_to_leaf = {}; keep = set()
         for node in self.traverse_leaves():
             label_to_leaf[str(node)] = node
             if labels is None or (without and str(node) not in labels) or (not without and str(node) in labels):
@@ -616,7 +616,7 @@ class Tree:
         Returns:
             ``tuple``: First value is the furthest ``Node`` from the root, and second value is the corresponding distance
         '''
-        best = (self.root,0); d = dict()
+        best = (self.root,0); d = {}
         for node in self.traverse_preorder():
             if node.edge_length is None:
                 d[node] = 0
@@ -716,7 +716,7 @@ class Tree:
             selection = selection[0]
         elif isinstance(selection,list):
             selection = set(selection)
-        label_to_node = dict()
+        label_to_node = {}
         for node in self.traverse_preorder():
             if selection == 'a' or (selection == 'i' and not node.is_leaf()) or (selection == 'l' and node.is_leaf()) or str(node) in selection:
                 label_to_node[str(node)] = node
@@ -779,7 +779,7 @@ class Tree:
         '''
         if present_day is not None and not isinstance(present_day,int) and not isinstance(present_day,float):
             raise TypeError("present_day must be a float")
-        time = dict()
+        time = {}
         if self.root.edge_length is None:
             tmproot = self.root
         else:
@@ -811,7 +811,7 @@ class Tree:
         else:
             shift = max(0,-min(lineages.keys()))
         if shift != 0:
-            tmp = dict()
+            tmp = {}
             for t in lineages:
                 tmp[t+shift] = lineages[t]
             lineages = tmp
@@ -839,7 +839,7 @@ class Tree:
             except:
                 raise TypeError("labels must be iterable")
         l2n = self.label_to_node(labels)
-        count = dict()
+        count = {}
         for node in l2n.values():
             for a in node.traverse_ancestors():
                 if a not in count:
@@ -855,12 +855,12 @@ class Tree:
         Returns:
             ``dict``: ``M[u][v]`` = MRCA of nodes ``u`` and ``v``
         '''
-        M = dict()
-        leaves_below = dict()
+        M = {}
+        leaves_below = {}
         for node in self.traverse_postorder():
             leaves_below[node] = []
             if node.is_leaf():
-                leaves_below[node].append(node); M[node] = dict()
+                leaves_below[node].append(node); M[node] = {}
             else:
                 for i in range(len(node.children)-1):
                     for l1 in leaves_below[node.children[i]]:
@@ -909,7 +909,7 @@ class Tree:
             raise TypeError("distance must be an int or a float")
         if distance < 0:
             raise RuntimeError("distance cannot be negative")
-        d = dict(); q = deque(); q.append(self.root); count = 0
+        d = {}; q = deque(); q.append(self.root); count = 0
         while len(q) != 0:
             node = q.popleft()
             if node.is_root():
@@ -988,7 +988,7 @@ class Tree:
         if not isinstance(ascending, bool):
             raise TypeError("ascending must be a bool")
         if 'num_descendants' in mode:
-            num_descendants = dict()
+            num_descendants = {}
             for node in self.traverse_postorder():
                 if node.is_leaf():
                     num_descendants[node] = 0
@@ -1103,7 +1103,7 @@ class Tree:
         Returns:
             ``float``: Sackin index (either normalized or not)
         '''
-        num_nodes_from_root = dict(); sackin = 0; num_leaves = 0
+        num_nodes_from_root = {}; sackin = 0; num_leaves = 0
         for node in self.traverse_preorder():
             num_nodes_from_root[node] = 1
             if not node.is_root():
@@ -1353,7 +1353,7 @@ def read_tree_dendropy(tree):
     Returns:
         ``Tree``: A TreeSwift tree created from ``tree``
     '''
-    out = Tree(); d2t = dict()
+    out = Tree(); d2t = {}
     if not hasattr(tree, 'preorder_node_iter') or not hasattr(tree, 'seed_node') or not hasattr(tree, 'is_rooted'):
         raise TypeError("tree must be a DendroPy Tree object")
     if tree.is_rooted != True:
@@ -1472,7 +1472,7 @@ def read_tree_nexml(nexml):
         f = open(expanduser(nexml))
     else:
         f = nexml.splitlines()
-    trees = dict(); id_to_node = dict(); tree_id = None
+    trees = {}; id_to_node = dict(); tree_id = None
     for line in f:
         if isinstance(line,bytes):
             l = line.decode().strip()
@@ -1496,7 +1496,7 @@ def read_tree_nexml(nexml):
         elif l_lower.replace(' ','').startswith('</tree>'):
             if tree_id is None:
                 raise ValueError(INVALID_NEXML)
-            id_to_node = dict(); tree_id = None
+            id_to_node = {}; tree_id = None
         # node
         elif l_lower.startswith('<node '):
             if tree_id is None:
@@ -1597,7 +1597,7 @@ def read_tree_nexus(nexus, translate=True):
         f = open(expanduser(nexus))
     else:
         f = nexus.splitlines()
-    trees = dict(); taxlabels = None; tr = None; reading_taxlabels = False; reading_translate = False
+    trees = {}; taxlabels = None; tr = None; reading_taxlabels = False; reading_translate = False
     for line in f:
         if isinstance(line,bytes):
             l = line.decode().strip()
@@ -1632,7 +1632,7 @@ def read_tree_nexus(nexus, translate=True):
             if '[' in left:
                 name = ' '.join(left.split('[')[0].split(' ')[1:]).strip()
                 if 'info' not in trees:
-                    trees['info'] = dict()
+                    trees['info'] = {}
                 trees['info'][name] = left.split('[')[1].split(']')[0].strip()
             else:
                 name = ' '.join(left.split(' ')[1:])
@@ -1645,7 +1645,7 @@ def read_tree_nexus(nexus, translate=True):
         elif l.lower() == 'taxlabels':
             taxlabels = []; reading_taxlabels = True
         elif l.lower() == 'translate':
-            tr = dict(); reading_translate = True
+            tr = {}; reading_translate = True
     if hasattr(f,'close'):
         f.close()
     if len(trees) == 0:
