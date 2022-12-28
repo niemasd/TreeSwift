@@ -189,7 +189,7 @@ class Tree:
 
     def condense(self):
         '''If siblings have the same label, merge them. If they have edge lengths, the resulting ``Node`` will have the larger of the lengths'''
-        self.resolve_polytomies(); labels_below = {}; longest_leaf_dist = dict()
+        self.resolve_polytomies(); labels_below = {}; longest_leaf_dist = {}
         for node in self.traverse_postorder():
             if node.is_leaf():
                 labels_below[node] = [node.label]; longest_leaf_dist[node] = None
@@ -329,7 +329,7 @@ class Tree:
         Returns:
             ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are labels of leaves; ``M[u][v]`` = distance from ``u`` to ``v``
         '''
-        M = {}; leaf_dists = dict()
+        M = {}; leaf_dists = {}
         for node in self.traverse_postorder():
             if node.is_leaf():
                 leaf_dists[node] = [[node,0]]
@@ -1476,7 +1476,7 @@ def read_tree_nexml(nexml):
         f = open(expanduser(nexml))
     else:
         f = nexml.splitlines()
-    trees = {}; id_to_node = dict(); tree_id = None
+    trees = {}; id_to_node = {}; tree_id = None
     for line in f:
         if isinstance(line,bytes):
             l = line.decode().strip()
