@@ -25,7 +25,7 @@ class Node:
     def __lt__(self, other):
         '''Less Than operator. Just compares labels'''
         if not isinstance(other,Node):
-            raise TypeError("'<' not supported between instances of '%s' and '%s'"%(type(self).__name__,type(other).__name__))
+            raise TypeError(f"'<' not supported between instances of '{type(self).__name__}' and '{type(other).__name__}'")
         elif self.label is None and other.label is not None:
             return True
         elif other.label is None:
@@ -133,7 +133,7 @@ class Node:
         '''
         for node in self.traverse_postorder():
             if node.is_leaf():
-                if node.label is None:
+                if not node.label:
                     node.string_rep = ''
                 else:
                     node.string_rep = str(node.label)
@@ -142,11 +142,11 @@ class Node:
                 for c in node.children:
                     out.append(c.string_rep)
                     if hasattr(c, 'node_params'):
-                        out.append('[%s]' % str(c.node_params))
+                        out.append(f'[{str(c.node_params)}]')
                     if c.edge_length is not None or hasattr(c, 'edge_params'):
                         out.append(':')
                     if hasattr(c, 'edge_params'):
-                        out.append('[%s]' % str(c.edge_params))
+                        out.append(f'[{str(c.edge_params)}]')
                     if isinstance(c.edge_length, float) and c.edge_length.is_integer():
                         out.append(str(int(c.edge_length)))
                     elif c.edge_length is not None:

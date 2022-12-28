@@ -503,7 +503,7 @@ class Tree:
             if len(node.children) > 1:
                 ax.plot([x[node],x[node]], [y[node.children[0]],y[node.children[-1]]], color=curr_color)
             elif node.is_leaf() and show_labels:
-                plt.text(x[node], y[node], " %s" % str(node), fontsize=label_fontsize, verticalalignment='center', color=curr_color)
+                plt.text(x[node], y[node], f" {str(node)}", fontsize=label_fontsize, verticalalignment='center', color=curr_color)
 
         # show/export
         if xlabel is not None:
@@ -881,20 +881,20 @@ class Tree:
         '''
         suffix = ''
         if hasattr(self.root, 'node_params'):
-            suffix += '[%s]' % str(self.root.node_params)
+            suffix += f'[{str(self.root.node_params)}]'
         if self.root.edge_length is not None or hasattr(self.root, 'edge_params'):
             suffix += ':'
         if hasattr(self.root, 'edge_params'):
-            suffix += '[%s]' % str(self.root.edge_params)
+            suffix += f'[{str(self.root.edge_params)}]'
         if isinstance(self.root.edge_length, float) and self.root.edge_length.is_integer():
             suffix += str(int(self.root.edge_length))
         elif self.root.edge_length is not None:
             suffix += str(self.root.edge_length)
         suffix += ';'
         if self.is_rooted:
-            return '[&R] %s%s' % (self.root.newick(),suffix)
+            return f'[&R] {self.root.newick()}{suffix}'
         else:
-            return '%s%s' % (self.root.newick(),suffix)
+            return f'{self.root.newick()}{suffix}'
 
     def num_lineages_at(self, distance):
         '''Returns the number of lineages of this ``Tree`` that exist ``distance`` away from the root
@@ -1718,5 +1718,5 @@ def read_tree(input, schema):
         'linkage': read_tree_linkage
     }
     if schema.lower() not in schema_to_function:
-        raise ValueError("Invalid schema: %s (valid options: %s)" % (schema, ', '.join(sorted(schema_to_function.keys()))))
+        raise ValueError(f"Invalid schema: {schema} (valid options: {', '.join(sorted(schema_to_function.keys()))})")
     return schema_to_function[schema.lower()](input)
