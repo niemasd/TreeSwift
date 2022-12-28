@@ -296,13 +296,11 @@ class Node:
 
     def traverse_internal(self):
         '''Traverse over the internal nodes below (and including) this ``Node`` object'''
-        for n in self.traverse_preorder(leaves=False):
-            yield n
+        yield from self.traverse_preorder(leaves=False)
 
     def traverse_leaves(self):
         '''Traverse over the leaves below this ``Node`` object'''
-        for n in self.traverse_preorder(internal=False):
-            yield n
+        yield from self.traverse_preorder(internal=False)
 
     def traverse_levelorder(self, leaves=True, internal=True):
         '''Perform a levelorder traversal starting at this ``Node`` object
@@ -374,5 +372,4 @@ class Node:
             if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
                 nodes.append((d,node))
         nodes.sort(reverse=(not ascending))
-        for e in nodes:
-            yield e
+        yield from nodes

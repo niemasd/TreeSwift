@@ -105,8 +105,7 @@ class Tree:
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
-        for dist in sorted((d for n,d in self.distances_from_root() if len(n.children) > 1), reverse=backward):
-            yield dist
+        yield from sorted((d for n, d in self.distances_from_root() if len(n.children) > 1),reverse=backward,)
 
     def coalescence_waiting_times(self, backward=True):
         '''Generator over the waiting times of successive coalescence events
@@ -1164,23 +1163,19 @@ class Tree:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        for node in self.root.traverse_inorder(leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_inorder(leaves=leaves, internal=internal)
 
     def traverse_internal(self):
         '''Traverse over the internal nodes of this ``Tree``'''
-        for node in self.root.traverse_internal():
-            yield node
+        yield from self.root.traverse_internal()
 
     def traverse_leaves(self):
         '''Traverse over the leaves of this ``Tree``'''
-        for node in self.root.traverse_leaves():
-            yield node
+        yield from self.root.traverse_leaves()
 
     def traverse_levelorder(self, leaves=True, internal=True):
         '''Perform a levelorder traversal of the ``Node`` objects in this ``Tree``'''
-        for node in self.root.traverse_levelorder(leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_levelorder(leaves=leaves, internal=internal)
 
     def traverse_postorder(self, leaves=True, internal=True):
         '''Perform a postorder traversal of the ``Node`` objects in this ``Tree``
@@ -1190,8 +1185,7 @@ class Tree:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        for node in self.root.traverse_postorder(leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_postorder(leaves=leaves, internal=internal)
 
     def traverse_preorder(self, leaves=True, internal=True):
         '''Perform a preorder traversal of the ``Node`` objects in this ``Tree``
@@ -1201,8 +1195,7 @@ class Tree:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        for node in self.root.traverse_preorder(leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_preorder(leaves=leaves, internal=internal)
 
     def traverse_rootdistorder(self, ascending=True, leaves=True, internal=True):
         '''Perform a traversal of the ``Node`` objects in this ``Tree`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root
@@ -1214,8 +1207,7 @@ class Tree:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        for node in self.root.traverse_rootdistorder(ascending=ascending, leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_rootdistorder(ascending=ascending, leaves=leaves, internal=internal)
 
     def treeness(self):
         '''Compute the `treeness` (sum of internal branch lengths / sum of all branch lengths) of this ``Tree``. Branch lengths of ``None`` are considered 0 length
