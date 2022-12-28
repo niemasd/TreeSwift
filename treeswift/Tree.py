@@ -942,11 +942,9 @@ class Tree:
             raise TypeError("leaves must be a bool")
         if not isinstance(internal, bool):
             raise TypeError("internal must be a bool")
-        num = 0
-        for node in self.traverse_preorder():
-            if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
-                num += 1
-        return num
+        return sum(bool((leaves and node.is_leaf()) or (internal and not node.is_leaf()))
+            for node in self.traverse_preorder()
+        )
 
     def order(self, mode, ascending=True):
         '''Order the children of the nodes in this ``Tree`` based on ``mode``
