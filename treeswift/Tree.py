@@ -710,7 +710,8 @@ class Tree:
         Returns:
             ``dict``: Dictionary mapping labels to the corresponding nodes
         '''
-        if not isinstance(selection,set) and not isinstance(selection,list) and (not isinstance(selection,str) or not (selection != 'all' or selection != 'leaves' or selection != 'internal')):
+        if (not isinstance(selection, set) and not isinstance(selection, list) and not isinstance(selection, str)
+        ):
             raise RuntimeError('"selection" must be one of the strings "all", "leaves", or "internal", or it must be a set containing Node labels')
         if isinstance(selection, str):
             selection = selection[0]
@@ -1500,11 +1501,11 @@ def read_tree_nexml(nexml):
             node_id = None; node_label = None; is_root = False
             k = ''; v = ''; in_key = True; in_quote = False
             for i in range(6, len(l)):
-                if l[i] == '"' or l[i] == "'":
+                if l[i] in ['"', "'"]:
                     in_quote = not in_quote
                 if not in_quote and in_key and l[i] == '=':
                     in_key = False
-                elif not in_quote and not in_key and (l[i] == '"' or l[i] == "'"):
+                elif not in_quote and not in_key and l[i] in ['"', "'"]:
                     k = k.strip()
                     if k.lower() == 'id':
                         node_id = v
@@ -1513,9 +1514,9 @@ def read_tree_nexml(nexml):
                     elif k.lower() == 'root' and v.strip().lower() == 'true':
                         is_root = True
                     in_key = True; k = ''; v = ''
-                elif in_key and not (l[i] == '"' or l[i] == "'"):
+                elif in_key and l[i] not in ['"', "'"]:
                     k += l[i]
-                elif not in_key and not (l[i] == '"' or l[i] == "'"):
+                elif not in_key and l[i] not in ['"', "'"]:
                     v += l[i]
             if node_id is None or node_id in id_to_node:
                 raise ValueError(INVALID_NEXML)
