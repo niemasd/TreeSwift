@@ -441,9 +441,10 @@ class Tree:
         import matplotlib.pyplot as plt
         from matplotlib.ticker import MaxNLocator
         from matplotlib import rcParams
-        orig = {}
-        for k in ['axes.spines.left','axes.spines.right','axes.spines.top']:
-            orig[k] = rcParams[k]
+        orig = {
+            k: rcParams[k]
+            for k in ['axes.spines.left', 'axes.spines.right', 'axes.spines.top']
+        }
         rcParams['axes.spines.left'] = False # hide left spine
         rcParams['axes.spines.right'] = False # hide right spine
         rcParams['axes.spines.top'] = False # hide top spine
@@ -716,10 +717,14 @@ class Tree:
             selection = selection[0]
         elif isinstance(selection,list):
             selection = set(selection)
-        label_to_node = {}
-        for node in self.traverse_preorder():
-            if selection == 'a' or (selection == 'i' and not node.is_leaf()) or (selection == 'l' and node.is_leaf()) or str(node) in selection:
-                label_to_node[str(node)] = node
+        label_to_node = {
+            str(node): node
+            for node in self.traverse_preorder()
+            if selection == 'a'
+            or (selection == 'i' and not node.is_leaf())
+            or (selection == 'l' and node.is_leaf())
+            or str(node) in selection
+        }
         if not isinstance(selection,str) and len(label_to_node) != len(selection):
             warn("Not all given labels exist in the tree")
         return label_to_node
@@ -811,9 +816,7 @@ class Tree:
         else:
             shift = max(0,-min(lineages.keys()))
         if shift != 0:
-            tmp = {}
-            for t in lineages:
-                tmp[t+shift] = lineages[t]
+            tmp = {t+shift: lineages[t] for t in lineages}
             lineages = tmp
         if tmproot != self.root:
             self.root.parent = None
@@ -1387,7 +1390,6 @@ def read_tree_newick(newick):
     if newick.lower().endswith('.gz'): # gzipped file
         f = gopen(expanduser(newick)); ts = f.read().decode().strip(); f.close()
     elif isfile(expanduser(newick)): # plain-text file
-        f = open(expanduser(newick)); ts = f.read().strip(); f.close()
         with open(expanduser(newick)) as f:
             ts = f.read().strip()
     else:
@@ -1396,29 +1398,28 @@ def read_tree_newick(newick):
     if len(lines) != 1:
         return [read_tree_newick(l) for l in lines]
     try:
-        t = Tree(); t.is_rooted = ts.startswith('[&R]')
+        t = Tree()
+        t.is_rooted = ts.startswith('[&R]')
         if ts[0] == '[':
             ts = ']'.join(ts.split(']')[1:]).strip(); ts = ts.replace(', ',',')
-        n = t.root; i = 0; parse_length = False
+        n = t.root
+        i = 0
+        parse_length = False
         while i < len(ts):
             # end of Newick string
             if ts[i] == ';':
                 if i != len(ts)-1 or n != t.root:
                     raise RuntimeError(INVALID_NEWICK)
 
-            # go to new child
             elif ts[i] == '(':
                 c = Node(); n.add_child(c); n = c
 
-            # go to parent
             elif ts[i] == ')':
                 n = n.parent
 
-            # go to new sibling
             elif ts[i] == ',':
                 n = n.parent; c = Node(); n.add_child(c); n = c
 
-            # comment (square brackets)
             elif ts[i] == '[':
                 count = 0; start_ind = i
                 while True:
@@ -1437,24 +1438,25 @@ def read_tree_newick(newick):
                 else:
                     n.node_params = curr_comment
 
-            # edge length
             elif ts[i] == ':':
                 parse_length = True
             elif parse_length:
                 ls = ''
-                while ts[i] != ',' and ts[i] != ')' and ts[i] != ';' and ts[i] != '[':
+                while ts[i] not in [',', ')', ';', '[']:
                     ls += ts[i]; i += 1
-                n.edge_length = float(ls); i -= 1; parse_length = False
+                n.edge_length = float(ls)
+                i -= 1
+                parse_length = False
 
-            # node label
             else:
                 label = ''
-                while ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')' and ts[i] != '[':
+                while ts[i] not in [':', ',', ';', ')', '[']:
                     label += ts[i]; i += 1
-                i -= 1; n.label = label
+                i -= 1
+                n.label = label
             i += 1
     except Exception as e:
-        raise RuntimeError("Failed to parse string as Newick: %s"%ts)
+        raise RuntimeError(f"Failed to parse string as Newick: {ts}")
     return t
 
 def read_tree_nexml(nexml):
