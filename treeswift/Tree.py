@@ -116,7 +116,7 @@ class Tree:
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
-        times = list(); lowest_leaf_dist = float('-inf')
+        times = []; lowest_leaf_dist = float('-inf')
         for n,d in self.distances_from_root():
             if len(n.children) > 1:
                 times.append(d)
@@ -210,7 +210,7 @@ class Tree:
             if node.is_leaf():
                 continue
             if len(labels_below[node]) == 1:
-                node.label = labels_below[node].pop(); node.children = list()
+                node.label = labels_below[node].pop(); node.children = []
                 if longest_leaf_dist[node] is not None:
                     if node.edge_length is None:
                         node.edge_length = 0
@@ -230,7 +230,7 @@ class Tree:
         '''
         if not isinstance(threshold, float) and not isinstance(threshold, int):
             raise TypeError("threshold must be float or int")
-        to_contract = list()
+        to_contract = []
         for node in self.traverse_preorder(leaves=terminal, internal=internal):
             try:
                 if float(str(node)) < threshold:
@@ -858,7 +858,7 @@ class Tree:
         M = dict()
         leaves_below = dict()
         for node in self.traverse_postorder():
-            leaves_below[node] = list()
+            leaves_below[node] = []
             if node.is_leaf():
                 leaves_below[node].append(node); M[node] = dict()
             else:
@@ -1643,7 +1643,7 @@ def read_tree_nexus(nexus, translate=True):
                         node.id = node.label; node.label = tr[node.id]
             trees[name] = curr_tree
         elif l.lower() == 'taxlabels':
-            taxlabels = list(); reading_taxlabels = True
+            taxlabels = []; reading_taxlabels = True
         elif l.lower() == 'translate':
             tr = dict(); reading_translate = True
     if hasattr(f,'close'):

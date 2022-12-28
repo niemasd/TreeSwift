@@ -17,7 +17,7 @@ class Node:
         Returns:
             ``Node`` object
         '''
-        self.children = list()         # list of child Node objects
+        self.children = []
         self.parent = None             # parent Node object (None for root)
         self.label = label             # label
         self.edge_length = edge_length # length of incident edge
@@ -362,7 +362,7 @@ class Node:
         '''
         if not isinstance(ascending, bool):
             raise TypeError("ascending must be a bool")
-        nodes = list(); dist_from_root = dict()
+        nodes = []; dist_from_root = dict()
         for node in self.traverse_preorder():
             if node == self:
                 d = 0
