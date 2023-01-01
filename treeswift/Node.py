@@ -17,7 +17,7 @@ class Node:
         Returns:
             ``Node`` object
         '''
-        self.children = list()         # list of child Node objects
+        self.children = []             # list of child Node objects
         self.parent = None             # parent Node object (None for root)
         self.label = label             # label
         self.edge_length = edge_length # length of incident edge
@@ -25,7 +25,7 @@ class Node:
     def __lt__(self, other):
         '''Less Than operator. Just compares labels'''
         if not isinstance(other,Node):
-            raise TypeError("'<' not supported between instances of '%s' and '%s'"%(type(self).__name__,type(other).__name__))
+            raise TypeError(f"'<' not supported between instances of '{type(self).__name__}' and '{type(other).__name__}'")
         elif self.label is None and other.label is not None:
             return True
         elif other.label is None:
@@ -142,11 +142,11 @@ class Node:
                 for c in node.children:
                     out.append(c.string_rep)
                     if hasattr(c, 'node_params'):
-                        out.append('[%s]' % str(c.node_params))
+                        out.append(f'[{str(c.node_params)}]')
                     if c.edge_length is not None or hasattr(c, 'edge_params'):
                         out.append(':')
                     if hasattr(c, 'edge_params'):
-                        out.append('[%s]' % str(c.edge_params))
+                        out.append(f'[{str(c.edge_params)}]')
                     if isinstance(c.edge_length, float) and c.edge_length.is_integer():
                         out.append(str(int(c.edge_length)))
                     elif c.edge_length is not None:
@@ -245,7 +245,7 @@ class Node:
         '''
         if not isinstance(include_self, bool):
             raise TypeError("include_self must be a bool")
-        q = deque(); dist = dict(); dist[self] = 0; q.append((self,0))
+        q = deque(); dist = {self: 0}; q.append((self,0))
         while len(q) != 0:
             curr = q.popleft(); yield curr
             for c in curr[0].children:
@@ -296,13 +296,11 @@ class Node:
 
     def traverse_internal(self):
         '''Traverse over the internal nodes below (and including) this ``Node`` object'''
-        for n in self.traverse_preorder(leaves=False):
-            yield n
+        yield from self.traverse_preorder(leaves=False)
 
     def traverse_leaves(self):
         '''Traverse over the leaves below this ``Node`` object'''
-        for n in self.traverse_preorder(internal=False):
-            yield n
+        yield from self.traverse_preorder(internal=False)
 
     def traverse_levelorder(self, leaves=True, internal=True):
         '''Perform a levelorder traversal starting at this ``Node`` object
@@ -362,7 +360,7 @@ class Node:
         '''
         if not isinstance(ascending, bool):
             raise TypeError("ascending must be a bool")
-        nodes = list(); dist_from_root = dict()
+        nodes = []; dist_from_root = {}
         for node in self.traverse_preorder():
             if node == self:
                 d = 0
@@ -374,5 +372,4 @@ class Node:
             if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
                 nodes.append((d,node))
         nodes.sort(reverse=(not ascending))
-        for e in nodes:
-            yield e
+        yield from nodes

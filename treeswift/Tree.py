@@ -85,7 +85,7 @@ class Tree:
         Returns:
             ``tuple``: First value is the closest leaf to the root, and second value is the corresponding distance
         '''
-        best = (None,float('inf')); d = dict()
+        best = (None,float('inf')); d = {}
         for node in self.traverse_preorder():
             if node.edge_length is None:
                 d[node] = 0
@@ -105,8 +105,7 @@ class Tree:
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
-        for dist in sorted((d for n,d in self.distances_from_root() if len(n.children) > 1), reverse=backward):
-            yield dist
+        yield from sorted((d for n,d in self.distances_from_root() if len(n.children) > 1), reverse=backward)
 
     def coalescence_waiting_times(self, backward=True):
         '''Generator over the waiting times of successive coalescence events
@@ -116,7 +115,7 @@ class Tree:
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
-        times = list(); lowest_leaf_dist = float('-inf')
+        times = []; lowest_leaf_dist = float('-inf')
         for n,d in self.distances_from_root():
             if len(n.children) > 1:
                 times.append(d)
@@ -166,7 +165,7 @@ class Tree:
         Returns:
             ``float``: Colless index (either normalized or not)
         '''
-        t_res = copy(self); t_res.resolve_polytomies(); leaves_below = dict(); n = 0; I = 0
+        t_res = copy(self); t_res.resolve_polytomies(); leaves_below = {}; n = 0; I = 0
         for node in t_res.traverse_postorder():
             if node.is_leaf():
                 leaves_below[node] = 1; n += 1
@@ -189,7 +188,7 @@ class Tree:
 
     def condense(self):
         '''If siblings have the same label, merge them. If they have edge lengths, the resulting ``Node`` will have the larger of the lengths'''
-        self.resolve_polytomies(); labels_below = dict(); longest_leaf_dist = dict()
+        self.resolve_polytomies(); labels_below = {}; longest_leaf_dist = {}
         for node in self.traverse_postorder():
             if node.is_leaf():
                 labels_below[node] = [node.label]; longest_leaf_dist[node] = None
@@ -210,7 +209,7 @@ class Tree:
             if node.is_leaf():
                 continue
             if len(labels_below[node]) == 1:
-                node.label = labels_below[node].pop(); node.children = list()
+                node.label = labels_below[node].pop(); node.children = []
                 if longest_leaf_dist[node] is not None:
                     if node.edge_length is None:
                         node.edge_length = 0
@@ -230,7 +229,7 @@ class Tree:
         '''
         if not isinstance(threshold, float) and not isinstance(threshold, int):
             raise TypeError("threshold must be float or int")
-        to_contract = list()
+        to_contract = []
         for node in self.traverse_preorder(leaves=terminal, internal=internal):
             try:
                 if float(str(node)) < threshold:
@@ -271,7 +270,7 @@ class Tree:
         Returns:
             ``float``: The diameter of this Tree
         '''
-        d = dict(); best = float('-inf')
+        d = {}; best = float('-inf')
         for node in self.traverse_postorder():
             if node.is_leaf():
                 if node.is_root():
@@ -329,7 +328,7 @@ class Tree:
         Returns:
             ``dict``: Distance matrix (2D dictionary) of the leaves of this ``Tree``, where keys are labels of leaves; ``M[u][v]`` = distance from ``u`` to ``v``
         '''
-        M = dict(); leaf_dists = dict()
+        M = {}; leaf_dists = {}
         for node in self.traverse_postorder():
             if node.is_leaf():
                 leaf_dists[node] = [[node,0]]
@@ -338,7 +337,7 @@ class Tree:
                     if c.edge_length is not None:
                         for i in range(len(leaf_dists[c])):
                             leaf_dists[c][i][1] += c.edge_length
-                for c1 in range(0,len(node.children)-1):
+                for c1 in range(len(node.children)-1):
                     leaves_c1 = leaf_dists[node.children[c1]]
                     for c2 in range(c1+1,len(node.children)):
                         leaves_c2 = leaf_dists[node.children[c2]]
@@ -350,10 +349,10 @@ class Tree:
                                 else:
                                     u_key = u; v_key = v
                                 if u_key not in M:
-                                    M[u_key] = dict()
+                                    M[u_key] = {}
                                 M[u_key][v_key] = d
                                 if v_key not in M:
-                                    M[v_key] = dict()
+                                    M[v_key] = {}
                                 M[v_key][u_key] = d
                 leaf_dists[node] = leaf_dists[node.children[0]]; del leaf_dists[node.children[0]]
                 for i in range(1,len(node.children)):
@@ -404,7 +403,7 @@ class Tree:
         if not isinstance(unlabeled, bool):
             raise TypeError("unlabeled must be a bool")
         if leaves or internal:
-            d = dict()
+            d = {}
             for node in self.traverse_preorder():
                 if node.is_root():
                     d[node] = 0
@@ -441,15 +440,13 @@ class Tree:
         import matplotlib.pyplot as plt
         from matplotlib.ticker import MaxNLocator
         from matplotlib import rcParams
-        orig = dict()
-        for k in ['axes.spines.left','axes.spines.right','axes.spines.top']:
-            orig[k] = rcParams[k]
+        orig = {k: rcParams[k] for k in ['axes.spines.left','axes.spines.right','axes.spines.top']}
         rcParams['axes.spines.left'] = False # hide left spine
         rcParams['axes.spines.right'] = False # hide right spine
         rcParams['axes.spines.top'] = False # hide top spine
 
         # compute total height needed at each node
-        dy = dict()
+        dy = {}
         for node in self.traverse_postorder():
             if node.is_leaf():
                 dy[node] = 1
@@ -465,7 +462,7 @@ class Tree:
                 y_top -= dy[node.children[i]]
 
         # compute x-coordinate of each node
-        x = dict()
+        x = {}
         for node in self.traverse_preorder():
             if node.is_root():
                 x[node] = start_time
@@ -503,7 +500,7 @@ class Tree:
             if len(node.children) > 1:
                 ax.plot([x[node],x[node]], [y[node.children[0]],y[node.children[-1]]], color=curr_color)
             elif node.is_leaf() and show_labels:
-                plt.text(x[node], y[node], " %s" % str(node), fontsize=label_fontsize, verticalalignment='center', color=curr_color)
+                plt.text(x[node], y[node], f" {str(node)}", fontsize=label_fontsize, verticalalignment='center', color=curr_color)
 
         # show/export
         if xlabel is not None:
@@ -563,7 +560,7 @@ class Tree:
                 labels = set(labels)
             except:
                 raise TypeError("labels must be iterable")
-        label_to_leaf = dict(); keep = set()
+        label_to_leaf = {}; keep = set()
         for node in self.traverse_leaves():
             label_to_leaf[str(node)] = node
             if labels is None or (without and str(node) not in labels) or (not without and str(node) in labels):
@@ -616,7 +613,7 @@ class Tree:
         Returns:
             ``tuple``: First value is the furthest ``Node`` from the root, and second value is the corresponding distance
         '''
-        best = (self.root,0); d = dict()
+        best = (self.root,0); d = {}
         for node in self.traverse_preorder():
             if node.edge_length is None:
                 d[node] = 0
@@ -635,7 +632,7 @@ class Tree:
             ``float``: The Gamma statistic of Pybus and Harvey (2000)
         '''
         t = copy(self); t.resolve_polytomies() # need fully bifurcating tree
-        G = [g for g in t.coalescence_times(backward=False)]
+        G = list(t.coalescence_times(backward=False))
         n = len(G)+1
         if n <= 2:
             raise RuntimeError("Gamma statistic can only be computed on trees with more than 2 leaves")
@@ -716,10 +713,7 @@ class Tree:
             selection = selection[0]
         elif isinstance(selection,list):
             selection = set(selection)
-        label_to_node = dict()
-        for node in self.traverse_preorder():
-            if selection == 'a' or (selection == 'i' and not node.is_leaf()) or (selection == 'l' and node.is_leaf()) or str(node) in selection:
-                label_to_node[str(node)] = node
+        label_to_node = {str(node): node for node in self.traverse_preorder() if selection == 'a' or (selection == 'i' and not node.is_leaf()) or (selection == 'l' and node.is_leaf()) or str(node) in selection}
         if not isinstance(selection,str) and len(label_to_node) != len(selection):
             warn("Not all given labels exist in the tree")
         return label_to_node
@@ -779,7 +773,7 @@ class Tree:
         '''
         if present_day is not None and not isinstance(present_day,int) and not isinstance(present_day,float):
             raise TypeError("present_day must be a float")
-        time = dict()
+        time = {}
         if self.root.edge_length is None:
             tmproot = self.root
         else:
@@ -811,9 +805,7 @@ class Tree:
         else:
             shift = max(0,-min(lineages.keys()))
         if shift != 0:
-            tmp = dict()
-            for t in lineages:
-                tmp[t+shift] = lineages[t]
+            tmp = {t+shift: lineages[t] for t in lineages}
             lineages = tmp
         if tmproot != self.root:
             self.root.parent = None
@@ -839,7 +831,7 @@ class Tree:
             except:
                 raise TypeError("labels must be iterable")
         l2n = self.label_to_node(labels)
-        count = dict()
+        count = {}
         for node in l2n.values():
             for a in node.traverse_ancestors():
                 if a not in count:
@@ -855,12 +847,12 @@ class Tree:
         Returns:
             ``dict``: ``M[u][v]`` = MRCA of nodes ``u`` and ``v``
         '''
-        M = dict()
-        leaves_below = dict()
+        M = {}
+        leaves_below = {}
         for node in self.traverse_postorder():
-            leaves_below[node] = list()
+            leaves_below[node] = []
             if node.is_leaf():
-                leaves_below[node].append(node); M[node] = dict()
+                leaves_below[node].append(node); M[node] = {}
             else:
                 for i in range(len(node.children)-1):
                     for l1 in leaves_below[node.children[i]]:
@@ -881,20 +873,20 @@ class Tree:
         '''
         suffix = ''
         if hasattr(self.root, 'node_params'):
-            suffix += '[%s]' % str(self.root.node_params)
+            suffix += f'[{str(self.root.node_params)}]'
         if self.root.edge_length is not None or hasattr(self.root, 'edge_params'):
             suffix += ':'
         if hasattr(self.root, 'edge_params'):
-            suffix += '[%s]' % str(self.root.edge_params)
+            suffix += f'[{str(self.root.edge_params)}]'
         if isinstance(self.root.edge_length, float) and self.root.edge_length.is_integer():
             suffix += str(int(self.root.edge_length))
         elif self.root.edge_length is not None:
             suffix += str(self.root.edge_length)
         suffix += ';'
         if self.is_rooted:
-            return '[&R] %s%s' % (self.root.newick(),suffix)
+            return f'[&R] {self.root.newick()}{suffix}'
         else:
-            return '%s%s' % (self.root.newick(),suffix)
+            return f'{self.root.newick()}{suffix}'
 
     def num_lineages_at(self, distance):
         '''Returns the number of lineages of this ``Tree`` that exist ``distance`` away from the root
@@ -909,7 +901,7 @@ class Tree:
             raise TypeError("distance must be an int or a float")
         if distance < 0:
             raise RuntimeError("distance cannot be negative")
-        d = dict(); q = deque(); q.append(self.root); count = 0
+        d = {}; q = deque(); q.append(self.root); count = 0
         while len(q) != 0:
             node = q.popleft()
             if node.is_root():
@@ -939,11 +931,7 @@ class Tree:
             raise TypeError("leaves must be a bool")
         if not isinstance(internal, bool):
             raise TypeError("internal must be a bool")
-        num = 0
-        for node in self.traverse_preorder():
-            if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
-                num += 1
-        return num
+        return sum((leaves and node.is_leaf()) or (internal and not node.is_leaf()) for node in self.traverse_preorder())
 
     def order(self, mode, ascending=True):
         '''Order the children of the nodes in this ``Tree`` based on ``mode``
@@ -988,7 +976,7 @@ class Tree:
         if not isinstance(ascending, bool):
             raise TypeError("ascending must be a bool")
         if 'num_descendants' in mode:
-            num_descendants = dict()
+            num_descendants = {}
             for node in self.traverse_postorder():
                 if node.is_leaf():
                     num_descendants[node] = 0
@@ -1103,7 +1091,7 @@ class Tree:
         Returns:
             ``float``: Sackin index (either normalized or not)
         '''
-        num_nodes_from_root = dict(); sackin = 0; num_leaves = 0
+        num_nodes_from_root = {}; sackin = 0; num_leaves = 0
         for node in self.traverse_preorder():
             num_nodes_from_root[node] = 1
             if not node.is_root():
@@ -1161,23 +1149,19 @@ class Tree:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        for node in self.root.traverse_inorder(leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_inorder(leaves=leaves, internal=internal)
 
     def traverse_internal(self):
         '''Traverse over the internal nodes of this ``Tree``'''
-        for node in self.root.traverse_internal():
-            yield node
+        yield from self.root.traverse_internal()
 
     def traverse_leaves(self):
         '''Traverse over the leaves of this ``Tree``'''
-        for node in self.root.traverse_leaves():
-            yield node
+        yield from self.root.traverse_leaves()
 
     def traverse_levelorder(self, leaves=True, internal=True):
         '''Perform a levelorder traversal of the ``Node`` objects in this ``Tree``'''
-        for node in self.root.traverse_levelorder(leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_levelorder(leaves=leaves, internal=internal)
 
     def traverse_postorder(self, leaves=True, internal=True):
         '''Perform a postorder traversal of the ``Node`` objects in this ``Tree``
@@ -1187,8 +1171,7 @@ class Tree:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        for node in self.root.traverse_postorder(leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_postorder(leaves=leaves, internal=internal)
 
     def traverse_preorder(self, leaves=True, internal=True):
         '''Perform a preorder traversal of the ``Node`` objects in this ``Tree``
@@ -1198,8 +1181,7 @@ class Tree:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        for node in self.root.traverse_preorder(leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_preorder(leaves=leaves, internal=internal)
 
     def traverse_rootdistorder(self, ascending=True, leaves=True, internal=True):
         '''Perform a traversal of the ``Node`` objects in this ``Tree`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from the root
@@ -1211,8 +1193,7 @@ class Tree:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
         '''
-        for node in self.root.traverse_rootdistorder(ascending=ascending, leaves=leaves, internal=internal):
-            yield node
+        yield from self.root.traverse_rootdistorder(ascending=ascending, leaves=leaves, internal=internal)
 
     def treeness(self):
         '''Compute the `treeness` (sum of internal branch lengths / sum of all branch lengths) of this ``Tree``. Branch lengths of ``None`` are considered 0 length
@@ -1353,7 +1334,7 @@ def read_tree_dendropy(tree):
     Returns:
         ``Tree``: A TreeSwift tree created from ``tree``
     '''
-    out = Tree(); d2t = dict()
+    out = Tree(); d2t = {}
     if not hasattr(tree, 'preorder_node_iter') or not hasattr(tree, 'seed_node') or not hasattr(tree, 'is_rooted'):
         raise TypeError("tree must be a DendroPy Tree object")
     if tree.is_rooted != True:
@@ -1440,19 +1421,19 @@ def read_tree_newick(newick):
                 parse_length = True
             elif parse_length:
                 ls = ''
-                while ts[i] != ',' and ts[i] != ')' and ts[i] != ';' and ts[i] != '[':
+                while ts[i] not in {',', ')', ';', '['}:
                     ls += ts[i]; i += 1
                 n.edge_length = float(ls); i -= 1; parse_length = False
 
             # node label
             else:
                 label = ''
-                while ts[i] != ':' and ts[i] != ',' and ts[i] != ';' and ts[i] != ')' and ts[i] != '[':
+                while ts[i] not in {':', ',', ';', ')', '['}:
                     label += ts[i]; i += 1
                 i -= 1; n.label = label
             i += 1
     except Exception as e:
-        raise RuntimeError("Failed to parse string as Newick: %s"%ts)
+        raise RuntimeError(f"Failed to parse string as Newick: {ts}")
     return t
 
 def read_tree_nexml(nexml):
@@ -1472,7 +1453,7 @@ def read_tree_nexml(nexml):
         f = open(expanduser(nexml))
     else:
         f = nexml.splitlines()
-    trees = dict(); id_to_node = dict(); tree_id = None
+    trees = {}; id_to_node = {}; tree_id = None
     for line in f:
         if isinstance(line,bytes):
             l = line.decode().strip()
@@ -1496,7 +1477,7 @@ def read_tree_nexml(nexml):
         elif l_lower.replace(' ','').startswith('</tree>'):
             if tree_id is None:
                 raise ValueError(INVALID_NEXML)
-            id_to_node = dict(); tree_id = None
+            id_to_node = {}; tree_id = None
         # node
         elif l_lower.startswith('<node '):
             if tree_id is None:
@@ -1504,11 +1485,11 @@ def read_tree_nexml(nexml):
             node_id = None; node_label = None; is_root = False
             k = ''; v = ''; in_key = True; in_quote = False
             for i in range(6, len(l)):
-                if l[i] == '"' or l[i] == "'":
+                if l[i] in {'"', "'"}:
                     in_quote = not in_quote
                 if not in_quote and in_key and l[i] == '=':
                     in_key = False
-                elif not in_quote and not in_key and (l[i] == '"' or l[i] == "'"):
+                elif not in_quote and not in_key and l[i] in {'"', "'"}:
                     k = k.strip()
                     if k.lower() == 'id':
                         node_id = v
@@ -1517,9 +1498,9 @@ def read_tree_nexml(nexml):
                     elif k.lower() == 'root' and v.strip().lower() == 'true':
                         is_root = True
                     in_key = True; k = ''; v = ''
-                elif in_key and not (l[i] == '"' or l[i] == "'"):
+                elif in_key and l[i] not in {'"', "'"}:
                     k += l[i]
-                elif not in_key and not (l[i] == '"' or l[i] == "'"):
+                elif not in_key and l[i] not in {'"', "'"}:
                     v += l[i]
             if node_id is None or node_id in id_to_node:
                 raise ValueError(INVALID_NEXML)
@@ -1597,7 +1578,7 @@ def read_tree_nexus(nexus, translate=True):
         f = open(expanduser(nexus))
     else:
         f = nexus.splitlines()
-    trees = dict(); taxlabels = None; tr = None; reading_taxlabels = False; reading_translate = False
+    trees = {}; taxlabels = None; tr = None; reading_taxlabels = False; reading_translate = False
     for line in f:
         if isinstance(line,bytes):
             l = line.decode().strip()
@@ -1632,7 +1613,7 @@ def read_tree_nexus(nexus, translate=True):
             if '[' in left:
                 name = ' '.join(left.split('[')[0].split(' ')[1:]).strip()
                 if 'info' not in trees:
-                    trees['info'] = dict()
+                    trees['info'] = {}
                 trees['info'][name] = left.split('[')[1].split(']')[0].strip()
             else:
                 name = ' '.join(left.split(' ')[1:])
@@ -1643,9 +1624,9 @@ def read_tree_nexus(nexus, translate=True):
                         node.id = node.label; node.label = tr[node.id]
             trees[name] = curr_tree
         elif l.lower() == 'taxlabels':
-            taxlabels = list(); reading_taxlabels = True
+            taxlabels = []; reading_taxlabels = True
         elif l.lower() == 'translate':
-            tr = dict(); reading_translate = True
+            tr = {}; reading_translate = True
     if hasattr(f,'close'):
         f.close()
     if len(trees) == 0:
@@ -1678,7 +1659,7 @@ def read_tree_linkage(linkage, return_list=False):
 
     # process
     nd = None
-    for i in range(0, n-1):
+    for i in range(n-1):
         # check for validity
         fi = int(linkage[i,0]); fj = int(linkage[i,1])
         if fi > i + n:
@@ -1718,5 +1699,5 @@ def read_tree(input, schema):
         'linkage': read_tree_linkage
     }
     if schema.lower() not in schema_to_function:
-        raise ValueError("Invalid schema: %s (valid options: %s)" % (schema, ', '.join(sorted(schema_to_function.keys()))))
+        raise ValueError(f"Invalid schema: {schema} (valid options: {', '.join(sorted(schema_to_function.keys()))})")
     return schema_to_function[schema.lower()](input)
