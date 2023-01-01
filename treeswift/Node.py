@@ -17,7 +17,7 @@ class Node:
         Returns:
             ``Node`` object
         '''
-        self.children = []
+        self.children = []             # list of child Node objects
         self.parent = None             # parent Node object (None for root)
         self.label = label             # label
         self.edge_length = edge_length # length of incident edge
@@ -133,7 +133,7 @@ class Node:
         '''
         for node in self.traverse_postorder():
             if node.is_leaf():
-                if not node.label:
+                if node.label is None:
                     node.string_rep = ''
                 else:
                     node.string_rep = str(node.label)
