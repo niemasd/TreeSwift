@@ -105,7 +105,7 @@ class Tree:
         '''
         if not isinstance(backward, bool):
             raise TypeError("backward must be a bool")
-        yield from sorted((d for n, d in self.distances_from_root() if len(n.children) > 1),reverse=backward,)
+        yield from sorted((d for n,d in self.distances_from_root() if len(n.children) > 1), reverse=backward)
 
     def coalescence_waiting_times(self, backward=True):
         '''Generator over the waiting times of successive coalescence events
@@ -440,10 +440,7 @@ class Tree:
         import matplotlib.pyplot as plt
         from matplotlib.ticker import MaxNLocator
         from matplotlib import rcParams
-        orig = {
-            k: rcParams[k]
-            for k in ['axes.spines.left', 'axes.spines.right', 'axes.spines.top']
-        }
+        orig = {k: rcParams[k] for k in ['axes.spines.left','axes.spines.right','axes.spines.top']}
         rcParams['axes.spines.left'] = False # hide left spine
         rcParams['axes.spines.right'] = False # hide right spine
         rcParams['axes.spines.top'] = False # hide top spine
@@ -710,21 +707,13 @@ class Tree:
         Returns:
             ``dict``: Dictionary mapping labels to the corresponding nodes
         '''
-        if (not isinstance(selection, set) and not isinstance(selection, list) and not isinstance(selection, str)
-        ):
+        if not isinstance(selection,set) and not isinstance(selection,list) and (not isinstance(selection,str) or not (selection != 'all' or selection != 'leaves' or selection != 'internal')):
             raise RuntimeError('"selection" must be one of the strings "all", "leaves", or "internal", or it must be a set containing Node labels')
         if isinstance(selection, str):
             selection = selection[0]
         elif isinstance(selection,list):
             selection = set(selection)
-        label_to_node = {
-            str(node): node
-            for node in self.traverse_preorder()
-            if selection == 'a'
-            or (selection == 'i' and not node.is_leaf())
-            or (selection == 'l' and node.is_leaf())
-            or str(node) in selection
-        }
+        label_to_node = {str(node): node for node in self.traverse_preorder() if selection == 'a' or (selection == 'i' and not node.is_leaf()) or (selection == 'l' and node.is_leaf()) or str(node) in selection}
         if not isinstance(selection,str) and len(label_to_node) != len(selection):
             warn("Not all given labels exist in the tree")
         return label_to_node
@@ -942,9 +931,7 @@ class Tree:
             raise TypeError("leaves must be a bool")
         if not isinstance(internal, bool):
             raise TypeError("internal must be a bool")
-        return sum(bool((leaves and node.is_leaf()) or (internal and not node.is_leaf()))
-            for node in self.traverse_preorder()
-        )
+        return sum(bool((leaves and node.is_leaf()) or (internal and not node.is_leaf())) for node in self.traverse_preorder())
 
     def order(self, mode, ascending=True):
         '''Order the children of the nodes in this ``Tree`` based on ``mode``
@@ -1381,36 +1368,36 @@ def read_tree_newick(newick):
     if newick.lower().endswith('.gz'): # gzipped file
         f = gopen(expanduser(newick)); ts = f.read().decode().strip(); f.close()
     elif isfile(expanduser(newick)): # plain-text file
-        with open(expanduser(newick)) as f:
-            ts = f.read().strip()
+        f = open(expanduser(newick)); ts = f.read().strip(); f.close()
     else:
         ts = newick.strip()
     lines = ts.splitlines()
     if len(lines) != 1:
         return [read_tree_newick(l) for l in lines]
     try:
-        t = Tree()
-        t.is_rooted = ts.startswith('[&R]')
+        t = Tree(); t.is_rooted = ts.startswith('[&R]')
         if ts[0] == '[':
             ts = ']'.join(ts.split(']')[1:]).strip(); ts = ts.replace(', ',',')
-        n = t.root
-        i = 0
-        parse_length = False
+        n = t.root; i = 0; parse_length = False
         while i < len(ts):
             # end of Newick string
             if ts[i] == ';':
                 if i != len(ts)-1 or n != t.root:
                     raise RuntimeError(INVALID_NEWICK)
 
+            # go to new child
             elif ts[i] == '(':
                 c = Node(); n.add_child(c); n = c
 
+            # go to parent
             elif ts[i] == ')':
                 n = n.parent
 
+            # go to new sibling
             elif ts[i] == ',':
                 n = n.parent; c = Node(); n.add_child(c); n = c
 
+            # comment (square brackets)
             elif ts[i] == '[':
                 count = 0; start_ind = i
                 while True:
@@ -1429,22 +1416,21 @@ def read_tree_newick(newick):
                 else:
                     n.node_params = curr_comment
 
+            # edge length
             elif ts[i] == ':':
                 parse_length = True
             elif parse_length:
                 ls = ''
-                while ts[i] not in [',', ')', ';', '[']:
+                while ts[i] not in {',', ')', ';', '['}:
                     ls += ts[i]; i += 1
-                n.edge_length = float(ls)
-                i -= 1
-                parse_length = False
+                n.edge_length = float(ls); i -= 1; parse_length = False
 
+            # node label
             else:
                 label = ''
-                while ts[i] not in [':', ',', ';', ')', '[']:
+                while ts[i] not in {':', ',', ';', ')', '['}:
                     label += ts[i]; i += 1
-                i -= 1
-                n.label = label
+                i -= 1; n.label = label
             i += 1
     except Exception as e:
         raise RuntimeError(f"Failed to parse string as Newick: {ts}")
@@ -1499,11 +1485,11 @@ def read_tree_nexml(nexml):
             node_id = None; node_label = None; is_root = False
             k = ''; v = ''; in_key = True; in_quote = False
             for i in range(6, len(l)):
-                if l[i] in ['"', "'"]:
+                if l[i] in {'"', "'"}:
                     in_quote = not in_quote
                 if not in_quote and in_key and l[i] == '=':
                     in_key = False
-                elif not in_quote and not in_key and l[i] in ['"', "'"]:
+                elif not in_quote and not in_key and l[i] in {'"', "'"}:
                     k = k.strip()
                     if k.lower() == 'id':
                         node_id = v
@@ -1512,9 +1498,9 @@ def read_tree_nexml(nexml):
                     elif k.lower() == 'root' and v.strip().lower() == 'true':
                         is_root = True
                     in_key = True; k = ''; v = ''
-                elif in_key and l[i] not in ['"', "'"]:
+                elif in_key and l[i] not in {'"', "'"}:
                     k += l[i]
-                elif not in_key and l[i] not in ['"', "'"]:
+                elif not in_key and l[i] not in {'"', "'"}:
                     v += l[i]
             if node_id is None or node_id in id_to_node:
                 raise ValueError(INVALID_NEXML)
@@ -1643,7 +1629,7 @@ def read_tree_nexus(nexus, translate=True):
             tr = {}; reading_translate = True
     if hasattr(f,'close'):
         f.close()
-    if not len(trees):
+    if len(trees) == 0:
         raise ValueError(INVALID_NEXUS)
     return trees
 
