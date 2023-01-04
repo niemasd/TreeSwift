@@ -270,7 +270,7 @@ class Tree:
             if to_keep.edge_length is None:
                 to_keep.edge_length = 0
             to_keep.edge_length += to_del.edge_length; to_del.edge_length = 0
-        to_del.contract()
+        to_del.contract(); self.is_rooted = False
 
     def diameter(self):
         '''Compute the diameter (maximum leaf pairwise distance) of this ``Tree``
