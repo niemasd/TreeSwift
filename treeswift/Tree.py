@@ -1396,6 +1396,8 @@ def read_tree_newick(newick):
             # go to new sibling
             elif not parse_label and ts[i] == ',':
                 n = n.parent; c = Node(); n.add_child(c); n = c
+                while ts[i+1] == ' ':
+                    i += 1 # skip spaces after commas
 
             # comment (square brackets)
             elif not parse_label and ts[i] == '[':
