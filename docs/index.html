@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>treeswift package &#8212; TreeSwift  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -13,7 +13,9 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -38,10 +40,10 @@
           <div class="body" role="main">
             
   <section id="treeswift-package">
-<h1>treeswift package<a class="headerlink" href="#treeswift-package" title="Permalink to this headline">¶</a></h1>
+<h1>treeswift package<a class="headerlink" href="#treeswift-package" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference external" href="https://github.com/niemasd/TreeSwift">TreeSwift</a> is a Python library for parsing, manipulating, and iterating over (rooted) tree structures. TreeSwift places an emphasis on speed.</p>
 <section id="module-treeswift">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-treeswift" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-treeswift" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="treeswift.Node">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">treeswift.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Node" title="Permalink to this definition">¶</a></dt>
@@ -980,7 +982,96 @@
     <h3><a href="#">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">treeswift package</a><ul>
-<li><a class="reference internal" href="#module-treeswift">Module contents</a></li>
+<li><a class="reference internal" href="#module-treeswift">Module contents</a><ul>
+<li><a class="reference internal" href="#treeswift.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a><ul>
+<li><a class="reference internal" href="#treeswift.Node.add_child"><code class="docutils literal notranslate"><span class="pre">Node.add_child()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.child_nodes"><code class="docutils literal notranslate"><span class="pre">Node.child_nodes()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.contract"><code class="docutils literal notranslate"><span class="pre">Node.contract()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.get_edge_length"><code class="docutils literal notranslate"><span class="pre">Node.get_edge_length()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.get_label"><code class="docutils literal notranslate"><span class="pre">Node.get_label()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.get_parent"><code class="docutils literal notranslate"><span class="pre">Node.get_parent()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.is_leaf"><code class="docutils literal notranslate"><span class="pre">Node.is_leaf()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.is_root"><code class="docutils literal notranslate"><span class="pre">Node.is_root()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.newick"><code class="docutils literal notranslate"><span class="pre">Node.newick()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.num_children"><code class="docutils literal notranslate"><span class="pre">Node.num_children()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.remove_child"><code class="docutils literal notranslate"><span class="pre">Node.remove_child()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.resolve_polytomies"><code class="docutils literal notranslate"><span class="pre">Node.resolve_polytomies()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.set_edge_length"><code class="docutils literal notranslate"><span class="pre">Node.set_edge_length()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.set_label"><code class="docutils literal notranslate"><span class="pre">Node.set_label()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.set_parent"><code class="docutils literal notranslate"><span class="pre">Node.set_parent()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_ancestors"><code class="docutils literal notranslate"><span class="pre">Node.traverse_ancestors()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_bfs"><code class="docutils literal notranslate"><span class="pre">Node.traverse_bfs()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_inorder"><code class="docutils literal notranslate"><span class="pre">Node.traverse_inorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_internal"><code class="docutils literal notranslate"><span class="pre">Node.traverse_internal()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_leaves"><code class="docutils literal notranslate"><span class="pre">Node.traverse_leaves()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_levelorder"><code class="docutils literal notranslate"><span class="pre">Node.traverse_levelorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_postorder"><code class="docutils literal notranslate"><span class="pre">Node.traverse_postorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_preorder"><code class="docutils literal notranslate"><span class="pre">Node.traverse_preorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.traverse_rootdistorder"><code class="docutils literal notranslate"><span class="pre">Node.traverse_rootdistorder()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#treeswift.Tree"><code class="docutils literal notranslate"><span class="pre">Tree</span></code></a><ul>
+<li><a class="reference internal" href="#treeswift.Tree.avg_branch_length"><code class="docutils literal notranslate"><span class="pre">Tree.avg_branch_length()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.branch_lengths"><code class="docutils literal notranslate"><span class="pre">Tree.branch_lengths()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.closest_leaf_to_root"><code class="docutils literal notranslate"><span class="pre">Tree.closest_leaf_to_root()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.coalescence_times"><code class="docutils literal notranslate"><span class="pre">Tree.coalescence_times()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.coalescence_waiting_times"><code class="docutils literal notranslate"><span class="pre">Tree.coalescence_waiting_times()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.collapse_short_branches"><code class="docutils literal notranslate"><span class="pre">Tree.collapse_short_branches()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.colless"><code class="docutils literal notranslate"><span class="pre">Tree.colless()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.condense"><code class="docutils literal notranslate"><span class="pre">Tree.condense()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.contract_low_support"><code class="docutils literal notranslate"><span class="pre">Tree.contract_low_support()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.deroot"><code class="docutils literal notranslate"><span class="pre">Tree.deroot()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.diameter"><code class="docutils literal notranslate"><span class="pre">Tree.diameter()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.distance_between"><code class="docutils literal notranslate"><span class="pre">Tree.distance_between()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.distance_matrix"><code class="docutils literal notranslate"><span class="pre">Tree.distance_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.distances_from_parent"><code class="docutils literal notranslate"><span class="pre">Tree.distances_from_parent()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.distances_from_root"><code class="docutils literal notranslate"><span class="pre">Tree.distances_from_root()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.draw"><code class="docutils literal notranslate"><span class="pre">Tree.draw()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.drop_edge_length_at_root"><code class="docutils literal notranslate"><span class="pre">Tree.drop_edge_length_at_root()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.edge_length_sum"><code class="docutils literal notranslate"><span class="pre">Tree.edge_length_sum()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.extract_subtree"><code class="docutils literal notranslate"><span class="pre">Tree.extract_subtree()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.extract_tree"><code class="docutils literal notranslate"><span class="pre">Tree.extract_tree()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.extract_tree_with"><code class="docutils literal notranslate"><span class="pre">Tree.extract_tree_with()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.extract_tree_without"><code class="docutils literal notranslate"><span class="pre">Tree.extract_tree_without()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.furthest_from_root"><code class="docutils literal notranslate"><span class="pre">Tree.furthest_from_root()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.gamma_statistic"><code class="docutils literal notranslate"><span class="pre">Tree.gamma_statistic()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.height"><code class="docutils literal notranslate"><span class="pre">Tree.height()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.indent"><code class="docutils literal notranslate"><span class="pre">Tree.indent()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.label_to_node"><code class="docutils literal notranslate"><span class="pre">Tree.label_to_node()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.labels"><code class="docutils literal notranslate"><span class="pre">Tree.labels()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.ladderize"><code class="docutils literal notranslate"><span class="pre">Tree.ladderize()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.lineages_through_time"><code class="docutils literal notranslate"><span class="pre">Tree.lineages_through_time()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.ltt"><code class="docutils literal notranslate"><span class="pre">Tree.ltt()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.mrca"><code class="docutils literal notranslate"><span class="pre">Tree.mrca()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.mrca_matrix"><code class="docutils literal notranslate"><span class="pre">Tree.mrca_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.newick"><code class="docutils literal notranslate"><span class="pre">Tree.newick()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.num_lineages_at"><code class="docutils literal notranslate"><span class="pre">Tree.num_lineages_at()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.num_nodes"><code class="docutils literal notranslate"><span class="pre">Tree.num_nodes()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.order"><code class="docutils literal notranslate"><span class="pre">Tree.order()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.rename_nodes"><code class="docutils literal notranslate"><span class="pre">Tree.rename_nodes()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.reroot"><code class="docutils literal notranslate"><span class="pre">Tree.reroot()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.resolve_polytomies"><code class="docutils literal notranslate"><span class="pre">Tree.resolve_polytomies()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.sackin"><code class="docutils literal notranslate"><span class="pre">Tree.sackin()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.scale_edges"><code class="docutils literal notranslate"><span class="pre">Tree.scale_edges()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.suppress_unifurcations"><code class="docutils literal notranslate"><span class="pre">Tree.suppress_unifurcations()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.traverse_inorder"><code class="docutils literal notranslate"><span class="pre">Tree.traverse_inorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.traverse_internal"><code class="docutils literal notranslate"><span class="pre">Tree.traverse_internal()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.traverse_leaves"><code class="docutils literal notranslate"><span class="pre">Tree.traverse_leaves()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.traverse_levelorder"><code class="docutils literal notranslate"><span class="pre">Tree.traverse_levelorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.traverse_postorder"><code class="docutils literal notranslate"><span class="pre">Tree.traverse_postorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.traverse_preorder"><code class="docutils literal notranslate"><span class="pre">Tree.traverse_preorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.traverse_rootdistorder"><code class="docutils literal notranslate"><span class="pre">Tree.traverse_rootdistorder()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.treeness"><code class="docutils literal notranslate"><span class="pre">Tree.treeness()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.write_tree_newick"><code class="docutils literal notranslate"><span class="pre">Tree.write_tree_newick()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#treeswift.read_tree"><code class="docutils literal notranslate"><span class="pre">read_tree()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.read_tree_dendropy"><code class="docutils literal notranslate"><span class="pre">read_tree_dendropy()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.read_tree_newick"><code class="docutils literal notranslate"><span class="pre">read_tree_newick()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.read_tree_nexml"><code class="docutils literal notranslate"><span class="pre">read_tree_nexml()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.read_tree_nexus"><code class="docutils literal notranslate"><span class="pre">read_tree_nexus()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1002,7 +1093,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1022,7 +1113,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Niema Moshiri.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>
