@@ -255,14 +255,22 @@ class Tree:
         Args:
             ``label`` (``str``): The desired label of the new child
         '''
-        if self.root.num_children() == 1:
-            warn("Unable to unroot tree with unifurcation at the root!")
-        elif self.root.num_children() == 2:
-            [left, right] = self.root.child_nodes()
-            if left.is_leaf():
-                right.contract()
-            else:
-                left.contract()
+        if self.root.num_children() != 2:
+            raise RuntimeError("Can only deroot a tree with degree-2 node at the root")
+        children = self.root.child_nodes()
+        if children[0].is_leaf():
+            to_keep, to_del = children
+        elif children[1].is_leaf():
+            to_del, to_keep = children
+        else:
+            raise RuntimeError("Can only deroot a tree where one child of root is a leaf")
+        if to_keep.edge_length is not None and to_del.edge_length is not None:
+            if to_del.edge_length is None:
+                to_del.edge_length = 0
+            if to_keep.edge_length is None:
+                to_keep.edge_length = 0
+            to_keep.edge_length += to_del.edge_length; to_del.edge_length = 0
+        to_del.contract()
 
     def diameter(self):
         '''Compute the diameter (maximum leaf pairwise distance) of this ``Tree``
