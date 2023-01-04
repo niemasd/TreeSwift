@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 from collections import deque
 from copy import copy
+UNSAFE_SYMBOLS = {';', '(', ')', ',', '[', ']', ':', "'"}
 INORDER_NONBINARY = "Can't do inorder traversal on non-binary tree"
 INVALID_NEWICK = "Tree not valid Newick tree"
 
@@ -132,11 +133,20 @@ class Node:
             ``str``: Newick string conversion starting at this ``Node`` object
         '''
         for node in self.traverse_postorder():
+            # handle current node's label
+            if node.label is None:
+                str_label = ''
+            else:
+                str_label = str(node.label)
+                for c in UNSAFE_SYMBOLS:
+                    if c in str_label:
+                        str_label = f"'{str_label}'"; break
+
+            # leaf Newick representation is just its label
             if node.is_leaf():
-                if node.label is None:
-                    node.string_rep = ''
-                else:
-                    node.string_rep = str(node.label)
+                node.string_rep = str_label
+
+            # handle internal node Newick representation
             else:
                 out = ['(']
                 for c in node.children:
@@ -156,7 +166,7 @@ class Node:
                 out.pop() # trailing comma
                 out.append(')')
                 if node.label is not None:
-                    out.append(str(node.label))
+                    out.append(str_label)
                 node.string_rep = ''.join(out)
         out = self.string_rep; del self.string_rep
         return out

@@ -1378,27 +1378,27 @@ def read_tree_newick(newick):
         t = Tree(); t.is_rooted = ts.startswith('[&R]')
         if ts[0] == '[':
             ts = ']'.join(ts.split(']')[1:]).strip(); ts = ts.replace(', ',',')
-        n = t.root; i = 0; parse_length = False
+        n = t.root; i = 0; parse_length = False; parse_label = False
         while i < len(ts):
             # end of Newick string
-            if ts[i] == ';':
+            if not parse_label and ts[i] == ';':
                 if i != len(ts)-1 or n != t.root:
                     raise RuntimeError(INVALID_NEWICK)
 
             # go to new child
-            elif ts[i] == '(':
+            elif not parse_label and ts[i] == '(':
                 c = Node(); n.add_child(c); n = c
 
             # go to parent
-            elif ts[i] == ')':
+            elif not parse_label and ts[i] == ')':
                 n = n.parent
 
             # go to new sibling
-            elif ts[i] == ',':
+            elif not parse_label and ts[i] == ',':
                 n = n.parent; c = Node(); n.add_child(c); n = c
 
             # comment (square brackets)
-            elif ts[i] == '[':
+            elif not parse_label and ts[i] == '[':
                 count = 0; start_ind = i
                 while True:
                     if ts[i] == '[':
@@ -1417,7 +1417,7 @@ def read_tree_newick(newick):
                     n.node_params = curr_comment
 
             # edge length
-            elif ts[i] == ':':
+            elif not parse_label and ts[i] == ':':
                 parse_length = True
             elif parse_length:
                 ls = ''
@@ -1426,11 +1426,17 @@ def read_tree_newick(newick):
                 n.edge_length = float(ls); i -= 1; parse_length = False
 
             # node label
+            elif not parse_label and ts[i] == "'":
+                parse_label = True
             else:
                 label = ''
-                while ts[i] not in {':', ',', ';', ')', '['}:
-                    label += ts[i]; i += 1
-                i -= 1; n.label = label
+                while parse_label or ts[i] not in {':', ',', ';', ')', '['}:
+                    if ts[i] == "'":
+                        parse_label = not parse_label
+                    else:
+                        label += ts[i]
+                    i += 1
+                i -= 1; n.label = label; parse_label = False
             i += 1
     except Exception as e:
         raise RuntimeError(f"Failed to parse string as Newick: {ts}")
