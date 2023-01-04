@@ -312,7 +312,7 @@
             <span class="k">if</span> <span class="n">to_keep</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">to_keep</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">to_keep</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">+=</span> <span class="n">to_del</span><span class="o">.</span><span class="n">edge_length</span><span class="p">;</span> <span class="n">to_del</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">to_del</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span></div>
+        <span class="n">to_del</span><span class="o">.</span><span class="n">contract</span><span class="p">();</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_rooted</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="Tree.diameter"><a class="viewcode-back" href="../../index.html#treeswift.Tree.diameter">[docs]</a>    <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the diameter (maximum leaf pairwise distance) of this ``Tree``</span>
