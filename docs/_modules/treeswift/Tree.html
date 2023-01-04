@@ -297,14 +297,22 @@
 <span class="sd">        Args:</span>
 <span class="sd">            ``label`` (``str``): The desired label of the new child</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">num_children</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unable to unroot tree with unifurcation at the root!&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">num_children</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="p">[</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">child_nodes</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">left</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-                <span class="n">right</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">left</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">num_children</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can only deroot a tree with degree-2 node at the root&quot;</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">child_nodes</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+            <span class="n">to_keep</span><span class="p">,</span> <span class="n">to_del</span> <span class="o">=</span> <span class="n">children</span>
+        <span class="k">elif</span> <span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+            <span class="n">to_del</span><span class="p">,</span> <span class="n">to_keep</span> <span class="o">=</span> <span class="n">children</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can only deroot a tree where one child of root is a leaf&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">to_keep</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">to_del</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">to_del</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">to_del</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">to_keep</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">to_keep</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">to_keep</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">+=</span> <span class="n">to_del</span><span class="o">.</span><span class="n">edge_length</span><span class="p">;</span> <span class="n">to_del</span><span class="o">.</span><span class="n">edge_length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">to_del</span><span class="o">.</span><span class="n">contract</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Tree.diameter"><a class="viewcode-back" href="../../index.html#treeswift.Tree.diameter">[docs]</a>    <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute the diameter (maximum leaf pairwise distance) of this ``Tree``</span>
