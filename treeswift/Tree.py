@@ -250,11 +250,7 @@ class Tree:
             self.root.edge_length = None
 
     def deroot(self):
-        '''If tree bifurcates at the root, contract an edge incident with the root to create a trifurcation at the root.
-
-        Args:
-            ``label`` (``str``): The desired label of the new child
-        '''
+        '''If tree bifurcates at the root, contract an edge incident with the root to create a trifurcation at the root.'''
         if self.root.num_children() != 2:
             raise RuntimeError("Can only deroot a tree with degree-2 node at the root")
         children = self.root.child_nodes()
