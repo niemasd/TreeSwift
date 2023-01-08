@@ -1,0 +1,16 @@
+name: TreeSwift Tests
+on: [push]
+
+jobs:
+    treeswift_tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Set up Git repository
+              uses: actions/checkout@v2
+            - name: Run TreeSwift Tests
+              run: |
+                  apt-get update && apt-get install -y python3 python3-pip && \
+                  pip3 install git+https://github.com/niemasd/TreeSwift.git && \
+                  for f in .tests/*.tre* ; do echo "$f" | rev | cut -d'/' -f1 | rev && python3 -c "from treeswift import read_tree_newick; read_tree_newick('$f')" && echo "" || exit 1 ; done && \
+                  for f in .tests/*.nex .tests/*.nex.* ; do echo "$f" | rev | cut -d'/' -f1 | rev && python3 -c "from treeswift import read_tree_nexus; read_tree_nexus('$f')" && echo "" || exit 1 ; done && \
+                  for f in .tests/*.nexml* ; do echo "$f" | rev | cut -d'/' -f1 | rev && python3 -c "from treeswift import read_tree_nexml; read_tree_nexml('$f')" && echo "" || exit 1 ; done
