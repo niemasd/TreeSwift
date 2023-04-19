@@ -892,6 +892,14 @@ class Tree:
         else:
             return f'{self.root.newick()}{suffix}'
 
+    def num_cherries(self):
+        '''Returns the number of cherries (i.e., internal nodes that only have leaf children) in this ``Tree``
+
+        Returns:
+            ``int``: The number of cherries in this ``Tree``
+        '''
+        return sum(sum(not child.is_leaf() for child in node.children) == 0 for node in self.traverse_internal())
+
     def num_lineages_at(self, distance):
         '''Returns the number of lineages of this ``Tree`` that exist ``distance`` away from the root
 
