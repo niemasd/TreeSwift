@@ -390,10 +390,6 @@
 <dt class="sig sig-object py" id="treeswift.Tree.deroot">
 <span class="sig-name descname"><span class="pre">deroot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.deroot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.deroot" title="Permalink to this definition">¶</a></dt>
 <dd><p>If tree bifurcates at the root, contract an edge incident with the root to create a trifurcation at the root.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">label</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The desired label of the new child</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -700,6 +696,16 @@
 <dd><p>Output this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> as a Newick string</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">str</span></code>: Newick string of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treeswift.Tree.num_cherries">
+<span class="sig-name descname"><span class="pre">num_cherries</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.num_cherries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.num_cherries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of cherries (i.e., internal nodes that only have leaf children) in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">int</span></code>: The number of cherries in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1045,6 +1051,7 @@
 <li><a class="reference internal" href="#treeswift.Tree.mrca"><code class="docutils literal notranslate"><span class="pre">Tree.mrca()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.mrca_matrix"><code class="docutils literal notranslate"><span class="pre">Tree.mrca_matrix()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.newick"><code class="docutils literal notranslate"><span class="pre">Tree.newick()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.num_cherries"><code class="docutils literal notranslate"><span class="pre">Tree.num_cherries()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.num_lineages_at"><code class="docutils literal notranslate"><span class="pre">Tree.num_lineages_at()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.num_nodes"><code class="docutils literal notranslate"><span class="pre">Tree.num_nodes()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.order"><code class="docutils literal notranslate"><span class="pre">Tree.order()</span></code></a></li>
