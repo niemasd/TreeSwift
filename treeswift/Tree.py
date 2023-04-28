@@ -1383,9 +1383,16 @@ def read_tree_newick(newick):
         f = open(expanduser(newick)); ts = f.read().strip(); f.close()
     else:
         ts = newick.strip()
-    lines = ts.splitlines()
+    lines = [l.strip() for l in ts.splitlines()]
     if len(lines) != 1:
-        return [read_tree_newick(l) for l in lines]
+        is_multi_newick = True
+        for l in lines:
+            if not l.endswith(';'):
+                is_multi_newick = False
+        if is_multi_newick:
+            return [read_tree_newick(l) for l in lines]
+        else:
+            ts = ts.replace('\n','')
     try:
         t = Tree(); t.is_rooted = ts.startswith('[&R]')
         if ts[0] == '[':
