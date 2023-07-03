@@ -573,6 +573,10 @@ class Tree:
             for a in node.traverse_ancestors(include_self=False):
                 keep.add(a)
         out = Tree(); out.root.label = self.root.label; out.root.edge_length = self.root.edge_length
+        if hasattr(self.root, 'node_params'):
+            out.root.node_params = self.root.node_params
+        if hasattr(self.root, 'edge_params'):
+            out.root.edge_params = self.root.edge_params
         q_old = deque(); q_old.append(self.root)
         q_new = deque(); q_new.append(out.root)
         while len(q_old) != 0:
@@ -580,6 +584,10 @@ class Tree:
             for c_old in n_old.children:
                 if c_old in keep:
                     c_new = Node(label=str(c_old), edge_length=c_old.edge_length); n_new.add_child(c_new)
+                    if hasattr(c_old, 'node_params'):
+                        c_new.node_params = c_old.node_params
+                    if hasattr(c_old, 'edge_params'):
+                        c_new.edge_params = c_old.edge_params
                     q_old.append(c_old); q_new.append(c_new)
         if suppress_unifurcations:
             out.suppress_unifurcations()
@@ -602,7 +610,7 @@ class Tree:
         '''Extract a copy of this ``Tree`` with only the leaves labeled by the strings in ``labels``
 
         Args:
-            ``leaves`` (``set``): Set of leaf labels to include.
+            ``labels`` (``set``): Set of leaf labels to include.
 
             ``suppress_unifurcations`` (``bool``): ``True`` to suppress unifurcations, otherwise ``False``
 
