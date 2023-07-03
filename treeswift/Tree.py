@@ -1229,11 +1229,38 @@ class Tree:
                     internal += node.edge_length
         return internal/all
 
+    def write_tree_nexus(self, filename):
+        '''Write this ``Tree`` to a Nexus file
+
+        Args:
+            ``filename`` (``str``): Path to desired output file (plain-text or gzipped)
+        '''
+        if not isinstance(filename, str):
+            raise TypeError("filename must be a str")
+        treestr = self.newick()
+        leaf_labels = [node.label for node in self.traverse_leaves()]
+        if treestr.startswith('[&R]'):
+            treestr = treestr[4:].strip()
+        if filename.lower().endswith('.gz'): # gzipped file
+            f = gopen(expanduser(filename),'wt',9)
+        else: # plain-text file
+            f = open(expanduser(filename), 'w')
+        f.write('#NEXUS\n')
+        f.write('Begin Taxa;\n')
+        f.write(' Dimensions NTAX=%d;\n' % len(leaf_labels))
+        f.write(' TaxLabels %s;\n' % ' '.join(leaf_labels))
+        f.write('End;\n')
+        f.write('Begin Trees;\n')
+        f.write(' Tree tree1=%s\n' % treestr)
+        f.write('End;\n')
+
     def write_tree_newick(self, filename, hide_rooted_prefix=False):
         '''Write this ``Tree`` to a Newick file
 
         Args:
             ``filename`` (``str``): Path to desired output file (plain-text or gzipped)
+
+            ``hide_rooted_prefix`` (``bool``): Hide the rooted prefix ``[&R]`` if rooted tree
         '''
         if not isinstance(filename, str):
             raise TypeError("filename must be a str")
