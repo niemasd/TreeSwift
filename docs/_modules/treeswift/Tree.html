@@ -1271,11 +1271,38 @@
                     <span class="n">internal</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
         <span class="k">return</span> <span class="n">internal</span><span class="o">/</span><span class="nb">all</span></div>
 
+<div class="viewcode-block" id="Tree.write_tree_nexus"><a class="viewcode-back" href="../../index.html#treeswift.Tree.write_tree_nexus">[docs]</a>    <span class="k">def</span> <span class="nf">write_tree_nexus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Write this ``Tree`` to a Nexus file</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``filename`` (``str``): Path to desired output file (plain-text or gzipped)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filename must be a str&quot;</span><span class="p">)</span>
+        <span class="n">treestr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">newick</span><span class="p">()</span>
+        <span class="n">leaf_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_leaves</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="n">treestr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;[&amp;R]&#39;</span><span class="p">):</span>
+            <span class="n">treestr</span> <span class="o">=</span> <span class="n">treestr</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span> <span class="c1"># gzipped file</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">gopen</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="s1">&#39;wt&#39;</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># plain-text file</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#NEXUS</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Begin Taxa;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39; Dimensions NTAX=</span><span class="si">%d</span><span class="s1">;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaf_labels</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39; TaxLabels </span><span class="si">%s</span><span class="s1">;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">leaf_labels</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;End;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Begin Trees;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39; Tree tree1=</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">treestr</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;End;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Tree.write_tree_newick"><a class="viewcode-back" href="../../index.html#treeswift.Tree.write_tree_newick">[docs]</a>    <span class="k">def</span> <span class="nf">write_tree_newick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">hide_rooted_prefix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Write this ``Tree`` to a Newick file</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``filename`` (``str``): Path to desired output file (plain-text or gzipped)</span>
+
+<span class="sd">            ``hide_rooted_prefix`` (``bool``): Hide the rooted prefix ``[&amp;R]`` if rooted tree</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filename must be a str&quot;</span><span class="p">)</span>
