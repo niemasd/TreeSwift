@@ -1,4 +1,4 @@
-# TreeSwift&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/niemasd/TreeSwift.svg?branch=master)](https://travis-ci.org/niemasd/TreeSwift)
+# TreeSwift
 TreeSwift is a Python library for parsing, manipulating, and iterating over (rooted) tree structures. TreeSwift places an emphasis on speed.
 
 ## Installation
