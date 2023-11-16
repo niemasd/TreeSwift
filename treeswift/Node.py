@@ -53,7 +53,7 @@ class Node:
         Returns:
             ``Node``: A copy of this ``Node``
         '''
-        out = Node(label=copy(self.label), edge_length=copy(self))
+        out = Node(label=copy(self.label), edge_length=copy(self.edge_length))
         out.children = copy(self.children)
         out.parent = self.parent
         return out
