@@ -306,6 +306,10 @@ class Tree:
             raise TypeError("v must be a Node")
         if u == v:
             return 0.
+        elif u == v.parent:
+            return v.edge_length
+        elif v == u.parent:
+            return u.edge_length
         u_dists = {u:0.}; v_dists = {v:0.}
         c = u; p = u.parent # u traversal
         while p is not None:
