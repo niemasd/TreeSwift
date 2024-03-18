@@ -1152,6 +1152,11 @@ class Tree:
             node = q.popleft()
             if len(node.children) != 1:
                 q.extend(node.children); continue
+            if node.label is not None or hasattr(node, 'node_params') or hasattr(node, 'edge_params'):
+                tmp_s = node.label
+                if tmp_s is None or tmp_s == '':
+                    tmp_s = '%s %s' % (repr(node), str(node.__dict__))
+                warn("Deleting a node with label/attributes in suppress_unifurcations: %s" % tmp_s)
             child = node.children.pop()
             if node.is_root():
                 self.root = child; child.parent = None
