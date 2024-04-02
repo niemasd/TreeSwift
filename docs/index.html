@@ -146,6 +146,19 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="treeswift.Node.num_nodes">
+<span class="sig-name descname"><span class="pre">num_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">internal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.num_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Node.num_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the total number of selected nodes in the subtree rooted by this <code class="docutils literal notranslate"><span class="pre">Node</span></code> (including itself)</p>
+<dl>
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Returns:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">int</span></code>: The total number of selected nodes in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="treeswift.Node.remove_child">
 <span class="sig-name descname"><span class="pre">remove_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.remove_child"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Node.remove_child" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove child from <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
@@ -532,6 +545,20 @@
 <p><code class="docutils literal notranslate"><span class="pre">suppress_unifurcations</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to suppress unifurcations, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt>Returns:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Tree</span></code>: Copy of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code>, exluding the leaves labeled by the strings in <code class="docutils literal notranslate"><span class="pre">labels</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treeswift.Tree.find_node">
+<span class="sig-name descname"><span class="pre">find_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">internal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.find_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.find_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find and return the node(s) labeled by <code class="docutils literal notranslate"><span class="pre">label</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if none exist. Note that this function performs a linear-time search, so if you will be call</p>
+<dl>
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">label</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The label to search for</p>
+<p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Returns:</dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Node</span></code> object labeled by <code class="docutils literal notranslate"><span class="pre">label</span></code> (or a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects if multiple are labeled by <code class="docutils literal notranslate"><span class="pre">label</span></code>), or <code class="docutils literal notranslate"><span class="pre">None</span></code> if none exist</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1011,6 +1038,7 @@
 <li><a class="reference internal" href="#treeswift.Node.is_root"><code class="docutils literal notranslate"><span class="pre">Node.is_root()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.newick"><code class="docutils literal notranslate"><span class="pre">Node.newick()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.num_children"><code class="docutils literal notranslate"><span class="pre">Node.num_children()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.num_nodes"><code class="docutils literal notranslate"><span class="pre">Node.num_nodes()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.remove_child"><code class="docutils literal notranslate"><span class="pre">Node.remove_child()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.resolve_polytomies"><code class="docutils literal notranslate"><span class="pre">Node.resolve_polytomies()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.set_edge_length"><code class="docutils literal notranslate"><span class="pre">Node.set_edge_length()</span></code></a></li>
@@ -1050,6 +1078,7 @@
 <li><a class="reference internal" href="#treeswift.Tree.extract_tree"><code class="docutils literal notranslate"><span class="pre">Tree.extract_tree()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.extract_tree_with"><code class="docutils literal notranslate"><span class="pre">Tree.extract_tree_with()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.extract_tree_without"><code class="docutils literal notranslate"><span class="pre">Tree.extract_tree_without()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.find_node"><code class="docutils literal notranslate"><span class="pre">Tree.find_node()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.furthest_from_root"><code class="docutils literal notranslate"><span class="pre">Tree.furthest_from_root()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.gamma_statistic"><code class="docutils literal notranslate"><span class="pre">Tree.gamma_statistic()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.height"><code class="docutils literal notranslate"><span class="pre">Tree.height()</span></code></a></li>

@@ -623,6 +623,27 @@ class Tree:
         '''
         return self.extract_tree(labels, False, suppress_unifurcations)
 
+    def find_node(self, label, leaves=True, internal=False):
+        '''Find and return the node(s) labeled by ``label``, or ``None`` if none exist. Note that this function performs a linear-time search, so if you will be call
+
+        Args:
+            ``label`` (``str``): The label to search for
+
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Returns:
+            The ``Node`` object labeled by ``label`` (or a ``list`` of ``Node`` objects if multiple are labeled by ``label``), or ``None`` if none exist
+        '''
+        out = [node for node in self.traverse_preorder(leaves=leaves, internal=internal) if node.label == label]
+        if len(out) == 0:
+            return None
+        elif len(out) == 1:
+            return out[0]
+        else:
+            return out
+
     def furthest_from_root(self):
         '''Return the ``Node`` that is furthest from the root and the corresponding distance. Edges with no length will be considered to have a length of 0
 
@@ -951,11 +972,7 @@ class Tree:
         Returns:
             ``int``: The total number of selected nodes in this ``Tree``
         '''
-        if not isinstance(leaves, bool):
-            raise TypeError("leaves must be a bool")
-        if not isinstance(internal, bool):
-            raise TypeError("internal must be a bool")
-        return sum((leaves and node.is_leaf()) or (internal and not node.is_leaf()) for node in self.traverse_preorder())
+        return self.root.num_nodes(leaves=leaves, internal=internal)
 
     def order(self, mode, ascending=True):
         '''Order the children of the nodes in this ``Tree`` based on ``mode``

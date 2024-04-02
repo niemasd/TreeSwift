@@ -179,6 +179,23 @@ class Node:
         '''
         return len(self.children)
 
+    def num_nodes(self, leaves=True, internal=True):
+        '''Compute the total number of selected nodes in the subtree rooted by this ``Node`` (including itself)
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Returns:
+            ``int``: The total number of selected nodes in this ``Tree``
+        '''
+        if not isinstance(leaves, bool):
+            raise TypeError("leaves must be a bool")
+        if not isinstance(internal, bool):
+            raise TypeError("internal must be a bool")
+        return sum((leaves and node.is_leaf()) or (internal and not node.is_leaf()) for node in self.traverse_preorder())
+
     def remove_child(self, child):
         '''Remove child from ``Node`` object
 
