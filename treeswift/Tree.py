@@ -563,11 +563,18 @@ class Tree:
         '''Helper function for ``extract_tree_*`` functions'''
         if not isinstance(suppress_unifurcations, bool):
             raise TypeError("suppress_unifurcations must be a bool")
-        if labels is not None and not isinstance(labels, set):
+        # if the user provides a string, assume the string itself is a single label
+        if isinstance(labels, str):
+            labels = {labels}
+
+        # otherwise, if the user provides a non-set iterable, convert to set
+        elif labels is not None and not isinstance(labels, set):
             try:
                 labels = set(labels)
             except:
                 raise TypeError("labels must be iterable")
+
+        # extract tree
         label_to_leaf = {}; keep = set()
         for node in self.traverse_leaves():
             label_to_leaf[str(node)] = node
@@ -1169,7 +1176,7 @@ class Tree:
             node = q.popleft()
             if len(node.children) != 1:
                 q.extend(node.children); continue
-            if node.label is not None or hasattr(node, 'node_params') or hasattr(node, 'edge_params'):
+            if (node.label is not None and node.label != '') or hasattr(node, 'node_params') or hasattr(node, 'edge_params'):
                 tmp_s = node.label
                 if tmp_s is None or tmp_s == '':
                     tmp_s = '%s %s' % (repr(node), str(node.__dict__))
