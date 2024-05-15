@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 from copy import copy
-from gzip import open as gopen
-from os.path import dirname,realpath
+from os.path import dirname, realpath
 from random import sample
-from treeswift import read_tree_newick,read_tree_nexml,read_tree_nexus
+from treeswift import read_tree_newick, read_tree_nexml, read_tree_nexus
 PATH = dirname(realpath(__file__))
-NEWICK_FILE = '%s/test.tre'%PATH
-NEWICK_GZIP = '%s/test.tre.gz'%PATH
+NEWICK_FILE = '%s/test.tre' % PATH
+NEWICK_GZIP = '%s/test.tre.gz' % PATH
 NEWICK_STR = open(NEWICK_FILE).read().strip()
-NEXUS_FILE = '%s/test.nex'%PATH
-NEXUS_GZIP = '%s/test.nex.gz'%PATH
+NEXUS_FILE = '%s/test.nex' % PATH
+NEXUS_GZIP = '%s/test.nex.gz' % PATH
 NEXUS_STR = open(NEXUS_FILE).read().strip()
-NEXML_FILE = '%s/test.nexml'%PATH
-NEXML_GZIP = '%s/test.nexml.gz'%PATH
+NEXML_FILE = '%s/test.nexml' % PATH
+NEXML_GZIP = '%s/test.nexml.gz' % PATH
 NEXML_STR = open(NEXML_FILE).read().strip()
 
 # tests

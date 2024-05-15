@@ -1275,7 +1275,7 @@ class Tree:
         if treestr.startswith('[&R]'):
             treestr = treestr[4:].strip()
         if filename.lower().endswith('.gz'): # gzipped file
-            f = gopen(expanduser(filename),'wt',9)
+            f = gopen(expanduser(filename), 'wt', 9)
         else: # plain-text file
             f = open(expanduser(filename), 'w')
         f.write('#NEXUS\n')
@@ -1304,9 +1304,10 @@ class Tree:
             else:
                 warn("Specified hide_rooted_prefix, but tree was not rooted")
         if filename.lower().endswith('.gz'): # gzipped file
-            f = gopen(expanduser(filename),'wb',9); f.write(treestr.encode()); f.close()
+            f = gopen(expanduser(filename), 'wt', 9)
         else: # plain-text file
-            f = open(expanduser(filename),'w'); f.write(treestr); f.close()
+            f = open(expanduser(filename),'w')
+        f.write(treestr); f.close()
 
 def plot_ltt(lineages, show_plot=True, export_filename=None, color='#000000', xmin=None, xmax=None, ymin=None, ymax=None, title=None, xlabel=None, ylabel=None):
     '''Plot the Lineages Through Time (LTT) curve of a given tree
@@ -1445,11 +1446,13 @@ def read_tree_newick(newick):
             newick = str(newick)
         except:
             raise TypeError("newick must be a str")
-    if newick.lower().endswith('.gz'): # gzipped file
-        f = gopen(expanduser(newick)); ts = f.read().decode().strip(); f.close()
-    elif isfile(expanduser(newick)): # plain-text file
-        f = open(expanduser(newick)); ts = f.read().strip(); f.close()
-    else:
+    if len(newick) < 1000 and isfile(expanduser(newick)):
+        if newick.lower().endswith('.gz'): # gzipped file
+            f = gopen(expanduser(newick), 'rt')
+        else: # plain-text file
+            f = open(expanduser(newick))
+        ts = f.read().strip(); f.close()
+    else: # string
         ts = newick.strip()
     lines = [l.strip() for l in ts.splitlines()]
     if len(lines) != 1:
@@ -1543,18 +1546,15 @@ def read_tree_nexml(nexml):
     if not isinstance(nexml, str):
         raise TypeError("nexml must be a str")
     if nexml.lower().endswith('.gz'): # gzipped file
-        f = gopen(expanduser(nexml))
+        f = gopen(expanduser(nexml), 'rt')
     elif isfile(expanduser(nexml)): # plain-text file
         f = open(expanduser(nexml))
     else:
         f = nexml.splitlines()
     trees = {}; id_to_node = {}; tree_id = None
     for line in f:
-        if isinstance(line,bytes):
-            l = line.decode().strip()
-        else:
-            l = line.strip()
-        l_lower = l.lower()
+        l = line.strip(); l_lower = l.lower()
+
         # start of tree
         if l_lower.startswith('<tree '):
             if tree_id is not None:
@@ -1568,11 +1568,13 @@ def read_tree_nexml(nexml):
             if tree_id is None:
                 raise ValueError(INVALID_NEXML)
             trees[tree_id] = Tree(); trees[tree_id].root = None
+
         # end of tree
         elif l_lower.replace(' ','').startswith('</tree>'):
             if tree_id is None:
                 raise ValueError(INVALID_NEXML)
             id_to_node = {}; tree_id = None
+
         # node
         elif l_lower.startswith('<node '):
             if tree_id is None:
@@ -1604,6 +1606,7 @@ def read_tree_nexml(nexml):
                 if trees[tree_id].root is not None:
                     raise ValueError(INVALID_NEXML)
                 trees[tree_id].root = id_to_node[node_id]
+
         # edge
         elif l_lower.startswith('<edge '):
             if tree_id is None:
@@ -1644,7 +1647,7 @@ def read_tree_nexml(nexml):
             if root_node is not None and trees[tree_id].root != root_node:
                 raise ValueError(INVALID_NEXML)
             trees[tree_id].root.edge_length = length
-    if hasattr(f,'close'):
+    if hasattr(f, 'close'):
         f.close()
     return trees
 
@@ -1668,17 +1671,14 @@ def read_tree_nexus(nexus, translate=True):
     if not isinstance(nexus, str):
         raise TypeError("nexus must be a str")
     if nexus.lower().endswith('.gz'): # gzipped file
-        f = gopen(expanduser(nexus))
+        f = gopen(expanduser(nexus), 'rt')
     elif isfile(expanduser(nexus)): # plain-text file
         f = open(expanduser(nexus))
     else:
         f = nexus.splitlines()
     trees = {}; taxlabels = None; tr = None; reading_taxlabels = False; reading_translate = False
     for line in f:
-        if isinstance(line,bytes):
-            l = line.decode().strip()
-        else:
-            l = line.strip()
+        l = line.strip()
         if reading_taxlabels:
             if l == ';':
                 reading_taxlabels = False; trees['taxlabels'] = taxlabels
