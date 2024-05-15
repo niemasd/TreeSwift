@@ -1679,16 +1679,20 @@ def read_tree_nexus(nexus, translate=True):
     trees = {}; taxlabels = None; tr = None; reading_taxlabels = False; reading_translate = False
     for line in f:
         l = line.strip()
+
+        # read line in TAXLABELS section (`TAXON_LABEL` on each line)
         if reading_taxlabels:
             if l == ';':
                 reading_taxlabels = False; trees['taxlabels'] = taxlabels
             else:
                 taxlabels.append(l)
+
+        # read line in TRANSLATE section (`<whitespace>TREE_LABEL<whitespace>TAXON_LABEL,` on each line)
         elif reading_translate:
             if l == ';':
                 reading_translate = False; trees['translate'] = tr
             else:
-                parts = l.split(' '); tmp = ' '.join(parts[1:])
+                parts = l.split(); tmp = ' '.join(parts[1:])
                 if tmp.endswith(','):
                     tmp = tmp[:-1]
                 tr[parts[0]] = tmp
