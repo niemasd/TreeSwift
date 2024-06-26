@@ -875,14 +875,16 @@ class Tree:
             except:
                 raise TypeError("labels must be iterable")
         l2n = self.label_to_node(labels)
-        count = {}
-        for node in l2n.values():
-            for a in node.traverse_ancestors():
-                if a not in count:
-                    count[a] = 0
-                count[a] += 1
-                if count[a] == len(l2n):
-                    return a
+        count = {}; q = deque(l2n.values())
+        while len(q) != 0:
+            curr = q.popleft()
+            if curr not in count:
+                count[curr] = 0
+            count[curr] += 1
+            if count[curr] == len(l2n):
+                return curr
+            if curr.parent is not None:
+                q.append(curr.parent)
         raise RuntimeError("There somehow does not exist an MRCA for the given labels")
 
     def mrca_matrix(self):
