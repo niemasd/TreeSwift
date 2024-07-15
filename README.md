@@ -28,7 +28,7 @@ for node in tree.traverse_postorder():
     print(node)
 ```
 
-Full documentation can be found at [https://niemasd.github.io/TreeSwift/](https://niemasd.github.io/TreeSwift/), and more examples can be found in the [TreeSwift Wiki](https://github.com/niemasd/TreeSwift/wiki).
+Full documentation can be found at [https://niema.net/TreeSwift](https://niema.net/TreeSwift), and more examples can be found in the [TreeSwift Wiki](https://github.com/niemasd/TreeSwift/wiki).
 
 ## Citing TreeSwift
 If you use TreeSwift in your work, please cite:
