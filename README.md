@@ -1,5 +1,7 @@
 # TreeSwift
-TreeSwift is a Python library for parsing, manipulating, and iterating over (rooted) tree structures. TreeSwift places an emphasis on speed.
+TreeSwift is a pure Python library for parsing, manipulating, and iterating over (rooted) tree structures. TreeSwift places an emphasis on speed.
+
+We strongly recommend that you consider our new package, [CompactTree](https://github.com/niemasd/CompactTree) (a header-only C++ library that has a Python package wrapper with similar functionality as TreeSwift), though we will continue maintaining TreeSwift in parallel with CompactTree.
 
 ## Installation
 TreeSwift can be installed using `pip`:
