@@ -316,6 +316,8 @@ class Tree:
             u_dists[p] = u_dists[c]
             if c.edge_length is not None:
                 u_dists[p] += c.edge_length
+            if p == v:
+            	return u_dists[p]
             c = p; p = p.parent
         c = v; p = v.parent # v traversal
         while p is not None:
