@@ -138,15 +138,15 @@ class Tree:
             raise RuntimeError("threshold cannot be negative")
         q = deque(); q.append(self.root)
         while len(q) != 0:
-            next = q.popleft()
-            if next.edge_length is None or next.edge_length <= threshold:
-                if next.is_root():
-                    next.edge_length = None
-                elif not next.is_leaf():
-                    parent = next.parent; parent.remove_child(next)
-                    for c in next.children:
+            node = q.popleft()
+            if node.edge_length is None or node.edge_length <= threshold:
+                if node.is_root():
+                    node.edge_length = None
+                elif not node.is_leaf():
+                    parent = node.parent; parent.remove_child(node)
+                    for c in node.children:
                         parent.add_child(c)
-            q.extend(next.children)
+            q.extend(node.children)
 
     def colless(self, normalize='leaves'):
         '''Compute the Colless balance index of this ``Tree``. If the tree has polytomies, they will be randomly resolved
@@ -1436,6 +1436,27 @@ def read_tree_dendropy(tree):
             curr.label = node.label
     return out
 
+def read_tree_scipy(root):
+    '''Create a TreeSwift tree from a SciPy tree
+
+    Args:
+        ``root`` (``scipy.cluster.hierarchy.ClusterNode``): The root ``ClusterNode` object of a SciPy tree
+
+    Returns:
+        ``Tree``: A TreeSwift tree created from ``root``
+    '''
+    out = Tree(); s2t = {}; q = deque(); q.append((root,None))
+    while len(q) != 0:
+        node, parent = q.popleft()
+        if parent is None:
+            curr = out.root
+        else:
+            curr = Node(edge_length=parent.dist-node.dist); s2t[parent.id].add_child(curr)
+        s2t[node.id] = curr; curr.label = node.id
+        if not node.is_leaf():
+            q.extend(((c,node) for c in (node.left, node.right)))
+    return out
+
 def read_tree_newick(newick):
     '''Read a tree from a Newick string or file
 
@@ -1781,26 +1802,27 @@ def read_tree_linkage(linkage, return_list=False):
     else:
         return out
 
-def read_tree(input, schema):
+def read_tree(tree_input, schema):
     '''Read a tree from a string or file
 
     Args:
-        ``input`` (``str``): Either a tree string, a path to a tree file (plain-text or gzipped), or a DendroPy Tree object
+        ``tree_input`` (``str``): Either a tree string, a path to a tree file (plain-text or gzipped), or a DendroPy Tree object
 
-        ``schema`` (``str``): The schema of ``input`` (DendroPy, Newick, NeXML, Nexus, or linkage)
+        ``schema`` (``str``): The schema of ``tree_input`` (DendroPy, linkage, SciPy, Newick, NeXML, Nexus)
 
     Returns:
-        * If the input is Newick, either a ``Tree`` object if ``input`` contains a single tree, or a ``list`` of ``Tree`` objects if ``input`` contains multiple trees (one per line)
+        * If the tree_input is Newick, either a ``Tree`` object if ``tree_input`` contains a single tree, or a ``list`` of ``Tree`` objects if ``tree_input`` contains multiple trees (one per line)
 
-        * If the input is NeXML or Nexus, a ``dict`` of trees represented by ``input``, where keys are tree names (``str``) and values are ``Tree`` objects
+        * If the tree_input is NeXML or Nexus, a ``dict`` of trees represented by ``tree_input``, where keys are tree names (``str``) and values are ``Tree`` objects
     '''
     schema_to_function = {
         'dendropy': read_tree_dendropy,
-        'newick': read_tree_newick,
-        'nexml': read_tree_nexml,
-        'nexus': read_tree_nexus,
-        'linkage': read_tree_linkage
+        'linkage':  read_tree_linkage,
+        'newick':   read_tree_newick,
+        'nexml':    read_tree_nexml,
+        'nexus':    read_tree_nexus,
+        'scipy':    read_tree_scipy,
     }
     if schema.lower() not in schema_to_function:
         raise ValueError(f"Invalid schema: {schema} (valid options: {', '.join(sorted(schema_to_function.keys()))})")
-    return schema_to_function[schema.lower()](input)
+    return schema_to_function[schema.lower()](tree_input)
