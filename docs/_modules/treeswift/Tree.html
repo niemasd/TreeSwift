@@ -492,6 +492,9 @@
 <span class="sd">            ``unlabeled`` (``bool``): ``True`` to include unlabeled nodes, otherwise ``False``</span>
 
 <span class="sd">            ``weighted`` (``bool``): ``True`` to define distance as sum of edge lengths (i.e., weighted distance), or ``False`` to define distance as total number of edges (i.e., unweighted distance). If unweighted, edges with length ``None`` are counted in the height</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``tuple``: The next (``Node``, root distance) pair</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;leaves must be a bool&quot;</span><span class="p">)</span>
@@ -503,14 +506,12 @@
             <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_root</span><span class="p">():</span>
-                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="k">if</span> <span class="n">weighted</span> <span class="k">else</span> <span class="mi">1</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">weighted</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="k">if</span> <span class="n">weighted</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="k">if</span> <span class="p">((</span><span class="n">leaves</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">internal</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">unlabeled</span> <span class="ow">or</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
                     <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">node</span><span class="p">])</span></div>
 
@@ -813,10 +814,33 @@
     <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Compute the height (i.e., maximum distance from root) of this ``Tree``</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            ``weighted``: ``True`` to use weighted distances (i.e., branch lengths), or ``False`` to use unweighted distances (i.e., number of branches)</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            ``float``: The height (i.e., maximum distance from root) of this ``Tree``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">distances_from_root</span><span class="p">(</span><span class="n">weighted</span><span class="o">=</span><span class="n">weighted</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Tree.heights">
+<a class="viewcode-back" href="../../index.html#treeswift.Tree.heights">[docs]</a>
+    <span class="k">def</span> <span class="nf">heights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Generator over the heights of every ``Node`` in this ``Tree``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``weighted``: ``True`` to use weighted distances (i.e., branch lengths), or ``False`` to use unweighted distances (i.e., number of branches)</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``tuple``: The next (``Node``, height) pair</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">node_heights</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">node_heights</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">edge_length</span> <span class="k">if</span> <span class="n">weighted</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">h</span><span class="p">);</span> <span class="n">node_heights</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span></div>
 
 
 <div class="viewcode-block" id="Tree.indent">
@@ -1379,6 +1403,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_inorder</span><span class="p">(</span><span class="n">leaves</span><span class="o">=</span><span class="n">leaves</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">internal</span><span class="p">)</span></div>
 
@@ -1386,21 +1413,38 @@
 <div class="viewcode-block" id="Tree.traverse_internal">
 <a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_internal">[docs]</a>
     <span class="k">def</span> <span class="nf">traverse_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Traverse over the internal nodes of this ``Tree``&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Traverse over the internal nodes of this ``Tree``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_internal</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Tree.traverse_leaves">
 <a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_leaves">[docs]</a>
     <span class="k">def</span> <span class="nf">traverse_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Traverse over the leaves of this ``Tree``&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Traverse over the leaves of this ``Tree``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_leaves</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Tree.traverse_levelorder">
 <a class="viewcode-back" href="../../index.html#treeswift.Tree.traverse_levelorder">[docs]</a>
     <span class="k">def</span> <span class="nf">traverse_levelorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Perform a levelorder traversal of the ``Node`` objects in this ``Tree``&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Perform a levelorder traversal of the ``Node`` objects in this ``Tree``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
+
+<span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_levelorder</span><span class="p">(</span><span class="n">leaves</span><span class="o">=</span><span class="n">leaves</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">internal</span><span class="p">)</span></div>
 
 
@@ -1413,6 +1457,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">(</span><span class="n">leaves</span><span class="o">=</span><span class="n">leaves</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">internal</span><span class="p">)</span></div>
 
@@ -1426,6 +1473,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">(</span><span class="n">leaves</span><span class="o">=</span><span class="n">leaves</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">internal</span><span class="p">)</span></div>
 
@@ -1441,6 +1491,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``tuple``: The next (root distance, ``Node``) pair in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">traverse_rootdistorder</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="n">ascending</span><span class="p">,</span> <span class="n">leaves</span><span class="o">=</span><span class="n">leaves</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">internal</span><span class="p">)</span></div>
 

@@ -207,6 +207,8 @@
 <dl class="simple">
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">include_self</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include self in the traversal, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -216,6 +218,8 @@
 <dd><p>Perform a Breadth-First Search (BFS) starting at this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object’. Yields (<code class="docutils literal notranslate"><span class="pre">Node</span></code>, distance) tuples</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">include_self</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include self in the traversal, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
 </dd>
 </dl>
 </dd></dl>
@@ -228,6 +232,8 @@
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -235,12 +241,20 @@
 <dt class="sig sig-object py" id="treeswift.Node.traverse_internal">
 <span class="sig-name descname"><span class="pre">traverse_internal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_internal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Node.traverse_internal" title="Link to this definition">¶</a></dt>
 <dd><p>Traverse over the internal nodes below (and including) this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
+<dl class="simple">
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="treeswift.Node.traverse_leaves">
 <span class="sig-name descname"><span class="pre">traverse_leaves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.traverse_leaves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Node.traverse_leaves" title="Link to this definition">¶</a></dt>
 <dd><p>Traverse over the leaves below this <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
+<dl class="simple">
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -250,6 +264,8 @@
 <dl>
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
 </dd>
 </dl>
 </dd></dl>
@@ -262,6 +278,8 @@
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -272,6 +290,8 @@
 <dl>
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
 </dd>
 </dl>
 </dd></dl>
@@ -284,6 +304,8 @@
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">ascending</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to perform traversal in ascending distance from the root, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> for descending</p>
 <p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">tuple</span></code>: The next (root distance, <code class="docutils literal notranslate"><span class="pre">Node</span></code>) pair in the traversal</p>
 </dd>
 </dl>
 </dd></dl>
@@ -458,6 +480,8 @@
 <p><code class="docutils literal notranslate"><span class="pre">unlabeled</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include unlabeled nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">weighted</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to define distance as sum of edge lengths (i.e., weighted distance), or <code class="docutils literal notranslate"><span class="pre">False</span></code> to define distance as total number of edges (i.e., unweighted distance). If unweighted, edges with length <code class="docutils literal notranslate"><span class="pre">None</span></code> are counted in the height</p>
 </dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">tuple</span></code>: The next (<code class="docutils literal notranslate"><span class="pre">Node</span></code>, root distance) pair</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -584,7 +608,21 @@
 <span class="sig-name descname"><span class="pre">height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weighted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.height" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the height (i.e., maximum distance from root) of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
 <dl class="simple">
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">weighted</span></code>: <code class="docutils literal notranslate"><span class="pre">True</span></code> to use weighted distances (i.e., branch lengths), or <code class="docutils literal notranslate"><span class="pre">False</span></code> to use unweighted distances (i.e., number of branches)</p>
+</dd>
 <dt>Returns:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">float</span></code>: The height (i.e., maximum distance from root) of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treeswift.Tree.heights">
+<span class="sig-name descname"><span class="pre">heights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weighted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.heights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.heights" title="Link to this definition">¶</a></dt>
+<dd><p>Generator over the heights of every <code class="docutils literal notranslate"><span class="pre">Node</span></code> in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">weighted</span></code>: <code class="docutils literal notranslate"><span class="pre">True</span></code> to use weighted distances (i.e., branch lengths), or <code class="docutils literal notranslate"><span class="pre">False</span></code> to use unweighted distances (i.e., number of branches)</p>
+</dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">tuple</span></code>: The next (<code class="docutils literal notranslate"><span class="pre">Node</span></code>, height) pair</p>
 </dd>
 </dl>
 </dd></dl>
@@ -852,6 +890,8 @@
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -859,18 +899,33 @@
 <dt class="sig sig-object py" id="treeswift.Tree.traverse_internal">
 <span class="sig-name descname"><span class="pre">traverse_internal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_internal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.traverse_internal" title="Link to this definition">¶</a></dt>
 <dd><p>Traverse over the internal nodes of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl class="simple">
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="treeswift.Tree.traverse_leaves">
 <span class="sig-name descname"><span class="pre">traverse_leaves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_leaves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.traverse_leaves" title="Link to this definition">¶</a></dt>
 <dd><p>Traverse over the leaves of this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl class="simple">
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="treeswift.Tree.traverse_levelorder">
 <span class="sig-name descname"><span class="pre">traverse_levelorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">internal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.traverse_levelorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.traverse_levelorder" title="Link to this definition">¶</a></dt>
 <dd><p>Perform a levelorder traversal of the <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
+<dl>
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -880,6 +935,8 @@
 <dl>
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
 </dd>
 </dl>
 </dd></dl>
@@ -892,6 +949,8 @@
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Node</span></code>: The next node in the traversal</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -903,6 +962,8 @@
 <dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">ascending</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to perform traversal in ascending distance from the root, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> for descending</p>
 <p><code class="docutils literal notranslate"><span class="pre">leaves</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include leaves, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">internal</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to include internal nodes, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt>Yields:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">tuple</span></code>: The next (root distance, <code class="docutils literal notranslate"><span class="pre">Node</span></code>) pair in the traversal</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1090,6 +1151,7 @@
 <li><a class="reference internal" href="#treeswift.Tree.furthest_from_root"><code class="docutils literal notranslate"><span class="pre">Tree.furthest_from_root()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.gamma_statistic"><code class="docutils literal notranslate"><span class="pre">Tree.gamma_statistic()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.height"><code class="docutils literal notranslate"><span class="pre">Tree.height()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.heights"><code class="docutils literal notranslate"><span class="pre">Tree.heights()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.indent"><code class="docutils literal notranslate"><span class="pre">Tree.indent()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.label_to_node"><code class="docutils literal notranslate"><span class="pre">Tree.label_to_node()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.labels"><code class="docutils literal notranslate"><span class="pre">Tree.labels()</span></code></a></li>

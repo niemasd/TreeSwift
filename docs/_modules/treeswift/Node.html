@@ -344,6 +344,9 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">include_self</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;include_self must be a bool&quot;</span><span class="p">)</span>
@@ -362,6 +365,9 @@
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">include_self</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;include_self must be a bool&quot;</span><span class="p">)</span>
@@ -392,6 +398,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="p">;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
@@ -421,14 +430,22 @@
 <div class="viewcode-block" id="Node.traverse_internal">
 <a class="viewcode-back" href="../../index.html#treeswift.Node.traverse_internal">[docs]</a>
     <span class="k">def</span> <span class="nf">traverse_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Traverse over the internal nodes below (and including) this ``Node`` object&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Traverse over the internal nodes below (and including) this ``Node`` object</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">(</span><span class="n">leaves</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Node.traverse_leaves">
 <a class="viewcode-back" href="../../index.html#treeswift.Node.traverse_leaves">[docs]</a>
     <span class="k">def</span> <span class="nf">traverse_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Traverse over the leaves below this ``Node`` object&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Traverse over the leaves below this ``Node`` object</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">(</span><span class="n">internal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
@@ -441,6 +458,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -459,6 +479,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">s1</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">s1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -478,6 +501,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``Node``: The next node in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">deque</span><span class="p">();</span> <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -498,6 +524,9 @@
 <span class="sd">            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``</span>
 
 <span class="sd">            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            ``tuple``: The next (root distance, ``Node``) pair in the traversal</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ascending</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;ascending must be a bool&quot;</span><span class="p">)</span>
