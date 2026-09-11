@@ -405,6 +405,9 @@ class Tree:
             ``unlabeled`` (``bool``): ``True`` to include unlabeled nodes, otherwise ``False``
 
             ``weighted`` (``bool``): ``True`` to define distance as sum of edge lengths (i.e., weighted distance), or ``False`` to define distance as total number of edges (i.e., unweighted distance). If unweighted, edges with length ``None`` are counted in the height
+
+        Yields:
+            ``tuple``: The next (``Node``, root distance) pair
         '''
         if not isinstance(leaves, bool):
             raise TypeError("leaves must be a bool")
@@ -416,14 +419,12 @@ class Tree:
             d = {}
             for node in self.traverse_preorder():
                 if node.is_root():
-                    d[node] = 0
+                    if node.edge_length is None:
+                        d[node] = 0
+                    else:
+                        d[node] = node.edge_length if weighted else 1
                 else:
-                    d[node] = d[node.parent]
-                if weighted:
-                    if node.edge_length is not None:
-                        d[node] += node.edge_length
-                else:
-                    d[node] += 1
+                    d[node] = d[node.parent] + (node.edge_length if weighted else 1)
                 if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (unlabeled or node.label is not None):
                     yield (node,d[node])
 
@@ -696,10 +697,30 @@ class Tree:
     def height(self, weighted=True):
         '''Compute the height (i.e., maximum distance from root) of this ``Tree``
 
+        Args:
+            ``weighted``: ``True`` to use weighted distances (i.e., branch lengths), or ``False`` to use unweighted distances (i.e., number of branches)
+
         Returns:
             ``float``: The height (i.e., maximum distance from root) of this ``Tree``
         '''
         return max(d[1] for d in self.distances_from_root(weighted=weighted))
+
+    def heights(self, weighted=True):
+        '''Generator over the heights of every ``Node`` in this ``Tree``
+
+        Args:
+            ``weighted``: ``True`` to use weighted distances (i.e., branch lengths), or ``False`` to use unweighted distances (i.e., number of branches)
+
+        Yields:
+            ``tuple``: The next (``Node``, height) pair
+        '''
+        node_heights = {}
+        for node in self.traverse_postorder():
+            if node.is_leaf():
+                h = 0
+            else:
+                h = max(node_heights[c] + (c.edge_length if weighted else 1) for c in node.children)
+            yield (node, h); node_heights[node] = h
 
     def indent(self, space=4):
         '''Return an indented Newick string, just like ``nw_indent`` in Newick Utilities
