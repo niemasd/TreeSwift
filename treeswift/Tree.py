@@ -1205,19 +1205,39 @@ class Tree:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         yield from self.root.traverse_inorder(leaves=leaves, internal=internal)
 
     def traverse_internal(self):
-        '''Traverse over the internal nodes of this ``Tree``'''
+        '''Traverse over the internal nodes of this ``Tree``
+
+        Yields:
+            ``Node``: The next node in the traversal
+        '''
         yield from self.root.traverse_internal()
 
     def traverse_leaves(self):
-        '''Traverse over the leaves of this ``Tree``'''
+        '''Traverse over the leaves of this ``Tree``
+
+        Yields:
+            ``Node``: The next node in the traversal
+        '''
         yield from self.root.traverse_leaves()
 
     def traverse_levelorder(self, leaves=True, internal=True):
-        '''Perform a levelorder traversal of the ``Node`` objects in this ``Tree``'''
+        '''Perform a levelorder traversal of the ``Node`` objects in this ``Tree``
+
+        Args:
+            ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
+
+            ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
+        '''
         yield from self.root.traverse_levelorder(leaves=leaves, internal=internal)
 
     def traverse_postorder(self, leaves=True, internal=True):
@@ -1227,6 +1247,9 @@ class Tree:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         yield from self.root.traverse_postorder(leaves=leaves, internal=internal)
 
@@ -1237,6 +1260,9 @@ class Tree:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         yield from self.root.traverse_preorder(leaves=leaves, internal=internal)
 
@@ -1249,6 +1275,9 @@ class Tree:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``tuple``: The next (root distance, ``Node``) pair in the traversal
         '''
         yield from self.root.traverse_rootdistorder(ascending=ascending, leaves=leaves, internal=internal)
 

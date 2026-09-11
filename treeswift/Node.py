@@ -254,6 +254,9 @@ class Node:
 
         Args:
             ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         if not isinstance(include_self, bool):
             raise TypeError("include_self must be a bool")
@@ -269,6 +272,9 @@ class Node:
         
         Args:
             ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         if not isinstance(include_self, bool):
             raise TypeError("include_self must be a bool")
@@ -296,6 +302,9 @@ class Node:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         c = self; s = deque(); done = False
         while not done:
@@ -322,11 +331,19 @@ class Node:
                     raise RuntimeError(INORDER_NONBINARY)
 
     def traverse_internal(self):
-        '''Traverse over the internal nodes below (and including) this ``Node`` object'''
+        '''Traverse over the internal nodes below (and including) this ``Node`` object
+
+        Yields:
+            ``Node``: The next node in the traversal
+        '''
         yield from self.traverse_preorder(leaves=False)
 
     def traverse_leaves(self):
-        '''Traverse over the leaves below this ``Node`` object'''
+        '''Traverse over the leaves below this ``Node`` object
+
+        Yields:
+            ``Node``: The next node in the traversal
+        '''
         yield from self.traverse_preorder(internal=False)
 
     def traverse_levelorder(self, leaves=True, internal=True):
@@ -336,6 +353,9 @@ class Node:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         q = deque(); q.append(self)
         while len(q) != 0:
@@ -351,6 +371,9 @@ class Node:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         s1 = deque(); s2 = deque(); s1.append(self)
         while len(s1) != 0:
@@ -367,6 +390,9 @@ class Node:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``Node``: The next node in the traversal
         '''
         s = deque(); s.append(self)
         while len(s) != 0:
@@ -384,6 +410,9 @@ class Node:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+        Yields:
+            ``tuple``: The next (root distance, ``Node``) pair in the traversal
         '''
         if not isinstance(ascending, bool):
             raise TypeError("ascending must be a bool")
