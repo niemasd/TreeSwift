@@ -1091,7 +1091,7 @@ class Tree:
             node.children.sort(key=k, reverse=not ascending)
 
     def parse_params(self, node_params=True, edge_params=True):
-        '''Attempt to parse the node and/or edge params of all ``Node`` objects in this ``Tree`` as a ``dict``s.
+        '''Attempt to parse the node and/or edge params of all ``Node`` objects in this ``Tree`` as a ``dict``.
 
         Args:
             ``node_params`` (``bool``): ``True`` to attempt to parse ``node_params``
@@ -1501,7 +1501,7 @@ def read_tree_scipy(root):
     '''Create a TreeSwift tree from a SciPy tree
 
     Args:
-        ``root`` (``scipy.cluster.hierarchy.ClusterNode``): The root ``ClusterNode` object of a SciPy tree
+        ``root`` (``scipy.cluster.hierarchy.ClusterNode``): The root ``ClusterNode`` object of a SciPy tree
 
     Returns:
         ``Tree``: A TreeSwift tree created from ``root``

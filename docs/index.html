@@ -155,6 +155,17 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="treeswift.Node.parse_params">
+<span class="sig-name descname"><span class="pre">parse_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.parse_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Node.parse_params" title="Link to this definition">¶</a></dt>
+<dd><p>Attempt to parse the node and/or edge params of this <code class="docutils literal notranslate"><span class="pre">Node</span></code> as a <code class="docutils literal notranslate"><span class="pre">dict</span></code>.</p>
+<dl>
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">node_params</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to attempt to parse this <code class="docutils literal notranslate"><span class="pre">Node</span></code>’s <code class="docutils literal notranslate"><span class="pre">node_params</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">edge_params</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to attempt to parse this <code class="docutils literal notranslate"><span class="pre">Node</span></code>’s <code class="docutils literal notranslate"><span class="pre">edge_params</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="treeswift.Node.remove_child">
 <span class="sig-name descname"><span class="pre">remove_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Node.html#Node.remove_child"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Node.remove_child" title="Link to this definition">¶</a></dt>
 <dd><p>Remove child from <code class="docutils literal notranslate"><span class="pre">Node</span></code> object</p>
@@ -825,6 +836,17 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="treeswift.Tree.parse_params">
+<span class="sig-name descname"><span class="pre">parse_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.parse_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.parse_params" title="Link to this definition">¶</a></dt>
+<dd><p>Attempt to parse the node and/or edge params of all <code class="docutils literal notranslate"><span class="pre">Node</span></code> objects in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code> as a <code class="docutils literal notranslate"><span class="pre">dict</span></code>.</p>
+<dl>
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">node_params</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to attempt to parse <code class="docutils literal notranslate"><span class="pre">node_params</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">edge_params</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): <code class="docutils literal notranslate"><span class="pre">True</span></code> to attempt to parse <code class="docutils literal notranslate"><span class="pre">edge_params</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="treeswift.Tree.rename_nodes">
 <span class="sig-name descname"><span class="pre">rename_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">renaming_map</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#Tree.rename_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.Tree.rename_nodes" title="Link to this definition">¶</a></dt>
 <dd><p>Rename nodes in this <code class="docutils literal notranslate"><span class="pre">Tree</span></code></p>
@@ -1074,7 +1096,7 @@
 <span class="sig-prename descclassname"><span class="pre">treeswift.</span></span><span class="sig-name descname"><span class="pre">read_tree_scipy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treeswift/Tree.html#read_tree_scipy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treeswift.read_tree_scipy" title="Link to this definition">¶</a></dt>
 <dd><p>Create a TreeSwift tree from a SciPy tree</p>
 <dl class="simple">
-<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">root</span></code> (<code class="docutils literal notranslate"><span class="pre">scipy.cluster.hierarchy.ClusterNode</span></code>): The root <a href="#id1"><span class="problematic" id="id2">``</span></a>ClusterNode` object of a SciPy tree</p>
+<dt>Args:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">root</span></code> (<code class="docutils literal notranslate"><span class="pre">scipy.cluster.hierarchy.ClusterNode</span></code>): The root <code class="docutils literal notranslate"><span class="pre">ClusterNode</span></code> object of a SciPy tree</p>
 </dd>
 <dt>Returns:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Tree</span></code>: A TreeSwift tree created from <code class="docutils literal notranslate"><span class="pre">root</span></code></p>
 </dd>
@@ -1108,6 +1130,7 @@
 <li><a class="reference internal" href="#treeswift.Node.newick"><code class="docutils literal notranslate"><span class="pre">Node.newick()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.num_children"><code class="docutils literal notranslate"><span class="pre">Node.num_children()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.num_nodes"><code class="docutils literal notranslate"><span class="pre">Node.num_nodes()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Node.parse_params"><code class="docutils literal notranslate"><span class="pre">Node.parse_params()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.remove_child"><code class="docutils literal notranslate"><span class="pre">Node.remove_child()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.resolve_polytomies"><code class="docutils literal notranslate"><span class="pre">Node.resolve_polytomies()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Node.set_edge_length"><code class="docutils literal notranslate"><span class="pre">Node.set_edge_length()</span></code></a></li>
@@ -1165,6 +1188,7 @@
 <li><a class="reference internal" href="#treeswift.Tree.num_lineages_at"><code class="docutils literal notranslate"><span class="pre">Tree.num_lineages_at()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.num_nodes"><code class="docutils literal notranslate"><span class="pre">Tree.num_nodes()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.order"><code class="docutils literal notranslate"><span class="pre">Tree.order()</span></code></a></li>
+<li><a class="reference internal" href="#treeswift.Tree.parse_params"><code class="docutils literal notranslate"><span class="pre">Tree.parse_params()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.rename_nodes"><code class="docutils literal notranslate"><span class="pre">Tree.rename_nodes()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.reroot"><code class="docutils literal notranslate"><span class="pre">Tree.reroot()</span></code></a></li>
 <li><a class="reference internal" href="#treeswift.Tree.resolve_polytomies"><code class="docutils literal notranslate"><span class="pre">Tree.resolve_polytomies()</span></code></a></li>

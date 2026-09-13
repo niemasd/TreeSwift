@@ -37,7 +37,7 @@
             
   <h1>Source code for treeswift.Tree</h1><div class="highlight"><pre>
 <span></span><span class="ch">#! /usr/bin/env python</span>
-<span class="kn">from</span> <span class="nn">treeswift.Node</span> <span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">treeswift.Node</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">params_str</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">gzip</span> <span class="kn">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
@@ -1086,11 +1086,11 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;node_params&#39;</span><span class="p">):</span>
-            <span class="n">suffix</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">node_params</span><span class="p">)</span><span class="si">}</span><span class="s1">]&#39;</span>
+            <span class="n">suffix</span> <span class="o">+=</span> <span class="n">params_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">node_params</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;edge_params&#39;</span><span class="p">):</span>
             <span class="n">suffix</span> <span class="o">+=</span> <span class="s1">&#39;:&#39;</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;edge_params&#39;</span><span class="p">):</span>
-            <span class="n">suffix</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_params</span><span class="p">)</span><span class="si">}</span><span class="s1">]&#39;</span>
+            <span class="n">suffix</span> <span class="o">+=</span> <span class="n">params_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_params</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span><span class="o">.</span><span class="n">is_integer</span><span class="p">():</span>
             <span class="n">suffix</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span><span class="p">))</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1245,6 +1245,20 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid choice for mode&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
             <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="ow">not</span> <span class="n">ascending</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tree.parse_params">
+<a class="viewcode-back" href="../../index.html#treeswift.Tree.parse_params">[docs]</a>
+    <span class="k">def</span> <span class="nf">parse_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_params</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_params</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Attempt to parse the node and/or edge params of all ``Node`` objects in this ``Tree`` as a ``dict``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ``node_params`` (``bool``): ``True`` to attempt to parse ``node_params``</span>
+
+<span class="sd">            ``edge_params`` (``bool``): ``True`` to attempt to parse ``edge_params``</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_preorder</span><span class="p">():</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parse_params</span><span class="p">(</span><span class="n">node_params</span><span class="o">=</span><span class="n">node_params</span><span class="p">,</span> <span class="n">edge_params</span><span class="o">=</span><span class="n">edge_params</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Tree.rename_nodes">
@@ -1701,7 +1715,7 @@
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Create a TreeSwift tree from a SciPy tree</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        ``root`` (``scipy.cluster.hierarchy.ClusterNode``): The root ``ClusterNode` object of a SciPy tree</span>
+<span class="sd">        ``root`` (``scipy.cluster.hierarchy.ClusterNode``): The root ``ClusterNode`` object of a SciPy tree</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        ``Tree``: A TreeSwift tree created from ``root``</span>
