@@ -5,6 +5,46 @@ UNSAFE_SYMBOLS = {';', '(', ')', ',', '[', ']', ':', "'"}
 INORDER_NONBINARY = "Can't do inorder traversal on non-binary tree"
 INVALID_NEWICK = "Tree not valid Newick tree"
 
+def params_str(params):
+    '''Return a string representation of node or edge parameters
+
+    Args:
+        ``params`` (``dict``): The node or edge parameters
+
+    Returns:
+        ``str``: A string representation of ``params``
+    '''
+    if isinstance(params, dict):
+        return '[%s]' % ','.join(f'{k}={v}' for k, v in params.items())
+    else:
+        if not isinstance(params, str):
+            params = str(params)
+        if not (params.startswith('[') and params.endswith(']')):
+            params = f'[{params}]'
+        return params
+
+def parse_params_str(params_str):
+    '''Parse a string representation of node or edge parameters
+
+    Args:
+        ``params_str`` (``str``): The string representation of node or edge parameters
+
+    Returns:
+        ``dict``: The parsed version of ``params_str``
+    '''
+    if isinstance(params_str, dict):
+        return params_str # already parsed
+    if not isinstance(params_str, str):
+        raise ValueError(f"params_str must be 'str', but received: {type(params_str)}")
+    if params_str.startswith('['):
+        params_str = params_str[1:]
+    if params_str.endswith(']'):
+        param_str = params_str[:-1]
+    params = dict()
+    for part in params_str.strip().split(','):
+        k, v = part.split('='); params[k.strip()] = v.strip()
+    return params
+
 class Node:
     '''``Node`` class'''
     def __init__(self, label=None, edge_length=None):
@@ -152,11 +192,11 @@ class Node:
                 for c in node.children:
                     out.append(c.string_rep)
                     if hasattr(c, 'node_params'):
-                        out.append(f'[{str(c.node_params)}]')
+                        out.append(params_str(c.node_params))
                     if c.edge_length is not None or hasattr(c, 'edge_params'):
                         out.append(':')
                     if hasattr(c, 'edge_params'):
-                        out.append(f'[{str(c.edge_params)}]')
+                        out.append(params_str(c.edge_params))
                     if isinstance(c.edge_length, float) and c.edge_length.is_integer():
                         out.append(str(int(c.edge_length)))
                     elif c.edge_length is not None:
@@ -195,6 +235,19 @@ class Node:
         if not isinstance(internal, bool):
             raise TypeError("internal must be a bool")
         return sum((leaves and node.is_leaf()) or (internal and not node.is_leaf()) for node in self.traverse_preorder())
+
+    def parse_params(self, node_params=True, edge_params=True):
+        '''Attempt to parse the node and/or edge params of this ``Node`` as a ``dict``.
+
+        Args:
+            ``node_params`` (``bool``): ``True`` to attempt to parse this ``Node``'s ``node_params``
+
+            ``edge_params`` (``bool``): ``True`` to attempt to parse this ``Node``'s ``edge_params``
+        '''
+        if node_params and hasattr(self, 'node_params') and isinstance(self.node_params, str):
+            self.node_params = parse_params_str(self.node_params)
+        if edge_params and hasattr(self, 'edge_params') and isinstance(self.edge_params, str):
+            self.edge_params = parse_params_str(self.edge_params)
 
     def remove_child(self, child):
         '''Remove child from ``Node`` object

@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-from treeswift.Node import Node
+from treeswift.Node import Node, params_str
 from collections import deque
 from copy import copy
 from gzip import open as gopen
@@ -942,11 +942,11 @@ class Tree:
         '''
         suffix = ''
         if hasattr(self.root, 'node_params'):
-            suffix += f'[{str(self.root.node_params)}]'
+            suffix += params_str(self.root.node_params)
         if self.root.edge_length is not None or hasattr(self.root, 'edge_params'):
             suffix += ':'
         if hasattr(self.root, 'edge_params'):
-            suffix += f'[{str(self.root.edge_params)}]'
+            suffix += params_str(self.root.edge_params)
         if isinstance(self.root.edge_length, float) and self.root.edge_length.is_integer():
             suffix += str(int(self.root.edge_length))
         elif self.root.edge_length is not None:
@@ -1089,6 +1089,17 @@ class Tree:
             raise ValueError("Invalid choice for mode")
         for node in self.traverse_preorder():
             node.children.sort(key=k, reverse=not ascending)
+
+    def parse_params(self, node_params=True, edge_params=True):
+        '''Attempt to parse the node and/or edge params of all ``Node`` objects in this ``Tree`` as a ``dict``s.
+
+        Args:
+            ``node_params`` (``bool``): ``True`` to attempt to parse ``node_params``
+
+            ``edge_params`` (``bool``): ``True`` to attempt to parse ``edge_params``
+        '''
+        for node in self.traverse_preorder():
+            node.parse_params(node_params=node_params, edge_params=edge_params)
 
     def rename_nodes(self, renaming_map):
         '''Rename nodes in this ``Tree``
