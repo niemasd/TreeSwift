@@ -3,11 +3,17 @@
 
 # tree files
 *.tre
+*.tre.gz
 *.tree
+*.tree.gz
 *.trees
+*.trees.gz
 *.nex
+*.nex.gz
 *.nexus
+*.nexus.gz
 *.nwk
+*.nwk.gz
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

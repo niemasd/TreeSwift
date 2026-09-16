@@ -2,7 +2,8 @@
 from copy import copy
 from os.path import dirname, realpath
 from random import sample
-from treeswift import read_tree_newick, read_tree_nexml, read_tree_nexus
+from treeswift import read_tree_newick, read_tree_nexml, read_tree_nexus, Tree
+from warnings import filterwarnings
 PATH = dirname(realpath(__file__))
 NEWICK_FILE = '%s/test.tre' % PATH
 NEWICK_GZIP = '%s/test.tre.gz' % PATH
@@ -13,6 +14,7 @@ NEXUS_STR = open(NEXUS_FILE).read().strip()
 NEXML_FILE = '%s/test.nexml' % PATH
 NEXML_GZIP = '%s/test.nexml.gz' % PATH
 NEXML_STR = open(NEXML_FILE).read().strip()
+filterwarnings('ignore')
 
 # tests
 def test_avg_branch_length(t):
@@ -196,7 +198,7 @@ if __name__ == "__main__":
     tests = [v for k,v in locals().items() if callable(v) and v.__module__ == __name__]
     trees = [read_tree_newick(NEWICK_FILE), read_tree_newick(NEWICK_GZIP), read_tree_newick(NEWICK_STR)]
     for nex in [NEXUS_FILE, NEXUS_GZIP, NEXUS_STR]:
-        trees += read_tree_nexus(nex).values()
+        trees += [val for val in read_tree_nexus(nex).values() if isinstance(val, Tree)]
     for t in trees:
         for test in tests:
             test(t)

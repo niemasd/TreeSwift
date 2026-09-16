@@ -329,11 +329,11 @@ class Node:
         Yields:
             ``Node``: The next node in the traversal
         '''
-        if not isinstance(include_self, bool):
-            raise TypeError("include_self must be a bool")
         q = deque(); dist = {self: 0}; q.append((self,0))
         while len(q) != 0:
-            curr = q.popleft(); yield curr
+            curr = q.popleft()
+            if include_self or curr[0] is not self:
+                yield curr
             for c in curr[0].children:
                 if c not in dist:
                     if c.edge_length is None:
@@ -348,13 +348,15 @@ class Node:
                     el = curr[0].edge_length
                 dist[curr[0].parent] = dist[curr[0]] + el; q.append((curr[0].parent,dist[curr[0].parent]))
 
-    def traverse_inorder(self, leaves=True, internal=True):
+    def traverse_inorder(self, leaves=True, internal=True, include_self=True):
         '''Perform an inorder traversal starting at this ``Node`` object
 
         Args:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
 
         Yields:
             ``Node``: The next node in the traversal
@@ -366,7 +368,7 @@ class Node:
                     done = True
                 else:
                     c = s.pop()
-                    if (leaves and c.is_leaf()) or (internal and not c.is_leaf()):
+                    if ((leaves and c.is_leaf()) or (internal and not c.is_leaf())) and (include_self or c is not self):
                         yield c
                     if len(c.children) == 0:
                         c = None
@@ -383,13 +385,16 @@ class Node:
                 else:
                     raise RuntimeError(INORDER_NONBINARY)
 
-    def traverse_internal(self):
+    def traverse_internal(self, include_self=True):
         '''Traverse over the internal nodes below (and including) this ``Node`` object
+
+        Args:
+            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
 
         Yields:
             ``Node``: The next node in the traversal
         '''
-        yield from self.traverse_preorder(leaves=False)
+        yield from self.traverse_preorder(leaves=False, include_self=include_self)
 
     def traverse_leaves(self):
         '''Traverse over the leaves below this ``Node`` object
@@ -399,7 +404,7 @@ class Node:
         '''
         yield from self.traverse_preorder(internal=False)
 
-    def traverse_levelorder(self, leaves=True, internal=True):
+    def traverse_levelorder(self, leaves=True, internal=True, include_self=True):
         '''Perform a levelorder traversal starting at this ``Node`` object
 
         Args:
@@ -407,23 +412,27 @@ class Node:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
 
+            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
+
         Yields:
             ``Node``: The next node in the traversal
         '''
         q = deque(); q.append(self)
         while len(q) != 0:
             n = q.popleft()
-            if (leaves and n.is_leaf()) or (internal and not n.is_leaf()):
+            if ((leaves and n.is_leaf()) or (internal and not n.is_leaf())) and (include_self or n is not self):
                 yield n
             q.extend(n.children)
 
-    def traverse_postorder(self, leaves=True, internal=True):
+    def traverse_postorder(self, leaves=True, internal=True, include_self=True):
         '''Perform a postorder traversal starting at this ``Node`` object
 
         Args:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
 
         Yields:
             ``Node``: The next node in the traversal
@@ -433,10 +442,10 @@ class Node:
             n = s1.pop(); s2.append(n); s1.extend(n.children)
         while len(s2) != 0:
             n = s2.pop()
-            if (leaves and n.is_leaf()) or (internal and not n.is_leaf()):
+            if ((leaves and n.is_leaf()) or (internal and not n.is_leaf())) and (include_self or n is not self):
                 yield n
 
-    def traverse_preorder(self, leaves=True, internal=True):
+    def traverse_preorder(self, leaves=True, internal=True, include_self=True):
         '''Perform a preorder traversal starting at this ``Node`` object
 
         Args:
@@ -444,17 +453,19 @@ class Node:
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
 
+            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
+
         Yields:
             ``Node``: The next node in the traversal
         '''
         s = deque(); s.append(self)
         while len(s) != 0:
             n = s.pop()
-            if (leaves and n.is_leaf()) or (internal and not n.is_leaf()):
+            if ((leaves and n.is_leaf()) or (internal and not n.is_leaf())) and (include_self or n is not self):
                 yield n
             s.extend(n.children)
 
-    def traverse_rootdistorder(self, ascending=True, leaves=True, internal=True):
+    def traverse_rootdistorder(self, ascending=True, leaves=True, internal=True, include_self=True):
         '''Perform a traversal of the ``Node`` objects in the subtree rooted at this ``Node`` in either ascending (``ascending=True``) or descending (``ascending=False``) order of distance from this ``Node``
 
         Args:
@@ -463,6 +474,8 @@ class Node:
             ``leaves`` (``bool``): ``True`` to include leaves, otherwise ``False``
 
             ``internal`` (``bool``): ``True`` to include internal nodes, otherwise ``False``
+
+            ``include_self`` (``bool``): ``True`` to include self in the traversal, otherwise ``False``
 
         Yields:
             ``tuple``: The next (root distance, ``Node``) pair in the traversal
@@ -478,7 +491,7 @@ class Node:
                 if node.edge_length is not None:
                     d += node.edge_length
             dist_from_root[node] = d
-            if (leaves and node.is_leaf()) or (internal and not node.is_leaf()):
+            if ((leaves and node.is_leaf()) or (internal and not node.is_leaf())) and (include_self or node is not self):
                 nodes.append((d,node))
         nodes.sort(reverse=(not ascending))
         yield from nodes
