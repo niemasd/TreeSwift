@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 from collections import deque
 from copy import copy
+from io import StringIO
 UNSAFE_SYMBOLS = {';', '(', ')', ',', '[', ']', ':', "'"}
 INORDER_NONBINARY = "Can't do inorder traversal on non-binary tree"
 INVALID_NEWICK = "Tree not valid Newick tree"
@@ -172,44 +173,63 @@ class Node:
         Returns:
             ``str``: Newick string conversion starting at this ``Node`` object
         '''
-        for node in self.traverse_postorder():
-            # handle current node's label
+        # set things up
+        out = StringIO()
+        root = self
+        stack = [[root, 0]]
+
+        # helper function to get node label as string
+        def label_str(node):
             if node.label is None:
-                str_label = ''
-            else:
-                str_label = str(node.label)
-                for c in UNSAFE_SYMBOLS:
-                    if c in str_label:
-                        str_label = f"'{str_label}'"; break
+                return ''
+            s = str(node.label)
+            for c in UNSAFE_SYMBOLS:
+                if c in s:
+                    s = f"'{s}'"; break
+            return s
 
-            # leaf Newick representation is just its label
-            if node.is_leaf():
-                node.string_rep = str_label
-
-            # handle internal node Newick representation
+        # helper function to append branch
+        def append_branch(node):
+            if hasattr(node, 'node_params'):
+                out.write(params_str(node.node_params))
+            if node.edge_length is not None or hasattr(node, 'edge_params'):
+                out.write(':')
+            if hasattr(node, 'edge_params'):
+                out.write(params_str(node.edge_params))
+            if isinstance(node.edge_length, float) and node.edge_length.is_integer():
+                out.write(str(int(node.edge_length)))
+            elif node.edge_length is not None:
+                out.write(str(node.edge_length))
+    
+        # build Newick string
+        while len(stack) != 0:
+            node, i = stack[-1]
+            children = node.children
+            if i == 0:
+                if len(children) == 0:
+                    out.write(label_str(node))
+                    if node is not root:
+                        append_branch(node)
+                    stack.pop(); continue
+                out.write('(')
+            if i < len(children):
+                if i > 0:
+                    out.write(',')
+                child = children[i]
+                stack[-1][1] += 1
+                if len(child.children) == 0:
+                    out.write(label_str(child))
+                    append_branch(child)
+                else:
+                    stack.append([child, 0])
             else:
-                out = ['(']
-                for c in node.children:
-                    out.append(c.string_rep)
-                    if hasattr(c, 'node_params'):
-                        out.append(params_str(c.node_params))
-                    if c.edge_length is not None or hasattr(c, 'edge_params'):
-                        out.append(':')
-                    if hasattr(c, 'edge_params'):
-                        out.append(params_str(c.edge_params))
-                    if isinstance(c.edge_length, float) and c.edge_length.is_integer():
-                        out.append(str(int(c.edge_length)))
-                    elif c.edge_length is not None:
-                        out.append(str(c.edge_length))
-                    out.append(',')
-                    del c.string_rep
-                out.pop() # trailing comma
-                out.append(')')
+                out.write(')')
                 if node.label is not None:
-                    out.append(str_label)
-                node.string_rep = ''.join(out)
-        out = self.string_rep; del self.string_rep
-        return out
+                    out.write(label_str(node))
+                if node is not root:
+                    append_branch(node)
+                stack.pop()
+        return out.getvalue()
 
     def num_children(self):
         '''Returns the number of children of this ``Node``

@@ -39,6 +39,7 @@
 <span></span><span class="ch">#! /usr/bin/env python</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
 <span class="n">UNSAFE_SYMBOLS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">}</span>
 <span class="n">INORDER_NONBINARY</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t do inorder traversal on non-binary tree&quot;</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
@@ -238,44 +239,63 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            ``str``: Newick string conversion starting at this ``Node`` object</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_postorder</span><span class="p">():</span>
-            <span class="c1"># handle current node&#39;s label</span>
+        <span class="c1"># set things up</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[[</span><span class="n">root</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+
+        <span class="c1"># helper function to get node label as string</span>
+        <span class="k">def</span> <span class="nf">label_str</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">str_label</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">str_label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">UNSAFE_SYMBOLS</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">str_label</span><span class="p">:</span>
-                        <span class="n">str_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">str_label</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">;</span> <span class="k">break</span>
+                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">UNSAFE_SYMBOLS</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">;</span> <span class="k">break</span>
+            <span class="k">return</span> <span class="n">s</span>
 
-            <span class="c1"># leaf Newick representation is just its label</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">string_rep</span> <span class="o">=</span> <span class="n">str_label</span>
-
-            <span class="c1"># handle internal node Newick representation</span>
+        <span class="c1"># helper function to append branch</span>
+        <span class="k">def</span> <span class="nf">append_branch</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;node_params&#39;</span><span class="p">):</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">params_str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">node_params</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;edge_params&#39;</span><span class="p">):</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;edge_params&#39;</span><span class="p">):</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">params_str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_params</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="o">.</span><span class="n">is_integer</span><span class="p">():</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)))</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">edge_length</span><span class="p">))</span>
+    
+        <span class="c1"># build Newick string</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">node</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">label_str</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">root</span><span class="p">:</span>
+                        <span class="n">append_branch</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">();</span> <span class="k">continue</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">label_str</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+                    <span class="n">append_branch</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">child</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;(&#39;</span><span class="p">]</span>
-                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                    <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">string_rep</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s1">&#39;node_params&#39;</span><span class="p">):</span>
-                        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">params_str</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">node_params</span><span class="p">))</span>
-                    <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s1">&#39;edge_params&#39;</span><span class="p">):</span>
-                        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s1">&#39;edge_params&#39;</span><span class="p">):</span>
-                        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">params_str</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">edge_params</span><span class="p">))</span>
-                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">edge_length</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">edge_length</span><span class="o">.</span><span class="n">is_integer</span><span class="p">():</span>
-                        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">edge_length</span><span class="p">)))</span>
-                    <span class="k">elif</span> <span class="n">c</span><span class="o">.</span><span class="n">edge_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">edge_length</span><span class="p">))</span>
-                    <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-                    <span class="k">del</span> <span class="n">c</span><span class="o">.</span><span class="n">string_rep</span>
-                <span class="n">out</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># trailing comma</span>
-                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">str_label</span><span class="p">)</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">string_rep</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_rep</span><span class="p">;</span> <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_rep</span>
-        <span class="k">return</span> <span class="n">out</span></div>
+                    <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">label_str</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">root</span><span class="p">:</span>
+                    <span class="n">append_branch</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Node.num_children">
