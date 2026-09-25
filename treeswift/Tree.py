@@ -3,8 +3,9 @@ from treeswift.Node import Node, params_str
 from collections import deque
 from copy import copy
 from gzip import open as gopen
-from math import ceil,log
-from os.path import expanduser,isfile
+from math import ceil, log
+from os import PathLike
+from os.path import expanduser, isfile
 from warnings import warn
 INVALID_NEWICK = "Tree not valid Newick tree"
 INVALID_NEXML = "Invalid NeXML file"
@@ -1333,8 +1334,10 @@ class Tree:
         Args:
             ``filename`` (``str``): Path to desired output file (plain-text or gzipped)
         '''
-        if not isinstance(filename, str):
-            raise TypeError("filename must be a str")
+        if isinstance(filename, PathLike):
+            filename = str(filename)
+        elif not isinstance(filename, str):
+            raise TypeError("filename must be a path-like")
         treestr = self.newick()
         leaf_labels = [node.label for node in self.traverse_leaves()]
         if treestr.startswith('[&R]'):
@@ -1360,8 +1363,10 @@ class Tree:
 
             ``hide_rooted_prefix`` (``bool``): Hide the rooted prefix ``[&R]`` if rooted tree
         '''
-        if not isinstance(filename, str):
-            raise TypeError("filename must be a str")
+        if isinstance(filename, PathLike):
+            filename = str(filename)
+        elif not isinstance(filename, str):
+            raise TypeError("filename must be a path-like")
         treestr = self.newick()
         if hide_rooted_prefix:
             if treestr.startswith('[&R]'):
