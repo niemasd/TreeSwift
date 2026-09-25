@@ -41,8 +41,9 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">gzip</span> <span class="kn">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">gopen</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span><span class="p">,</span><span class="n">log</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span><span class="p">,</span><span class="n">isfile</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">PathLike</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span><span class="p">,</span> <span class="n">isfile</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 <span class="n">INVALID_NEWICK</span> <span class="o">=</span> <span class="s2">&quot;Tree not valid Newick tree&quot;</span>
 <span class="n">INVALID_NEXML</span> <span class="o">=</span> <span class="s2">&quot;Invalid NeXML file&quot;</span>
@@ -1537,8 +1538,10 @@
 <span class="sd">        Args:</span>
 <span class="sd">            ``filename`` (``str``): Path to desired output file (plain-text or gzipped)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filename must be a str&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">):</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filename must be a path-like&quot;</span><span class="p">)</span>
         <span class="n">treestr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">newick</span><span class="p">()</span>
         <span class="n">leaf_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">label</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">traverse_leaves</span><span class="p">()]</span>
         <span class="k">if</span> <span class="n">treestr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;[&amp;R]&#39;</span><span class="p">):</span>
@@ -1567,8 +1570,10 @@
 
 <span class="sd">            ``hide_rooted_prefix`` (``bool``): Hide the rooted prefix ``[&amp;R]`` if rooted tree</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filename must be a str&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">):</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filename must be a path-like&quot;</span><span class="p">)</span>
         <span class="n">treestr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">newick</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">hide_rooted_prefix</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">treestr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;[&amp;R]&#39;</span><span class="p">):</span>
@@ -1745,10 +1750,7 @@
 <span class="sd">        ``Tree``: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a ``list`` of ``Tree`` objects will be returned</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">newick</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">newick</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">newick</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;newick must be a str&quot;</span><span class="p">)</span>
+        <span class="n">newick</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">newick</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">newick</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1000</span> <span class="ow">and</span> <span class="n">isfile</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">newick</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">newick</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span> <span class="c1"># gzipped file</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">gopen</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">newick</span><span class="p">),</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span>
@@ -1850,7 +1852,7 @@
 <span class="sd">        ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexml``, where keys are tree names (``str``) and values are ``Tree`` objects</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nexml</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nexml must be a str&quot;</span><span class="p">)</span>
+        <span class="n">nexml</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">nexml</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">nexml</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span> <span class="c1"># gzipped file</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">gopen</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">nexml</span><span class="p">),</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">isfile</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">nexml</span><span class="p">)):</span> <span class="c1"># plain-text file</span>
@@ -1978,7 +1980,7 @@
 <span class="sd">        If ``translate`` was ``True``, if a node ``x`` was translated, ``x.label`` will be the translated label, and ``x.id`` will be the original label (the &quot;ID&quot;)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nexus</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nexus must be a str&quot;</span><span class="p">)</span>
+        <span class="n">nexus</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">nexus</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">nexus</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span> <span class="c1"># gzipped file</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">gopen</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">nexus</span><span class="p">),</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">isfile</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">nexus</span><span class="p">)):</span> <span class="c1"># plain-text file</span>
