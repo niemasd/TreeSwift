@@ -1533,10 +1533,7 @@ def read_tree_newick(newick):
         ``Tree``: The tree represented by ``newick``. If the Newick file has multiple trees (one per line), a ``list`` of ``Tree`` objects will be returned
     '''
     if not isinstance(newick, str):
-        try:
-            newick = str(newick)
-        except:
-            raise TypeError("newick must be a str")
+        newick = str(newick)
     if len(newick) < 1000 and isfile(expanduser(newick)):
         if newick.lower().endswith('.gz'): # gzipped file
             f = gopen(expanduser(newick), 'rt')
@@ -1635,7 +1632,7 @@ def read_tree_nexml(nexml):
         ``dict`` of ``Tree``: A dictionary of the trees represented by ``nexml``, where keys are tree names (``str``) and values are ``Tree`` objects
     '''
     if not isinstance(nexml, str):
-        raise TypeError("nexml must be a str")
+        nexml = str(nexml)
     if nexml.lower().endswith('.gz'): # gzipped file
         f = gopen(expanduser(nexml), 'rt')
     elif isfile(expanduser(nexml)): # plain-text file
@@ -1760,7 +1757,7 @@ def read_tree_nexus(nexus, translate=True):
         If ``translate`` was ``True``, if a node ``x`` was translated, ``x.label`` will be the translated label, and ``x.id`` will be the original label (the "ID")
     '''
     if not isinstance(nexus, str):
-        raise TypeError("nexus must be a str")
+        nexus = str(nexus)
     if nexus.lower().endswith('.gz'): # gzipped file
         f = gopen(expanduser(nexus), 'rt')
     elif isfile(expanduser(nexus)): # plain-text file
