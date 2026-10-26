@@ -22,6 +22,10 @@ Examples of unacceptable behavior by participants include:
 * Publishing others' private information, such as a physical or electronic address, without explicit permission
 * Other conduct which could reasonably be considered inappropriate in a professional setting
 
+### Policy on AI Code Generation
+
+We recognize that Artificial Intelligence (AI) code generation tools can be helpful in rapidly prototyping potential code contributions. However, these tools are not perfect and should not be used without a human in the loop to take ownership of, verify, and fix the generated code. Pull Requests with code contributions that seem likely to have been produced by AI code generation tools without manual human verification will not be considered, and users who submit repeated such Pull Requests may potentially be banned.
+
 ## Our Responsibilities
 
 Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
