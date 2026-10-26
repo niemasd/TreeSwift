@@ -676,14 +676,32 @@ class Tree:
     def gamma_statistic(self):
         '''Compute the Gamma statistic of Pybus and Harvey (2000)
 
+        The statistic assumes an ultrametric tree. It uses the intervals between
+        branching events, including the final interval to the most distant tip.
+        Root stems and unary nodes are not branching events. Polytomies are
+        resolved with 0-length edges.
+
         Returns:
             ``float``: The Gamma statistic of Pybus and Harvey (2000)
         '''
         t = copy(self); t.resolve_polytomies() # need fully bifurcating tree
-        G = list(t.coalescence_times(backward=False))
-        n = len(G)+1
+        crown = t.root
+        while len(crown.children) == 1:
+            crown = crown.children[0]
+        distances = {crown:0}; times = []; tip_time = float('-inf')
+        for node in crown.traverse_preorder():
+            if node is not crown:
+                distances[node] = distances[node.parent] + node.edge_length
+            if node.is_leaf():
+                tip_time = max(tip_time, distances[node])
+            elif len(node.children) > 1:
+                times.append(distances[node])
+        times.sort()
+        n = len(times)+1
         if n <= 2:
             raise RuntimeError("Gamma statistic can only be computed on trees with more than 2 leaves")
+        times.append(tip_time)
+        G = [times[i+1]-times[i] for i in range(len(times)-1)]
         T = sum((j+2)*g for j,g in enumerate(G))
         out = 0.
         for i in range(len(G)-1):
